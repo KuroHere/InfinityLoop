@@ -1,0 +1,17 @@
+[
+  {
+    "modid": "loop",
+    "name": "InfinityLoop",
+    "description": "1.12.2 Anarchy PvP Client",
+    "version": "0.0.3",
+    "mcversion": "1.12.2",
+    "logoFile": "loop.png",
+    "url": "   ",
+    "updateUrl": "",
+    "authorList": [
+      "Kuro Here"
+    ],
+    "screenshots": [],
+    "dependencies": []
+  }
+]
