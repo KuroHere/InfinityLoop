@@ -148,7 +148,7 @@ public class InfinityLoopGui
         return -6;
     }
 
-    public com.me.infinity.loop.features.gui.components.Component getComponentByName(String name) {
+    public Component getComponentByName(String name) {
         for (Component component : this.components) {
             if (!component.getName().equalsIgnoreCase(name)) continue;
             return component;
