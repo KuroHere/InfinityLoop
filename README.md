@@ -1,19 +1,7 @@
-### **KURO HACK REBORN!**
+### **Infinity Loop**
 
-`-SUPPER STRONG CLIENTTTT!`
-`-HAVE BASED,SEXY,FUNNY MODULE!!! `
+~~Everything is CUSTOM!!~~
 
-~~And Everything is CUSTOM!!~~
+### **Very good client**
 
-**Insane Client1!1!1!1**
-
-### **I SKID RENDERING MODULE FROM EVERY CLIENT IN THE WORLD!**
-
-1. WP3+
-2. ThunderHackPlus
-3. Konas
-4. Gamesense
-5. 3arthh4ck
-6. ............................
-
-too muchh!
+only make render module!
