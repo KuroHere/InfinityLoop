@@ -21,10 +21,8 @@ public class ConfigManager implements Util {
     public ArrayList<Feature> features = new ArrayList<>();
 
     public String config = "loop/config/";
-    public String MiscFolder = "loop/misc/";
 
-
-    public JsonObject writeSettings(Feature feature) {
+    public JsonObject getModuleObject(Feature feature) {
         JsonObject object = new JsonObject();
         JsonParser jp = new JsonParser();
 
@@ -34,14 +32,14 @@ public class ConfigManager implements Util {
                 object.add(setting.getName(), converter.doForward((Enum) setting.getValue()));
                 continue;
             }
-            if(setting.isColorSetting()){
+            /*if(setting.isColorSetting()){
                 JsonArray array = new JsonArray();
                 array.add(new JsonPrimitive(((ColorSetting) setting.getValue()).getRawColor()));
                 array.add(new JsonPrimitive(((ColorSetting) setting.getValue()).isCycle()));
                 array.add(new JsonPrimitive(((ColorSetting) setting.getValue()).getGlobalOffset()));
                 object.add(setting.getName(), array);
                 continue;
-            }
+            }*/
             if (setting.isStringSetting()) {
                 String str = (String) setting.getValue();
                 setting.setValue(str.replace(" ", "_"));
@@ -60,12 +58,6 @@ public class ConfigManager implements Util {
     public static void setValueFromJson(Feature feature, Setting setting, JsonElement element) {
         String str;
         switch (setting.getType()) {
-            case "ColorSetting":
-                JsonArray array = element.getAsJsonArray();
-                ((ColorSetting) setting.getValue()).setColor(array.get(0).getAsInt());
-                ((ColorSetting) setting.getValue()).setCycle(array.get(1).getAsBoolean());
-                ((ColorSetting) setting.getValue()).setGlobalOffset(array.get(2).getAsInt());
-                return;
             case "Boolean":
                 setting.setValue(Boolean.valueOf(element.getAsBoolean()));
                 return;
@@ -85,6 +77,12 @@ public class ConfigManager implements Util {
             case "Bind":
                 setting.setValue((new Bind.BindConverter()).doBackward(element));
                 return;
+            case "ColorSetting":
+                JsonArray array = element.getAsJsonArray();
+                ((ColorSetting) setting.getValue()).setColor(array.get(0).getAsInt());
+                ((ColorSetting) setting.getValue()).setCycle(array.get(1).getAsBoolean());
+                ((ColorSetting) setting.getValue()).setGlobalOffset(array.get(2).getAsInt());
+                return;
             case "Enum":
                 try {
                     EnumConverter converter = new EnumConverter(((Enum) setting.getValue()).getClass());
@@ -94,6 +92,7 @@ public class ConfigManager implements Util {
                 }
                 return;
         }
+
         Loop.LOGGER.error("Unknown Setting type for: " + feature.getName() + " : " + setting.getName());
     }
 
@@ -164,7 +163,7 @@ public class ConfigManager implements Util {
     }
 
     public void saveCurrentConfig() {
-        File currentConfig = new File("loop/currentconfig.txt");
+        File currentConfig = new File("loop/misc/currentconfig.txt");
         try {
             if (currentConfig.exists()) {
                 FileWriter writer = new FileWriter(currentConfig);
@@ -216,7 +215,7 @@ public class ConfigManager implements Util {
 
 
     public String loadCurrentConfig() {
-        File currentConfig = new File("loop/currentconfig.txt");
+        File currentConfig = new File("loop/misc/currentconfig.txt");
         String name = "config";
         try {
             if (currentConfig.exists()) {
@@ -248,7 +247,7 @@ public class ConfigManager implements Util {
         if (!Files.exists(outputFile))
             Files.createFile(outputFile);
         Gson gson = (new GsonBuilder()).setPrettyPrinting().create();
-        String json = gson.toJson(writeSettings(feature));
+        String json = gson.toJson(getModuleObject(feature));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(outputFile)));
         writer.write(json);
         writer.close();

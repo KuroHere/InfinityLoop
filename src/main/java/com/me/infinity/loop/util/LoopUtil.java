@@ -91,7 +91,7 @@ public class LoopUtil {
                     e.printStackTrace();
                 }
                 try {
-                    ImageIO.write(img, "png", new File("oyvey/temp/heads/" + nickname + ".png"));
+                    ImageIO.write(img, "png", new File("loop/temp/heads/" + nickname + ".png"));
                 } catch (IOException e) {
                     System.out.println("Couldn't create/send the output image.");
                     e.printStackTrace();
@@ -153,7 +153,7 @@ public class LoopUtil {
                     e.printStackTrace();
                 }
                 try {
-                    ImageIO.write(img, "png", new File("oyvey/temp/skins/" + nickname + ".png"));
+                    ImageIO.write(img, "png", new File("loop/temp/skins/" + nickname + ".png"));
                 } catch (IOException e) {
                     System.out.println("Couldn't create/send the output image.");
                     e.printStackTrace();
