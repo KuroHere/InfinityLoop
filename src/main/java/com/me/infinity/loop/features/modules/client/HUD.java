@@ -45,7 +45,7 @@ public class HUD extends Module {
     private final Setting<Boolean> lag = register(new Setting("LagNotifier", Boolean.valueOf(false), "The time"));
     private final Timer timer = new Timer();
     private final Map<String, Integer> players = new HashMap<>();
-    public Setting<String> command = register(new Setting("Command", "OyVey"));
+    public Setting<String> command = register(new Setting("Command", "[InfinityLoop]"));
     public Setting<TextUtil.Color> bracketColor = register(new Setting("BracketColor", TextUtil.Color.BLUE));
     public Setting<TextUtil.Color> commandColor = register(new Setting("NameColor", TextUtil.Color.BLUE));
     public Setting<String> commandBracket = register(new Setting("Bracket", "<"));

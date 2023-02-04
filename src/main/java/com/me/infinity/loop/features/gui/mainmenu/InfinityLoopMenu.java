@@ -102,7 +102,6 @@ public class InfinityLoopMenu extends GuiScreen
             this.mc.displayGuiScreen( new GuiAltManager());
         }
         if (button.id == 666) {
-            Loop.unload(false);
             this.mc.shutdown();
         }
     }

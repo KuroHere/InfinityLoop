@@ -5,6 +5,7 @@ import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.gui.components.Component;
 import com.me.infinity.loop.features.gui.components.items.Item;
 import com.me.infinity.loop.features.gui.components.items.buttons.ModuleButton;
+import com.me.infinity.loop.features.gui.font.FontRender;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;

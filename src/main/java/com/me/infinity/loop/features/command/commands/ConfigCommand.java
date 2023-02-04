@@ -16,13 +16,13 @@ public class ConfigCommand extends Command {
 
     public void execute(String[] commands) {
         if (commands.length == 1) {
-            sendMessage("You`ll find the config files in your gameProfile directory under oyvey/config");
+            sendMessage("You`ll find the config files in your gameProfile directory under loop/config");
             return;
         }
         if (commands.length == 2)
             if ("list".equals(commands[0])) {
                 String configs = "Configs: ";
-                File file = new File("oyvey/");
+                File file = new File("loop/");
                 List<File> directories = Arrays.stream(file.listFiles()).filter(File::isDirectory).filter(f -> !f.getName().equals("util")).collect(Collectors.toList());
                 StringBuilder builder = new StringBuilder(configs);
                 for (File file1 : directories)
