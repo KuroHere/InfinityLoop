@@ -31,7 +31,7 @@ public class InfinityLoopGui
         INSTANCE = new InfinityLoopGui();
     }
 
-    private final ArrayList<com.me.infinity.loop.features.gui.components.Component> components = new ArrayList();
+    private final ArrayList<Component> components = new ArrayList();
 
     public InfinityLoopGui() {
         this.setInstance();
@@ -56,7 +56,7 @@ public class InfinityLoopGui
     private void load() {
         int x = -85;
         for (final Module.Category category : Loop.moduleManager.getCategories()) {
-            this.components.add(new com.me.infinity.loop.features.gui.components.Component(category.getName(), x += 92, 27, true) {
+            this.components.add(new Component(category.getName(), x += 92, 27, true) {
 
                 @Override
                 public void setupItems() {

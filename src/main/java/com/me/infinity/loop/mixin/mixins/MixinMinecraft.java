@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 import static com.me.infinity.loop.util.interfaces.Util.mc;
 
 @Mixin(value = {Minecraft.class})
-public abstract class MixinMinecraft implements IMinecraft {
+public abstract class MixinMinecraft {
     @Shadow
     @Nullable
     public GuiScreen currentScreen;

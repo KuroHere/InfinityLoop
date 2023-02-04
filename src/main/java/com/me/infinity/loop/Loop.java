@@ -173,7 +173,7 @@ public class Loop {
         Loop.load();
     }
 
-    /*--------------------    ONLOAD  ------------------------*/
+    /*-------------------    ONUNLOAD  -----------------------*/
 
     public static void onUnload() {
         if (!unloaded) {
