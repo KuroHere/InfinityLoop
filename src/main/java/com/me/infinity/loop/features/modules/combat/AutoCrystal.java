@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.combat;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.PacketEvent;
 import com.me.infinity.loop.event.events.Render3DEvent;
 import com.me.infinity.loop.features.modules.Module;
@@ -293,7 +293,7 @@ public class AutoCrystal
             }
             this.realTarget = this.target;
             if (AutoGG.getINSTANCE().isOn()) {
-                AutoGG autoGG = (AutoGG) Loop.moduleManager.getModuleByName("AutoGG");
+                AutoGG autoGG = (AutoGG) InfinityLoop.moduleManager.getModuleByName("AutoGG");
                 autoGG.addTargetedPlayer(this.target.getName());
             }
             if (this.hotBarSlot != -1 && this.autoswitch.getValue().booleanValue() && !AutoCrystal.mc.player.isPotionActive(MobEffects.WEAKNESS)) {
@@ -419,7 +419,7 @@ public class AutoCrystal
     EntityPlayer getTarget() {
         EntityPlayer closestPlayer = null;
         for (EntityPlayer entity : AutoCrystal.mc.world.playerEntities) {
-            if (AutoCrystal.mc.player == null || AutoCrystal.mc.player.isDead || entity.isDead || entity == AutoCrystal.mc.player || Loop.friendManager.isFriend(entity.getName()) || entity.getDistance(AutoCrystal.mc.player) > 12.0f)
+            if (AutoCrystal.mc.player == null || AutoCrystal.mc.player.isDead || entity.isDead || entity == AutoCrystal.mc.player || InfinityLoop.friendManager.isFriend(entity.getName()) || entity.getDistance(AutoCrystal.mc.player) > 12.0f)
                 continue;
             this.armorTarget = false;
             for (ItemStack is : entity.getArmorInventoryList()) {

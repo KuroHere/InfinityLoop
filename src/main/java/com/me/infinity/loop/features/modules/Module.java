@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.ClientEvent;
 import com.me.infinity.loop.event.events.Render2DEvent;
 import com.me.infinity.loop.event.events.Render3DEvent;
@@ -102,7 +102,7 @@ public class Module
         this.onToggle();
         this.onEnable();
         if (HUD.getInstance().notifyToggles.getValue().booleanValue()) {
-            TextComponentString text = new TextComponentString(Loop.commandManager.getClientMessage() + " " + ChatFormatting.GREEN + this.getDisplayName() + " toggled on.");
+            TextComponentString text = new TextComponentString(InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.GREEN + this.getDisplayName() + " toggled on.");
             Module.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(text, 1);
         }
         if (this.isOn() && this.hasListener && !this.alwaysListening) {
@@ -116,7 +116,7 @@ public class Module
         }
         this.enabled.setValue(false);
         if (HUD.getInstance().notifyToggles.getValue().booleanValue()) {
-            TextComponentString text = new TextComponentString(Loop.commandManager.getClientMessage() + " " + ChatFormatting.RED + this.getDisplayName() + " toggled off.");
+            TextComponentString text = new TextComponentString(InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.RED + this.getDisplayName() + " toggled off.");
             Module.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(text, 1);
         }
         this.onToggle();
@@ -136,8 +136,8 @@ public class Module
     }
 
     public void setDisplayName(String name) {
-        Module module = Loop.moduleManager.getModuleByDisplayName(name);
-        Module originalModule = Loop.moduleManager.getModuleByName(name);
+        Module module = InfinityLoop.moduleManager.getModuleByDisplayName(name);
+        Module originalModule = InfinityLoop.moduleManager.getModuleByName(name);
         if (module == null && originalModule == null) {
             Command.sendMessage(this.getDisplayName() + ", name: " + this.getName() + ", has been renamed to: " + name);
             this.displayName.setValue(name);

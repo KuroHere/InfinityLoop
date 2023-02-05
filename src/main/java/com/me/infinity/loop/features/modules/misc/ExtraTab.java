@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.misc;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
@@ -20,7 +20,7 @@ public class ExtraTab
     public static String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn) {
         String name;
         String string = name = networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
-        if (Loop.friendManager.isFriend(name)) {
+        if (InfinityLoop.friendManager.isFriend(name)) {
             return ChatFormatting.AQUA + name;
         }
         return name;

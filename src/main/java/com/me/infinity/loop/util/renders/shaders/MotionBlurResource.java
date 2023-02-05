@@ -1,6 +1,6 @@
 package com.me.infinity.loop.util.renders.shaders;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.client.GameChanger;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.data.IMetadataSection;
@@ -13,7 +13,7 @@ import java.util.Locale;
 
 public class MotionBlurResource implements IResource {
     public InputStream getInputStream() {
-        double amount = 0.7D + Loop.moduleManager.getModuleByClass(GameChanger.class).amount.getValue() / 100.0D * 3.0D - 0.01D;
+        double amount = 0.7D + InfinityLoop.moduleManager.getModuleByClass(GameChanger.class).amount.getValue() / 100.0D * 3.0D - 0.01D;
         return IOUtils.toInputStream(String.format(Locale.ENGLISH, "{\"targets\":[\"swap\",\"previous\"],\"passes\":[{\"name\":\"phosphor\",\"intarget\":\"minecraft:main\",\"outtarget\":\"swap\",\"auxtargets\":[{\"name\":\"PrevSampler\",\"id\":\"previous\"}],\"uniforms\":[{\"name\":\"Phosphor\",\"values\":[%.2f, %.2f, %.2f]}]},{\"name\":\"blit\",\"intarget\":\"swap\",\"outtarget\":\"previous\"},{\"name\":\"blit\",\"intarget\":\"swap\",\"outtarget\":\"minecraft:main\"}]}", amount, amount, amount));
     }
 

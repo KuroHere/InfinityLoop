@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.misc;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.PacketEvent;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.player.Speedmine;
@@ -8,7 +8,6 @@ import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.manager.InventoryManager;
 import com.me.infinity.loop.util.player.EntityUtil;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,7 +24,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -102,7 +100,7 @@ public class BlockTweaks
         if (BlockTweaks.fullNullCheck()) {
             return;
         }
-        if (this.noFriendAttack.getValue().booleanValue() && event.getPacket() instanceof CPacketUseEntity && (entity = (packet = event.getPacket()).getEntityFromWorld(BlockTweaks.mc.world)) != null && Loop.friendManager.isFriend(entity.getName())) {
+        if (this.noFriendAttack.getValue().booleanValue() && event.getPacket() instanceof CPacketUseEntity && (entity = (packet = event.getPacket()).getEntityFromWorld(BlockTweaks.mc.world)) != null && InfinityLoop.friendManager.isFriend(entity.getName())) {
             event.setCanceled(true);
         }
     }

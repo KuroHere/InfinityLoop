@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.player;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.BlockEvent;
 import com.me.infinity.loop.event.events.PacketEvent;
 import com.me.infinity.loop.event.events.Render3DEvent;
@@ -19,7 +19,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSword;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
@@ -86,7 +85,7 @@ public class Speedmine
                 this.currentBlockState = null;
                 return;
             }
-            if (Speedmine.mc.player != null && this.silentSwitch.getValue().booleanValue() && this.timer.passedMs((int)(2000.0f * Loop.serverManager.getTpsFactor())) && this.getPickSlot() != -1) {
+            if (Speedmine.mc.player != null && this.silentSwitch.getValue().booleanValue() && this.timer.passedMs((int)(2000.0f * InfinityLoop.serverManager.getTpsFactor())) && this.getPickSlot() != -1) {
                 Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
             }
             if (!Speedmine.mc.world.getBlockState(this.currentPos).equals(this.currentBlockState) || Speedmine.mc.world.getBlockState(this.currentPos).getBlock() == Blocks.AIR) {
@@ -117,7 +116,7 @@ public class Speedmine
     @Override
     public void onRender3D(Render3DEvent event) {
         if (this.render.getValue().booleanValue() && this.currentPos != null) {
-            Color color = new Color(this.timer.passedMs((int)(2000.0f * Loop.serverManager.getTpsFactor())) ? 0 : 255, this.timer.passedMs((int)(2000.0f * Loop.serverManager.getTpsFactor())) ? 255 : 0, 0, 255);
+            Color color = new Color(this.timer.passedMs((int)(2000.0f * InfinityLoop.serverManager.getTpsFactor())) ? 0 : 255, this.timer.passedMs((int)(2000.0f * InfinityLoop.serverManager.getTpsFactor())) ? 255 : 0, 0, 255);
             RenderUtil.drawBoxESP(this.currentPos, color, false, color, this.lineWidth.getValue().floatValue(), this.outline.getValue(), this.box.getValue(), this.boxAlpha.getValue(), false);
         }
     }

@@ -1,6 +1,6 @@
 package com.me.infinity.loop.manager;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.modules.movement.TimerSpeed;
 
@@ -10,7 +10,7 @@ public class TimerManager
     private TimerSpeed module;
 
     public void init() {
-        this.module = Loop.moduleManager.getModuleByClass(TimerSpeed.class);
+        this.module = InfinityLoop.moduleManager.getModuleByClass(TimerSpeed.class);
     }
 
     public void unload() {

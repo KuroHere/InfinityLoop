@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.combat;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.UpdateWalkingPlayerEvent;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
@@ -48,14 +48,14 @@ public class Killaura extends Module {
             target = null;
             return;
         }
-        int wait = !this.delay.getValue().booleanValue() ? 0 : (int) (DamageUtil.getCooldownByWeapon(mc.player) * (this.tps.getValue().booleanValue() ? Loop.serverManager.getTpsFactor() : 1.0F));
+        int wait = !this.delay.getValue().booleanValue() ? 0 : (int) (DamageUtil.getCooldownByWeapon(mc.player) * (this.tps.getValue().booleanValue() ? InfinityLoop.serverManager.getTpsFactor() : 1.0F));
         if (!this.timer.passedMs(wait))
             return;
         target = getTarget();
         if (target == null)
             return;
         if (this.rotate.getValue().booleanValue())
-            Loop.rotationManager.lookAtEntity(target);
+            InfinityLoop.rotationManager.lookAtEntity(target);
         EntityUtil.attackEntity(target, this.packet.getValue().booleanValue(), true);
         this.timer.reset();
     }

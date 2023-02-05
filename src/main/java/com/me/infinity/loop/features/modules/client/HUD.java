@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.client;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.ClientEvent;
 import com.me.infinity.loop.event.events.Render2DEvent;
 import com.me.infinity.loop.util.player.EntityUtil;
@@ -117,15 +117,15 @@ public class HUD extends Module {
         if (this.arrayList.getValue().booleanValue())
             if (this.renderingUp.getValue().booleanValue()) {
                 if (this.renderingMode.getValue() == RenderingMode.ABC) {
-                    for (int k = 0; k < Loop.moduleManager.sortedModulesABC.size(); k++) {
-                        String str = Loop.moduleManager.sortedModulesABC.get(k);
+                    for (int k = 0; k < InfinityLoop.moduleManager.sortedModulesABC.size(); k++) {
+                        String str = InfinityLoop.moduleManager.sortedModulesABC.get(k);
                         this.renderer.drawString(str, (width - 2 - this.renderer.getStringWidth(str)), (2 + j * 10), (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow(counter1[0] * (Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : this.color, true);
                         j++;
                         counter1[0] = counter1[0] + 1;
                     }
                 } else {
-                    for (int k = 0; k < Loop.moduleManager.sortedModules.size(); k++) {
-                        Module module = Loop.moduleManager.sortedModules.get(k);
+                    for (int k = 0; k < InfinityLoop.moduleManager.sortedModules.size(); k++) {
+                        Module module = InfinityLoop.moduleManager.sortedModules.get(k);
                         String str = module.getDisplayName() + ChatFormatting.GRAY + ((module.getDisplayInfo() != null) ? (" [" + ChatFormatting.WHITE + module.getDisplayInfo() + ChatFormatting.GRAY + "]") : "");
                         this.renderer.drawString(str, (width - 2 - this.renderer.getStringWidth(str)), (2 + j * 10), (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow(counter1[0] * (Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : this.color, true);
                         j++;
@@ -133,15 +133,15 @@ public class HUD extends Module {
                     }
                 }
             } else if (this.renderingMode.getValue() == RenderingMode.ABC) {
-                for (int k = 0; k < Loop.moduleManager.sortedModulesABC.size(); k++) {
-                    String str = Loop.moduleManager.sortedModulesABC.get(k);
+                for (int k = 0; k < InfinityLoop.moduleManager.sortedModulesABC.size(); k++) {
+                    String str = InfinityLoop.moduleManager.sortedModulesABC.get(k);
                     j += 10;
                     this.renderer.drawString(str, (width - 2 - this.renderer.getStringWidth(str)), (height - j), (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow(counter1[0] * (Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : this.color, true);
                     counter1[0] = counter1[0] + 1;
                 }
             } else {
-                for (int k = 0; k < Loop.moduleManager.sortedModules.size(); k++) {
-                    Module module = Loop.moduleManager.sortedModules.get(k);
+                for (int k = 0; k < InfinityLoop.moduleManager.sortedModules.size(); k++) {
+                    Module module = InfinityLoop.moduleManager.sortedModules.get(k);
                     String str = module.getDisplayName() + ChatFormatting.GRAY + ((module.getDisplayInfo() != null) ? (" [" + ChatFormatting.WHITE + module.getDisplayInfo() + ChatFormatting.GRAY + "]") : "");
                     j += 10;
                     this.renderer.drawString(str, (width - 2 - this.renderer.getStringWidth(str)), (height - j), (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow(counter1[0] * (Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : this.color, true);
@@ -154,13 +154,13 @@ public class HUD extends Module {
             if (this.potions.getValue().booleanValue()) {
                 List<PotionEffect> effects = new ArrayList<>((Minecraft.getMinecraft()).player.getActivePotionEffects());
                 for (PotionEffect potionEffect : effects) {
-                    String str = Loop.potionManager.getColoredPotionString(potionEffect);
+                    String str = InfinityLoop.potionManager.getColoredPotionString(potionEffect);
                     i += 10;
                     this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (height - 2 - i), potionEffect.getPotion().getLiquidColor(), true);
                 }
             }
             if (this.speed.getValue().booleanValue()) {
-                String str = grayString + "Speed " + ChatFormatting.WHITE + Loop.speedManager.getSpeedKpH() + " km/h";
+                String str = grayString + "Speed " + ChatFormatting.WHITE + InfinityLoop.speedManager.getSpeedKpH() + " km/h";
                 i += 10;
                 this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (height - 2 - i), (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow(counter1[0] * (Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : this.color, true);
                 counter1[0] = counter1[0] + 1;
@@ -172,13 +172,13 @@ public class HUD extends Module {
                 counter1[0] = counter1[0] + 1;
             }
             if (this.tps.getValue().booleanValue()) {
-                String str = grayString + "TPS " + ChatFormatting.WHITE + Loop.serverManager.getTPS();
+                String str = grayString + "TPS " + ChatFormatting.WHITE + InfinityLoop.serverManager.getTPS();
                 i += 10;
                 this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (height - 2 - i), (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow(counter1[0] * (Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : this.color, true);
                 counter1[0] = counter1[0] + 1;
             }
             String fpsText = grayString + "FPS " + ChatFormatting.WHITE + Minecraft.debugFPS;
-            String str1 = grayString + "Ping " + ChatFormatting.WHITE + Loop.serverManager.getPing();
+            String str1 = grayString + "Ping " + ChatFormatting.WHITE + InfinityLoop.serverManager.getPing();
             if (this.renderer.getStringWidth(str1) > this.renderer.getStringWidth(fpsText)) {
                 if (this.ping.getValue().booleanValue()) {
                     i += 10;
@@ -206,12 +206,12 @@ public class HUD extends Module {
             if (this.potions.getValue().booleanValue()) {
                 List<PotionEffect> effects = new ArrayList<>((Minecraft.getMinecraft()).player.getActivePotionEffects());
                 for (PotionEffect potionEffect : effects) {
-                    String str = Loop.potionManager.getColoredPotionString(potionEffect);
+                    String str = InfinityLoop.potionManager.getColoredPotionString(potionEffect);
                     this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (2 + i++ * 10), potionEffect.getPotion().getLiquidColor(), true);
                 }
             }
             if (this.speed.getValue().booleanValue()) {
-                String str = grayString + "Speed " + ChatFormatting.WHITE + Loop.speedManager.getSpeedKpH() + " km/h";
+                String str = grayString + "Speed " + ChatFormatting.WHITE + InfinityLoop.speedManager.getSpeedKpH() + " km/h";
                 this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (2 + i++ * 10), (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow(counter1[0] * (Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : this.color, true);
                 counter1[0] = counter1[0] + 1;
             }
@@ -221,12 +221,12 @@ public class HUD extends Module {
                 counter1[0] = counter1[0] + 1;
             }
             if (this.tps.getValue().booleanValue()) {
-                String str = grayString + "TPS " + ChatFormatting.WHITE + Loop.serverManager.getTPS();
+                String str = grayString + "TPS " + ChatFormatting.WHITE + InfinityLoop.serverManager.getTPS();
                 this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (2 + i++ * 10), (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow(counter1[0] * (Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : this.color, true);
                 counter1[0] = counter1[0] + 1;
             }
             String fpsText = grayString + "FPS " + ChatFormatting.WHITE + Minecraft.debugFPS;
-            String str1 = grayString + "Ping " + ChatFormatting.WHITE + Loop.serverManager.getPing();
+            String str1 = grayString + "Ping " + ChatFormatting.WHITE + InfinityLoop.serverManager.getPing();
             if (this.renderer.getStringWidth(str1) > this.renderer.getStringWidth(fpsText)) {
                 if (this.ping.getValue().booleanValue()) {
                     this.renderer.drawString(str1, (width - this.renderer.getStringWidth(str1) - 2), (2 + i++ * 10), (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow(counter1[0] * (Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : this.color, true);
@@ -256,7 +256,7 @@ public class HUD extends Module {
         int hposZ = (int) (mc.player.posZ * nether);
         i = (mc.currentScreen instanceof net.minecraft.client.gui.GuiChat) ? 14 : 0;
         String coordinates = ChatFormatting.WHITE + "XYZ " + ChatFormatting.RESET + (inHell ? (posX + ", " + posY + ", " + posZ + ChatFormatting.WHITE + " [" + ChatFormatting.RESET + hposX + ", " + hposZ + ChatFormatting.WHITE + "]" + ChatFormatting.RESET) : (posX + ", " + posY + ", " + posZ + ChatFormatting.WHITE + " [" + ChatFormatting.RESET + hposX + ", " + hposZ + ChatFormatting.WHITE + "]"));
-        String direction = this.direction.getValue().booleanValue() ? Loop.rotationManager.getDirection4D(false) : "";
+        String direction = this.direction.getValue().booleanValue() ? InfinityLoop.rotationManager.getDirection4D(false) : "";
         String coords = this.coords.getValue().booleanValue() ? coordinates : "";
         i += 10;
         if ((Colors.getInstance()).rainbow.getValue().booleanValue()) {
@@ -325,8 +325,8 @@ public class HUD extends Module {
 
     public void renderLag() {
         int width = this.renderer.scaledWidth;
-        if (Loop.serverManager.isServerNotResponding()) {
-            String text = ChatFormatting.RED + "Server not responding " + MathUtil.round((float) Loop.serverManager.serverRespondingTime() / 1000.0F, 1) + "s.";
+        if (InfinityLoop.serverManager.isServerNotResponding()) {
+            String text = ChatFormatting.RED + "Server not responding " + MathUtil.round((float) InfinityLoop.serverManager.serverRespondingTime() / 1000.0F, 1) + "s.";
             this.renderer.drawString(text, width / 2.0F - this.renderer.getStringWidth(text) / 2.0F + 2.0F, 20.0F, this.color, true);
         }
     }
@@ -396,14 +396,14 @@ public class HUD extends Module {
     }
 
     public void onLoad() {
-        Loop.commandManager.getClientMessage();
+        InfinityLoop.commandManager.getClientMessage();
     }
 
     @SubscribeEvent
     public void onSettingChange(ClientEvent event) {
         if (event.getStage() == 2 &&
                 equals(event.getSetting().getFeature()))
-            Loop.commandManager.getClientMessage();
+            InfinityLoop.commandManager.getClientMessage();
     }
 
     public String getCommandMessage() {

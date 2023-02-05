@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.combat;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.util.player.EntityUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
@@ -142,7 +142,7 @@ public class AutoWeb
         EntityPlayer target = null;
         double distance = Math.pow(range, 2.0) + 1.0;
         for (EntityPlayer player : AutoWeb.mc.world.playerEntities) {
-            if (EntityUtil.isntValid(player, range) || player.isInWeb || Loop.speedManager.getPlayerSpeed(player) > 30.0)
+            if (EntityUtil.isntValid(player, range) || player.isInWeb || InfinityLoop.speedManager.getPlayerSpeed(player) > 30.0)
                 continue;
             if (target == null) {
                 target = player;

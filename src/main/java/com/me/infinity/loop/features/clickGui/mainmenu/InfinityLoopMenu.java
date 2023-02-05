@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.clickGui.mainmenu;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.clickGui.font.FontRender;
 import com.me.infinity.loop.features.modules.client.MainSettings;
 import com.me.infinity.loop.util.renders.helper.RoundedShader;
@@ -19,8 +19,8 @@ public class InfinityLoopMenu extends GuiScreen
 
     public InfinityLoopMenu() {
         try {
-            if(Loop.moduleManager != null){
-                switch (Loop.moduleManager.getModuleByClass(MainSettings.class).shaderMode.getValue()){
+            if(InfinityLoop.moduleManager != null){
+                switch (InfinityLoop.moduleManager.getModuleByClass(MainSettings.class).shaderMode.getValue()){
                     case Smoke2:
                         backgroundShader = new MainMenuShader("/shaders/smoke.fsh");
                         break;
@@ -54,7 +54,7 @@ public class InfinityLoopMenu extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         ScaledResolution sr = new ScaledResolution(this.mc);
         GlStateManager.disableCull();
-        this.backgroundShader.useShader((int) (sr.getScaledWidth() * 2.0f), (int) (sr.getScaledHeight() * 2.0f), (float)mouseX, (float)mouseY, (float)(System.currentTimeMillis() - Loop.initTime) / 1000.0F);
+        this.backgroundShader.useShader((int) (sr.getScaledWidth() * 2.0f), (int) (sr.getScaledHeight() * 2.0f), (float)mouseX, (float)mouseY, (float)(System.currentTimeMillis() - InfinityLoop.initTime) / 1000.0F);
         GL11.glBegin(7);
         GL11.glVertex2f(-1.0F, -1F);
         GL11.glVertex2f(-1.0F, 1.0F);

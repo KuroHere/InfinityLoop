@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.movement;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.ClientEvent;
 import com.me.infinity.loop.event.events.MoveEvent;
 import com.me.infinity.loop.event.events.UpdateWalkingPlayerEvent;
@@ -10,7 +10,6 @@ import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.minecraft.BlockUtil;
 import com.me.infinity.loop.util.player.EntityUtil;
 import com.me.infinity.loop.util.worlds.MathUtil;
-import net.minecraft.entity.Entity;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.MovementInput;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -57,7 +56,7 @@ public class Speed
     }
 
     private boolean shouldReturn() {
-        return Loop.moduleManager.isModuleEnabled("Freecam") || Loop.moduleManager.isModuleEnabled("Phase") || Loop.moduleManager.isModuleEnabled("ElytraFlight") || Loop.moduleManager.isModuleEnabled("Strafe") || Loop.moduleManager.isModuleEnabled("Flight");
+        return InfinityLoop.moduleManager.isModuleEnabled("Freecam") || InfinityLoop.moduleManager.isModuleEnabled("Phase") || InfinityLoop.moduleManager.isModuleEnabled("ElytraFlight") || InfinityLoop.moduleManager.isModuleEnabled("Strafe") || InfinityLoop.moduleManager.isModuleEnabled("Flight");
     }
 
     @Override
@@ -168,7 +167,7 @@ public class Speed
                     this.move = 0.27895f;
                 }
                 if (this.useTimer.getValue().booleanValue()) {
-                    Loop.timerManager.setTimer(1.0f);
+                    InfinityLoop.timerManager.setTimer(1.0f);
                 }
             }
             if (Speed.mc.player.posY == this.startY) {
@@ -194,9 +193,9 @@ public class Speed
                 }
                 if (this.useTimer.getValue().booleanValue()) {
                     if (rnd) {
-                        Loop.timerManager.setTimer(1.3f);
+                        InfinityLoop.timerManager.setTimer(1.3f);
                     } else {
-                        Loop.timerManager.setTimer(1.0f);
+                        InfinityLoop.timerManager.setTimer(1.0f);
                     }
                 }
             }
@@ -283,7 +282,7 @@ public class Speed
                     this.move = 0.545f;
                 }
                 if (this.useTimer.getValue().booleanValue()) {
-                    Loop.timerManager.setTimer(1.0f);
+                    InfinityLoop.timerManager.setTimer(1.0f);
                 }
             }
             if (Speed.mc.player.posY == this.startY) {
@@ -342,9 +341,9 @@ public class Speed
                 }
                 if (this.useTimer.getValue().booleanValue()) {
                     if (rnd) {
-                        Loop.timerManager.setTimer(1.3f);
+                        InfinityLoop.timerManager.setTimer(1.3f);
                     } else {
-                        Loop.timerManager.setTimer(1.0f);
+                        InfinityLoop.timerManager.setTimer(1.0f);
                     }
                 }
             }
@@ -431,7 +430,7 @@ public class Speed
                     this.move = 0.545f;
                 }
                 if (this.useTimer.getValue().booleanValue()) {
-                    Loop.timerManager.setTimer(1.0f);
+                    InfinityLoop.timerManager.setTimer(1.0f);
                 }
             }
             if (Speed.mc.player.posY == this.startY) {
@@ -490,9 +489,9 @@ public class Speed
                 }
                 if (this.useTimer.getValue().booleanValue()) {
                     if (rnd) {
-                        Loop.timerManager.setTimer(1.3f);
+                        InfinityLoop.timerManager.setTimer(1.3f);
                     } else {
-                        Loop.timerManager.setTimer(1.0f);
+                        InfinityLoop.timerManager.setTimer(1.0f);
                     }
                 }
             }
@@ -515,7 +514,7 @@ public class Speed
             Speed.mc.player.motionY = -0.1;
         }
         this.changeY = false;
-        Loop.timerManager.setTimer(1.0f);
+        InfinityLoop.timerManager.setTimer(1.0f);
         this.highChainVal = 0.0;
         this.lowChainVal = 0.0;
         this.antiShake = false;

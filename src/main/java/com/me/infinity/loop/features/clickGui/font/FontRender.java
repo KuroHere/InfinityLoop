@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.clickGui.font;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.util.interfaces.Util;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
@@ -36,126 +36,126 @@ public class FontRender{
     // ints
     public static float drawStringWithShadow(String text, int x, int y, int color) {
         if (isCustomFontEnabled())
-            return Loop.fontRenderer.drawStringWithShadow(text, x, y, color);
+            return InfinityLoop.fontRenderer.drawStringWithShadow(text, x, y, color);
 
         return Util.mc.fontRenderer.drawStringWithShadow(text, x, y, color);
     }
 
     public static float drawString(String text, int x, int y, int color) {
         if (isCustomFontEnabled())
-            return Loop.fontRenderer.drawString(text, x, y, color);
+            return InfinityLoop.fontRenderer.drawString(text, x, y, color);
 
         return Util.mc.fontRenderer.drawString(text, x, y, color);
     }
 
     public static float drawString2(String text, int x, int y, int color) {
         if (isCustomFontEnabled())
-            return Loop.fontRenderer2.drawString(text, x, y, color);
+            return InfinityLoop.fontRenderer2.drawString(text, x, y, color);
 
         return Util.mc.fontRenderer.drawString(text, x, y, color);
     }
 
     public static float drawString3(String text, float x, float y, int color) {
-        return Loop.fontRenderer3.drawString(text, x, y, color);
+        return InfinityLoop.fontRenderer3.drawString(text, x, y, color);
     }
     public static float drawCentString3(String text, float x, float y, int color) {
-        return Loop.fontRenderer3.drawString(text, x - getStringWidth3(text) / 2f, y - getFontHeight3() / 2f , color);
+        return InfinityLoop.fontRenderer3.drawString(text, x - getStringWidth3(text) / 2f, y - getFontHeight3() / 2f , color);
     }
 
 
     public static float drawString8(String text, int x, int y, int color) {
-        return Loop.fontRenderer8.drawString(text, x, y, color);
+        return InfinityLoop.fontRenderer8.drawString(text, x, y, color);
     }
 
     public static float drawCentString8(String text, float x, float y, int color) {
-        return Loop.fontRenderer8.drawString(text, x - getStringWidth6(text) / 2f, y, color);
+        return InfinityLoop.fontRenderer8.drawString(text, x - getStringWidth6(text) / 2f, y, color);
 
     }
 
     public static float drawString4(String text, int x, int y, int color) {
         if (isCustomFontEnabled())
-            return Loop.fontRenderer4.drawString(text, x, y, color);
+            return InfinityLoop.fontRenderer4.drawString(text, x, y, color);
 
         return Util.mc.fontRenderer.drawString(text, x, y, color);
     }
     public static float drawString5(String text, float x, float y, int color) {
-        return Loop.fontRenderer5.drawString(text, x, y, color);
+        return InfinityLoop.fontRenderer5.drawString(text, x, y, color);
     }
 
 
     public static float drawString6(String text, float x, float y, int color,boolean shadow) {
-        return Loop.fontRenderer6.drawString(text, x, y, color);
+        return InfinityLoop.fontRenderer6.drawString(text, x, y, color);
     }
     public static float drawString7(String text, float x, float y, int color,boolean shadow) {
-        return Loop.fontRenderer7.drawString(text, x, y, color);
+        return InfinityLoop.fontRenderer7.drawString(text, x, y, color);
     }
 
     public static float drawCentString6(String text, float x, float y, int color) {
-        return Loop.fontRenderer6.drawString(text, x - getStringWidth6(text) / 2f, y, color);
+        return InfinityLoop.fontRenderer6.drawString(text, x - getStringWidth6(text) / 2f, y, color);
 
     }
 
     public static float drawCentString5(String text, float x, float y, int color) {
-        return Loop.fontRenderer5.drawString(text, x - getStringWidth5(text) / 2f, y, color);
+        return InfinityLoop.fontRenderer5.drawString(text, x - getStringWidth5(text) / 2f, y, color);
 
     }
 
 
     public static int getStringWidth(String str) {
         if (isCustomFontEnabled())
-            return Loop.fontRenderer.getStringWidth(str);
+            return InfinityLoop.fontRenderer.getStringWidth(str);
 
         return Util.mc.fontRenderer.getStringWidth(str);
     }
 
     public static int getStringWidth6(String str) {
-        return Loop.fontRenderer6.getStringWidth(str);
+        return InfinityLoop.fontRenderer6.getStringWidth(str);
     }
 
     public static int getStringWidth5(String str) {
-        return Loop.fontRenderer5.getStringWidth(str);
+        return InfinityLoop.fontRenderer5.getStringWidth(str);
     }
 
     public static int getStringWidth3(String str) {
-        return Loop.fontRenderer3.getStringWidth(str);
+        return InfinityLoop.fontRenderer3.getStringWidth(str);
     }
 
 
     public static int getStringWidth4(String str) {
-        return Loop.fontRenderer4.getStringWidth(str);
+        return InfinityLoop.fontRenderer4.getStringWidth(str);
     }
 
     public static int getFontHeight() {
         if (isCustomFontEnabled())
-            return Loop.fontRenderer.getHeight() + 2;
+            return InfinityLoop.fontRenderer.getHeight() + 2;
 
         return Util.mc.fontRenderer.FONT_HEIGHT;
     }
 
     public static int getFontHeight2() {
         if (isCustomFontEnabled())
-            return Loop.fontRenderer4.getHeight() + 2;
+            return InfinityLoop.fontRenderer4.getHeight() + 2;
 
         return Util.mc.fontRenderer.FONT_HEIGHT;
     }
 
     public static int getFontHeight3() {
         if (isCustomFontEnabled())
-            return Loop.fontRenderer3.getHeight();
+            return InfinityLoop.fontRenderer3.getHeight();
 
         return Util.mc.fontRenderer.FONT_HEIGHT;
     }
 
     public static int getFontHeight6() {
-        return Loop.fontRenderer6.getHeight();
+        return InfinityLoop.fontRenderer6.getHeight();
     }
 
     public static int getFontHeight8() {
-        return Loop.fontRenderer8.getHeight();
+        return InfinityLoop.fontRenderer8.getHeight();
     }
 
     public static int getFontHeight5() {
-        return Loop.fontRenderer5.getHeight() + 2;
+        return InfinityLoop.fontRenderer5.getHeight() + 2;
     }
 
 }

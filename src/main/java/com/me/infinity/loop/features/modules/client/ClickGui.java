@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.client;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.ClientEvent;
 import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
 import com.me.infinity.loop.features.modules.Module;
@@ -56,7 +56,7 @@ public class ClickGui
 
     @SubscribeEvent
     public void onSettingChange(ClientEvent event) {
-        Loop.colorManager.setColor(this.red.getPlannedValue(), this.green.getPlannedValue(), this.blue.getPlannedValue(), this.hoverAlpha.getPlannedValue());
+        InfinityLoop.colorManager.setColor(this.red.getPlannedValue(), this.green.getPlannedValue(), this.blue.getPlannedValue(), this.hoverAlpha.getPlannedValue());
     }
 
     @Override
@@ -67,9 +67,9 @@ public class ClickGui
     @Override
     public void onLoad() {
         if (this.colorSync.getValue()) {
-            Loop.colorManager.setColor(Colors.getInstance().getCurrentColor().getRed(), Colors.getInstance().getCurrentColor().getGreen(), Colors.getInstance().getCurrentColor().getBlue(), this.alpha.getValue());
+            InfinityLoop.colorManager.setColor(Colors.getInstance().getCurrentColor().getRed(), Colors.getInstance().getCurrentColor().getGreen(), Colors.getInstance().getCurrentColor().getBlue(), this.alpha.getValue());
         } else {
-            Loop.colorManager.setColor(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.hoverAlpha.getValue());
+            InfinityLoop.colorManager.setColor(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.hoverAlpha.getValue());
         }
     }
 

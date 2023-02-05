@@ -1,10 +1,9 @@
 package com.me.infinity.loop.features.clickGui.components.items.buttons;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
 import com.me.infinity.loop.features.clickGui.components.Component;
 import com.me.infinity.loop.features.clickGui.components.items.Item;
-import com.me.infinity.loop.features.clickGui.elements.ColorPickerElement;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.setting.Bind;
@@ -34,7 +33,8 @@ public class ModuleButton
             for (Setting setting : this.module.getSettings()) {
                 if (setting.getValue() instanceof Boolean && !setting.getName().equals("Enabled")) {
                     newItems.add(new BooleanButton(setting));
-                } else if (setting.getValue() instanceof ColorSetting) {
+                }
+                if (setting.getValue() instanceof ColorSetting) {
                     newItems.add(new ColorPicker(setting));
                 }
                 if (setting.getValue() instanceof Bind && !setting.getName().equalsIgnoreCase("Keybind") && !this.module.getName().equalsIgnoreCase("Hud")) {
@@ -59,14 +59,14 @@ public class ModuleButton
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         if (!this.items.isEmpty()) {
-            ClickGui gui = Loop.moduleManager.getModuleByClass(ClickGui.class);
-            Loop.textManager.drawStringWithShadow(gui.openCloseChange.getValue().booleanValue() ? (this.subOpen ? gui.close.getValue() : gui.open.getValue()) : gui.moduleButton.getValue(), this.x - 1.5f + (float) this.width - 7.4f, this.y - 2.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1);
+            ClickGui gui = InfinityLoop.moduleManager.getModuleByClass(ClickGui.class);
+            InfinityLoop.textManager.drawStringWithShadow(gui.openCloseChange.getValue().booleanValue() ? (this.subOpen ? gui.close.getValue() : gui.open.getValue()) : gui.moduleButton.getValue(), this.x - 1.5f + (float) this.width - 7.4f, this.y - 2.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1);
             if (ClickGui.getInstance().bindText.getValue().booleanValue()) {
-                Loop.textManager.drawString(this.module.getBind().toString().toUpperCase(), this.x - 1.5f + (float) this.width - 2.4f, this.y + 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, false);
+                InfinityLoop.textManager.drawString(this.module.getBind().toString().toUpperCase(), this.x - 1.5f + (float) this.width - 2.4f, this.y + 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, false);
                 }else {
             }
             if (ClickGui.getInstance().description.getValue() && this.isHovering(mouseX, mouseY)) {
-                Loop.textManager.drawStringWithShadow(this.module.getDescription(), 10.0f, 10.0f, -1);
+                InfinityLoop.textManager.drawStringWithShadow(this.module.getDescription(), 10.0f, 10.0f, -1);
             }
             if (this.subOpen) {
                 float height = 1.0f;

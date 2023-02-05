@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.command.commands;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.command.Command;
 
 public class UnloadCommand
@@ -11,7 +11,7 @@ public class UnloadCommand
 
     @Override
     public void execute(String[] commands) {
-        Loop.unload(true);
+        InfinityLoop.unload(true);
     }
 }
 

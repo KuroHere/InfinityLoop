@@ -16,11 +16,11 @@ import java.util.Objects;
 
 @Mod(modid = "loop", name = "InfinityLoop", version = "0.0.3")
 
-public class Loop {
+public class InfinityLoop {
     public static final String MODID = "loop", MODNAME = "InfinityLoop", MODVER = "0.0.3";
 
     @Mod.Instance
-    public static Loop INSTANCE;
+    public static InfinityLoop INSTANCE;
     public static long initTime;
     public static java.util.List<String> alts = new ArrayList<>();
 
@@ -88,14 +88,14 @@ public class Loop {
 
         /*------------    FONTS    ------------ */
         try {
-            fontRenderer = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(Loop.class.getResourceAsStream("/fonts/ThunderFont2.ttf"))).deriveFont( 24.f ), true, true );
-            fontRenderer2 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(Loop.class.getResourceAsStream("/fonts/ThunderFont3.ttf"))).deriveFont( 36.f ), true, true );
-            fontRenderer3 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(Loop.class.getResourceAsStream("/fonts/ThunderFont2.ttf"))).deriveFont( 18.f ), true, true );
-            fontRenderer4 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(Loop.class.getResourceAsStream("/fonts/ThunderFont2.ttf"))).deriveFont( 50.f ), true, true );
-            fontRenderer5 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(Loop.class.getResourceAsStream("/fonts/Monsterrat.ttf"))).deriveFont( 12.f ), true, true );
-            fontRenderer6 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(Loop.class.getResourceAsStream("/fonts/Monsterrat.ttf"))).deriveFont( 14.f ), true, true );
-            fontRenderer7 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(Loop.class.getResourceAsStream("/fonts/Monsterrat.ttf"))).deriveFont( 10.f ), true, true );
-            fontRenderer8 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(Loop.class.getResourceAsStream("/fonts/ThunderFont3.ttf"))).deriveFont( 62.f ), true, true );
+            fontRenderer = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(InfinityLoop.class.getResourceAsStream("/fonts/ThunderFont2.ttf"))).deriveFont( 24.f ), true, true );
+            fontRenderer2 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(InfinityLoop.class.getResourceAsStream("/fonts/ThunderFont3.ttf"))).deriveFont( 36.f ), true, true );
+            fontRenderer3 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(InfinityLoop.class.getResourceAsStream("/fonts/ThunderFont2.ttf"))).deriveFont( 18.f ), true, true );
+            fontRenderer4 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(InfinityLoop.class.getResourceAsStream("/fonts/ThunderFont2.ttf"))).deriveFont( 50.f ), true, true );
+            fontRenderer5 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(InfinityLoop.class.getResourceAsStream("/fonts/Monsterrat.ttf"))).deriveFont( 12.f ), true, true );
+            fontRenderer6 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(InfinityLoop.class.getResourceAsStream("/fonts/Monsterrat.ttf"))).deriveFont( 14.f ), true, true );
+            fontRenderer7 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(InfinityLoop.class.getResourceAsStream("/fonts/Monsterrat.ttf"))).deriveFont( 10.f ), true, true );
+            fontRenderer8 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(InfinityLoop.class.getResourceAsStream("/fonts/ThunderFont3.ttf"))).deriveFont( 62.f ), true, true );
         } catch ( Exception e ) {
             e.printStackTrace( );
         }
@@ -145,7 +145,7 @@ public class Loop {
             reloadManager.init(commandManager != null ? commandManager.getPrefix() : "-");
         }
         ConfigManager.saveAlts();
-        Loop.onUnload();
+        InfinityLoop.onUnload();
         fontRenderer = null;
         eventManager = null;
         friendManager = null;
@@ -169,8 +169,8 @@ public class Loop {
     /*--------------------    RELOAD  ------------------------*/
 
     public static void reload() {
-        Loop.unload(false);
-        Loop.load();
+        InfinityLoop.unload(false);
+        InfinityLoop.load();
     }
 
     /*-------------------    ONUNLOAD  -----------------------*/
@@ -179,7 +179,7 @@ public class Loop {
         if (!unloaded) {
             eventManager.onUnload();
             moduleManager.onUnload();
-            configManager.saveConfig(Loop.configManager.config.replaceFirst("loop/", ""));
+            configManager.saveConfig(InfinityLoop.configManager.config.replaceFirst("loop/", ""));
             moduleManager.onUnloadPost();
             timerManager.unload();
             unloaded = true;
@@ -198,7 +198,7 @@ public class Loop {
     public void init(FMLInitializationEvent event) {
         Display.setTitle("InfinityLoop Client");
         initTime = System.currentTimeMillis();
-        Loop.load();
+        InfinityLoop.load();
     }
 
     static {

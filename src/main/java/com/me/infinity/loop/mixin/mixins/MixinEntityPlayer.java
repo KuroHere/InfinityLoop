@@ -1,6 +1,6 @@
 package com.me.infinity.loop.mixin.mixins;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.mojang.authlib.GameProfile;
 import com.me.infinity.loop.features.modules.player.TpsSync;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,7 +22,7 @@ public abstract class MixinEntityPlayer
     @Inject(method={"getCooldownPeriod"}, at={@At(value="HEAD")}, cancellable=true)
     private void getCooldownPeriodHook(CallbackInfoReturnable<Float> callbackInfoReturnable) {
         if (TpsSync.getInstance().isOn() && TpsSync.getInstance().attack.getValue().booleanValue()) {
-            callbackInfoReturnable.setReturnValue(Float.valueOf((float)(1.0 / ((EntityPlayer)EntityPlayer.class.cast((Object)this)).getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getBaseValue() * 20.0 * (double)Loop.serverManager.getTpsFactor())));
+            callbackInfoReturnable.setReturnValue(Float.valueOf((float)(1.0 / ((EntityPlayer)EntityPlayer.class.cast((Object)this)).getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getBaseValue() * 20.0 * (double) InfinityLoop.serverManager.getTpsFactor())));
         }
     }
 }

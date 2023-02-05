@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.clickGui;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.clickGui.components.Component;
 import com.me.infinity.loop.features.clickGui.components.items.Item;
@@ -55,12 +55,12 @@ public class InfinityLoopGui
 
     private void load() {
         int x = -85;
-        for (final Module.Category category : Loop.moduleManager.getCategories()) {
+        for (final Module.Category category : InfinityLoop.moduleManager.getCategories()) {
             this.components.add(new Component(category.getName(), x += 92, 27, true) {
 
                 @Override
                 public void setupItems() {
-                    Loop.moduleManager.getModulesByCategory(category).forEach(module -> {
+                    InfinityLoop.moduleManager.getModulesByCategory(category).forEach(module -> {
                         if (!module.hidden) {
                             this.addButton(new ModuleButton(module));
                         }
@@ -115,8 +115,8 @@ public class InfinityLoopGui
         RenderUtil.drawRect(0, 0, sr.getScaledWidth(), 20, new Color(15,15,15,255).getRGB());
         String time = ChatFormatting.WHITE + (new SimpleDateFormat("h:mm a")).format(new Date());
         String date = ChatFormatting.WHITE + (new SimpleDateFormat("d/m/y")).format(new Date());
-        Loop.textManager.drawStringWithShadow(time , 5, 1, 0);
-        Loop.textManager.drawStringWithShadow(date, 5, 12, 0);
+        InfinityLoop.textManager.drawStringWithShadow(time , 5, 1, 0);
+        InfinityLoop.textManager.drawStringWithShadow(date, 5, 12, 0);
     }
 
     public void mouseClicked(int mouseX, int mouseY, int clickedButton) {

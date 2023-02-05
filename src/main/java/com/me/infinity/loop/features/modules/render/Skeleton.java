@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.render;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.Render3DEvent;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.client.ClickGui;
@@ -65,7 +65,7 @@ public class Skeleton
             GL11.glPushMatrix();
             GL11.glEnable(2848);
             GL11.glLineWidth(this.lineWidth.getValue().floatValue());
-            if (Loop.friendManager.isFriend(e.getName())) {
+            if (InfinityLoop.friendManager.isFriend(e.getName())) {
                 GlStateManager.color(0.0f, 191.0f, 230.0f, (float) this.alpha.getValue().intValue());
             } else {
                 GlStateManager.color((float) ClickGui.getInstance().red.getValue().intValue() / 255.0f, (float) ClickGui.getInstance().green.getValue().intValue() / 255.0f, (float) ClickGui.getInstance().blue.getValue().intValue() / 255.0f, (float) this.alpha.getValue().intValue());

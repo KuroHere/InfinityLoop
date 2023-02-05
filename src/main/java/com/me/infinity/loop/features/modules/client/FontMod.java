@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.client;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.ClientEvent;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
@@ -64,7 +64,7 @@ public class FontMod
     @Override
     public void onTick() {
         if (this.reloadFont) {
-            Loop.textManager.init(false);
+            InfinityLoop.textManager.init(false);
             this.reloadFont = false;
         }
     }

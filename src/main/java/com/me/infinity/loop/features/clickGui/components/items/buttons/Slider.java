@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.clickGui.components.items.buttons;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.setting.Setting;
 import com.mojang.realmsclient.gui.ChatFormatting;
@@ -31,8 +31,8 @@ public class Slider
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.dragSetting(mouseX, mouseY);
         RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 7.4f, this.y + (float) this.height - 2.5f, !this.isHovering(mouseX, mouseY) ? new Color(0xE6282828, true).getRGB() : new Color(0xFF1E1E1E, true).getRGB());
-        RenderUtil.drawRect(this.x, this.y, ((Number) this.setting.getValue()).floatValue() <= this.min.floatValue() ? this.x : this.x + ((float) this.width + 7.4f) * this.partialMultiplier(), this.y + (float) this.height - 2.5f, !this.isHovering(mouseX, mouseY) ? Loop.colorManager.getColorWithAlpha(Loop.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue()) : Loop.colorManager.getColorWithAlpha(Loop.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue()));
-        Loop.textManager.drawStringWithShadow(this.getName() + " " + ChatFormatting.GRAY + (this.setting.getValue() instanceof Float ? this.setting.getValue() : Double.valueOf(((Number) this.setting.getValue()).doubleValue())), this.x + 2.3f, this.y - 2.7f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1);
+        RenderUtil.drawRect(this.x, this.y, ((Number) this.setting.getValue()).floatValue() <= this.min.floatValue() ? this.x : this.x + ((float) this.width + 7.4f) * this.partialMultiplier(), this.y + (float) this.height - 2.5f, !this.isHovering(mouseX, mouseY) ? InfinityLoop.colorManager.getColorWithAlpha(InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue()) : InfinityLoop.colorManager.getColorWithAlpha(InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue()));
+        InfinityLoop.textManager.drawStringWithShadow(this.getName() + " " + ChatFormatting.GRAY + (this.setting.getValue() instanceof Float ? this.setting.getValue() : Double.valueOf(((Number) this.setting.getValue()).doubleValue())), this.x + 2.3f, this.y - 2.7f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1);
     }
 
     @Override

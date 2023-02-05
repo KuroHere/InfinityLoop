@@ -1,6 +1,6 @@
 package com.me.infinity.loop.util.renders.shaders;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.util.interfaces.Nameable;
 import org.lwjgl.opengl.GL11;
 
@@ -56,7 +56,7 @@ public abstract class Shader implements Nameable
         }
         catch (IOException | NullPointerException e)
         {
-            Loop.getLogger().error("Shader " + name + " failed to read.");
+            InfinityLoop.getLogger().error("Shader " + name + " failed to read.");
             e.printStackTrace();
             return;
         }
@@ -99,13 +99,13 @@ public abstract class Shader implements Nameable
 
         if (glGetShaderi(vertex, GL_COMPILE_STATUS) == GL11.GL_FALSE)
         {
-            Loop.getLogger().error("Shader " + name + "'s vertex shader failed to compile! Reason: " + glGetShaderInfoLog(vertex, 1024));
+            InfinityLoop.getLogger().error("Shader " + name + "'s vertex shader failed to compile! Reason: " + glGetShaderInfoLog(vertex, 1024));
             return;
         }
 
         if (glGetShaderi(vertex, GL_COMPILE_STATUS) == GL11.GL_FALSE)
         {
-            Loop.getLogger().error("Shader " + name + "'s fragment shader failed to compile! Reason: " + glGetShaderInfoLog(fragment, 1024));
+            InfinityLoop.getLogger().error("Shader " + name + "'s fragment shader failed to compile! Reason: " + glGetShaderInfoLog(fragment, 1024));
             return;
         }
 
@@ -116,7 +116,7 @@ public abstract class Shader implements Nameable
 
         if (glGetProgrami(program, GL_LINK_STATUS) == GL11.GL_FALSE)
         {
-            Loop.getLogger().error("Shader " + name + "failed to link! Reason: " + glGetProgramInfoLog(fragment, 1024));
+            InfinityLoop.getLogger().error("Shader " + name + "failed to link! Reason: " + glGetProgramInfoLog(fragment, 1024));
             return;
         }
 
@@ -127,7 +127,7 @@ public abstract class Shader implements Nameable
 
         if (glGetProgrami(program, GL_VALIDATE_STATUS) == GL11.GL_FALSE)
         {
-            Loop.getLogger().error("Shader " + name + "failed to validate! Reason: " + glGetProgramInfoLog(fragment, 1024));
+            InfinityLoop.getLogger().error("Shader " + name + "failed to validate! Reason: " + glGetProgramInfoLog(fragment, 1024));
             return;
         }
 

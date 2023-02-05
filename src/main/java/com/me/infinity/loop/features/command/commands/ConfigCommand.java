@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.command.commands;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 
@@ -35,12 +35,12 @@ public class ConfigCommand extends Command {
         if (commands.length >= 3) {
             switch (commands[0]) {
                 case "save":
-                    Loop.configManager.saveConfig(commands[1]);
+                    InfinityLoop.configManager.saveConfig(commands[1]);
                     sendMessage(ChatFormatting.GREEN + "Config '" + commands[1] + "' has been saved.");
                     return;
                 case "load":
-                    if (Loop.configManager.configExists(commands[1])) {
-                        Loop.configManager.loadConfig(commands[1]);
+                    if (InfinityLoop.configManager.configExists(commands[1])) {
+                        InfinityLoop.configManager.loadConfig(commands[1]);
                         sendMessage(ChatFormatting.GREEN + "Config '" + commands[1] + "' has been loaded.");
                     } else {
                         sendMessage(ChatFormatting.RED + "Config '" + commands[1] + "' does not exist.");

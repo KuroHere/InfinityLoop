@@ -1,7 +1,7 @@
 package com.me.infinity.loop.manager;
 
 import com.google.common.base.Strings;
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.*;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.Feature;
@@ -20,13 +20,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
 import net.minecraft.network.play.server.SPacketTimeUpdate;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -75,14 +73,14 @@ public class EventManager extends Feature {
     @SubscribeEvent
     public void onUpdate(LivingEvent.LivingUpdateEvent event) {
         if (!fullNullCheck() && (event.getEntity().getEntityWorld()).isRemote && event.getEntityLiving().equals(mc.player)) {
-            Loop.inventoryManager.update();
-            Loop.holeManager.update();
-            Loop.moduleManager.onUpdate();
-            Loop.timerManager.update();
+            InfinityLoop.inventoryManager.update();
+            InfinityLoop.holeManager.update();
+            InfinityLoop.moduleManager.onUpdate();
+            InfinityLoop.timerManager.update();
             if ((HUD.getInstance()).renderingMode.getValue() == HUD.RenderingMode.Length) {
-                Loop.moduleManager.sortModules(true);
+                InfinityLoop.moduleManager.sortModules(true);
             } else {
-                Loop.moduleManager.sortModulesABC();
+                InfinityLoop.moduleManager.sortModulesABC();
             }
         }
     }
@@ -90,19 +88,19 @@ public class EventManager extends Feature {
     @SubscribeEvent
     public void onClientConnect(FMLNetworkEvent.ClientConnectedToServerEvent event) {
         this.logoutTimer.reset();
-        Loop.moduleManager.onLogin();
+        InfinityLoop.moduleManager.onLogin();
     }
 
     @SubscribeEvent
     public void onClientDisconnect(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
-        Loop.moduleManager.onLogout();
+        InfinityLoop.moduleManager.onLogout();
     }
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (fullNullCheck())
             return;
-        Loop.moduleManager.onTick();
+        InfinityLoop.moduleManager.onTick();
         for (EntityPlayer player : mc.world.playerEntities) {
             if (player == null || player.getHealth() > 0.0F)
                 continue;
@@ -116,13 +114,13 @@ public class EventManager extends Feature {
         if (fullNullCheck())
             return;
         if (event.getStage() == 0) {
-            Loop.speedManager.updateValues();
-            Loop.rotationManager.updateRotations();
-            Loop.positionManager.updatePosition();
+            InfinityLoop.speedManager.updateValues();
+            InfinityLoop.rotationManager.updateRotations();
+            InfinityLoop.positionManager.updatePosition();
         }
         if (event.getStage() == 1) {
-            Loop.rotationManager.restoreRotations();
-            Loop.positionManager.restorePosition();
+            InfinityLoop.rotationManager.restoreRotations();
+            InfinityLoop.positionManager.restorePosition();
         }
     }
 
@@ -131,14 +129,14 @@ public class EventManager extends Feature {
         if (event.getStage() != 0) {
             return;
         }
-        Loop.serverManager.onPacketReceived();
+        InfinityLoop.serverManager.onPacketReceived();
         if (event.getPacket() instanceof SPacketEntityStatus) {
             final SPacketEntityStatus packet = event.getPacket();
             if (packet.getOpCode() == 35 && packet.getEntity(EventManager.mc.world) instanceof EntityPlayer) {
                 final EntityPlayer player = (EntityPlayer)packet.getEntity(EventManager.mc.world);
                 MinecraftForge.EVENT_BUS.post(new TotemPopEvent(player));
                 PopCounter.getInstance().onTotemPop(player);
-                Loop.positionManager.onTotemPop(player);
+                InfinityLoop.positionManager.onTotemPop(player);
             }
         }
         else if (event.getPacket() instanceof SPacketPlayerListItem && !Feature.fullNullCheck() && this.logoutTimer.passedS(1.0)) {
@@ -175,7 +173,7 @@ public class EventManager extends Feature {
             });
         }
         else if (event.getPacket() instanceof SPacketTimeUpdate) {
-            Loop.serverManager.update();
+            InfinityLoop.serverManager.update();
         }
     }
 
@@ -201,7 +199,7 @@ public class EventManager extends Feature {
         GL11.glGetInteger(2978, viewPort);
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         projection.updateMatrices(viewPort, modelView, projectionPort, (double)scaledResolution.getScaledWidth() / (double) Minecraft.getMinecraft().displayWidth, (double)scaledResolution.getScaledHeight() / (double)Minecraft.getMinecraft().displayHeight);
-        Loop.moduleManager.onRender3D(render3dEvent);
+        InfinityLoop.moduleManager.onRender3D(render3dEvent);
         GlStateManager.glLineWidth(1.0f);
         GlStateManager.shadeModel(7424);
         GlStateManager.disableBlend();
@@ -220,7 +218,7 @@ public class EventManager extends Feature {
     @SubscribeEvent
     public void renderHUD(RenderGameOverlayEvent.Post event) {
         if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR)
-            Loop.textManager.updateResolution();
+            InfinityLoop.textManager.updateResolution();
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -228,7 +226,7 @@ public class EventManager extends Feature {
         if (event.getType().equals(RenderGameOverlayEvent.ElementType.TEXT)) {
             ScaledResolution resolution = new ScaledResolution(mc);
             Render2DEvent render2DEvent = new Render2DEvent(event.getPartialTicks(), resolution);
-            Loop.moduleManager.onRender2D(render2DEvent);
+            InfinityLoop.moduleManager.onRender2D(render2DEvent);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
@@ -236,7 +234,7 @@ public class EventManager extends Feature {
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (Keyboard.getEventKeyState())
-            Loop.moduleManager.onKeyPressed(Keyboard.getEventKey());
+            InfinityLoop.moduleManager.onKeyPressed(Keyboard.getEventKey());
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -246,7 +244,7 @@ public class EventManager extends Feature {
             try {
                 mc.ingameGUI.getChatGUI().addToSentMessages(event.getMessage());
                 if (event.getMessage().length() > 1) {
-                    Loop.commandManager.executeCommand(event.getMessage().substring(Command.getCommandPrefix().length() - 1));
+                    InfinityLoop.commandManager.executeCommand(event.getMessage().substring(Command.getCommandPrefix().length() - 1));
                 } else {
                     Command.sendMessage("Please enter a command.");
                 }

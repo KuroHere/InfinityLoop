@@ -1,7 +1,7 @@
 package com.me.infinity.loop.util.minecraft;
 
 import com.google.common.util.concurrent.AtomicDouble;
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.util.interfaces.Util;
 import com.me.infinity.loop.util.player.EntityUtil;
@@ -15,7 +15,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.util.EnumFacing;
@@ -198,7 +197,7 @@ public class BlockUtil
             sneaking = true;
         }
         if (rotate) {
-            Loop.rotationManager.lookAtVec3d(hitVec);
+            InfinityLoop.rotationManager.lookAtVec3d(hitVec);
         }
         BlockUtil.rightClickBlock(neighbour, hitVec, hand, opposite, packet);
         BlockUtil.mc.player.swingArm(EnumHand.MAIN_HAND);

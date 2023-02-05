@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.client;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.renders.ColorUtil;
@@ -51,7 +51,7 @@ public class Colors extends Module {
             tempHue += 0.0013071896f;
         }
         if (ClickGui.getInstance().colorSync.getValue()) {
-            Loop.colorManager.setColor(INSTANCE.getCurrentColor().getRed(), INSTANCE.getCurrentColor().getGreen(), INSTANCE.getCurrentColor().getBlue(), ClickGui.getInstance().hoverAlpha.getValue());
+            InfinityLoop.colorManager.setColor(INSTANCE.getCurrentColor().getRed(), INSTANCE.getCurrentColor().getGreen(), INSTANCE.getCurrentColor().getBlue(), ClickGui.getInstance().hoverAlpha.getValue());
         }
     }
 

@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.combat;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.minecraft.InventoryUtil;
@@ -63,7 +63,7 @@ public class AutoArmor
             int slot3;
             ItemStack chest;
             int slot4;
-            if (this.mendingTakeOff.getValue().booleanValue() && InventoryUtil.holdingItem(ItemExpBottle.class) && AutoArmor.mc.gameSettings.keyBindUseItem.isKeyDown() && AutoArmor.mc.world.playerEntities.stream().noneMatch(e -> e != AutoArmor.mc.player && !Loop.friendManager.isFriend(e.getName()) && AutoArmor.mc.player.getDistance(e) <= (float) this.closestEnemy.getValue().intValue()) && !this.flag) {
+            if (this.mendingTakeOff.getValue().booleanValue() && InventoryUtil.holdingItem(ItemExpBottle.class) && AutoArmor.mc.gameSettings.keyBindUseItem.isKeyDown() && AutoArmor.mc.world.playerEntities.stream().noneMatch(e -> e != AutoArmor.mc.player && !InfinityLoop.friendManager.isFriend(e.getName()) && AutoArmor.mc.player.getDistance(e) <= (float) this.closestEnemy.getValue().intValue()) && !this.flag) {
                 int goods;
                 int dam;
                 int takeOff = 0;
@@ -131,7 +131,7 @@ public class AutoArmor
                 this.getSlotOn(8, slot);
             }
         }
-        if (this.timer.passedMs((int) ((float) this.delay.getValue().intValue() * Loop.serverManager.getTpsFactor()))) {
+        if (this.timer.passedMs((int) ((float) this.delay.getValue().intValue() * InfinityLoop.serverManager.getTpsFactor()))) {
             if (!this.taskList.isEmpty()) {
                 for (int i = 0; i < this.actions.getValue(); ++i) {
                     InventoryUtil.Task task = this.taskList.poll();

@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.movement;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.worlds.Timer;
@@ -58,7 +58,7 @@ public class TimerSpeed
     @Override
     public void onDisable() {
         this.speed = 1.0f;
-        Loop.timerManager.reset();
+        InfinityLoop.timerManager.reset();
         this.fast = false;
     }
 

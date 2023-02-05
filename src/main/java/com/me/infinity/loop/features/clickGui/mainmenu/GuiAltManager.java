@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.clickGui.mainmenu;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.clickGui.font.FontRender;
 import com.me.infinity.loop.features.modules.client.MainSettings;
 import com.me.infinity.loop.util.LoopUtil;
@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.me.infinity.loop.Loop.alts;
+import static com.me.infinity.loop.InfinityLoop.alts;
 import static com.me.infinity.loop.features.clickGui.components.items.buttons.StringButton.removeLastChar;
 
 public class GuiAltManager extends GuiScreen
@@ -33,8 +33,8 @@ public class GuiAltManager extends GuiScreen
 
     public GuiAltManager() {
         try {
-            if(Loop.moduleManager != null){
-                switch (Loop.moduleManager.getModuleByClass(MainSettings.class).shaderMode.getValue()) {
+            if(InfinityLoop.moduleManager != null){
+                switch (InfinityLoop.moduleManager.getModuleByClass(MainSettings.class).shaderMode.getValue()) {
                     case Smoke2:
                         backgroundShader = new MainMenuShader("/shaders/smoke.fsh");
                         break;
@@ -75,7 +75,7 @@ public class GuiAltManager extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         ScaledResolution sr = new ScaledResolution(this.mc);
         GlStateManager.disableCull();
-        this.backgroundShader.useShader(sr.getScaledWidth() * 2, sr.getScaledHeight() * 2, (float)mouseX, (float)mouseY, (float)(System.currentTimeMillis() - Loop.initTime) / 1000.0F);
+        this.backgroundShader.useShader(sr.getScaledWidth() * 2, sr.getScaledHeight() * 2, (float)mouseX, (float)mouseY, (float)(System.currentTimeMillis() - InfinityLoop.initTime) / 1000.0F);
         checkMouseWheel();
 
         GL11.glBegin(7);

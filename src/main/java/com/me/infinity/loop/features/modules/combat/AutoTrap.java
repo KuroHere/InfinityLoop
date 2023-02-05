@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.combat;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.util.player.EntityUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
@@ -148,7 +148,7 @@ public class AutoTrap
         EntityPlayer target = null;
         double distance = Math.pow(range, 2.0) + 1.0;
         for (EntityPlayer player : AutoTrap.mc.world.playerEntities) {
-            if (EntityUtil.isntValid(player, range) || trapped && EntityUtil.isTrapped(player, this.antiScaffold.getValue(), this.antiStep.getValue(), false, false, false) || Loop.speedManager.getPlayerSpeed(player) > 10.0)
+            if (EntityUtil.isntValid(player, range) || trapped && EntityUtil.isTrapped(player, this.antiScaffold.getValue(), this.antiStep.getValue(), false, false, false) || InfinityLoop.speedManager.getPlayerSpeed(player) > 10.0)
                 continue;
             if (target == null) {
                 target = player;

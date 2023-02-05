@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.render;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.Render3DEvent;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
@@ -12,8 +12,6 @@ import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
-
-import static com.me.infinity.loop.util.renders.ColorUtil.getColor;
 
 public class BreadCrumbs extends Module {
 
@@ -146,7 +144,7 @@ public class BreadCrumbs extends Module {
                 alpha = 0;
                 arrayList.remove(this);
             }
-            this.alpha -= lAlpha.getValue() / fadeSpeed.getValue() * Loop.getFpsManagement().getFrametime();
+            this.alpha -= lAlpha.getValue() / fadeSpeed.getValue() * InfinityLoop.getFpsManagement().getFrametime();
         }
 
     }

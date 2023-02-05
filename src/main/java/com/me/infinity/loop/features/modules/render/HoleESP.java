@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.render;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.Render3DEvent;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
@@ -105,11 +105,11 @@ public class HoleESP
         if (!this.pulseAlpha.getValue().booleanValue() || !this.pulsing) {
             this.currentAlpha = 0;
         }
-        for (BlockPos pos : Loop.holeManager.getSortedHoles()) {
+        for (BlockPos pos : InfinityLoop.holeManager.getSortedHoles()) {
             if (drawnHoles >= this.holes.getValue()) break;
             if (pos.equals(new BlockPos(HoleESP.mc.player.posX, HoleESP.mc.player.posY, HoleESP.mc.player.posZ)) && !this.ownHole.getValue().booleanValue() || !BlockUtil.isPosInFov(pos).booleanValue() && this.fov.getValue().booleanValue())
                 continue;
-            if (this.safeColor.getValue().booleanValue() && Loop.holeManager.isSafe(pos)) {
+            if (this.safeColor.getValue().booleanValue() && InfinityLoop.holeManager.isSafe(pos)) {
                 if (this.x.getValue()) {
                     RenderUtil.drawBoundingBoxBottomBlockPosXInMiddle(pos, this.lineWidth.getValue(), new Color(this.safeRed.getValue(), this.safeGreen.getValue(), this.safeBlue.getValue(), this.safeAlpha.getValue()));
                     RenderUtil.drawBoundingBoxBottomBlockPosXInMiddle2(pos, this.lineWidth.getValue(), new Color(this.safeRed.getValue(), this.safeGreen.getValue(), this.safeBlue.getValue(), this.safeAlpha.getValue()));

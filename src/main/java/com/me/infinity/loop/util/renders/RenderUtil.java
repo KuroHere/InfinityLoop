@@ -1,6 +1,6 @@
 package com.me.infinity.loop.util.renders;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.util.interfaces.IShaderGroup;
 import com.me.infinity.loop.util.player.EntityUtil;
 import com.me.infinity.loop.util.interfaces.Util;
@@ -24,7 +24,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.EXTFramebufferObject;
@@ -1101,8 +1100,8 @@ public class RenderUtil
         GlStateManager.pushMatrix();
         RenderUtil.glBillboardDistanceScaled((float) pos.getX() + 0.5f, (float) pos.getY() + 0.5f, (float) pos.getZ() + 0.5f, RenderUtil.mc.player, 1.0f);
         GlStateManager.disableDepth();
-        GlStateManager.translate(-((double) Loop.textManager.getStringWidth((text)) / 2.0), 0.0, 0.0);
-        Loop.textManager.drawStringWithShadow((text), 0.0f, 0.0f, -5592406);
+        GlStateManager.translate(-((double) InfinityLoop.textManager.getStringWidth((text)) / 2.0), 0.0, 0.0);
+        InfinityLoop.textManager.drawStringWithShadow((text), 0.0f, 0.0f, -5592406);
         GlStateManager.popMatrix();
     }
 

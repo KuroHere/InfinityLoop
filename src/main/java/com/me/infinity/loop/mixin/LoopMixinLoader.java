@@ -1,6 +1,6 @@
 package com.me.infinity.loop.mixin;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.MixinEnvironment;
@@ -13,11 +13,11 @@ public class LoopMixinLoader
     private static boolean isObfuscatedEnvironment = false;
 
     public LoopMixinLoader() {
-        Loop.LOGGER.info("\n\nLoading mixins by KuroHere");
+        InfinityLoop.LOGGER.info("\n\nLoading mixins by KuroHere");
         MixinBootstrap.init();
         Mixins.addConfiguration("mixins.loop.json");
         MixinEnvironment.getDefaultEnvironment().setObfuscationContext("searge");
-        Loop.LOGGER.info(MixinEnvironment.getDefaultEnvironment().getObfuscationContext());
+        InfinityLoop.LOGGER.info(MixinEnvironment.getDefaultEnvironment().getObfuscationContext());
     }
 
     public String[] getASMTransformerClass() {

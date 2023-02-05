@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.clickGui.mainmenu;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.clickGui.font.FontRender;
 import com.me.infinity.loop.util.interfaces.Util;
 import com.me.infinity.loop.util.renders.helper.RoundedShader;
@@ -74,7 +74,7 @@ public class AltCompoment {
             GuiAltManager.clicktimer.reset();
         }
         if(isHoveringDelete(x,y)){
-            Loop.alts.remove(this.name);
+            InfinityLoop.alts.remove(this.name);
             GuiAltManager.clicktimer.reset();
         }
     }

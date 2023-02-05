@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.csgui.components;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.csgui.CSClickGui;
 import com.me.infinity.loop.features.clickGui.components.items.Item;
@@ -59,7 +59,7 @@ public class CSComponent
             Gui.drawRect(this.x, this.y + height + 2, this.x + this.width, this.y + this.height - 6, new Color(0xFFFFFF).getRGB());
             Gui.drawRect(this.x, this.y - 1, this.x + this.width, this.y + this.height - 7, Colors.getInstance().rainbow.getValue() ? ColorUtil.rainbow(Colors.getInstance().rainbowHue.getValue()).getRGB() : color);
             Gui.drawRect(this.x, this.y + height - 5, this.x + this.width, this.y + this.height - 6, new Color(0xFFFFFF).getRGB());
-            Loop.textManager.drawStringWithShadow(this.getName(), (float) this.x + 3.0f, (float) this.y - 4.0f - (float) CSClickGui.getCSGui().getTextOffset(), -1);
+            InfinityLoop.textManager.drawStringWithShadow(this.getName(), (float) this.x + 3.0f, (float) this.y - 4.0f - (float) CSClickGui.getCSGui().getTextOffset(), -1);
             if (this.open) {
                 RenderUtil.drawRect(this.x, (float) this.y + 12.5f, this.x + this.width, (float) (this.y + this.height) + totalItemHeight, 0x77000000);
                 float y = (float) (this.getY() + this.getHeight()) - 3.0f;

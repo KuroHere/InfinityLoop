@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.clickGui.components;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
 import com.me.infinity.loop.features.clickGui.components.items.Item;
@@ -60,7 +60,7 @@ public abstract class Component
         float totalItemHeight = this.open ? this.getTotalItemHeight() - 2.0f : 0.0f;
         int color = ColorUtil.toARGB(ClickGui.getInstance().topRed.getValue(), ClickGui.getInstance().topGreen.getValue(), ClickGui.getInstance().topBlue.getValue(), 255);
         Gui.drawRect(this.x, this.y - 2, this.x + this.width, this.y + this.height - 7, Colors.getInstance().rainbow.getValue() ? ColorUtil.rainbow(Colors.getInstance().rainbowHue.getValue()).getRGB() : color);
-        Loop.textManager.drawString(this.getName(), (float) this.x + 3.0f, (float) this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, false);
+        InfinityLoop.textManager.drawString(this.getName(), (float) this.x + 3.0f, (float) this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, false);
         Gui.drawRect(this.x, this.y + height - 5, this.x + this.width, this.y + this.height - 6, new Color(255, 255, 255, 255).getRGB());
         if (this.open) {
             if (ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {

@@ -1,6 +1,6 @@
 package com.me.infinity.loop.manager;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.Render2DEvent;
 import com.me.infinity.loop.event.events.Render3DEvent;
 import com.me.infinity.loop.features.modules.client.*;
@@ -288,7 +288,7 @@ public class ModuleManager
                 }
             } else {
                 for (String e : ModuleManager.this.sortedModulesABC) {
-                    Module module = Loop.moduleManager.getModuleByName(e);
+                    Module module = InfinityLoop.moduleManager.getModuleByName(e);
                     String text = module.getDisplayName() + ChatFormatting.GRAY + (module.getDisplayInfo() != null ? " [" + ChatFormatting.WHITE + module.getDisplayInfo() + ChatFormatting.GRAY + "]" : "");
                     module.offset = (float) ModuleManager.this.renderer.getStringWidth(text) / HUD.getInstance().animationHorizontalTime.getValue().floatValue();
                     module.vOffset = (float) ModuleManager.this.renderer.getFontHeight() / HUD.getInstance().animationVerticalTime.getValue().floatValue();

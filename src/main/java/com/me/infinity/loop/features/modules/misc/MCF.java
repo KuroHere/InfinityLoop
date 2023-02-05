@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.misc;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.Module;
@@ -33,11 +33,11 @@ public class MCF
         Entity entity;
         RayTraceResult result = MCF.mc.objectMouseOver;
         if (result != null && result.typeOfHit == RayTraceResult.Type.ENTITY && (entity = result.entityHit) instanceof EntityPlayer) {
-            if (Loop.friendManager.isFriend(entity.getName())) {
-                Loop.friendManager.removeFriend(entity.getName());
+            if (InfinityLoop.friendManager.isFriend(entity.getName())) {
+                InfinityLoop.friendManager.removeFriend(entity.getName());
                 Command.sendMessage(ChatFormatting.RED + entity.getName() + ChatFormatting.RED + " has been unfriended.");
             } else {
-                Loop.friendManager.addFriend(entity.getName());
+                InfinityLoop.friendManager.addFriend(entity.getName());
                 Command.sendMessage(ChatFormatting.AQUA + entity.getName() + ChatFormatting.AQUA + " has been friended.");
             }
         }

@@ -1,7 +1,7 @@
 package com.me.infinity.loop.manager;
 
 import com.google.gson.*;
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Bind;
@@ -93,7 +93,7 @@ public class ConfigManager implements Util {
                 return;
         }
 
-        Loop.LOGGER.error("Unknown Setting type for: " + feature.getName() + " : " + setting.getName());
+        InfinityLoop.LOGGER.error("Unknown Setting type for: " + feature.getName() + " : " + setting.getName());
     }
 
     private static void loadFile(JsonObject input, Feature feature) {
@@ -102,7 +102,7 @@ public class ConfigManager implements Util {
             JsonElement element = entry.getValue();
             if (feature instanceof FriendManager) {
                 try {
-                    Loop.friendManager.addFriend(new FriendManager.Friend(element.getAsString(), UUID.fromString(settingName)));
+                    InfinityLoop.friendManager.addFriend(new FriendManager.Friend(element.getAsString(), UUID.fromString(settingName)));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -130,7 +130,7 @@ public class ConfigManager implements Util {
         } else {
             this.config = "loop/config/";
         }
-        Loop.friendManager.onLoad();
+        InfinityLoop.friendManager.onLoad();
         for (Feature feature : this.features) {
             try {
                 loadSettings(feature);
@@ -151,7 +151,7 @@ public class ConfigManager implements Util {
         File path = new File(this.config);
         if (!path.exists())
             path.mkdir();
-        Loop.friendManager.saveFriends();
+        InfinityLoop.friendManager.saveFriends();
         for (Feature feature : this.features) {
             try {
                 saveSettings(feature);
@@ -190,7 +190,7 @@ public class ConfigManager implements Util {
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                     while (reader.ready()) {
                         String name = reader.readLine();
-                        Loop.alts.add(name);
+                        InfinityLoop.alts.add(name);
                     }
 
                 }
@@ -207,7 +207,7 @@ public class ConfigManager implements Util {
 
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            for (String name : Loop.alts) {
+            for (String name : InfinityLoop.alts) {
                 writer.write(name + "\n");
             }
         } catch (Exception ignored){}
@@ -255,10 +255,10 @@ public class ConfigManager implements Util {
 
     public void init() {
         this.features.addAll(ModuleManager.modules);
-        this.features.add(Loop.friendManager);
+        this.features.add(InfinityLoop.friendManager);
         String name = loadCurrentConfig();
         loadConfig(name);
-        Loop.LOGGER.info("Config loaded.");
+        InfinityLoop.LOGGER.info("Config loaded.");
     }
 
     private void loadSettings(Feature feature) throws IOException {
@@ -274,7 +274,7 @@ public class ConfigManager implements Util {
         try {
             loadFile((new JsonParser()).parse(new InputStreamReader(stream)).getAsJsonObject(), feature);
         } catch (IllegalStateException e) {
-            Loop.LOGGER.error("Bad Config File for: " + feature.getName() + ". Resetting...");
+            InfinityLoop.LOGGER.error("Bad Config File for: " + feature.getName() + ". Resetting...");
             loadFile(new JsonObject(), feature);
         }
         stream.close();

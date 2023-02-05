@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.command;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.Feature;
 import net.minecraft.util.text.ITextComponent;
@@ -27,7 +27,7 @@ public abstract class Command
     }
 
     public static void sendMessage(String message) {
-        Command.sendSilentMessage(Loop.commandManager.getClientMessage() + " " + ChatFormatting.GRAY + message);
+        Command.sendSilentMessage(InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.GRAY + message);
     }
 
     public static void sendSilentMessage(String message) {
@@ -38,7 +38,7 @@ public abstract class Command
     }
 
     public static String getCommandPrefix() {
-        return Loop.commandManager.getPrefix();
+        return InfinityLoop.commandManager.getPrefix();
     }
 
     public abstract void execute(String[] var1);

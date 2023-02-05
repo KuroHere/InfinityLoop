@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.client;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.ClientEvent;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.Module;
@@ -25,15 +25,15 @@ public class MainSettings extends Module {
     public void onSettingChange(ClientEvent event) {
         if (event.getStage() == 2 && event.getSetting().getFeature().equals(this)) {
             if (event.getSetting().equals(this.prefix)) {
-                Loop.commandManager.setPrefix(this.prefix.getPlannedValue());
-                Command.sendMessage("Prefix set to " + ChatFormatting.DARK_GRAY + Loop.commandManager.getPrefix());
+                InfinityLoop.commandManager.setPrefix(this.prefix.getPlannedValue());
+                Command.sendMessage("Prefix set to " + ChatFormatting.DARK_GRAY + InfinityLoop.commandManager.getPrefix());
             }
         }
     }
 
     @Override
     public void onLoad() {
-        Loop.commandManager.setPrefix(this.prefix.getValue());
+        InfinityLoop.commandManager.setPrefix(this.prefix.getValue());
     }
 
     public enum ShaderModeEn {

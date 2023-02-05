@@ -1,6 +1,6 @@
 package com.me.infinity.loop.manager;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.setting.shaders.SettingShader;
 import com.me.infinity.loop.features.modules.Module;
@@ -29,7 +29,7 @@ public class FileManager
     private final Map<String, SettingShader> shaders = new ConcurrentHashMap<>();
     public FileManager() {
         this.getMkDirectory(this.base, "pvp");
-        for (Module.Category category : Loop.moduleManager.getCategories()) {
+        for (Module.Category category : InfinityLoop.moduleManager.getCategories()) {
             this.getMkDirectory(this.config, category.getName());
         }
     }
@@ -101,7 +101,7 @@ public class FileManager
                 }
                 catch (IOException e)
                 {
-                    Loop.getLogger().error("Failed to shader model: " + file.getName() + "!");
+                    InfinityLoop.getLogger().error("Failed to shader model: " + file.getName() + "!");
                     e.printStackTrace();
                 }
             }

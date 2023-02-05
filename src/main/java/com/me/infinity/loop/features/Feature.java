@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
@@ -13,7 +13,7 @@ import java.util.List;
 public class Feature
         implements Util {
     public List<Setting> settings = new ArrayList<Setting>();
-    public TextManager renderer = Loop.textManager;
+    public TextManager renderer = InfinityLoop.textManager;
     private String name;
 
     public Feature() {

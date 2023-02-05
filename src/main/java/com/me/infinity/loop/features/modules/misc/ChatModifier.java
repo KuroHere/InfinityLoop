@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.modules.misc;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.PacketEvent;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
@@ -34,7 +34,7 @@ public class ChatModifier
     public void onPacketSend(PacketEvent.Send event) {
         if (event.getPacket() instanceof CPacketChatMessage) {
             String s = ((CPacketChatMessage) event.getPacket()).getMessage();
-            this.check = !s.startsWith(Loop.commandManager.getPrefix());
+            this.check = !s.startsWith(InfinityLoop.commandManager.getPrefix());
         }
     }
 }

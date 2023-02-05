@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.command.commands;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.Module;
@@ -21,7 +21,7 @@ public class BindCommand
         }
         String rkey = commands[1];
         String moduleName = commands[0];
-        Module module = Loop.moduleManager.getModuleByName(moduleName);
+        Module module = InfinityLoop.moduleManager.getModuleByName(moduleName);
         if (module == null) {
             BindCommand.sendMessage("Unknown module '" + module + "'!");
             return;

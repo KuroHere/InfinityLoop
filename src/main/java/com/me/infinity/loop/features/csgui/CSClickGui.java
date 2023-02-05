@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.csgui;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.clickGui.components.Component;
 import com.me.infinity.loop.features.clickGui.components.items.Item;
@@ -56,12 +56,12 @@ public class CSClickGui
 
     private void load() {
         int x = -85;
-        for (final Module.Category category : Loop.moduleManager.getCategories()) {
+        for (final Module.Category category : InfinityLoop.moduleManager.getCategories()) {
             this.components.add(new Component(category.getName(), x += 92, 27, true) {
 
                 @Override
                 public void setupItems() {
-                    Loop.moduleManager.getModulesByCategory(category).forEach(module -> {
+                    InfinityLoop.moduleManager.getModulesByCategory(category).forEach(module -> {
                         if (!module.hidden) {
                             this.addButton(new ModuleButton(module));
                         }

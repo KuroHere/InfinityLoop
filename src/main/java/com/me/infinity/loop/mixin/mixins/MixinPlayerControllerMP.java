@@ -1,6 +1,6 @@
 package com.me.infinity.loop.mixin.mixins;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.BlockEvent;
 import com.me.infinity.loop.event.events.ProcessRightClickBlockEvent;
 import com.me.infinity.loop.features.modules.misc.BlockTweaks;
@@ -23,7 +23,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
@@ -44,7 +43,7 @@ public class MixinPlayerControllerMP {
     }
     @Redirect(method = {"onPlayerDamageBlock"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/IBlockState;getPlayerRelativeBlockHardness(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)F"))
     public float getPlayerRelativeBlockHardnessHook(IBlockState state, EntityPlayer player, World worldIn, BlockPos pos) {
-        return state.getPlayerRelativeBlockHardness(player, worldIn, pos) * (TpsSync.getInstance().isOn() && TpsSync.getInstance().mining.getValue() ? 1.0f / Loop.serverManager.getTpsFactor() : 1.0f);
+        return state.getPlayerRelativeBlockHardness(player, worldIn, pos) * (TpsSync.getInstance().isOn() && TpsSync.getInstance().mining.getValue() ? 1.0f / InfinityLoop.serverManager.getTpsFactor() : 1.0f);
     }
 
     @Inject(method = {"clickBlock"}, at = {@At(value = "HEAD")}, cancellable = true)

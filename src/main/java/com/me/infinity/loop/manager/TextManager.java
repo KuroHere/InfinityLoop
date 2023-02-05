@@ -1,6 +1,6 @@
 package com.me.infinity.loop.manager;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.clickGui.font.CustomFont;
 import com.me.infinity.loop.features.modules.client.FontMod;
@@ -23,7 +23,7 @@ public class TextManager
     }
 
     public void init(boolean startup) {
-        FontMod cFont = Loop.moduleManager.getModuleByClass(FontMod.class);
+        FontMod cFont = InfinityLoop.moduleManager.getModuleByClass(FontMod.class);
         try {
             this.setFontRenderer(new Font(cFont.fontName.getValue(), cFont.fontStyle.getValue(), cFont.fontSize.getValue()), cFont.antiAlias.getValue(), cFont.fractionalMetrics.getValue());
         } catch (Exception exception) {
@@ -36,7 +36,7 @@ public class TextManager
     }
 
     public float drawString(String text, float x, float y, int color, boolean shadow) {
-        if (Loop.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
+        if (InfinityLoop.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
             if (shadow) {
                 this.customFont.drawStringWithShadow(text, x, y, color);
             } else {
@@ -49,14 +49,14 @@ public class TextManager
     }
 
     public int getStringWidth(String text) {
-        if (Loop.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
+        if (InfinityLoop.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
             return this.customFont.getStringWidth(text);
         }
         return TextManager.mc.fontRenderer.getStringWidth(text);
     }
 
     public int getFontHeight() {
-        if (Loop.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
+        if (InfinityLoop.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
             String text = "A";
             return this.customFont.getStringHeight(text);
         }
@@ -104,7 +104,7 @@ public class TextManager
     }
 
     public static float drawString3(String text, float x, float y, int color) {
-        return Loop.textManager.drawString(text, x, y, color);
+        return InfinityLoop.textManager.drawString(text, x, y, color);
     }
 
     public float drawString(String text, float x, float y, int color) {

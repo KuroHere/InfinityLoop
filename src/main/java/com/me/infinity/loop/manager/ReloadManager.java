@@ -1,6 +1,6 @@
 package com.me.infinity.loop.manager;
 
-import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.InfinityLoop;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.event.events.PacketEvent;
 import com.me.infinity.loop.features.Feature;
@@ -29,7 +29,7 @@ public class ReloadManager
     public void onPacketSend(PacketEvent.Send event) {
         CPacketChatMessage packet;
         if (event.getPacket() instanceof CPacketChatMessage && (packet = event.getPacket()).getMessage().startsWith(this.prefix) && packet.getMessage().contains("reload")) {
-            Loop.load();
+            InfinityLoop.load();
             event.setCanceled(true);
         }
     }
