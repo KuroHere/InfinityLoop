@@ -34,6 +34,8 @@ public class ModuleButton
             for (Setting setting : this.module.getSettings()) {
                 if (setting.getValue() instanceof Boolean && !setting.getName().equals("Enabled")) {
                     newItems.add(new BooleanButton(setting));
+                } else if (setting.getValue() instanceof ColorSetting) {
+                    newItems.add(new ColorPicker(setting));
                 }
                 if (setting.getValue() instanceof Bind && !setting.getName().equalsIgnoreCase("Keybind") && !this.module.getName().equalsIgnoreCase("Hud")) {
                     newItems.add(new BindButton(setting));

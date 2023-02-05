@@ -9,6 +9,8 @@ import com.me.infinity.loop.features.clickGui.components.Component;
 import com.me.infinity.loop.util.renders.RenderUtil;
 import org.lwjgl.input.Mouse;
 
+import java.awt.*;
+
 public class Slider
         extends Button {
     private final Number min;
@@ -28,7 +30,7 @@ public class Slider
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.dragSetting(mouseX, mouseY);
-        RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 7.4f, this.y + (float) this.height - 2.5f, !this.isHovering(mouseX, mouseY) ? 0x11555555 : -2007673515);
+        RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 7.4f, this.y + (float) this.height - 2.5f, !this.isHovering(mouseX, mouseY) ? new Color(0xE6282828, true).getRGB() : new Color(0xFF1E1E1E, true).getRGB());
         RenderUtil.drawRect(this.x, this.y, ((Number) this.setting.getValue()).floatValue() <= this.min.floatValue() ? this.x : this.x + ((float) this.width + 7.4f) * this.partialMultiplier(), this.y + (float) this.height - 2.5f, !this.isHovering(mouseX, mouseY) ? Loop.colorManager.getColorWithAlpha(Loop.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue()) : Loop.colorManager.getColorWithAlpha(Loop.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue()));
         Loop.textManager.drawStringWithShadow(this.getName() + " " + ChatFormatting.GRAY + (this.setting.getValue() instanceof Float ? this.setting.getValue() : Double.valueOf(((Number) this.setting.getValue()).doubleValue())), this.x + 2.3f, this.y - 2.7f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1);
     }

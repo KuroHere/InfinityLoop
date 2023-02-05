@@ -17,10 +17,10 @@ public class GameChanger
     private static GameChanger INSTANCE = new GameChanger();
     public Setting<Boolean> customCamera = this.register(new Setting<>("CustomCamera", false));
     public Setting<Boolean> noCameraClip = this.register(new Setting<>("CameraClip", false, v -> this.customCamera.getValue()));
-    public Setting<Boolean> aspect = this.register(new Setting<>("Aspect", false));
     public Setting<Boolean> modelFlip = this.register(new Setting<>("ModelFlip", false));
-    public Setting<Boolean> motionBlur = this.register(new Setting<>("MotionBlur", false));
+    public Setting<Boolean> motionBlur = this.register(new Setting<>("MotionBlur(Don't Work)", false));
     public final Setting<Float> amount = this.register(new Setting<>("Amount", Float.valueOf(1f), Float.valueOf(0f), Float.valueOf(10f), v -> this .motionBlur.getValue()));
+    public Setting<Boolean> aspect = this.register(new Setting<>("Aspect", false));
     public final Setting<Double> aspectValue = this.register(new Setting<>("AspectValue", mc.displayWidth / mc.displayHeight + 0.0, 0.0, 3.0,v -> this.aspect.getValue()));
     public Setting<Boolean> customFov = this.register(new Setting<>("CustomFov", false));
     public final Setting<Float> fov = this.register(new Setting<>("Fov", Float.valueOf(150.0f), Float.valueOf(-180.0f), Float.valueOf(180.0f), v -> customFov.getValue()));

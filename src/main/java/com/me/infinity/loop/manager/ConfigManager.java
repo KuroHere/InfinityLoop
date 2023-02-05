@@ -32,14 +32,14 @@ public class ConfigManager implements Util {
                 object.add(setting.getName(), converter.doForward((Enum) setting.getValue()));
                 continue;
             }
-            /*if(setting.isColorSetting()){
+            if(setting.isColorSetting()){
                 JsonArray array = new JsonArray();
                 array.add(new JsonPrimitive(((ColorSetting) setting.getValue()).getRawColor()));
                 array.add(new JsonPrimitive(((ColorSetting) setting.getValue()).isCycle()));
                 array.add(new JsonPrimitive(((ColorSetting) setting.getValue()).getGlobalOffset()));
                 object.add(setting.getName(), array);
                 continue;
-            }*/
+            }
             if (setting.isStringSetting()) {
                 String str = (String) setting.getValue();
                 setting.setValue(str.replace(" ", "_"));
@@ -57,6 +57,7 @@ public class ConfigManager implements Util {
     /*----------------- LOAD ---------------*/
     public static void setValueFromJson(Feature feature, Setting setting, JsonElement element) {
         String str;
+        JsonArray array = element.getAsJsonArray();
         switch (setting.getType()) {
             case "Boolean":
                 setting.setValue(Boolean.valueOf(element.getAsBoolean()));
@@ -78,7 +79,6 @@ public class ConfigManager implements Util {
                 setting.setValue((new Bind.BindConverter()).doBackward(element));
                 return;
             case "ColorSetting":
-                JsonArray array = element.getAsJsonArray();
                 ((ColorSetting) setting.getValue()).setColor(array.get(0).getAsInt());
                 ((ColorSetting) setting.getValue()).setCycle(array.get(1).getAsBoolean());
                 ((ColorSetting) setting.getValue()).setGlobalOffset(array.get(2).getAsInt());

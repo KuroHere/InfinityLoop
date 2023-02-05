@@ -8,6 +8,15 @@ public class Timer
         time = System.currentTimeMillis();
     }
 
+    public final boolean passed( final long delay ) {
+        return passed( delay, false );
+    }
+
+    public boolean passed( final long delay, final boolean reset ) {
+        if ( reset ) this.reset( );
+        return System.currentTimeMillis( ) - this.time >= delay;
+    }
+
     public boolean passed(double ms) {
         return System.currentTimeMillis() - time >= ms;
     }

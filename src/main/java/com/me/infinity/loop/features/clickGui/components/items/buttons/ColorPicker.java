@@ -1,5 +1,6 @@
 package com.me.infinity.loop.features.clickGui.components.items.buttons;
 
+import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.setting.ColorSetting;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.manager.TextManager;
@@ -32,10 +33,8 @@ public class ColorPicker extends Button {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        if (Mouse.isButtonDown(0)) {
-            this.dragSetting(mouseX, mouseY);
-        }
-        //RenderUtil.drawRect2(this.x,this.y,this.x + 94,this.y + 90, ClickGui.getInstance().buttsColor.getValue().getRawColor());
+        this.dragSetting(mouseX, mouseY);
+        RenderUtil.drawRect(this.x,this.y,this.x + (float) this.width + 7.4f, this.y + (float) this.height - 0.5f, ClickGui.getInstance().buttsColor.getValue().getRawColor());
         float[] hsb = Color.RGBtoHSB(red, green, blue, null);
 
         TextManager.drawString3(colorSetting.getName(),(int) this.x + 3, (int) this.y + 2,new Color(red,green,blue).getRGB());

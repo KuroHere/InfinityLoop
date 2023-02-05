@@ -209,11 +209,11 @@ public class Setting<T> {
     }
 
     public String getType() {
-        if(this.isColorSetting()){
-            return "ColorSetting";
-        }
         if (this.isEnumSetting()) {
             return "Enum";
+        }
+        if(this.isColorSetting()){
+            return "ColorSetting";
         }
         return this.getClassName(this.defaultValue);
     }
@@ -229,16 +229,20 @@ public class Setting<T> {
         return this.description;
     }
 
-    public boolean isColorSetting() {
-        return this.value instanceof ColorSetting;
-    }
-
     public boolean isNumberSetting() {
         return this.value instanceof Double || this.value instanceof Integer || this.value instanceof Short || this.value instanceof Long || this.value instanceof Float;
     }
 
+    public boolean isColorHeader(){
+        return this.value instanceof ColorSettingHeader;
+    }
+
     public boolean isEnumSetting() {
-        return !this.isNumberSetting() && !(this.value instanceof String) && !(this.value instanceof Bind) && !(this.value instanceof Character) && !(this.value instanceof Boolean);
+        return !this.isColorHeader()  && !this.isNumberSetting() && !(this.value instanceof String)  && !(this.value instanceof ColorSetting) && !(this.value instanceof Bind) && !(this.value instanceof Character) && !(this.value instanceof Boolean);
+    }
+
+    public boolean isColorSetting() {
+        return this.value instanceof ColorSetting;
     }
 
     public boolean isStringSetting() {

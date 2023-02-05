@@ -4,6 +4,7 @@ import com.me.infinity.loop.Loop;
 import com.me.infinity.loop.event.events.ClientEvent;
 import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.setting.ColorSetting;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -34,7 +35,7 @@ public class ClickGui
     public Setting<Integer> topGreen = this.register(new Setting<>("SecondGreen", 0, 0, 255));
     public Setting<Integer> topBlue = this.register(new Setting<>("SecondBlue", 0, 0, 255));
     public Setting<Integer> alpha = this.register(new Setting<>("HoverAlpha", 240, 0, 255));
-    //public Setting<ColorSetting> buttsColor = this.register(new Setting<>("buttsColor", new ColorSetting(0x8800FF00)));
+    public Setting<ColorSetting> buttsColor = this.register(new Setting<>("buttsColor", new ColorSetting(0x8800FF00)));
     private InfinityLoopGui click;
 
     public ClickGui() {
