@@ -1,7 +1,7 @@
 package com.me.infinity.loop.features;
 
 import com.me.infinity.loop.Loop;
-import com.me.infinity.loop.features.gui.InfinityLoopGui;
+import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.manager.TextManager;

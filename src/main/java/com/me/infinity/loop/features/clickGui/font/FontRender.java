@@ -1,4 +1,4 @@
-package com.me.infinity.loop.features.gui.font;
+package com.me.infinity.loop.features.clickGui.font;
 
 import com.me.infinity.loop.Loop;
 import com.me.infinity.loop.util.interfaces.Util;

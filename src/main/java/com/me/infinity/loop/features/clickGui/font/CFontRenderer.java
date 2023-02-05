@@ -1,4 +1,4 @@
-package com.me.infinity.loop.features.gui.font;
+package com.me.infinity.loop.features.clickGui.font;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;

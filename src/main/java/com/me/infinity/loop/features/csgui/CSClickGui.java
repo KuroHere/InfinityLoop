@@ -2,9 +2,9 @@ package com.me.infinity.loop.features.csgui;
 
 import com.me.infinity.loop.Loop;
 import com.me.infinity.loop.features.Feature;
-import com.me.infinity.loop.features.gui.components.Component;
-import com.me.infinity.loop.features.gui.components.items.Item;
-import com.me.infinity.loop.features.gui.components.items.buttons.ModuleButton;
+import com.me.infinity.loop.features.clickGui.components.Component;
+import com.me.infinity.loop.features.clickGui.components.items.Item;
+import com.me.infinity.loop.features.clickGui.components.items.buttons.ModuleButton;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.client.CSGui;
 import com.me.infinity.loop.util.renders.ColorUtil;

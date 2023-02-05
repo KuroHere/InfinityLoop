@@ -1,7 +1,7 @@
-package com.me.infinity.loop.features.gui.mainmenu;
+package com.me.infinity.loop.features.clickGui.mainmenu;
 
 import com.me.infinity.loop.Loop;
-import com.me.infinity.loop.features.gui.font.FontRender;
+import com.me.infinity.loop.features.clickGui.font.FontRender;
 import com.me.infinity.loop.features.modules.client.MainSettings;
 import com.me.infinity.loop.util.LoopUtil;
 import com.me.infinity.loop.util.renders.RenderUtil;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.me.infinity.loop.Loop.alts;
-import static com.me.infinity.loop.features.gui.components.items.buttons.StringButton.removeLastChar;
+import static com.me.infinity.loop.features.clickGui.components.items.buttons.StringButton.removeLastChar;
 
 public class GuiAltManager extends GuiScreen
 {
@@ -36,7 +36,7 @@ public class GuiAltManager extends GuiScreen
             if(Loop.moduleManager != null){
                 switch (Loop.moduleManager.getModuleByClass(MainSettings.class).shaderMode.getValue()) {
                     case Smoke2:
-                        backgroundShader = new MainMenuShader("/shaders/moon.fsh");
+                        backgroundShader = new MainMenuShader("/shaders/smoke.fsh");
                         break;
                     case Smoke:
                         backgroundShader = new MainMenuShader("/shaders/mainmenu.fsh");

@@ -1,6 +1,6 @@
 package com.me.infinity.loop;
 
-import com.me.infinity.loop.features.gui.font.CFontRenderer;
+import com.me.infinity.loop.features.clickGui.font.CFontRenderer;
 import com.me.infinity.loop.util.interfaces.Util;
 import com.me.infinity.loop.manager.*;
 import net.minecraftforge.fml.common.Mod;

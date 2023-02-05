@@ -2,7 +2,7 @@ package com.me.infinity.loop.manager;
 
 import com.me.infinity.loop.Loop;
 import com.me.infinity.loop.features.Feature;
-import com.me.infinity.loop.features.gui.font.CustomFont;
+import com.me.infinity.loop.features.clickGui.font.CustomFont;
 import com.me.infinity.loop.features.modules.client.FontMod;
 import com.me.infinity.loop.util.worlds.Timer;
 import net.minecraft.util.math.MathHelper;

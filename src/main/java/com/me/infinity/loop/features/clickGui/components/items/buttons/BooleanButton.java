@@ -1,19 +1,18 @@
-package com.me.infinity.loop.features.gui.components.items.buttons;
+package com.me.infinity.loop.features.clickGui.components.items.buttons;
 
 import com.me.infinity.loop.Loop;
+import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.setting.Setting;
-import com.mojang.realmsclient.gui.ChatFormatting;
-import com.me.infinity.loop.features.gui.InfinityLoopGui;
 import com.me.infinity.loop.util.renders.RenderUtil;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
 
-public class EnumButton
+public class BooleanButton
         extends Button {
-    public Setting setting;
+    private final Setting setting;
 
-    public EnumButton(Setting setting) {
+    public BooleanButton(Setting setting) {
         super(setting.getName());
         this.setting = setting;
         this.width = 15;
@@ -22,7 +21,7 @@ public class EnumButton
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 7.4f, this.y + (float) this.height - 0.5f, this.getState() ? (!this.isHovering(mouseX, mouseY) ? Loop.colorManager.getColorWithAlpha(Loop.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue()) : Loop.colorManager.getColorWithAlpha(Loop.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue())) : (!this.isHovering(mouseX, mouseY) ? 0x11555555 : -2007673515));
-        Loop.textManager.drawStringWithShadow(this.setting.getName() + " " + ChatFormatting.GRAY + (this.setting.currentEnumName().equalsIgnoreCase("ABC") ? "ABC" : this.setting.currentEnumName()), this.x + 2.3f, this.y - 1.7f - (float) InfinityLoopGui.getClickGui().getTextOffset(), this.getState() ? -1 : -5592406);
+        Loop.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 1.7f - (float) InfinityLoopGui.getClickGui().getTextOffset(), this.getState() ? -1 : -5592406);
     }
 
     @Override
@@ -45,12 +44,12 @@ public class EnumButton
 
     @Override
     public void toggle() {
-        this.setting.increaseEnum();
+        this.setting.setValue(!((Boolean) this.setting.getValue()));
     }
 
     @Override
     public boolean getState() {
-        return true;
+        return (Boolean) this.setting.getValue();
     }
 }
 

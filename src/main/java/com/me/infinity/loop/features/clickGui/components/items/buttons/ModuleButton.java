@@ -1,12 +1,14 @@
-package com.me.infinity.loop.features.gui.components.items.buttons;
+package com.me.infinity.loop.features.clickGui.components.items.buttons;
 
 import com.me.infinity.loop.Loop;
-import com.me.infinity.loop.features.gui.InfinityLoopGui;
-import com.me.infinity.loop.features.gui.components.Component;
-import com.me.infinity.loop.features.gui.components.items.Item;
+import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
+import com.me.infinity.loop.features.clickGui.components.Component;
+import com.me.infinity.loop.features.clickGui.components.items.Item;
+import com.me.infinity.loop.features.clickGui.elements.ColorPickerElement;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.setting.Bind;
+import com.me.infinity.loop.features.setting.ColorSetting;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
@@ -42,9 +44,6 @@ public class ModuleButton
                 if (setting.isNumberSetting() && setting.hasRestriction()) {
                     newItems.add(new Slider(setting));
                     continue;
-                }
-                if(setting.isColorSetting()){
-                    newItems.add(new ColorPicker(setting));
                 }
                 if (!setting.isEnumSetting()) continue;
                 newItems.add(new EnumButton(setting));

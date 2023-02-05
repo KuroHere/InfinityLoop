@@ -2,10 +2,9 @@ package com.me.infinity.loop.mixin.mixins;
 
 import com.me.infinity.loop.Loop;
 import com.me.infinity.loop.event.events.KeyEvent;
-import com.me.infinity.loop.features.gui.mainmenu.InfinityLoopMenu;
+import com.me.infinity.loop.features.clickGui.mainmenu.InfinityLoopMenu;
 import com.me.infinity.loop.features.modules.client.MainSettings;
 import com.me.infinity.loop.features.modules.player.MultiTask;
-import com.me.infinity.loop.util.minecraft.IMinecraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiMainMenu;

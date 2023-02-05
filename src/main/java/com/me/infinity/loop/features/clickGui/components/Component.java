@@ -1,10 +1,10 @@
-package com.me.infinity.loop.features.gui.components;
+package com.me.infinity.loop.features.clickGui.components;
 
 import com.me.infinity.loop.Loop;
 import com.me.infinity.loop.features.Feature;
-import com.me.infinity.loop.features.gui.InfinityLoopGui;
-import com.me.infinity.loop.features.gui.components.items.Item;
-import com.me.infinity.loop.features.gui.components.items.buttons.Button;
+import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
+import com.me.infinity.loop.features.clickGui.components.items.Item;
+import com.me.infinity.loop.features.clickGui.components.items.buttons.Button;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.util.renders.ColorUtil;

@@ -1,6 +1,5 @@
-package com.me.infinity.loop.features.gui.components.items.buttons;
+package com.me.infinity.loop.features.clickGui.components.items.buttons;
 
-import com.me.infinity.loop.Loop;
 import com.me.infinity.loop.features.setting.ColorSetting;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.manager.TextManager;
@@ -11,7 +10,7 @@ import org.lwjgl.input.Mouse;
 
 import java.awt.*;
 
-import static com.me.infinity.loop.features.gui.components.Component.mouseWithinBounds;
+import static com.me.infinity.loop.features.clickGui.components.Component.mouseWithinBounds;
 
 public class ColorPicker extends Button {
 
@@ -134,6 +133,10 @@ public class ColorPicker extends Button {
     @Override
     public int getHeight() {
         return 14;
+    }
+
+    public static boolean mouseWithinBounds(int mouseX, int mouseY, double x, double y, double width, double height) {
+        return (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height);
     }
 
     private void getRGBfromClick(float mouseX, float mouseY) {

@@ -1,7 +1,7 @@
-package com.me.infinity.loop.features.gui.mainmenu;
+package com.me.infinity.loop.features.clickGui.mainmenu;
 
 import com.me.infinity.loop.Loop;
-import com.me.infinity.loop.features.gui.font.FontRender;
+import com.me.infinity.loop.features.clickGui.font.FontRender;
 import com.me.infinity.loop.features.modules.client.MainSettings;
 import com.me.infinity.loop.util.renders.helper.RoundedShader;
 import net.minecraft.client.gui.*;
@@ -22,7 +22,7 @@ public class InfinityLoopMenu extends GuiScreen
             if(Loop.moduleManager != null){
                 switch (Loop.moduleManager.getModuleByClass(MainSettings.class).shaderMode.getValue()){
                     case Smoke2:
-                        backgroundShader = new MainMenuShader("/shaders/moon.fsh");
+                        backgroundShader = new MainMenuShader("/shaders/smoke.fsh");
                         break;
                     case Smoke:
                         backgroundShader = new MainMenuShader("/shaders/mainmenu.fsh");
@@ -70,6 +70,8 @@ public class InfinityLoopMenu extends GuiScreen
         float half_height = sr.getScaledHeight() / 2f;
 
         RoundedShader.drawGradientRound(half_width - 120, half_height - 80, 240,  140, 15f, color,color,color,color);
+        FontRender.drawCentString8("1NF1N1TY LOOP" ,(int) half_width - 53, (int) half_height - 83 - FontRender.getFontHeight8(),new Color(0x980051FF, true).getRGB());
+        FontRender.drawCentString8("1NF1N1TY LOOP" ,(int) half_width - 51, (int) half_height - 81 - FontRender.getFontHeight8(),new Color(0x98FF0000, true).getRGB());
         FontRender.drawCentString8("1NF1N1TY LOOP" ,(int) half_width - 52, (int) half_height - 82 - FontRender.getFontHeight8(),-1);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
