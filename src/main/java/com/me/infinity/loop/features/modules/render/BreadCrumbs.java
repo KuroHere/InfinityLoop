@@ -55,7 +55,9 @@ public class BreadCrumbs extends Module {
             mc.world.spawnParticle(EnumParticleTypes.DRIP_WATER, mc.player.posX, mc.player.posY, mc.player.posZ, mc.player.motionX, mc.player.motionY, mc.player.motionZ, 2);
     }
 
-    public static void putVertex3d(Vec3d vec) { GL11.glVertex3d(vec.x, vec.y, vec.z); }
+    public static void putVertex3d(Vec3d vec) {
+        GL11.glVertex3d(vec.x, vec.y, vec.z);
+    }
 
     public Vec3d getRenderPos(double x, double y, double z) {
         AccessorRenderManager renderManager = (AccessorRenderManager) mc.getRenderManager( );

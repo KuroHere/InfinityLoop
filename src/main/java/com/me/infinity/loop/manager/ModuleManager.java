@@ -49,6 +49,7 @@ public class ModuleManager
         modules.add(new PearlRender());
         modules.add(new BreadCrumbs());
         modules.add(new MainSettings());
+        modules.add(new ItemPhysics());
         //this.modules.add(new BreakESP());
         modules.add(new ViewModel());
         modules.add(new AutoDoSmth());

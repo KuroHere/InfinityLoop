@@ -480,7 +480,6 @@ public class RenderUtil
         GlStateManager.popMatrix();
     }
 
-
     public static void initFboAndShader() {
         try {
             if (buffer != null) {
@@ -1803,6 +1802,8 @@ public class RenderUtil
     public static void drawCircle(float x, float y, float radius, int start, int end, int segments) {
         RenderUtil.drawArc(x, y, radius, start, end, segments);
     }
+
+
 
     public static void drawOutlinedRoundedRectangle(int x, int y, int width, int height, float radius, float dR, float dG, float dB, float dA, float outlineWidth) {
         RenderUtil.drawRoundedRectangle(x, y, width, height, radius);

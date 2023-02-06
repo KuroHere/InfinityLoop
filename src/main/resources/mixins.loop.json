@@ -21,6 +21,8 @@
     "MixinPlayerControllerMP",
     "MixinRenderEnderCrystal",
     "MixinRenderLivingBase",
+    "MixinRenderEntityItem",
+    "MixinRenderer",
     "MixinWorld",
     "MixinShaderGroup"
   ]
