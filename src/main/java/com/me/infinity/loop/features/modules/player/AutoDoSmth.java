@@ -10,8 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class AutoDoSmth extends Module {
 
     private static AutoDoSmth INSTANCE = new AutoDoSmth();
-    public Setting<Boolean> sprint = this.register(new Setting<>("Sprint", false));
-    public Setting<Sprint> autoSprint = this.register(new Setting<>("AutoSprint", Sprint.Legit, v -> this.sprint.getValue()));
+    public Setting<Sprint> autoSprint = this.register(new Setting<>("AutoSprint", Sprint.Legit));
     public Setting<Boolean> autoWalk = this.register(new Setting<>("AutoWalk", false));
     public Setting<Boolean> autoSneak = this.register(new Setting<>("AutoSneak", false));
     public Setting<Boolean> autoJump = this.register(new Setting<>("AutoJump", false));
@@ -50,14 +49,13 @@ public class AutoDoSmth extends Module {
     public void onUpdate() {
         if (!nullCheck()) {
         }
-        if (sprint.getValue() && autoSprint.getValue() == Sprint.Rage) {
-            if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() || mc.player.isSneaking() || mc.player.collidedHorizontally || (float)mc.player.getFoodStats().getFoodLevel() <= 6.0f) {
+        if (autoSprint.getValue() == Sprint.Rage) {
+            if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() || mc.player.isSneaking() || mc.player.collidedHorizontally || (float) mc.player.getFoodStats().getFoodLevel() <= 6.0f)
                 mc.player.setSprinting(true);
-            }
         }
-        if (sprint.getValue() && autoSprint.getValue() == Sprint.Legit) {
-            if (!mc.gameSettings.keyBindForward.isKeyDown() || mc.player.isSneaking() || mc.player.isHandActive() || mc.player.collidedHorizontally || (float)mc.player.getFoodStats().getFoodLevel() <= 6.0f || mc.currentScreen != null)
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), true);
+        if (autoSprint.getValue() == Sprint.Legit) {
+            if (!mc.gameSettings.keyBindForward.isKeyDown() || mc.player.isSneaking() || mc.player.isHandActive() || mc.player.collidedHorizontally || (float) mc.player.getFoodStats().getFoodLevel() <= 6.0f || mc.currentScreen != null)
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), true);
         }
         if (autoSpin.getValue() && yawAnimation.getValue()) {
             mc.player.rotationYaw = (mc.player.rotationYaw + yaw.getValue());
@@ -92,7 +90,8 @@ public class AutoDoSmth extends Module {
     }
     public enum Sprint {
         Rage,
-        Legit
+        Legit,
+        None
     }
 }
 

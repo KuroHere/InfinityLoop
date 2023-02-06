@@ -21,7 +21,7 @@ public class BurrowESP extends Module {
     public Setting<Integer> range = register(new Setting("Range", 20, 5, 50));
     public Setting<Boolean> self = register(new Setting("Self", true));
     public Setting<Boolean> text = register(new Setting("Text", true));
-    public Setting<Boolean> customText = register(new Setting("CustomText", true, v -> this.text.getValue()));
+    public Setting<Boolean> customText = register(new Setting("CustomText", false, v -> this.text.getValue()));
     public Setting<String> textString = register(new Setting("TextString", "BURROW", v -> this.text.getValue() && this.customText.getValue()));
     public Setting<Boolean> rainbow = register(new Setting("Rainbow", false));
     public Setting<Integer> red = register(new Setting("Red", 0, 0, 255, v -> !this.rainbow.getValue()));
@@ -65,14 +65,14 @@ public class BurrowESP extends Module {
 
     @Override
     public void onRender3D(Render3DEvent event) {
-        for (BlockPos blockPos : posList) {
+        for (BlockPos bp : posList) {
             String text = textString.getValue().toUpperCase();
             if (this.text.getValue().booleanValue() && customText.getValue()) {
-                renderUtil.drawText(blockPos, text, rainbow.getValue() ? ColorUtil.rainbow(Colors.getInstance().rainbowHue.getValue()) : new Color(red.getValue(), green.getValue(), blue.getValue(), outlineAlpha.getValue()));
+                renderUtil.drawText(bp, text, rainbow.getValue() ? ColorUtil.rainbow(Colors.getInstance().rainbowHue.getValue()) : new Color(red.getValue(), green.getValue(), blue.getValue(), outlineAlpha.getValue()));
             } else {
-                RenderUtil.drawText(blockPos, mc.player.getGameProfile().getName());
+                RenderUtil.drawText(bp, mc.player.getGameProfile().getName());
             }
-            RenderUtil.drawBoxESP(blockPos, rainbow.getValue() ? ColorUtil.rainbow(Colors.getInstance().rainbowHue.getValue()) : new Color(red.getValue(), green.getValue(), blue.getValue(), outlineAlpha.getValue()), 1.5F, true, true, alpha.getValue());
+            RenderUtil.drawBoxESP(bp, rainbow.getValue() ? ColorUtil.rainbow(Colors.getInstance().rainbowHue.getValue()) : new Color(red.getValue(), green.getValue(), blue.getValue(), outlineAlpha.getValue()), 1.5F, true, true, alpha.getValue());
         }
     }
 }

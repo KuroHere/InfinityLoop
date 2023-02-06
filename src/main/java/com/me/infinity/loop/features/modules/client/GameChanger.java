@@ -15,8 +15,6 @@ public class GameChanger
     extends Module {
 
     private static GameChanger INSTANCE = new GameChanger();
-    public Setting<Boolean> customCamera = this.register(new Setting<>("CustomCamera", false));
-    public Setting<Boolean> noCameraClip = this.register(new Setting<>("CameraClip", false, v -> this.customCamera.getValue()));
     public Setting<Boolean> modelFlip = this.register(new Setting<>("ModelFlip", false));
     public Setting<Boolean> motionBlur = this.register(new Setting<>("MotionBlur(Don't Work)", false));
     public final Setting<Float> amount = this.register(new Setting<>("Amount", Float.valueOf(1f), Float.valueOf(0f), Float.valueOf(10f), v -> this .motionBlur.getValue()));

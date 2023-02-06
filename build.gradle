@@ -66,7 +66,7 @@ dependencies {
         exclude module: 'commons-io'
         exclude module: 'log4j-core'
     }
-
+    
     compile 'com.github.DarkiBoi:EventDispatcher:v1.1'
     compile 'com.github.ionar2:Alpine:1.9f'
     compile 'club.minnced:java-discord-rpc:2.0.2'

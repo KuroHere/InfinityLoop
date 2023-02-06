@@ -50,6 +50,7 @@ public class ModuleManager
         modules.add(new BreadCrumbs());
         modules.add(new MainSettings());
         modules.add(new ItemPhysics());
+        modules.add(new CameraClip());
         //this.modules.add(new BreakESP());
         modules.add(new ViewModel());
         modules.add(new AutoDoSmth());
