@@ -1,4 +1,4 @@
-package com.me.infinity.loop.features.clickGui.components.items;
+package com.me.infinity.loop.features.clickGui.screen.components.items;
 
 import com.me.infinity.loop.features.Feature;
 

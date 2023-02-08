@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class ClickGui
         extends Module {
     private static ClickGui INSTANCE = new ClickGui();
-    public Setting<Boolean> description= this.register(new Setting("Description", true));
+    public Setting<Mode> description= this.register(new Setting("Description", Mode.Frame));
     //public Setting<Boolean> guiGlow= this.register(new Setting("Glow", true));
     //public Setting<Integer> glowOffset = this.register(new Setting<>("GlowOffset", 2, 0, 20, v -> this.guiGlow.getValue()));
     public Setting<Boolean> bindText = register(new Setting("ShowBind",false));
@@ -79,5 +79,12 @@ public class ClickGui
             this.disable();
         }
     }
+
+    public enum Mode {
+        Frame,
+        Folow,
+        None
+    }
+
 }
 

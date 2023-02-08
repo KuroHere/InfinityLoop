@@ -22,10 +22,8 @@ public class RoundedShader {
         drawRound(x, y, width, height, radius, false, color);
     }
 
-    public static void drawRoundScale(float x, float y, float width, float height, float radius, Color color,
-                                      float scale) {
-        drawRound(x + width - width * scale, y + height / 2f - ((height / 2f) * scale),
-                width * scale, height * scale, radius, false, color);
+    public static void drawRoundScale(float x, float y, float width, float height, float radius, Color color, float scale) {
+        drawRound(x + width - width * scale, y + height / 2f - ((height / 2f) * scale), width * scale, height * scale, radius, false, color);
     }
 
     public static void drawGradientHorizontal(float x, float y, float width, float height, float radius, Color left,
@@ -48,8 +46,7 @@ public class RoundedShader {
         drawGradientRound(x, y, width, height, radius, bottomLeft, mixedColor, mixedColor, topRight);
     }
 
-    public static void drawGradientRound(float x, float y, float width, float height, float radius, Color bottomLeft,
-                                         Color topLeft, Color bottomRight, Color topRight) {
+    public static void drawGradientRound(float x, float y, float width, float height, float radius, Color bottomLeft, Color topLeft, Color bottomRight, Color topRight) {
         GlStateManager.resetColor();
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

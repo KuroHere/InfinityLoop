@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.me.infinity.loop.InfinityLoop.alts;
-import static com.me.infinity.loop.features.clickGui.components.items.buttons.StringButton.removeLastChar;
+import static com.me.infinity.loop.features.clickGui.screen.components.items.buttons.StringButton.removeLastChar;
 
 public class GuiAltManager extends GuiScreen
 {

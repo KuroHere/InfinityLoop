@@ -1,11 +1,11 @@
-package com.me.infinity.loop.features.clickGui.components.items.buttons;
+package com.me.infinity.loop.features.clickGui.screen.components.items.buttons;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.setting.Setting;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
-import com.me.infinity.loop.features.clickGui.components.Component;
+import com.me.infinity.loop.features.clickGui.screen.components.Component;
 import com.me.infinity.loop.util.renders.RenderUtil;
 import org.lwjgl.input.Mouse;
 

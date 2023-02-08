@@ -1,4 +1,4 @@
-package com.me.infinity.loop.features.clickGui.elements;
+package com.me.infinity.loop.features.clickGui.screen.elements;
 
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.renders.Drawable;
