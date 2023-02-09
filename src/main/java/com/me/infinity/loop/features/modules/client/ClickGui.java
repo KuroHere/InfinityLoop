@@ -15,7 +15,7 @@ public class ClickGui
     //public Setting<Boolean> guiGlow= this.register(new Setting("Glow", true));
     //public Setting<Integer> glowOffset = this.register(new Setting<>("GlowOffset", 2, 0, 20, v -> this.guiGlow.getValue()));
     public Setting<Boolean> bindText = register(new Setting("ShowBind",false));
-    public Setting<Boolean> openCloseChange = register(new Setting("Open/Close",true));
+    public Setting<Boolean> openCloseChange = register(new Setting("Open/Close",false));
     public Setting<String> moduleButton = register(new Setting("Buttons:", " ", v -> !this.openCloseChange.getValue()).setRenderName(true));
     public Setting<String> open = register(new Setting("Open:", "+", v -> this.openCloseChange.getValue()).setRenderName(true));
     public Setting<String> close = register(new Setting("Close:", "-", v -> this.openCloseChange.getValue()).setRenderName(true));
@@ -84,6 +84,11 @@ public class ClickGui
         Frame,
         Folow,
         None
+    }
+
+    public enum OutlineMode {
+        LEFT,
+        LEFTONTOP
     }
 
 }

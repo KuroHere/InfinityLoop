@@ -71,19 +71,4 @@ public class Taskbar extends DrawableComponent {
 
         glPopMatrix();
     }
-
-    @Override
-    public void onClick(ClickType in) {
-
-    }
-
-    @Override
-    public void onType(int in) {
-
-    }
-
-    @Override
-    public void onScroll(int in) {
-
-    }
 }

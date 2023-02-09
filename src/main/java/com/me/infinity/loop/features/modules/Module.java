@@ -40,6 +40,27 @@ public class Module
         this.alwaysListening = alwaysListening;
     }
 
+
+    public enum Category {
+        COMBAT("Combat"),
+        MISC("Misc"),
+        RENDER("Render"),
+        MOVEMENT("Movement"),
+        PLAYER("Player"),
+        CLIENT("Client"),
+        TEST("Test");
+
+        private final String name;
+
+        Category(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+    }
+
     public boolean isSliding() {
         return this.sliding;
     }
@@ -182,24 +203,5 @@ public class Module
         return this.getDisplayName() + ChatFormatting.GRAY + (this.getDisplayInfo() != null ? " [" + ChatFormatting.WHITE + this.getDisplayInfo() + ChatFormatting.GRAY + "]" : "");
     }
 
-    public enum Category {
-        COMBAT("Combat"),
-        MISC("Misc"),
-        RENDER("Render"),
-        MOVEMENT("Movement"),
-        PLAYER("Player"),
-        CLIENT("Client"),
-        TEST("Test");
-
-        private final String name;
-
-        Category(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-    }
 }
 

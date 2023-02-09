@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.math.Vec2f;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.io.IOException;
@@ -58,7 +59,7 @@ public class InfinityLoopGui
     private void load() {
         int x = -80;
         for (final Module.Category category : InfinityLoop.moduleManager.getCategories()) {
-            this.components.add(new Component(category.getName(), x += 100, 40, true) {
+            this.components.add(new Component(category.getName(), x += 96, 40, true) {
 
                 @Override
                 public void setupItems() {
@@ -92,19 +93,18 @@ public class InfinityLoopGui
         this.checkMouseWheel();
         ScaledResolution resolution = new ScaledResolution(mc);
         if (ClickGui.getInstance().background.getValue()) {
+            if (ClickGui.getInstance().dark.getValue()) {
+                this.drawDefaultBackground();
+            }
+            if (ClickGui.getInstance().blur.getValue()) {
+                RenderUtil.drawBlurryRect(0, 0, resolution.getScaledWidth(), resolution.getScaledHeight(), ClickGui.getInstance().blurAmount.getValue(), ClickGui.getInstance().blurSize.getValue());
+            }
             if (ClickGui.getInstance().gradiant.getValue()) {
                 RenderUtil.drawGradientRect(0, 0, resolution.getScaledWidth(), resolution.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue(), 0, new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().hoverAlpha.getValue() / 2).getRGB());
                 if (ClickGui.getInstance().gradiant.getValue() && ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
                     RenderUtil.drawGradientRect(0, 0, resolution.getScaledWidth(), resolution.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue().intValue(), 0, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : this.color);
                 }
             }
-            if (ClickGui.getInstance().blur.getValue()) {
-                RenderUtil.drawBlurryRect(0, 0, resolution.getScaledWidth(), resolution.getScaledHeight(), ClickGui.getInstance().blurAmount.getValue(), ClickGui.getInstance().blurSize.getValue());
-            }
-            if (ClickGui.getInstance().dark.getValue()) {
-                this.drawDefaultBackground();
-            }
-
         }
         this.components.forEach(components -> components.drawScreen(mouseX, mouseY, partialTicks));
         taskbar.drawComponent();

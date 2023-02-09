@@ -66,19 +66,19 @@ public class ModuleButton
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         if (!this.items.isEmpty()) {
+            Color outline = new Color(0xCD000000, true);
+            Color fillcolor = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().hoverAlpha.getValue());
+            Color rainbow = new Color(Colors.getInstance().rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : this.color);
+
             ClickGui gui = InfinityLoop.moduleManager.getModuleByClass(ClickGui.class);
             InfinityLoop.textManager.drawStringWithShadow(gui.openCloseChange.getValue().booleanValue() ? (this.subOpen ? gui.close.getValue() : gui.open.getValue()) : gui.moduleButton.getValue(), this.x - 1.5f + (float) this.width - 7.4f, this.y - 2.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1);
-
             if (ClickGui.getInstance().bindText.getValue().booleanValue()) {
-                InfinityLoop.textManager.drawString(this.module.getBind().toString().toUpperCase(), this.x - 1.5f + (float) this.width - 2.4f, this.y + 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, false);
+                InfinityLoop.textManager.drawString(this.module.getBind().toString().toUpperCase(), this.x + 3.0f, this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, false);
             } else {
 
             }
             if (this.isHovering(mouseX, mouseY)) {
                 if (ClickGui.getInstance().description.getValue() == ClickGui.Mode.Frame) {
-                    Color outline = new Color(0xCD000000, true);
-                    Color fillcolor = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().hoverAlpha.getValue());
-                    Color rainbow = new Color(Colors.getInstance().rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : this.color);
                     RoundedShader.drawGradientRound(15.0f, 25.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 3f, outline, outline, outline, outline);
                     if (ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
                         RoundedShader.drawRoundOutline(15.0f, 25.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, rainbow, rainbow);
