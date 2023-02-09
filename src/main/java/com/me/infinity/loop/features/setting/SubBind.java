@@ -5,15 +5,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import org.lwjgl.input.Keyboard;
 
-public class Bind {
+public class SubBind {
     private int key;
-    private boolean hold = false;
-    public Bind(int key) {
+
+    public SubBind(int key) {
         this.key = key;
     }
 
-    public static Bind none() {
-        return new Bind(-1);
+    public static SubBind none() {
+        return new SubBind(-1);
     }
 
     public int getKey() {
@@ -29,7 +29,7 @@ public class Bind {
     }
 
     public String toString() {
-        return this.isEmpty() ? " " : (this.key < 0 ? " " : this.capitalise(Keyboard.getKeyName(this.key)));
+        return this.isEmpty() ? "None" : (this.key < 0 ? "None" : this.capitalise(Keyboard.getKeyName(this.key)));
     }
 
     public boolean isDown() {
@@ -43,24 +43,16 @@ public class Bind {
         return Character.toUpperCase(str.charAt(0)) + (str.length() != 1 ? str.substring(1).toLowerCase() : "");
     }
 
-    public boolean isHold() {
-        return hold;
-    }
-
-    public void setHold(boolean hold) {
-        this.hold = hold;
-    }
-
-    public static class BindConverter
-            extends Converter<Bind, JsonElement> {
-        public JsonElement doForward(Bind bind) {
-            return new JsonPrimitive(bind.toString());
+    public static class SubBindConverter
+            extends Converter<SubBind, JsonElement> {
+        public JsonElement doForward(SubBind subbind) {
+            return new JsonPrimitive(subbind.toString());
         }
 
-        public Bind doBackward(JsonElement jsonElement) {
+        public SubBind doBackward(JsonElement jsonElement) {
             String s = jsonElement.getAsString();
-            if (s.equalsIgnoreCase(" ")) {
-                return Bind.none();
+            if (s.equalsIgnoreCase("None")) {
+                return SubBind.none();
             }
             int key = -1;
             try {
@@ -69,10 +61,9 @@ public class Bind {
                 // empty catch block
             }
             if (key == 0) {
-                return Bind.none();
+                return SubBind.none();
             }
-            return new Bind(key);
+            return new SubBind(key);
         }
     }
 }
-

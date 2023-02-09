@@ -6,6 +6,8 @@
   "mixins": [
     "MixinBlockLiquid",
     "MixinEntityPlayer",
+    "IEntityRenderer",
+    "IRenderManager",
     "MixinEntityPlayerSP",
     "MixinGuiMainMenu",
     "MixinEntityRenderer",

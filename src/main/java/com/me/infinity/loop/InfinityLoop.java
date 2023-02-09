@@ -1,8 +1,15 @@
 package com.me.infinity.loop;
 
 import com.me.infinity.loop.features.clickGui.font.CFontRenderer;
+import com.me.infinity.loop.util.dism.EntityGib;
+import com.me.infinity.loop.util.dism.RenderGib;
+import com.me.infinity.loop.util.ffp.NetworkHandler;
 import com.me.infinity.loop.util.interfaces.Util;
 import com.me.infinity.loop.manager.*;
+import com.me.infinity.loop.util.phobos.GlobalExecutor;
+import com.me.infinity.loop.util.phobos.Sphere;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -46,6 +53,7 @@ public class InfinityLoop {
     public static ModuleManager moduleManager;
     public static PacketManager packetManager;
     public static ColorManager colorManager;
+    public static NetworkHandler networkHandler;
     public static HoleManager holeManager;
     public static InventoryManager inventoryManager;
     public static PotionManager potionManager;
@@ -79,12 +87,15 @@ public class InfinityLoop {
     /*---------------------    LOAD  -------------------------*/
     public static void load() {
         ConfigManager.loadAlts();
+        ConfigManager.loadSearch();
         LOGGER.info("\n\nLoading InfinityLoop by KuroHere");
         unloaded = false;
         if (reloadManager != null) {
             reloadManager.unload();
             reloadManager = null;
         }
+
+        ConfigManager.init();
 
         /*------------    FONTS    ------------ */
         try {
@@ -101,6 +112,7 @@ public class InfinityLoop {
         }
         /*------------------------------------- */
 
+        networkHandler = new NetworkHandler();
         textManager = new TextManager();
         fpsManagement = new FpsManagement();
         commandManager = new CommandManager();
@@ -122,7 +134,7 @@ public class InfinityLoop {
         LOGGER.info("Managers loaded.");
         moduleManager.init();
         LOGGER.info("Modules loaded.");
-        configManager.init();
+        ConfigManager.load(ConfigManager.getCurrentConfig());
         eventManager.init();
         LOGGER.info("EventManager loaded.");
         textManager.init(true);
@@ -145,7 +157,18 @@ public class InfinityLoop {
             reloadManager.init(commandManager != null ? commandManager.getPrefix() : "-");
         }
         ConfigManager.saveAlts();
-        InfinityLoop.onUnload();
+        ConfigManager.saveSearch();
+        if (!unloaded) {
+            eventManager.onUnload();
+
+            moduleManager.onUnload();
+            ConfigManager.save(ConfigManager.getCurrentConfig());
+            moduleManager.onUnloadPost();
+            unloaded = true;
+        }
+
+
+        networkHandler = null;
         fontRenderer = null;
         eventManager = null;
         friendManager = null;
@@ -173,32 +196,23 @@ public class InfinityLoop {
         InfinityLoop.load();
     }
 
-    /*-------------------    ONUNLOAD  -----------------------*/
-
-    public static void onUnload() {
-        if (!unloaded) {
-            eventManager.onUnload();
-            moduleManager.onUnload();
-            configManager.saveConfig(InfinityLoop.configManager.config.replaceFirst("loop/", ""));
-            moduleManager.onUnloadPost();
-            timerManager.unload();
-            unloaded = true;
-        }
-    }
 
     /*--------------------------------------------------------*/
 
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        RenderingRegistry.registerEntityRenderingHandler(EntityGib.class, RenderGib::new);
+        GlobalExecutor.EXECUTOR.submit(() -> Sphere.cacheSphere());
         LOGGER.info("KuroHere!");
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        Display.setTitle("InfinityLoop Client");
+        Display.setTitle("InfinityLoop");
         initTime = System.currentTimeMillis();
         InfinityLoop.load();
+        MinecraftForge.EVENT_BUS.register(networkHandler);
     }
 
     static {

@@ -51,7 +51,8 @@ public class ModuleManager
         modules.add(new MainSettings());
         modules.add(new ItemPhysics());
         modules.add(new CameraClip());
-        //this.modules.add(new BreakESP());
+        modules.add(new Dismemberment());
+        modules.add(new Search());
         modules.add(new ViewModel());
         modules.add(new AutoDoSmth());
         modules.add(new com.me.infinity.loop.features.modules.render.Animation());

@@ -52,7 +52,7 @@ public abstract class MixinMinecraft implements IMinecraft {
 
     private void unload() {
         InfinityLoop.LOGGER.info("Initiated client shutdown!");
-        InfinityLoop.onUnload();
+        InfinityLoop.unload(false);
         InfinityLoop.LOGGER.info("Finished client shutdown!");
     }
 

@@ -15,6 +15,8 @@ public class Setting<T> {
     private T plannedValue;
     private T min;
     private T max;
+    private Setting<Parent> parent = null;
+
     private boolean hasRestriction;
     private boolean shouldRenderStringName;
     private Predicate<T> visibility;
@@ -215,6 +217,9 @@ public class Setting<T> {
         if(this.isColorSetting()){
             return "ColorSetting";
         }
+        if(this.isPositionSetting()){
+            return "PositionSetting";
+        }
         return this.getClassName(this.defaultValue);
     }
 
@@ -238,7 +243,15 @@ public class Setting<T> {
     }
 
     public boolean isEnumSetting() {
-        return !this.isColorHeader()  && !this.isNumberSetting() && !(this.value instanceof String)  && !(this.value instanceof ColorSetting) && !(this.value instanceof Bind) && !(this.value instanceof Character) && !(this.value instanceof Boolean);
+        return !this.isPositionSetting()&& !this.isColorHeader()  && !this.isNumberSetting() &&!(this.value instanceof PositionSetting) && !(this.value instanceof String)  && !(this.value instanceof ColorSetting) && !(this.value instanceof Parent) && !(this.value instanceof Bind) && !(this.value instanceof SubBind)&& !(this.value instanceof Character) && !(this.value instanceof Boolean);
+    }
+
+    public boolean isBindSetting() {
+        return this.value instanceof Bind;
+    }
+
+    public boolean  isPositionSetting() {
+        return this.value instanceof PositionSetting;
     }
 
     public boolean isColorSetting() {
@@ -276,7 +289,21 @@ public class Setting<T> {
         }
         return this.shouldRenderStringName;
     }
+    public Setting<T> withParent(Setting<Parent> parent) {
+        this.parent = parent;
+        return this;
+    }
+
+    public Setting<Parent> getParent() {
+        return parent;
+    }
+
     public boolean isVisible() {
+        if (parent != null) {
+            if (!parent.getValue().isExtended()) {
+                return false;
+            }
+        }
         if (this.visibility == null) {
             return true;
         }
@@ -286,5 +313,6 @@ public class Setting<T> {
     public boolean nullCheck() {
         return Feature.mc.player == null;
     }
+
 }
 
