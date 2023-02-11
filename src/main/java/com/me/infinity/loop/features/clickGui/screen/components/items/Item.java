@@ -1,9 +1,11 @@
 package com.me.infinity.loop.features.clickGui.screen.components.items;
 
 import com.me.infinity.loop.features.Feature;
+import com.me.infinity.loop.features.setting.Setting;
 
 public class Item
         extends Feature {
+    protected Setting setting;
     protected float x;
     protected float y;
     protected int width;
@@ -66,5 +68,10 @@ public class Item
         this.hidden = hidden;
         return this.hidden;
     }
+
+    public boolean isVisible() {
+        return setting.isVisible();
+    }
+
 }
 

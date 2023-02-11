@@ -18,9 +18,9 @@ public class FriendCommand
                 FriendCommand.sendMessage("Friend list empty D:.");
             } else {
                 String f = "Friends: ";
-                for (FriendManager.Friend friend : InfinityLoop.friendManager.getFriends()) {
+                for (String friend : InfinityLoop.friendManager.getFriends()) {
                     try {
-                        f = f + friend.getUsername() + ", ";
+                        f = f + friend + ", ";
                     } catch (Exception exception) {
                     }
                 }
@@ -29,10 +29,12 @@ public class FriendCommand
             return;
         }
         if (commands.length == 2) {
-            if (commands[0].equals("reset")) {
-                InfinityLoop.friendManager.onLoad();
-                FriendCommand.sendMessage("Friends got reset.");
-                return;
+            switch (commands[0]) {
+                case "reset": {
+                    InfinityLoop.friendManager.clear();
+                    FriendCommand.sendMessage("Friends got reset.");
+                    return;
+                }
             }
             FriendCommand.sendMessage(commands[0] + (InfinityLoop.friendManager.isFriend(commands[0]) ? " is friended." : " isn't friended."));
             return;
@@ -42,6 +44,7 @@ public class FriendCommand
                 case "add": {
                     InfinityLoop.friendManager.addFriend(commands[1]);
                     FriendCommand.sendMessage(ChatFormatting.GREEN + commands[1] + " has been friended");
+                    mc.player.sendChatMessage("/w "+ commands[1] + " i friended u at InfinityLoop Client");
                     return;
                 }
                 case "del": {

@@ -33,12 +33,7 @@ public class Taskbar extends DrawableComponent {
         if (ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
             RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 21, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : color);
         }
-        RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 20, new Color(15, 15, 15, 255).getRGB());
-        String time = ChatFormatting.WHITE + (new SimpleDateFormat("h:mm a")).format(new Date());
-        String date = ChatFormatting.WHITE + (new SimpleDateFormat("d/m/y")).format(new Date());
-        InfinityLoop.textManager.drawStringWithShadow(time, 5, 1, 0);
-        InfinityLoop.textManager.drawStringWithShadow(date, 5, 12, 0);
-
+        RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 20, new Color(23, 23, 29).getRGB());
 
         // taskbar
         RenderUtil.drawRect(0, resolution.getScaledHeight() - 34, resolution.getScaledWidth(), 34, new Color(23, 23, 29).getRGB());
@@ -48,8 +43,8 @@ public class Taskbar extends DrawableComponent {
         glColor4d(1, 1, 1, 1);
 
         // logo
-        mc.getTextureManager().bindTexture(new ResourceLocation("loop", "textures/imgs/logotransparent.png"));
-        GuiScreen.drawModalRectWithCustomSizedTexture(resolution.getScaledWidth() - 104, resolution.getScaledHeight() - 31, 0, 0, 104, 28, 104, 28);
+        mc.getTextureManager().bindTexture(new ResourceLocation("loop", "imgs/logotransparent.png"));
+        GuiScreen.drawModalRectWithCustomSizedTexture(resolution.getScaledWidth() - 104, resolution.getScaledHeight() - 31, 0, 0, 106, 28, 106, 28);
 
         glPopMatrix();
 
@@ -59,6 +54,20 @@ public class Taskbar extends DrawableComponent {
         float scaledWidth = (InfinityLoop.textManager.getStringWidth(mc.player.getName()) + 8) * 2.75F;
 
         RenderUtil.drawRect(0, resolution.getScaledHeight() - 44, scaledWidth, 44, new Color(23, 23, 29).getRGB());
+
+        // time and date
+        glScaled(1, 1, 1); {
+            float scaledX = 7 * 0.36363636F;
+            float scaledY = (resolution.getScaledHeight() - 35) * 0.36363636F;
+            String time = ChatFormatting.WHITE + (new SimpleDateFormat("h:mm:s a")).format(new Date());
+            //String date = ChatFormatting.WHITE + (new SimpleDateFormat("d/m/y")).format(new Date());
+            mc.fontRenderer.drawString(time, scaledX, 0, -1, false);
+            //mc.fontRenderer.drawString(date, scaledX * 2, scaledY * 2, -1, false);
+        }
+
+        glScaled(0.36363636F, 0.36363636F, 0.36363636F);
+
+        glPopMatrix();
 
         // player info
         glScaled(2.75, 2.75, 2.75); {
@@ -70,5 +79,6 @@ public class Taskbar extends DrawableComponent {
         glScaled(0.36363636F, 0.36363636F, 0.36363636F);
 
         glPopMatrix();
+
     }
 }

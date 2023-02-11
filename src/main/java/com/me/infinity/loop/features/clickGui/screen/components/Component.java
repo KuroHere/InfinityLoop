@@ -58,14 +58,20 @@ public abstract class Component
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drag(mouseX, mouseY);
+        counter1 = new int[]{1};
         float totalItemHeight = this.open ? this.getTotalItemHeight() - 2.0f : 0.0f;
         int color = ColorUtil.toARGB(ClickGui.getInstance().topRed.getValue(), ClickGui.getInstance().topGreen.getValue(), ClickGui.getInstance().topBlue.getValue(), 255);
         Gui.drawRect(this.x, this.y - 2, this.x + this.width, this.y + this.height - 6, Colors.getInstance().rainbow.getValue() ? ColorUtil.rainbow(Colors.getInstance().rainbowHue.getValue()).getRGB() : color);
         Gui.drawRect(this.x, this.y + height - 5, this.x + this.width, this.y + this.height - 6, new Color(255, 255, 255, 255).getRGB());
         RenderUtil.drawRect(this.x, (float) this.y + 12.5f, this.x + this.width, (float) (this.y + this.height) + totalItemHeight, 0x77000000);
-        InfinityLoop.textManager.drawString(this.getName(), (float) this.x + 3.0f, (float) this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, true);
-        if (this.open) {
-
+        if (ClickGui.getInstance().topText.getValue() == ClickGui.Locate.Left) {
+            InfinityLoop.textManager.drawString(this.getName(), (float) this.x + 3.0f, (float) this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, true);
+        } else if (ClickGui.getInstance().topText.getValue() == ClickGui.Locate.Middle) {
+            InfinityLoop.textManager.drawString(this.getName(), (float) this.x + (this.x + this.width) / 2f, (float) this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, true);
+        } else if (ClickGui.getInstance().topText.getValue() == ClickGui.Locate.Right) {
+            InfinityLoop.textManager.drawString(this.getName(), (float) this.x + this.width / 4.0f, (float) this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, true);
+        }
+            if (this.open) {
             float y = (float) (this.getY() + this.getHeight()) - 3.0f;
             for (Item item : this.getItems()) {
                 Component.counter1[0] = counter1[0] + 1;

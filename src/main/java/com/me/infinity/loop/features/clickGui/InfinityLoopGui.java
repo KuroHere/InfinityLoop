@@ -27,7 +27,6 @@ public class InfinityLoopGui
         extends GuiScreen {
     private static InfinityLoopGui INSTANCE;
     private final Taskbar taskbar = new Taskbar();
-    private final MousePosition mouse = new MousePosition(Vec2f.ZERO, false, false, false, false);
     private int color;
 
     static {
@@ -63,6 +62,7 @@ public class InfinityLoopGui
 
                 @Override
                 public void setupItems() {
+                    counter1 = new int[]{1};
                     InfinityLoop.moduleManager.getModulesByCategory(category).forEach(module -> {
                         if (!module.hidden) {
                             this.addButton(new ModuleButton(module));
@@ -100,7 +100,7 @@ public class InfinityLoopGui
                 RenderUtil.drawBlurryRect(0, 0, resolution.getScaledWidth(), resolution.getScaledHeight(), ClickGui.getInstance().blurAmount.getValue(), ClickGui.getInstance().blurSize.getValue());
             }
             if (ClickGui.getInstance().gradiant.getValue()) {
-                RenderUtil.drawGradientRect(0, 0, resolution.getScaledWidth(), resolution.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue(), 0, new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().hoverAlpha.getValue() / 2).getRGB());
+                RenderUtil.drawGradientRect(0, 0, resolution.getScaledWidth(), resolution.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue(), 0, new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().gradiantAlpha.getValue()).getRGB());
                 if (ClickGui.getInstance().gradiant.getValue() && ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
                     RenderUtil.drawGradientRect(0, 0, resolution.getScaledWidth(), resolution.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue().intValue(), 0, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : this.color);
                 }
@@ -109,8 +109,7 @@ public class InfinityLoopGui
         this.components.forEach(components -> components.drawScreen(mouseX, mouseY, partialTicks));
         taskbar.drawComponent();
     }
-
-
+    
     public void mouseClicked(int mouseX, int mouseY, int clickedButton) {
         this.components.forEach(components -> components.mouseClicked(mouseX, mouseY, clickedButton));
     }

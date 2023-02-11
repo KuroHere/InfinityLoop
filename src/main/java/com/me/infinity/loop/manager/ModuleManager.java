@@ -36,70 +36,84 @@ public class ModuleManager
     public Animation animationThread;
 
     public void init() {
+        // Test
+        modules.add(new Test());
+
+        // Client
         modules.add(new CSGui());
         modules.add(new ClickGui());
         modules.add(new RPC());
         modules.add(new GameChanger());
         modules.add(new Colors());
-        modules.add(new Test());
         modules.add(new FontMod());
-        modules.add(new ExtraTab());
         modules.add(new HUD());
-        modules.add(new BlockHighlight());
-        modules.add(new PearlRender());
-        modules.add(new BreadCrumbs());
         modules.add(new MainSettings());
-        modules.add(new ItemPhysics());
-        modules.add(new CameraClip());
-        modules.add(new Dismemberment());
-        modules.add(new Search());
-        modules.add(new ViewModel());
-        modules.add(new AutoDoSmth());
-        modules.add(new com.me.infinity.loop.features.modules.render.Animation());
-        modules.add(new HoleESP());
-        modules.add(new Skeleton());
-        modules.add(new Wireframe());
-        modules.add(new Replenish());
-        modules.add(new BurrowESP());
-        modules.add(new FogColor());
-        modules.add(new SmallShield());
-        modules.add(new HandChams());
-        modules.add(new Trajectories());
-        modules.add(new FakePlayer());
-        modules.add(new TpsSync());
-        modules.add(new MultiTask());
-        modules.add(new MCP());
-        modules.add(new LiquidInteract());
-        modules.add(new Speedmine());
-        modules.add(new ReverseStep());
-        modules.add(new NoVoid());
-        modules.add(new NoHandShake());
-        modules.add(new BuildHeight());
-        modules.add(new ChatModifier());
-        modules.add(new MCF());
-        modules.add(new AutoGG());
-        modules.add(new ToolTips());
-        modules.add(new Tracker());
-        modules.add(new PopCounter());
-        modules.add(new Offhand());
-        modules.add(new Surround());
+        modules.add(new Windows());
+
+        // Combat
+        modules.add(new AutoArmor());
+        modules.add(new AutoCrystal());
+        modules.add(new AutoMinecart());
         modules.add(new AutoTrap());
         modules.add(new AutoWeb());
-        modules.add(new AutoCrystal());
-        modules.add(new Killaura());
         modules.add(new Criticals());
         modules.add(new HoleFiller());
-        modules.add(new AutoArmor());
+        modules.add(new Killaura());
+        modules.add(new Offhand());
+        modules.add(new SelfFill());
+        modules.add(new Selftrap());
+        modules.add(new Surround());
+
+        // Misc
+        modules.add(new AutoGG());
+        modules.add(new BlockTweaks());
+        modules.add(new BuildHeight());
+        modules.add(new ChatModifier());
+        modules.add(new ExtraTab());
+        modules.add(new MCF());
+        modules.add(new NoHandShake());
+        modules.add(new PopCounter());
+        modules.add(new ToolTips());
+        modules.add(new Tracker());
+
+        // Movement
+        modules.add(new NoVoid());
+        modules.add(new ReverseStep());
         modules.add(new Speed());
         modules.add(new Step());
-        modules.add(new FastPlace());
-        modules.add(new ESP());
-        modules.add(new Selftrap());
-        modules.add(new BlockTweaks());
-        modules.add(new AutoMinecart());
-        modules.add(new SelfFill());
-        modules.add(new ArrowESP());
         modules.add(new TimerSpeed());
+
+        // Player
+        modules.add(new AutoDoSmth());
+        modules.add(new FakePlayer());
+        modules.add(new FastPlace());
+        modules.add(new LiquidInteract());
+        modules.add(new MCP());
+        modules.add(new MultiTask());
+        modules.add(new Replenish());
+        modules.add(new Search());
+        modules.add(new Speedmine());
+        modules.add(new TpsSync());
+
+        // Render
+        modules.add(new com.me.infinity.loop.features.modules.render.Animation());
+        modules.add(new ArrowESP());
+        modules.add(new BlockHighlight());
+        modules.add(new BreadCrumbs());
+        modules.add(new BurrowESP());
+        modules.add(new CameraClip());
+        modules.add(new Dismemberment());
+        modules.add(new ESP());
+        modules.add(new FogColor());
+        modules.add(new HandChams());
+        modules.add(new HoleESP());
+        modules.add(new ItemPhysics());
+        modules.add(new PearlRender());
+        modules.add(new Skeleton());
+        modules.add(new SmallShield());
+        modules.add(new Trajectories());
+        modules.add(new ViewModel());
+        modules.add(new Wireframe());
     }
 
     public Module getModuleByName(String name) {

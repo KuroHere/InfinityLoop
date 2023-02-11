@@ -5,33 +5,35 @@ import com.me.infinity.loop.event.events.ClientEvent;
 import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.ColorSetting;
+import com.me.infinity.loop.features.setting.Parent;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ClickGui
         extends Module {
     private static ClickGui INSTANCE = new ClickGui();
-    public Setting<Mode> description= this.register(new Setting("Description", Mode.Frame));
+    public Setting<Locate> topText = this.register(new Setting("TopText", Locate.Middle));
+    public Setting<Mode> description = this.register(new Setting("Description", Mode.Frame));
     //public Setting<Boolean> guiGlow= this.register(new Setting("Glow", true));
     //public Setting<Integer> glowOffset = this.register(new Setting<>("GlowOffset", 2, 0, 20, v -> this.guiGlow.getValue()));
-    public Setting<Boolean> bindText = register(new Setting("ShowBind",false));
+    public Setting<Boolean> showBind = register(new Setting("ShowBind",true));
     public Setting<Boolean> openCloseChange = register(new Setting("Open/Close",false));
-    public Setting<String> moduleButton = register(new Setting("Buttons:", " ", v -> !this.openCloseChange.getValue()).setRenderName(true));
     public Setting<String> open = register(new Setting("Open:", "+", v -> this.openCloseChange.getValue()).setRenderName(true));
     public Setting<String> close = register(new Setting("Close:", "-", v -> this.openCloseChange.getValue()).setRenderName(true));
     public Setting<Boolean> background= this.register(new Setting("Background", true));
-    public Setting<Boolean> blur = this.register(new Setting("Blur", false, v -> this.background.getValue()));
-    public Setting<Integer> blurAmount = this.register(new Setting<>("BlurAmount", 2, 0, 20, v -> this.background.getValue()));
-    public Setting<Integer> blurSize = this.register(new Setting<>("BlurSize", 0, 0, 20, v -> this.background.getValue()));
-    public Setting<Boolean> dark = this.register(new Setting("Dark", false, v -> this.background.getValue()));
+    public Setting<Boolean> blur = this.register(new Setting("Blur", false));
+    public Setting<Integer> blurAmount = this.register(new Setting<>("BlurAmount", 2, 0, 20, v -> this.background.getValue() && this.blur.getValue()));
+    public Setting<Integer> blurSize = this.register(new Setting<>("BlurSize", 0, 0, 20, v -> this.background.getValue() && this.blur.getValue()));
+    public Setting<Boolean> dark = this.register(new Setting("Dark", true, v -> this.background.getValue()));
     public Setting<Boolean> gradiant = this.register(new Setting("Gradiant", false, v -> this.background.getValue()));
-    public Setting<Integer> gradiantHeight = this.register(new Setting("GradiantHeight", 0, 0, 255, v -> this.background.getValue()));
-    public Setting<Boolean> colorSync = this.register(new Setting<>("ColorSync", false));
-    public Setting<Integer> red = this.register(new Setting<>("Red", 230, 0, 255));
-    public Setting<Integer> green = this.register(new Setting<>("Green", 0, 0, 255));
-    public Setting<Integer> blue = this.register(new Setting<>("Blue", 0, 0, 255));
+    public Setting<Integer> gradiantHeight = this.register(new Setting("GradiantHeight", 0, 0, 255, v -> this.background.getValue() && this.gradiant.getValue()));
+    public Setting<Integer> gradiantAlpha = this.register(new Setting<>("GradiantAlpha", 230, 0, 255, v -> this.background.getValue() && this.gradiant.getValue()));
+    public Setting<Integer> red = this.register(new Setting<>("Red", 160, 0, 255));
+    public Setting<Integer> green = this.register(new Setting<>("Green", 10, 0, 255));
+    public Setting<Integer> blue = this.register(new Setting<>("Blue", 255, 0, 255));
     public Setting<Integer> hoverAlpha = this.register(new Setting<>("Alpha", 170, 0, 255));
-    public Setting<Integer> topRed = this.register(new Setting<>("SecondRed", 230, 0, 255));
+    public Setting<Boolean> colorSync = this.register(new Setting<>("ColorSync", false));
+    public Setting<Integer> topRed = this.register(new Setting<>("SecondRed", 0, 0, 255));
     public Setting<Integer> topGreen = this.register(new Setting<>("SecondGreen", 0, 0, 255));
     public Setting<Integer> topBlue = this.register(new Setting<>("SecondBlue", 0, 0, 255));
     public Setting<Integer> alpha = this.register(new Setting<>("HoverAlpha", 240, 0, 255));
@@ -86,9 +88,10 @@ public class ClickGui
         None
     }
 
-    public enum OutlineMode {
-        LEFT,
-        LEFTONTOP
+    public enum Locate {
+        Left,
+        Right,
+        Middle
     }
 
 }

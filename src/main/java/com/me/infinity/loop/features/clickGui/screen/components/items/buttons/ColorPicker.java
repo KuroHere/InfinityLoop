@@ -165,6 +165,11 @@ public class ColorPicker extends Button {
         updateColor();
     }
 
+    @Override
+    public int getHeight() {
+        return 14;
+    }
+
     private void dragSetting(int mouseX, int mouseY) {
         handleMouseClick(mouseX, mouseY,0);
     }

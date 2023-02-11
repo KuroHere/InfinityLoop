@@ -2,8 +2,10 @@ package com.me.infinity.loop.features.clickGui.screen.components.items.buttons;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
+import com.me.infinity.loop.features.clickGui.font.FontRender;
 import com.me.infinity.loop.features.clickGui.screen.components.Component;
 import com.me.infinity.loop.features.clickGui.screen.components.items.Item;
+import com.me.infinity.loop.features.clickGui.screen.components.items.buttons.elements.ColorPickerElement;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
@@ -11,6 +13,7 @@ import com.me.infinity.loop.features.setting.Bind;
 import com.me.infinity.loop.features.setting.ColorSetting;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.renders.ColorUtil;
+import com.me.infinity.loop.util.renders.Drawable;
 import com.me.infinity.loop.util.renders.RenderUtil;
 import com.me.infinity.loop.util.renders.helper.RoundedShader;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -37,6 +40,8 @@ public class ModuleButton
     public void initSettings() {
         ArrayList<Item> newItems = new ArrayList<Item>();
         if (!this.module.getSettings().isEmpty()) {
+            newItems.add(new BindButton(this.module.getSettingByName("Keybind")));
+            this.items = newItems;
             for (Setting setting : this.module.getSettings()) {
                 if (setting.getValue() instanceof Boolean && !setting.getName().equals("Enabled")) {
                     newItems.add(new BooleanButton(setting));
@@ -58,8 +63,6 @@ public class ModuleButton
                 newItems.add(new EnumButton(setting));
             }
         }
-        newItems.add(new BindButton(this.module.getSettingByName("Keybind")));
-        this.items = newItems;
     }
 
     @Override
@@ -71,11 +74,13 @@ public class ModuleButton
             Color rainbow = new Color(Colors.getInstance().rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : this.color);
 
             ClickGui gui = InfinityLoop.moduleManager.getModuleByClass(ClickGui.class);
-            InfinityLoop.textManager.drawStringWithShadow(gui.openCloseChange.getValue().booleanValue() ? (this.subOpen ? gui.close.getValue() : gui.open.getValue()) : gui.moduleButton.getValue(), this.x - 1.5f + (float) this.width - 7.4f, this.y - 2.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1);
-            if (ClickGui.getInstance().bindText.getValue().booleanValue()) {
-                InfinityLoop.textManager.drawString(this.module.getBind().toString().toUpperCase(), this.x + 3.0f, this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, false);
+            if(!ClickGui.getInstance().showBind.getValue() ){
+                if (module.getSettings().size() > 4)
+                    if (ClickGui.getInstance().openCloseChange.getValue())
+                    FontRender.drawCentString6(isEnabled() ? gui.close.getValue() : gui.open.getValue(), (float) x + (float) width - 8f, (float) y + 6, -1);
             } else {
-
+                if(!module.getBind().toString().equalsIgnoreCase("none"))
+                    FontRender.drawString5(module.getBind().toString(), (float) x + (float) width - FontRender.getStringWidth5("[" + module.getBind().toString() + "]" ) - 3f, (float) y + 6, -1);
             }
             if (this.isHovering(mouseX, mouseY)) {
                 if (ClickGui.getInstance().description.getValue() == ClickGui.Mode.Frame) {
@@ -93,6 +98,7 @@ public class ModuleButton
                     this.renderer.drawStringWithShadow(this.module.getDescription(), (float) (mouseX + 10), (float) mouseY, -1);
                 }
             }
+
             if (this.subOpen) {
                 float height = 1.0f;
                 for (Item item : this.items) {
@@ -102,12 +108,16 @@ public class ModuleButton
                         item.setHeight(15);
                         item.setWidth(this.width - 9);
                         item.drawScreen(mouseX, mouseY, partialTicks);
+                        if (item instanceof ColorPicker)
+                            item.setHeight(56);
                     }
                     item.update();
                 }
             }
+            //Drawable.drawBlurredShadow((int) x, (int) (y + height), (int) width, 3, 9, new Color(0, 0, 0, 160));
         }
     }
+
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {

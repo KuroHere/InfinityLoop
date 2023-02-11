@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 public class ConfigManager implements Util {
 
-    public static  File MainFolder = new File(mc.gameDir, "ThunderHack");
+    public static  File MainFolder = new File(mc.gameDir, "loop");
     public static  File ConfigsFolder = new File(MainFolder, "configs");
     public static  File CustomImages = new File(MainFolder, "images");
     public static  File TempFolder = new File(MainFolder, "temp");
@@ -64,7 +64,7 @@ public class ConfigManager implements Util {
     public static void load(String name) {
         File file = new File(ConfigsFolder, name + ".th");
         if (!file.exists()) {
-            Command.sendMessage("Конфига " + name + " не существует!");
+            Command.sendMessage("config " + name + " does not exist!");
             return;
         }
 
@@ -108,7 +108,7 @@ public class ConfigManager implements Util {
                     }
                 });
             }
-            Command.sendMessage("Загружен конфиг " + config.getName());
+            Command.sendMessage("Loaded config " + config.getName());
         } catch (IOException e) {
             e.printStackTrace();
         }

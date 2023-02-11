@@ -3,6 +3,7 @@ package com.me.infinity.loop.manager;
 import com.google.common.base.Strings;
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.*;
+import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.command.Command;
@@ -83,7 +84,14 @@ public class EventManager extends Feature {
                 InfinityLoop.moduleManager.sortModulesABC();
             }
         }
+        if(!fullNullCheck()){
+            if(InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).getBind().getKey() == -1){
+                Command.sendMessage(ChatFormatting.DARK_RED +  "Default clickgui keybind --> P");
+                InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).setBind(Keyboard.getKeyIndex("P"));
+            }
+        }
     }
+    
 
     @SubscribeEvent
     public void onClientConnect(FMLNetworkEvent.ClientConnectedToServerEvent event) {
