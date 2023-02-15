@@ -1,9 +1,9 @@
 package com.me.infinity.loop;
 
-import com.me.infinity.loop.features.clickGui.font.CFontRenderer;
-import com.me.infinity.loop.util.dism.EntityGib;
-import com.me.infinity.loop.util.dism.RenderGib;
-import com.me.infinity.loop.util.ffp.NetworkHandler;
+import com.me.infinity.loop.features.ui.font.CFontRenderer;
+import com.me.infinity.loop.util.renders.helper.dism.EntityGib;
+import com.me.infinity.loop.util.renders.helper.dism.RenderGib;
+import com.me.infinity.loop.util.renders.helper.ffp.NetworkHandler;
 import com.me.infinity.loop.util.interfaces.Util;
 import com.me.infinity.loop.manager.*;
 import com.me.infinity.loop.util.phobos.GlobalExecutor;
@@ -154,7 +154,7 @@ public class InfinityLoop {
         LOGGER.info("\n\nUnloading InfinityLoop by KuroHere");
         if (unload) {
             reloadManager = new ReloadManager();
-            reloadManager.init(commandManager != null ? commandManager.getPrefix() : "-");
+            reloadManager.init(commandManager != null ? commandManager.getPrefix() : ".");
         }
         ConfigManager.saveAlts();
         ConfigManager.saveSearch();

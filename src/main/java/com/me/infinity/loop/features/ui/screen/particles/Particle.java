@@ -1,4 +1,4 @@
-package com.me.infinity.loop.features.gui.screen.particles;
+package com.me.infinity.loop.features.ui.screen.particles;
 
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;

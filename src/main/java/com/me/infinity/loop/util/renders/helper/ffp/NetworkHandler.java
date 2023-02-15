@@ -1,12 +1,10 @@
-package com.me.infinity.loop.util.ffp;
+package com.me.infinity.loop.util.renders.helper.ffp;
 
 import net.minecraft.network.EnumPacketDirection;
-import net.minecraft.network.INetHandler;
 import net.minecraft.network.NettyPacketDecoder;
 import net.minecraft.network.NettyPacketEncoder;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.relauncher.SideOnly;

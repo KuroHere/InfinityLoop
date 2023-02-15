@@ -1,9 +1,9 @@
-package com.me.infinity.loop.features.gui.screen.components.items.buttons;
+package com.me.infinity.loop.features.ui.screen.components.items.buttons;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.features.gui.InfinityLoopGui;
-import com.me.infinity.loop.features.gui.screen.components.Component;
-import com.me.infinity.loop.features.gui.screen.components.items.Item;
+import com.me.infinity.loop.features.ui.InfinityLoopGui;
+import com.me.infinity.loop.features.ui.screen.components.Component;
+import com.me.infinity.loop.features.ui.screen.components.items.Item;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.util.renders.RenderUtil;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -22,7 +22,7 @@ public class Button
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width, this.y + (float) this.height - 1.5f, this.getState() ? (!this.isHovering(mouseX, mouseY) ? InfinityLoop.colorManager.getColorWithAlpha(InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue()) : InfinityLoop.colorManager.getColorWithAlpha(InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue())) : (!this.isHovering(mouseX, mouseY) ? new Color(0x413B3B3B, true).getRGB() : new Color(0x4D3B3B3B, true).getRGB()));
+        RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width, this.y + (float) this.height - 1.5f, this.getState() ? (!this.isHovering(mouseX, mouseY) ? InfinityLoop.colorManager.getColorWithAlpha(InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue()) : InfinityLoop.colorManager.getColorWithAlpha(InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue())) : (!this.isHovering(mouseX, mouseY) ? new Color(0x273B3B3B, true).getRGB() : new Color(0x4D3B3B3B, true).getRGB()));
         InfinityLoop.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 2.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), this.getState() ? -1 : -5592406);
         //Drawable.drawBlurredShadow(this.x, this.y, (int) width, 1, 2, new Color(0, 0, 0, 160));
     }

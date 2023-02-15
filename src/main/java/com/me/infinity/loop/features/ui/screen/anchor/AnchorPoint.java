@@ -1,4 +1,4 @@
-package com.me.infinity.loop.features.gui.screen.anchor;
+package com.me.infinity.loop.features.ui.screen.anchor;
 
 import net.minecraft.client.gui.ScaledResolution;
 

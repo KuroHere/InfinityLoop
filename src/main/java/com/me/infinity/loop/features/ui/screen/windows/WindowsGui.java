@@ -1,11 +1,11 @@
-package com.me.infinity.loop.features.gui.screen.windows;
+package com.me.infinity.loop.features.ui.screen.windows;
 
-import com.me.infinity.loop.features.gui.screen.particles.ParticleSystem;
-import com.me.infinity.loop.features.gui.screen.particles.ParticlesComponent;
-import com.me.infinity.loop.features.gui.screen.windows.window.WindowConfig;
-import com.me.infinity.loop.features.gui.screen.windows.window.WindowFriends;
-import com.me.infinity.loop.features.gui.screen.windows.window.WindowPackets;
-import com.me.infinity.loop.features.gui.screen.windows.window.WindowAltManager;
+import com.me.infinity.loop.features.ui.screen.particles.ParticleSystem;
+import com.me.infinity.loop.features.ui.screen.particles.ParticlesComponent;
+import com.me.infinity.loop.features.ui.screen.windows.window.WindowConfig;
+import com.me.infinity.loop.features.ui.screen.windows.window.WindowFriends;
+import com.me.infinity.loop.features.ui.screen.windows.window.WindowPackets;
+import com.me.infinity.loop.features.ui.screen.windows.window.WindowAltManager;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.features.modules.client.Windows;

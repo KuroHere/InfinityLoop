@@ -1,4 +1,4 @@
-package com.me.infinity.loop.util.dism;
+package com.me.infinity.loop.util.renders.helper.dism;
 
 import net.minecraft.client.particle.Particle;
 import net.minecraft.world.World;

@@ -1,7 +1,7 @@
-package com.me.infinity.loop.features.gui.mainmenu;
+package com.me.infinity.loop.features.ui.mainmenu;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.features.gui.font.FontRender;
+import com.me.infinity.loop.features.ui.font.FontRender;
 import com.me.infinity.loop.features.modules.client.MainSettings;
 import com.me.infinity.loop.util.renders.helper.RoundedShader;
 import net.minecraft.client.gui.*;

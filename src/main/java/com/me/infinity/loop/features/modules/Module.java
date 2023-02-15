@@ -40,7 +40,6 @@ public class Module
         this.alwaysListening = alwaysListening;
     }
 
-
     public enum Category {
         COMBAT("Combat"),
         MISC("Misc"),
@@ -177,6 +176,10 @@ public class Module
 
     public void setDrawn(boolean drawn) {
         this.drawn.setValue(drawn);
+    }
+
+    public void setUndrawn() {
+        this.drawn.setValue(null);
     }
 
     public Category getCategory() {

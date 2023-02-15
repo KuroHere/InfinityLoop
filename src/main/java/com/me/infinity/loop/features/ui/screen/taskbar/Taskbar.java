@@ -1,9 +1,12 @@
-package com.me.infinity.loop.features.gui.screen.taskbar;
+package com.me.infinity.loop.features.ui.screen.taskbar;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.features.gui.screen.DrawableComponent;
+import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.ui.font.FontRender;
+import com.me.infinity.loop.features.ui.screen.DrawableComponent;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
+import com.me.infinity.loop.util.interfaces.Util;
 import com.me.infinity.loop.util.renders.ColorUtil;
 import com.me.infinity.loop.util.renders.RenderUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
@@ -19,18 +22,20 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Taskbar extends DrawableComponent {
     private int color;
+    public static String description = "";
+
     @Override
     public void drawComponent() {
         ScaledResolution resolution = new ScaledResolution(mc);
         if (ClickGui.getInstance().colorSync.getValue()) {
-            RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 21, new Color(Colors.getInstance().red.getValue(), Colors.getInstance().green.getValue(), Colors.getInstance().blue.getValue(), 250).getRGB());
+            RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 31, new Color(Colors.getInstance().red.getValue(), Colors.getInstance().green.getValue(), Colors.getInstance().blue.getValue(), 250).getRGB());
         } else {
-            RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 21, new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), 250).getRGB());
+            RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 31, new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), 250).getRGB());
         }
         if (ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
-            RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 21, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : color);
+            RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 31, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : color);
         }
-        RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 20, new Color(23, 23, 29).getRGB());
+        RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 30, new Color(23, 23, 29).getRGB());
 
         // taskbar
         RenderUtil.drawRect(0, resolution.getScaledHeight() - 34, resolution.getScaledWidth(), 34, new Color(23, 23, 29).getRGB());

@@ -45,6 +45,28 @@ public class ColorUtil {
         return color;
     }
 
+    public static int changeAlpha(int origColor, int userInputedAlpha) {
+        origColor = origColor & 0x00FFFFFF;
+        return (userInputedAlpha << 24) | origColor;
+    }
+
+    public static int fadeColor(int startColor, int endColor, float progress) {
+        if (progress > 1) {
+            progress = 1 - progress % 1;
+        }
+        return fade(startColor, endColor, progress);
+    }
+
+    public static int fade(int startColor, int endColor, float progress) {
+        float invert = 1.0f - progress;
+        int r = (int) ((startColor >> 16 & 0xFF) * invert + (endColor >> 16 & 0xFF) * progress);
+        int g = (int) ((startColor >> 8 & 0xFF) * invert + (endColor >> 8 & 0xFF) * progress);
+        int b = (int) ((startColor & 0xFF) * invert + (endColor & 0xFF) * progress);
+        int a = (int) ((startColor >> 24 & 0xFF) * invert + (endColor >> 24 & 0xFF) * progress);
+        return (a & 0xFF) << 24 | (r & 0xFF) << 16 | (g & 0xFF) << 8 | (b & 0xFF);
+    }
+
+
     public boolean isRainbow() {
         return rainbow;
     }

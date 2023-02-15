@@ -12,7 +12,7 @@ import com.me.infinity.loop.features.modules.render.*;
 import com.me.infinity.loop.util.interfaces.Util;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.Feature;
-import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
+import com.me.infinity.loop.features.ui.InfinityLoopGui;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.test.Test;
 import net.minecraftforge.common.MinecraftForge;
@@ -96,6 +96,7 @@ public class ModuleManager
         modules.add(new TpsSync());
 
         // Render
+        modules.add(new ShadowESP());
         modules.add(new com.me.infinity.loop.features.modules.render.Animation());
         modules.add(new ArrowESP());
         modules.add(new BlockHighlight());

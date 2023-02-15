@@ -1,4 +1,4 @@
-package com.me.infinity.loop.features.gui.mainmenu;
+package com.me.infinity.loop.features.ui.mainmenu;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

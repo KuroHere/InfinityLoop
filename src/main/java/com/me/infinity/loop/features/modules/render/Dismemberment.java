@@ -2,8 +2,8 @@ package com.me.infinity.loop.features.modules.render;
 
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.dism.EntityGib;
-import com.me.infinity.loop.util.dism.ParticleBlood;
+import com.me.infinity.loop.util.renders.helper.dism.EntityGib;
+import com.me.infinity.loop.util.renders.helper.dism.ParticleBlood;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.particle.Particle;

@@ -1,6 +1,6 @@
 package com.me.infinity.loop.manager;
 
-import com.me.infinity.loop.features.clickGui.screen.components.Component;
+import com.me.infinity.loop.features.ui.screen.components.Component;
 import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.util.renders.ColorUtil;
 

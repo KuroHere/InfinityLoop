@@ -1,8 +1,8 @@
-package com.me.infinity.loop.features.gui.screen.windows.window;
+package com.me.infinity.loop.features.ui.screen.windows.window;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.features.gui.font.FontRender;
-import com.me.infinity.loop.features.gui.screen.windows.window.parts.FriendPart;
+import com.me.infinity.loop.features.ui.font.FontRender;
+import com.me.infinity.loop.features.ui.screen.windows.window.parts.FriendPart;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.util.renders.RenderUtil;
 import net.minecraft.client.gui.ScaledResolution;
@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.me.infinity.loop.features.gui.screen.components.items.buttons.StringButton.removeLastChar;
+import static com.me.infinity.loop.features.ui.screen.components.items.buttons.StringButton.removeLastChar;
 import static com.me.infinity.loop.util.interfaces.Util.mc;
 
 public class WindowFriends {

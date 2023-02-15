@@ -1,7 +1,7 @@
-package com.me.infinity.loop.features.gui.mainmenu;
+package com.me.infinity.loop.features.ui.mainmenu;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.features.gui.font.FontRender;
+import com.me.infinity.loop.features.ui.font.FontRender;
 import com.me.infinity.loop.features.modules.client.MainSettings;
 import com.me.infinity.loop.util.LoopUtil;
 import com.me.infinity.loop.util.renders.RenderUtil;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.me.infinity.loop.InfinityLoop.alts;
-import static com.me.infinity.loop.features.gui.screen.components.items.buttons.StringButton.removeLastChar;
+import static com.me.infinity.loop.features.ui.screen.components.items.buttons.StringButton.removeLastChar;
 
 public class GuiAltManager extends GuiScreen
 {

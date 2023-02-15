@@ -2,17 +2,20 @@ package com.me.infinity.loop.features.modules.client;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.ClientEvent;
-import com.me.infinity.loop.features.clickGui.InfinityLoopGui;
+import com.me.infinity.loop.features.ui.InfinityLoopGui;
+import com.me.infinity.loop.features.ui.screen.anchor.AnchorPoint;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.ColorSetting;
-import com.me.infinity.loop.features.setting.Parent;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClickGui
         extends Module {
     private static ClickGui INSTANCE = new ClickGui();
-    public Setting<Locate> topText = this.register(new Setting("TopText", Locate.Middle));
+    public Setting<Locate> topText = this.register(new Setting("TopText", Locate.Right));
     public Setting<Mode> description = this.register(new Setting("Description", Mode.Frame));
     //public Setting<Boolean> guiGlow= this.register(new Setting("Glow", true));
     //public Setting<Integer> glowOffset = this.register(new Setting<>("GlowOffset", 2, 0, 20, v -> this.guiGlow.getValue()));
@@ -21,7 +24,10 @@ public class ClickGui
     public Setting<String> open = register(new Setting("Open:", "+", v -> this.openCloseChange.getValue()).setRenderName(true));
     public Setting<String> close = register(new Setting("Close:", "-", v -> this.openCloseChange.getValue()).setRenderName(true));
     public Setting<Boolean> background= this.register(new Setting("Background", true));
-    public Setting<Boolean> blur = this.register(new Setting("Blur", false));
+    public Setting<Boolean> particles = this.register(new Setting("Particles", true, v -> this.background.getValue()));
+    public Setting<Integer> particleLength = this.register(new Setting<>("ParticlesLength", 80, 0, 300, v -> this.background.getValue() && this.particles.getValue()));
+    //public Setting<BGShader> shader = this.register(new Setting("ShaderBG", BGShader.none, v -> this.background.getValue()));
+    public Setting<Boolean> blur = this.register(new Setting("Blur", false, v -> this.background.getValue()));
     public Setting<Integer> blurAmount = this.register(new Setting<>("BlurAmount", 2, 0, 20, v -> this.background.getValue() && this.blur.getValue()));
     public Setting<Integer> blurSize = this.register(new Setting<>("BlurSize", 0, 0, 20, v -> this.background.getValue() && this.blur.getValue()));
     public Setting<Boolean> dark = this.register(new Setting("Dark", true, v -> this.background.getValue()));
@@ -39,7 +45,7 @@ public class ClickGui
     public Setting<Integer> alpha = this.register(new Setting<>("HoverAlpha", 240, 0, 255));
     public Setting<ColorSetting> buttsColor = this.register(new Setting<>("buttsColor", new ColorSetting(0x8800FF00)));
     private InfinityLoopGui click;
-
+    private List<AnchorPoint> anchorPoints = new ArrayList<>();
     public ClickGui() {
         super("ClickGui", "Opens the ClickGui", Module.Category.CLIENT, true, false, false);
         this.setInstance();
@@ -82,6 +88,32 @@ public class ClickGui
         }
     }
 
+    /*@Override
+    public void onUpdate() {
+        if(fullNullCheck()) return;
+        if(shader.getValue() != BGShader.none) {
+
+            if (OpenGlHelper.shadersSupported && ClickGui.mc.getRenderViewEntity() instanceof EntityPlayer) {
+                if (ClickGui.mc.entityRenderer.getShaderGroup() != null) {
+                    ClickGui.mc.entityRenderer.getShaderGroup().deleteShaderGroup();
+                }
+                try {
+                    ClickGui.mc.entityRenderer.loadShader(new ResourceLocation("shaders/post/" + this.shader.getValue() + ".json"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (ClickGui.mc.entityRenderer.getShaderGroup() != null && ClickGui.mc.currentScreen == null) {
+                ClickGui.mc.entityRenderer.getShaderGroup().deleteShaderGroup();
+            }
+        }
+    }*/
+
+    public List<AnchorPoint> getAnchorPoints() {
+        return anchorPoints;
+    }
+
+
+
     public enum Mode {
         Frame,
         Folow,
@@ -92,6 +124,32 @@ public class ClickGui
         Left,
         Right,
         Middle
+    }
+
+    public enum BGShader {
+        none,
+        notch,
+        antialias,
+        art,
+        bits,
+        blobs,
+        blobs2,
+        blur,
+        bumpy,
+        color_convolve,
+        creeper,
+        deconverge,
+        desaturate,
+        flip,
+        fxaa,
+        green,
+        invert,
+        ntsc,
+        pencil,
+        phosphor,
+        sobel,
+        spider,
+        wobble;
     }
 
 }

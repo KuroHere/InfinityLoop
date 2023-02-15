@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 
 public abstract class Command
         extends Feature {
+    String specialUsage;
+    String description;
     protected String name;
     protected String[] commands;
 
@@ -25,6 +27,21 @@ public abstract class Command
         this.name = name;
         this.commands = commands;
     }
+
+    public Command(String name, String specialUsage, String description) {
+        this.name = name;
+        this.specialUsage = specialUsage;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getUsageException() {
+        return this.specialUsage;
+    }
+
 
     public static void sendMessage(String message) {
         Command.sendSilentMessage(InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.GRAY + message);

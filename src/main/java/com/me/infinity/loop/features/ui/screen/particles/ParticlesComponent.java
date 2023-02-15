@@ -1,6 +1,6 @@
-package com.me.infinity.loop.features.gui.screen.particles;
+package com.me.infinity.loop.features.ui.screen.particles;
 
-import com.me.infinity.loop.features.gui.screen.components.Component;
+import com.me.infinity.loop.features.ui.screen.components.Component;
 
 public final class ParticlesComponent extends Component {
 

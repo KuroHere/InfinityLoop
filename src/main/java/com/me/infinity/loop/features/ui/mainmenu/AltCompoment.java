@@ -1,7 +1,7 @@
-package com.me.infinity.loop.features.gui.mainmenu;
+package com.me.infinity.loop.features.ui.mainmenu;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.features.gui.font.FontRender;
+import com.me.infinity.loop.features.ui.font.FontRender;
 import com.me.infinity.loop.util.interfaces.Util;
 import com.me.infinity.loop.util.renders.helper.RoundedShader;
 import com.me.infinity.loop.util.renders.shaders.PNGtoResourceLocation;

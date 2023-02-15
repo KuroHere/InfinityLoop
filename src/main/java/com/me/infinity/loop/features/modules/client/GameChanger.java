@@ -70,22 +70,22 @@ public class GameChanger
                 float curValue = amount.getValue();
 
                 if (!mc.entityRenderer.isShaderActive() && mc.world != null) {
-                    mc.entityRenderer.loadShader(new ResourceLocation("motionblur", "motionblur"));
+                    mc.entityRenderer.loadShader(new ResourceLocation("minecraft", "post/lunar_motionblur.json"));
                 }
 
                 if (domainResourceManagers == null) {
                     //domainResourceManagers =  ((SimpleReloadableResourceManager) mc.resourceManager).domainResourceManagers;
                 }
 
-                if (!domainResourceManagers.containsKey("motionblur")) {
-                    domainResourceManagers.put("motionblur", new MotionBlurResourceManager());
+                if (!domainResourceManagers.containsKey("lunar_motionblur.json")) {
+                    domainResourceManagers.put("lunar_motionblur.json", new MotionBlurResourceManager());
                 }
 
                 if (curValue != lastValue) {
                     Command.sendMessage("Motion Blur Reset!");
-                    domainResourceManagers.remove("motionblur");
-                    domainResourceManagers.put("motionblur", new MotionBlurResourceManager());
-                    mc.entityRenderer.loadShader(new ResourceLocation("motionblur", "motionblur"));
+                    domainResourceManagers.remove("lunar_motionblur.json");
+                    domainResourceManagers.put("lunar_motionblur.json", new MotionBlurResourceManager());
+                    mc.entityRenderer.loadShader(new ResourceLocation("minecraft", "lunar_motionblur.json"));
                 }
 
                 lastValue = curValue;

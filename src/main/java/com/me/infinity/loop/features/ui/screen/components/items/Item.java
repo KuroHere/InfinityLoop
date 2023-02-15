@@ -1,7 +1,9 @@
-package com.me.infinity.loop.features.gui.screen.components.items;
+package com.me.infinity.loop.features.ui.screen.components.items;
 
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.setting.Setting;
+
+import java.awt.*;
 
 public class Item
         extends Feature {

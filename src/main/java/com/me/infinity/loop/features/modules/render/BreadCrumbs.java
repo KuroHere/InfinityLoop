@@ -3,6 +3,7 @@ package com.me.infinity.loop.features.modules.render;
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.Render3DEvent;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.setting.ColorSetting;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.manager.AccessorRenderManager;
 import com.me.infinity.loop.util.worlds.MathUtil;
@@ -19,10 +20,7 @@ public class BreadCrumbs extends Module {
     ArrayList<BreadCrumb> bcs = new ArrayList<>();
 
     public Setting<Mode> mode = this.register(new Setting<>("Mode", Mode.DEFAULT));
-    public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255, v -> this.mode.getValue() == Mode.DEFAULT));
-    public Setting<Integer> green = register(new Setting<>("Green", 255, 0, 255, v -> this.mode.getValue() == Mode.DEFAULT));
-    public Setting<Integer> blue = register(new Setting<>("Blue", 255, 0, 255, v -> this.mode.getValue() == Mode.DEFAULT));
-    public Setting<Integer> lAlpha = register(new Setting<>("Alpha", 255, 0, 255, v -> this.mode.getValue() == Mode.DEFAULT));
+    public Setting<ColorSetting> color  = register(new Setting<>("Alpha", new ColorSetting(0x8800FF00), v -> this.mode.getValue() == Mode.DEFAULT));
     public Setting<Float> lineWidht = register(new Setting<>("LineWidth", Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(5.0f), v -> this.mode.getValue() == Mode.DEFAULT));
     public Setting<Integer> tickClear = register(new Setting<>("TickClear",  25, 1, 45));
     public Setting<Float> fadeSpeed = register(new Setting<>("FadeSpeed", Float.valueOf(0.4f), Float.valueOf(0.1f), Float.valueOf(2.0f)));
@@ -99,7 +97,7 @@ public class BreadCrumbs extends Module {
                 if (crumb.getTimer().passed(time)) {
                     crumb.update(bcs);
                 }
-                GL11.glColor4f(this.red.getValue() / 255.0F, this.green.getValue() / 255.0f, this.blue.getValue() / 255.0f, ( float ) (this.lAlpha.getValue() / 255f));
+                GL11.glColor4f(color.getValue().getRed() / 255.0F, color.getValue().getGreen() / 255.0f, color.getValue().getBlue() / 255.0f, ( float ) (crumb.getAlpha() / 255f));
                 putVertex3d(getRenderPos(crumb.getVector().x, crumb.getVector().y + 0.3, crumb.getVector().z));
             }
             GL11.glEnd();
@@ -126,7 +124,7 @@ public class BreadCrumbs extends Module {
             timer = new Timer();
             timer.reset();
             this.vector = vector;
-            this.alpha = lAlpha.getValue();
+            this.alpha = color.getValue().getAlpha();
         }
 
         public Timer getTimer() {
@@ -146,7 +144,7 @@ public class BreadCrumbs extends Module {
                 alpha = 0;
                 arrayList.remove(this);
             }
-            this.alpha -= lAlpha.getValue() / fadeSpeed.getValue() * InfinityLoop.getFpsManagement().getFrametime();
+            this.alpha -= color.getValue().getAlpha() / fadeSpeed.getValue() * InfinityLoop.getFpsManagement().getFrametime();
         }
 
     }

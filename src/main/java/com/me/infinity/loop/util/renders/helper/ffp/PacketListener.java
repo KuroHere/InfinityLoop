@@ -1,4 +1,4 @@
-package com.me.infinity.loop.util.ffp;
+package com.me.infinity.loop.util.renders.helper.ffp;
 
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.Packet;

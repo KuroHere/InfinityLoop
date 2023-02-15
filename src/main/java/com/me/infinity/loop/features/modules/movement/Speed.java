@@ -40,7 +40,7 @@ public class Speed
     private int vanillaCounter = 0;
 
     public Speed() {
-        super("Speed", "Makes you faster", Module.Category.MOVEMENT, true, false, false);
+        super("Speed", "Makes you faster", Category.MOVEMENT, true, false, false);
         this.setInstance();
     }
 

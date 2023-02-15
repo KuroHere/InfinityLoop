@@ -1,25 +1,18 @@
-package com.me.infinity.loop.util.dism;
+package com.me.infinity.loop.util.renders.helper.dism;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.render.Dismemberment;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
-
-import javax.annotation.Nullable;
-import java.lang.reflect.Method;
 
 
 public class RenderGib extends Render<EntityGib>

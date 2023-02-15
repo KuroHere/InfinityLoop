@@ -1,9 +1,10 @@
-package com.me.infinity.loop.features.gui.screen.components.items.buttons;
+package com.me.infinity.loop.features.ui.screen.components.items.buttons;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.features.gui.font.FontRender;
-import com.me.infinity.loop.features.gui.screen.components.Component;
-import com.me.infinity.loop.features.gui.screen.components.items.Item;
+import com.me.infinity.loop.features.command.Command;
+import com.me.infinity.loop.features.ui.font.FontRender;
+import com.me.infinity.loop.features.ui.screen.components.Component;
+import com.me.infinity.loop.features.ui.screen.components.items.Item;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
@@ -81,16 +82,15 @@ public class ModuleButton
             }
             if (this.isHovering(mouseX, mouseY)) {
                 if (ClickGui.getInstance().description.getValue() == ClickGui.Mode.Frame) {
-                    RoundedShader.drawGradientRound(15.0f, 25.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 3f, outline, outline, outline, outline);
+                    RoundedShader.drawGradientRound(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 3f, outline, outline, outline, outline);
                     if (ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
-                        RoundedShader.drawRoundOutline(15.0f, 25.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, rainbow, rainbow);
+                        RoundedShader.drawRoundOutline(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, rainbow, rainbow);
                     } else {
-                        RoundedShader.drawRoundOutline(15.0f, 25.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, fillcolor, fillcolor);
+                        RoundedShader.drawRoundOutline(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, fillcolor, fillcolor);
                     }
                     InfinityLoop.textManager.drawStringWithShadow(this.module.getDescription(), 17.0f, 26.0f, -1);
-
                 } else if (ClickGui.getInstance().description.getValue() == ClickGui.Mode.Folow) {
-                    RenderUtil.drawRect((float) (mouseX + 10), (float) mouseY, (float) (mouseX + 10 + this.renderer.getStringWidth(this.module.getDescription())), (float) (mouseY + 10), new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB());
+                    RenderUtil.drawRect((float) (mouseX + 10), (float) mouseY, (float) (mouseX + 10 + this.renderer.getStringWidth(this.module.getDescription())), (float) (mouseY + 10), new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), (ClickGui.getInstance().hoverAlpha.getValue() / 2)).getRGB());
                     RenderUtil.drawBorder((float) (mouseX + 10), (float) mouseY, (float) this.renderer.getStringWidth(this.module.getDescription()), 10.0f, new Color(0xCD000000));
                     this.renderer.drawStringWithShadow(this.module.getDescription(), (float) (mouseX + 10), (float) mouseY, -1);
                 }
@@ -105,8 +105,6 @@ public class ModuleButton
                         item.setHeight(15);
                         item.setWidth(this.width - 9);
                         item.drawScreen(mouseX, mouseY, partialTicks);
-                        if (item instanceof ColorPicker)
-                            item.setHeight(56);
                     }
                     item.update();
                 }
@@ -123,6 +121,14 @@ public class ModuleButton
             if (mouseButton == 1 && this.isHovering(mouseX, mouseY)) {
                 this.subOpen = !this.subOpen;
                 mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+            }else if(mouseButton == 2) {
+                if(module.isDrawn()) {
+                    module.setUndrawn();
+                    Command.sendMessage(module.getName() + " is no longer Drawn.");
+                }else {
+                    module.setDrawn(false);
+                    Command.sendMessage(module.getName() + " is now Drawn.");
+                }
             }
             if (this.subOpen) {
                 for (Item item : this.items) {

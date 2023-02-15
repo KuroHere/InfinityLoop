@@ -1,14 +1,17 @@
-package com.me.infinity.loop.features.gui.screen.components.items.buttons;
+package com.me.infinity.loop.features.ui.screen.components.items.buttons;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.renders.RenderUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
-import com.me.infinity.loop.features.gui.InfinityLoopGui;
+import com.me.infinity.loop.features.ui.InfinityLoopGui;
 import com.me.infinity.loop.features.setting.Bind;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
 
 public class BindButton
         extends Button {
@@ -29,6 +32,7 @@ public class BindButton
         } else {
             InfinityLoop.textManager.drawStringWithShadow(this.setting.getName() + " " + ChatFormatting.GRAY + this.setting.getValue().toString().toUpperCase(), this.x + 2.3f, this.y - 1.7f - (float) InfinityLoopGui.getClickGui().getTextOffset(), this.getState() ? -1 : -5592406);
         }
+
     }
 
     @Override

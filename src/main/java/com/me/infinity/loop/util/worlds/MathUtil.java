@@ -213,5 +213,13 @@ public class MathUtil
     public static double interpolate(double from, double to, double difference) {
         return from + (to - from) * difference;
     }
+
+    // linearly maps value from the range (a..b) to (c..d)
+    public static double map(double value, double a, double b, double c, double d) {
+        // first map value from (a..b) to (0..1)
+        value = (value - a) / (b - a);
+        // then map it from (0..1) to (c..d) and return it
+        return c + value * (d - c);
+    }
 }
 

@@ -1,7 +1,7 @@
-package com.me.infinity.loop.features.gui.screen.components.items.buttons;
+package com.me.infinity.loop.features.ui.screen.components.items.buttons;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.features.gui.InfinityLoopGui;
+import com.me.infinity.loop.features.ui.InfinityLoopGui;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.interfaces.Util;

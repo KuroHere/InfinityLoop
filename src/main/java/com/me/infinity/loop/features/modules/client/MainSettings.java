@@ -13,7 +13,7 @@ public class MainSettings extends Module {
     public Setting<Boolean> showcapes = this.register(new Setting<>("Capes", true));
     public Setting<Boolean> DownloadCapes = this.register(new Setting<>("DownloadCapes", true));
     public Setting<Boolean> notifyToggles = this.register(new Setting<>("NotifyToggles", false));
-    public Setting<String> prefix = this.register(new Setting<String>("Prefix", "-"));
+    public Setting<String> prefix = this.register(new Setting<String>("Prefix", "."));
     public Setting<Boolean> mainMenu = this.register(new Setting<>("MainMenu", true));
     public Setting<ShaderModeEn> shaderMode = register(new Setting("ShaderMode", ShaderModeEn.Smoke2, v -> this.mainMenu.getValue()));
 

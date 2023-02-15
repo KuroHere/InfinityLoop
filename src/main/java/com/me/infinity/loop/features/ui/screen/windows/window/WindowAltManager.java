@@ -1,4 +1,4 @@
-package com.me.infinity.loop.features.gui.screen.windows.window;
+package com.me.infinity.loop.features.ui.screen.windows.window;
 
 public class WindowAltManager {
     public static void drawScreen(int mouseX, int mouseY, float partialTicks) {

@@ -1,6 +1,6 @@
-package com.me.infinity.loop.features.gui.screen.windows.window.parts;
+package com.me.infinity.loop.features.ui.screen.windows.window.parts;
 
-import com.me.infinity.loop.features.gui.font.FontRender;
+import com.me.infinity.loop.features.ui.font.FontRender;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.manager.ConfigManager;
 import com.me.infinity.loop.util.interfaces.Util;

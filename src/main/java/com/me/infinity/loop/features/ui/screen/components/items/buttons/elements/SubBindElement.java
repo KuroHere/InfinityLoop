@@ -1,6 +1,6 @@
-package com.me.infinity.loop.features.gui.screen.components.items.buttons.elements;
+package com.me.infinity.loop.features.ui.screen.components.items.buttons.elements;
 
-import com.me.infinity.loop.features.gui.font.FontRender;
+import com.me.infinity.loop.features.ui.font.FontRender;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.features.setting.SubBind;
 import com.mojang.realmsclient.gui.ChatFormatting;

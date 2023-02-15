@@ -1,6 +1,6 @@
-package com.me.infinity.loop.features.gui.screen.particles;
+package com.me.infinity.loop.features.ui.screen.particles;
 
-import com.me.infinity.loop.features.gui.InfinityLoopGui;
+import com.me.infinity.loop.features.ui.InfinityLoopGui;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.util.renders.ColorUtil;

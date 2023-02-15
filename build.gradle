@@ -8,8 +8,10 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
         classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.3'
+        classpath group: 'org.jetbrains.kotlin', name: 'kotlin-gradle-plugin', version: "${kotlin_version}"
     }
 }
+apply plugin: 'kotlin'
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.github.johnrengelman.shadow'
@@ -24,6 +26,18 @@ archivesBaseName = "loop"
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 minecraft {
@@ -72,6 +86,13 @@ dependencies {
     compile 'club.minnced:java-discord-rpc:2.0.2'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
 
+    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib", version: kotlin_version
+    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk7", version: kotlin_version
+    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk8", version: kotlin_version
+    compile group: "org.jetbrains.kotlin", name: "kotlin-reflect", version: kotlin_version
+
+    compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-core", version: coroutines_version
+    compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-jdk8", version: coroutines_version
 }
 
 processResources {
@@ -94,6 +115,13 @@ shadowJar {
         include(dependency('club.minnced:java-discord-rpc'))
         include(dependency('com.googlecode.json-simple:json-simple:1.1.1'))
         include(dependency('org.spongepowered:mixin'))
+        include(dependency("org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"))
+        include(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin_version}"))
+        include(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"))
+        include(dependency("org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}"))
+        include(dependency("org.jetbrains:annotations:${annotations_version}"))
+        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"))
+        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutines_version}"))
     }
     exclude 'dummyThing'
     exclude 'LICENSE.txt'

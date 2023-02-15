@@ -1,6 +1,6 @@
-package com.me.infinity.loop.features.gui.screen.components.items.buttons;
+package com.me.infinity.loop.features.ui.screen.components.items.buttons;
 
-import com.me.infinity.loop.features.gui.font.FontRender;
+import com.me.infinity.loop.features.ui.font.FontRender;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.setting.ColorSetting;
 import com.me.infinity.loop.features.setting.Setting;

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class CSGui
         extends Module {
     private static CSGui INSTANCE = new CSGui();
-    public Setting<String> prefix = this.register(new Setting<>("Prefix", "-"));
+    public Setting<String> prefix = this.register(new Setting<>("Prefix", "."));
     public Setting<Boolean> description= this.register(new Setting("Description", true));
     public Setting<Boolean> bindText = register(new Setting("ShowBind",false));
     public Setting<Boolean> openCloseChange = register(new Setting("Open/Close",true));

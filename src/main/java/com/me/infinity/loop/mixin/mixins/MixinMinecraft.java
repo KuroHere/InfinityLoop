@@ -2,7 +2,7 @@ package com.me.infinity.loop.mixin.mixins;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.event.events.KeyEvent;
-import com.me.infinity.loop.features.clickGui.mainmenu.InfinityLoopMenu;
+import com.me.infinity.loop.features.ui.mainmenu.InfinityLoopMenu;
 import com.me.infinity.loop.features.modules.client.MainSettings;
 import com.me.infinity.loop.features.modules.player.MultiTask;
 import com.me.infinity.loop.util.minecraft.IMinecraft;

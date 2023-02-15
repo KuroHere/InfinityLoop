@@ -1,14 +1,14 @@
-package com.me.infinity.loop.features.gui;
+package com.me.infinity.loop.features.ui;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
-import com.me.infinity.loop.features.gui.screen.anchor.AnchorPoint;
-import com.me.infinity.loop.features.gui.screen.components.Component;
-import com.me.infinity.loop.features.gui.screen.components.items.Item;
-import com.me.infinity.loop.features.gui.screen.components.items.buttons.ModuleButton;
-import com.me.infinity.loop.features.gui.screen.particles.ParticleSystem;
-import com.me.infinity.loop.features.gui.screen.particles.ParticlesComponent;
-import com.me.infinity.loop.features.gui.screen.taskbar.Taskbar;
+import com.me.infinity.loop.features.ui.screen.anchor.AnchorPoint;
+import com.me.infinity.loop.features.ui.screen.components.Component;
+import com.me.infinity.loop.features.ui.screen.components.items.Item;
+import com.me.infinity.loop.features.ui.screen.components.items.buttons.ModuleButton;
+import com.me.infinity.loop.features.ui.screen.particles.ParticleSystem;
+import com.me.infinity.loop.features.ui.screen.particles.ParticlesComponent;
+import com.me.infinity.loop.features.ui.screen.taskbar.Taskbar;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
@@ -17,9 +17,6 @@ import com.me.infinity.loop.util.renders.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 
 import java.awt.*;
@@ -30,7 +27,6 @@ import java.util.Comparator;
 public class InfinityLoopGui
         extends GuiScreen {
     private static InfinityLoopGui INSTANCE;
-    ScaledResolution resolution = new ScaledResolution(mc);
     private final Taskbar taskbar = new Taskbar();
     public ParticleSystem particleSystem;
     private ParticlesComponent particlesComponent;
@@ -67,7 +63,7 @@ public class InfinityLoopGui
     private void load() {
         int x = -80;
         for (final Module.Category category : InfinityLoop.moduleManager.getCategories()) {
-            this.components.add(new Component(category.getName(), x += 96, 40, true) {
+            this.components.add(new Component(category.getName(), x += 96, 50, true) {
 
                 @Override
                 public void setupItems() {
@@ -84,7 +80,7 @@ public class InfinityLoopGui
     }
 
     public void updateModule(final Module module) {
-        for (final com.me.infinity.loop.features.gui.screen.components.Component component : this.components) {
+        for (final com.me.infinity.loop.features.ui.screen.components.Component component : this.components) {
             for (final Item item : component.getItems()) {
                 if (item instanceof ModuleButton) {
                     final ModuleButton button = (ModuleButton) item;
@@ -113,17 +109,18 @@ public class InfinityLoopGui
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.checkMouseWheel();
+        ScaledResolution rs = new ScaledResolution(mc);
         if (ClickGui.getInstance().background.getValue()) {
             if (ClickGui.getInstance().dark.getValue()) {
                 this.drawDefaultBackground();
             }
             if (ClickGui.getInstance().blur.getValue()) {
-                RenderUtil.drawBlurryRect(0, 0, resolution.getScaledWidth(), resolution.getScaledHeight(), ClickGui.getInstance().blurAmount.getValue(), ClickGui.getInstance().blurSize.getValue());
+                RenderUtil.drawBlurryRect(0, 0, rs.getScaledWidth(), rs.getScaledHeight(), ClickGui.getInstance().blurAmount.getValue(), ClickGui.getInstance().blurSize.getValue());
             }
             if (ClickGui.getInstance().gradiant.getValue()) {
-                RenderUtil.drawGradientRect(0, 0, resolution.getScaledWidth(), resolution.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue(), 0, new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().gradiantAlpha.getValue()).getRGB());
+                RenderUtil.drawGradientRect(0, 0, rs.getScaledWidth(), rs.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue(), 0, new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().gradiantAlpha.getValue()).getRGB());
                 if (ClickGui.getInstance().gradiant.getValue() && ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
-                    RenderUtil.drawGradientRect(0, 0, resolution.getScaledWidth(), resolution.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue().intValue(), 0, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : this.color);
+                    RenderUtil.drawGradientRect(0, 0, rs.getScaledWidth(), rs.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue().intValue(), 0, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : this.color);
                 }
             }
             if (this.particleSystem != null && ClickGui.getInstance().particles.getValue()) {
@@ -169,7 +166,7 @@ public class InfinityLoopGui
         return false;
     }
 
-    public final ArrayList<com.me.infinity.loop.features.gui.screen.components.Component> getComponents() {
+    public final ArrayList<Component> getComponents() {
         return this.components;
     }
 
