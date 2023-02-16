@@ -6,7 +6,7 @@ import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.player.DamageUtil;
 import com.me.infinity.loop.util.player.EntityUtil;
-import com.me.infinity.loop.util.worlds.MathUtil;
+import com.me.infinity.loop.util.client.MathUtil;
 import com.me.infinity.loop.util.worlds.Timer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

@@ -11,7 +11,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.worlds.MathUtil;
+import com.me.infinity.loop.util.client.MathUtil;
 import com.me.infinity.loop.util.renders.RenderUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;

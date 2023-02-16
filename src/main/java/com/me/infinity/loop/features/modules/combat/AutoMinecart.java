@@ -7,7 +7,7 @@ import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.minecraft.BlockUtil;
 import com.me.infinity.loop.util.minecraft.InventoryUtil;
-import com.me.infinity.loop.util.worlds.MathUtil;
+import com.me.infinity.loop.util.client.MathUtil;
 import net.minecraft.block.BlockWeb;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityMinecartTNT;

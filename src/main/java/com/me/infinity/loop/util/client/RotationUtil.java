@@ -1,7 +1,6 @@
-package com.me.infinity.loop.util.minecraft;
+package com.me.infinity.loop.util.client;
 
 import com.me.infinity.loop.features.modules.client.GameChanger;
-import com.me.infinity.loop.util.worlds.MathUtil;
 import com.me.infinity.loop.util.interfaces.Util;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

@@ -7,7 +7,7 @@ import com.me.infinity.loop.util.player.EntityUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.worlds.MathUtil;
+import com.me.infinity.loop.util.client.MathUtil;
 import com.me.infinity.loop.util.worlds.Timer;
 import com.me.infinity.loop.util.renders.ColorUtil;
 import com.me.infinity.loop.util.renders.RenderUtil;

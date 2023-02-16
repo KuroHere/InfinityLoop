@@ -1,6 +1,6 @@
 package com.me.infinity.loop.util.`kotlins(unused)`
 
-import com.me.infinity.loop.util.worlds.GeometryMasks
+import com.me.infinity.loop.util.client.GeometryMasks
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.Tessellator

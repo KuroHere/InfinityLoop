@@ -6,7 +6,7 @@ import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.renders.Drawable;
 import com.me.infinity.loop.util.renders.RenderUtil;
 import com.me.infinity.loop.util.renders.helper.RoundedShader;
-import com.me.infinity.loop.util.worlds.MathUtil;
+import com.me.infinity.loop.util.client.MathUtil;
 
 import java.awt.*;
 

@@ -28,9 +28,6 @@ public class WindowsGui extends GuiScreen {
         INSTANCE = new WindowsGui();
     }
 
-
-
-
     public WindowsGui() {
         this.setInstance();
         this.load();

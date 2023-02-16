@@ -1,4 +1,4 @@
-package com.me.infinity.loop.features.ui.screen.taskbar;
+package com.me.infinity.loop.features.ui.screen.taskbar.element;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.Module;
@@ -8,7 +8,9 @@ import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.util.interfaces.Util;
 import com.me.infinity.loop.util.renders.ColorUtil;
+import com.me.infinity.loop.util.renders.Render2DUtil;
 import com.me.infinity.loop.util.renders.RenderUtil;
+import com.me.infinity.loop.util.renders.builder.Render2DBuilder;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -22,7 +24,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Taskbar extends DrawableComponent {
     private int color;
-    public static String description = "";
+
 
     @Override
     public void drawComponent() {
@@ -56,20 +58,6 @@ public class Taskbar extends DrawableComponent {
         float scaledWidth = (InfinityLoop.textManager.getStringWidth(mc.player.getName()) + 8) * 2.75F;
 
         RenderUtil.drawRect(0, resolution.getScaledHeight() - 44, scaledWidth, 44, new Color(23, 23, 29).getRGB());
-
-        // time and date
-        glScaled(1.25, 1.25, 1.25); {
-            float scaledX = 7 * 0.3F;
-            float scaledY = (resolution.getScaledHeight() - 35) * 0.3F;
-            String time = ChatFormatting.WHITE + (new SimpleDateFormat("h:mm:s a")).format(new Date());
-            //String date = ChatFormatting.WHITE + (new SimpleDateFormat("d/m/y")).format(new Date());
-            mc.fontRenderer.drawString(time, scaledX, 0, -1, false);
-            //mc.fontRenderer.drawString(date, scaledX * 2, scaledY * 2, -1, false);
-        }
-
-        glScaled(0.3F, 0.3F, 0.3F);
-
-        glPopMatrix();
 
         // player info
         glScaled(2.75, 2.75, 2.75); {

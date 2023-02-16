@@ -8,7 +8,7 @@ import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.features.modules.misc.AutoGG;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.player.EntityUtil;
-import com.me.infinity.loop.util.worlds.MathUtil;
+import com.me.infinity.loop.util.client.MathUtil;
 import com.me.infinity.loop.util.worlds.Timer;
 import com.me.infinity.loop.util.renders.ColorUtil;
 import com.me.infinity.loop.util.renders.RenderUtil;

@@ -5,7 +5,7 @@ import com.me.infinity.loop.features.ui.screen.components.Component;
 public final class ParticlesComponent extends Component {
 
     public ParticlesComponent() {
-        super("Particles");
+        super();
         this.setVisible(true);
     }
 }

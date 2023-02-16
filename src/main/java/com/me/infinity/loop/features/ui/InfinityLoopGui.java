@@ -8,7 +8,8 @@ import com.me.infinity.loop.features.ui.screen.components.items.Item;
 import com.me.infinity.loop.features.ui.screen.components.items.buttons.ModuleButton;
 import com.me.infinity.loop.features.ui.screen.particles.ParticleSystem;
 import com.me.infinity.loop.features.ui.screen.particles.ParticlesComponent;
-import com.me.infinity.loop.features.ui.screen.taskbar.Taskbar;
+import com.me.infinity.loop.features.ui.screen.taskbar.TaskbarStage;
+import com.me.infinity.loop.features.ui.screen.taskbar.element.Taskbar;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
@@ -27,7 +28,8 @@ import java.util.Comparator;
 public class InfinityLoopGui
         extends GuiScreen {
     private static InfinityLoopGui INSTANCE;
-    private final Taskbar taskbar = new Taskbar();
+    private final TaskbarStage taskbarStage = new TaskbarStage();
+
     public ParticleSystem particleSystem;
     private ParticlesComponent particlesComponent;
     private int color;
@@ -131,7 +133,7 @@ public class InfinityLoopGui
             }
         }
         this.components.forEach(components -> components.drawScreen(mouseX, mouseY, partialTicks));
-        taskbar.drawComponent();
+        taskbarStage.drawComponent();
     }
 
     public void updateScreen() {

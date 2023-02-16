@@ -1,6 +1,6 @@
 package com.me.infinity.loop.util.phobos;
 
-import com.me.infinity.loop.util.worlds.MathUtil;
+import com.me.infinity.loop.util.client.MathUtil;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 

@@ -88,7 +88,7 @@ public class ModuleButton
                     } else {
                         RoundedShader.drawRoundOutline(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, fillcolor, fillcolor);
                     }
-                    InfinityLoop.textManager.drawStringWithShadow(this.module.getDescription(), 17.0f, 26.0f, -1);
+                    InfinityLoop.textManager.drawStringWithShadow(this.module.getDescription(), 17.0f, 36.0f, -1);
                 } else if (ClickGui.getInstance().description.getValue() == ClickGui.Mode.Folow) {
                     RenderUtil.drawRect((float) (mouseX + 10), (float) mouseY, (float) (mouseX + 10 + this.renderer.getStringWidth(this.module.getDescription())), (float) (mouseY + 10), new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), (ClickGui.getInstance().hoverAlpha.getValue() / 2)).getRGB());
                     RenderUtil.drawBorder((float) (mouseX + 10), (float) mouseY, (float) this.renderer.getStringWidth(this.module.getDescription()), 10.0f, new Color(0xCD000000));

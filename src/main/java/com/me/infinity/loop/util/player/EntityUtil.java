@@ -3,7 +3,7 @@ package com.me.infinity.loop.util.player;
 import com.me.infinity.loop.InfinityLoop;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.util.minecraft.BlockUtil;
-import com.me.infinity.loop.util.worlds.MathUtil;
+import com.me.infinity.loop.util.client.MathUtil;
 import com.me.infinity.loop.util.interfaces.Util;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;

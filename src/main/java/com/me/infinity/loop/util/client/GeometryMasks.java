@@ -1,4 +1,4 @@
-package com.me.infinity.loop.util.worlds;
+package com.me.infinity.loop.util.client;
 
 import net.minecraft.util.EnumFacing;
 

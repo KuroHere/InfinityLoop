@@ -1,8 +1,8 @@
 package com.me.infinity.loop.manager;
 
 import com.me.infinity.loop.features.Feature;
-import com.me.infinity.loop.util.worlds.MathUtil;
-import com.me.infinity.loop.util.minecraft.RotationUtil;
+import com.me.infinity.loop.util.client.MathUtil;
+import com.me.infinity.loop.util.client.RotationUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;

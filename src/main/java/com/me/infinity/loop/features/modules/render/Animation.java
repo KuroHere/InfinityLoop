@@ -3,6 +3,8 @@ package com.me.infinity.loop.features.modules.render;
 import com.me.infinity.loop.event.events.PacketEvent;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
+import com.me.infinity.loop.util.interfaces.Util;
+import net.minecraft.init.Items;
 import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -11,7 +13,7 @@ public class Animation extends Module {
     private static Animation INSTANCE = new Animation();
     public Setting<Mode> mode = this.register(new Setting("OldAnimations", Mode.NoDelay));
     public Setting<WhatHand> whatHand = this.register(new Setting<>("Swing", WhatHand.Mainhand));
-    public Setting<Boolean> swing = register(new Setting<>("SwingHand", false));
+    public Setting<Boolean> swing = register(new Setting<>("customSwingAnimation", false));
     public Setting<Integer> speed = register(new Setting<>("Speed", 13, 1, 20,v -> this.swing.getValue()));
 
     public Animation() {
@@ -41,6 +43,7 @@ public class Animation extends Module {
             Animation.mc.entityRenderer.itemRenderer.equippedProgressMainHand = 1.0f;
             Animation.mc.entityRenderer.itemRenderer.itemStackMainHand = Animation.mc.player.getHeldItemMainhand();
         }
+
     }
 
     @SubscribeEvent

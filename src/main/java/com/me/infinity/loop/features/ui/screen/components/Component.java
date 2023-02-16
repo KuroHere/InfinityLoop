@@ -9,8 +9,9 @@ import com.me.infinity.loop.features.ui.screen.components.items.buttons.Button;
 import com.me.infinity.loop.features.modules.client.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.util.renders.ColorUtil;
+import com.me.infinity.loop.util.renders.Render2DUtil;
 import com.me.infinity.loop.util.renders.RenderUtil;
-import com.me.infinity.loop.util.worlds.MathUtil;
+import com.me.infinity.loop.util.renders.builder.Render2DBuilder;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -47,7 +48,7 @@ public abstract class Component
         this.setupItems();
     }
 
-    public Component(String particles) {
+    public Component() {
     }
 
     public void setupItems() {
@@ -72,7 +73,7 @@ public abstract class Component
         if (ClickGui.getInstance().topText.getValue() == ClickGui.Locate.Left) {
             InfinityLoop.textManager.drawString(this.getName(), (float) this.x + 3.0f, (float) this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, true);
         } else if (ClickGui.getInstance().topText.getValue() == ClickGui.Locate.Middle) {
-            InfinityLoop.textManager.drawString(this.getName(),(this.x + this.width) / 2, (float) this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, true);
+            InfinityLoop.textManager.drawString(this.getName(), (this.x + this.width) / 2, (float) this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, true);
         } else if (ClickGui.getInstance().topText.getValue() == ClickGui.Locate.Right) {
             InfinityLoop.textManager.drawString(this.getName(), (float) this.x + this.width / 4.0f, (float) this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1, true);
         }
@@ -82,7 +83,7 @@ public abstract class Component
                 InfinityLoop.textManager.drawStringWithShadow(module.getDescription(), (new ScaledResolution(mc).getScaledWidth() / 2) - (InfinityLoop.textManager.getStringWidth(description) / 2) + 20, 10, -1);
             }
         }
-            if (this.open) {
+        if (this.open) {
             float y = (float) (this.getY() + this.getHeight()) - 3.0f;
             for (Item item : this.getItems()) {
                 Component.counter1[0] = counter1[0] + 1;
@@ -213,5 +214,6 @@ public abstract class Component
         }
         return height;
     }
+
 }
 
