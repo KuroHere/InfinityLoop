@@ -5,8 +5,8 @@
     "description": "1.12.2 Anarchy PvP Client",
     "version": "0.0.3",
     "mcversion": "1.12.2",
-    "logoFile": "loop:imgs/logotransparent.png",
-    "url": "   ",
+    "logoFile": "Logo.png",
+    "url": "https://discord.gg/AdFEggFXfW",
     "updateUrl": "",
     "authorList": [
       "Kuro Here"
