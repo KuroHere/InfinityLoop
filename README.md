@@ -11,8 +11,8 @@
 - Default ClickGui keybind - **"P"**
 - Default prefix  - **"."**
 
-~~Everything is CUSTOM!!~~
+## A couple of words to say:
 
-### **Very good client**
-
-only make render module!
+- This is oyvey paste, meme client was made by me(**Kuro_Here**).
+- 90% code is from other opensrc client.
+- Don't expect too much from this client.
