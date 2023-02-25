@@ -11,6 +11,16 @@
 - Default ClickGui keybind - **"P"**
 - Default prefix  - **"."**
 
+## Showcase:
+<details>
+ <summary>Images</summary>
+
+ ![](will have soon!)
+
+ ![](will have soon!)
+
+</details>
+
 ## A couple of words to say:
 
 - This is oyvey paste, meme client was made by me(**Kuro_Here**).
