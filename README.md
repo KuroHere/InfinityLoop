@@ -16,3 +16,5 @@
 - This is oyvey paste, meme client was made by me(**Kuro_Here**).
 - 90% code is from other opensrc client.
 - Don't expect too much from this client.
+
+`fck u guys`
