@@ -5,6 +5,12 @@
 
 ![Logo](https://github.com/KuroHere/InfinityLoop/blob/master/src/main/resources/assets/loop/imgs/logotransparent.png)
 
+## Info:
+- Minecraft version: forge 1.12.2
+- Client version: v6.9.4.20
+- Default ClickGui keybind - **"P"**
+- Default prefix  - **"."**
+
 ~~Everything is CUSTOM!!~~
 
 ### **Very good client**
