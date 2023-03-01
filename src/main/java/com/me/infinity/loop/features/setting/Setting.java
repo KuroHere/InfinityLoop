@@ -12,7 +12,6 @@ public class Setting<T> {
     private final String name;
     private final T defaultValue;
     public Minecraft mc;
-
     public boolean isOpen;
     private T value;
     private T plannedValue;
@@ -237,8 +236,6 @@ public class Setting<T> {
     public boolean isNumberSetting() {
         return this.value instanceof Double || this.value instanceof Integer || this.value instanceof Short || this.value instanceof Long || this.value instanceof Float;
     }
-
-
 
     public boolean isEnumSetting() {
         return !this.isNumberSetting() &&!(this.value instanceof PositionSetting) && !(this.value instanceof String) && !(this.value instanceof Parent) && !(this.value instanceof Bind) && !(this.value instanceof SubBind)&& !(this.value instanceof Character) && !(this.value instanceof Boolean);

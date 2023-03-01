@@ -5,7 +5,6 @@ import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.gui.InfinityLoopGui;
 import com.me.infinity.loop.features.gui.components.items.Item;
 import com.me.infinity.loop.features.gui.components.items.buttons.Button;
-import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.client.ClickGui.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.util.utils.maths.ImageUtil;
@@ -35,9 +34,6 @@ public abstract class Component
     private ResourceLocation movement = new ResourceLocation("textures/movement.png");
     private ResourceLocation player = new ResourceLocation("textures/player.png");
     private ResourceLocation render = new ResourceLocation("textures/render.png");
-
-    private Module module;
-    private int color;
     public boolean drag;
     private int x;
     private int y;

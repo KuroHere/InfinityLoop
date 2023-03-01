@@ -6,10 +6,7 @@ import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.modules.render.Search;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.features.setting.impl.Bind;
-import com.me.infinity.loop.features.setting.impl.EnumConverter;
-import com.me.infinity.loop.features.setting.impl.PositionSetting;
-import com.me.infinity.loop.features.setting.impl.SubBind;
+import com.me.infinity.loop.features.setting.impl.*;
 import com.me.infinity.loop.util.utils.Util;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
@@ -21,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import static com.me.infinity.loop.manager.ModuleManager.modules;
 
 
 public class ConfigManager implements Util {
@@ -160,7 +159,7 @@ public class ConfigManager implements Util {
 
     private static void parseModule(JsonObject object) throws NullPointerException {
 
-        Module module = InfinityLoop.moduleManager.modules.stream()
+        Module module = modules.stream()
                 .filter(m -> object.getAsJsonObject(m.getName()) != null)
                 .findFirst().orElse(null);
 
@@ -170,48 +169,58 @@ public class ConfigManager implements Util {
             for(Setting setting2 : module.getSettings()){
                 try {
                     switch (setting2.getType()) {
-                        case "Parent":
-                            continue;
-                        case "Boolean":
+                        case "Parent": {
+                            break;
+                        }
+                        case "Boolean": {
                             setting2.setValue(mobject.getAsJsonPrimitive(setting2.getName()).getAsBoolean());
-                            continue;
-                        case "Double":
+                            break;
+                        }
+                        case "Double": {
                             setting2.setValue(mobject.getAsJsonPrimitive(setting2.getName()).getAsDouble());
-                            continue;
-                        case "Float":
+                            break;
+                        }
+                        case "Float": {
                             setting2.setValue(mobject.getAsJsonPrimitive(setting2.getName()).getAsFloat());
-                            continue;
-                        case "Integer":
+                            break;
+                        }
+                        case "Integer": {
                             setting2.setValue(mobject.getAsJsonPrimitive(setting2.getName()).getAsInt());
-                            continue;
-                        case "String":
+                            break;
+                        }
+                        case "String": {
                             setting2.setValue(mobject.getAsJsonPrimitive(setting2.getName()).getAsString().replace("_", " "));
-                            continue;
-                        case "Bind":
+                            break;
+                        }
+                        case "Bind": {
                             JsonArray array4 = mobject.getAsJsonArray("Keybind");
                             setting2.setValue((new Bind.BindConverter()).doBackward(array4.get(0)));
                             ((Bind) setting2.getValue()).setHold(array4.get(1).getAsBoolean());
-                            continue;
-                        case "Color":
-                            JsonArray array = mobject.getAsJsonArray(setting2.getName());
-                            setting2.setValue(new Color(array.get(2).getAsInt(), true));
-                            continue;
-
-                        case "PositionSetting":
+                            break;
+                        }
+                        case "Color": {
+                            setting2.setValue(new Color(mobject.getAsInt(), true));
+                            break;
+                        }
+                        case "PositionSetting": {
                             JsonArray array3 = mobject.getAsJsonArray(setting2.getName());
                             ((PositionSetting) setting2.getValue()).setX(array3.get(0).getAsFloat());
                             ((PositionSetting) setting2.getValue()).setY(array3.get(1).getAsFloat());
-                            continue;
-                        case "SubBind":
+                            break;
+                        }
+                        case "SubBind": {
                             setting2.setValue((new SubBind.SubBindConverter()).doBackward(mobject.getAsJsonPrimitive(setting2.getName())));
-                            continue;
-                        case "Enum":
+                            break;
+                        }
+                        case "Enum": {
                             try {
                                 EnumConverter converter = new EnumConverter(((Enum) setting2.getValue()).getClass());
                                 Enum value = converter.doBackward(mobject.getAsJsonPrimitive(setting2.getName()));
                                 setting2.setValue((value == null) ? setting2.getDefaultValue() : value);
                             } catch (Exception ignored) {
                             }
+                            break;
+                        }
                     }
                 } catch (Exception e){
                     System.out.println(module.getName());
@@ -224,7 +233,7 @@ public class ConfigManager implements Util {
 
     private static JsonArray getModuleArray() {
         JsonArray modulesArray = new JsonArray();
-        for (Module m : InfinityLoop.moduleManager.modules) {
+        for (Module m : modules) {
             modulesArray.add(getModuleObject(m));
         }
         return modulesArray;
@@ -235,6 +244,10 @@ public class ConfigManager implements Util {
         JsonParser jp = new JsonParser();
 
         for (Setting setting : m.getSettings()) {
+            if (setting.getValue() instanceof Color) {
+                attrs.add(setting.getName(), jp.parse(String.valueOf(((Color) setting.getValue()).getRGB())));
+                continue;
+            }
             if (setting.isEnumSetting()) {
                 EnumConverter converter = new EnumConverter(((Enum) setting.getValue()).getClass());
                 attrs.add(setting.getName(), converter.doForward((Enum) setting.getValue()));
@@ -243,14 +256,6 @@ public class ConfigManager implements Util {
             if (setting.isStringSetting()) {
                 String str = (String) setting.getValue();
                 setting.setValue(str.replace(" ", "_"));
-            }
-            if (setting.getValue() instanceof Color) {
-                JsonArray array = new JsonArray();
-                array.add(new JsonPrimitive(((Color) setting.getValue()).getRGB()));
-                array.add(new JsonPrimitive(((Color) setting.getValue()).getTransparency()));
-                attrs.add(setting.getName(), array);
-                //attrs.add(setting.getName(), jp.parse(String.valueOf(((Color) setting.getValue()).getRGB())));
-                continue;
             }
             if(setting.isPositionSetting()){
                 JsonArray array = new JsonArray();

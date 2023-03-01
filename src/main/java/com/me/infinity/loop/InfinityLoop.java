@@ -1,13 +1,13 @@
 package com.me.infinity.loop;
 
 import com.me.infinity.loop.features.gui.font.CFontRenderer;
+import com.me.infinity.loop.manager.*;
 import com.me.infinity.loop.util.utils.IconUtils;
+import com.me.infinity.loop.util.utils.phobos.GlobalExecutor;
+import com.me.infinity.loop.util.utils.phobos.Sphere;
 import com.me.infinity.loop.util.utils.renders.helper.dism.EntityGib;
 import com.me.infinity.loop.util.utils.renders.helper.dism.RenderGib;
 import com.me.infinity.loop.util.utils.renders.helper.ffp.NetworkHandler;
-import com.me.infinity.loop.manager.*;
-import com.me.infinity.loop.util.utils.phobos.GlobalExecutor;
-import com.me.infinity.loop.util.utils.phobos.Sphere;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Util;
 import net.minecraftforge.common.MinecraftForge;
@@ -40,6 +40,7 @@ public class InfinityLoop {
     /*--------------------    LOGGER  ------------------------*/
 
     public static final Logger LOGGER;
+
     static {
         LOGGER = LogManager.getLogger("InfinityLoop");
         unloaded = false;
