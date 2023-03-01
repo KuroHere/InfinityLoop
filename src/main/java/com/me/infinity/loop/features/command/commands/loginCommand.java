@@ -1,7 +1,7 @@
 package com.me.infinity.loop.features.command.commands;
 
 import com.me.infinity.loop.features.command.Command;
-import com.me.infinity.loop.util.interfaces.Util;
+import com.me.infinity.loop.util.utils.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
 

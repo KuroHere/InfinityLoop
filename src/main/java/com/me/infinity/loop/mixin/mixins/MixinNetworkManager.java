@@ -1,7 +1,8 @@
 package com.me.infinity.loop.mixin.mixins;
 
+import com.me.infinity.loop.event.Event;
+import com.me.infinity.loop.event.events.network.EventPacket;
 import io.netty.channel.ChannelHandlerContext;
-import com.me.infinity.loop.event.events.PacketEvent;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraftforge.common.MinecraftForge;
@@ -12,21 +13,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = {NetworkManager.class})
 public class MixinNetworkManager {
-    @Inject(method = {"sendPacket(Lnet/minecraft/network/Packet;)V"}, at = {@At(value = "HEAD")}, cancellable = true)
-    private void onSendPacketPre(Packet<?> packet, CallbackInfo info) {
-        PacketEvent.Send event = new PacketEvent.Send(0, packet);
-        MinecraftForge.EVENT_BUS.post(event);
-        if (event.isCanceled()) {
-            info.cancel();
+    @Inject(method={"sendPacket(Lnet/minecraft/network/Packet;)V"}, at={@At(value="HEAD")}, cancellable=true)
+    private void onSendPacket(Packet<?> packet, CallbackInfo callbackInfo) {
+        EventPacket.Send event = new EventPacket.Send(Event.Stage.PRE, packet);
+        MinecraftForge.EVENT_BUS.post((Event)event);
+        if (event.isCancelled()) {
+            callbackInfo.cancel();
         }
     }
 
-    @Inject(method = {"channelRead0"}, at = {@At(value = "HEAD")}, cancellable = true)
-    private void onChannelReadPre(ChannelHandlerContext context, Packet<?> packet, CallbackInfo info) {
-        PacketEvent.Receive event = new PacketEvent.Receive(0, packet);
-        MinecraftForge.EVENT_BUS.post(event);
-        if (event.isCanceled()) {
-            info.cancel();
+    @Inject(method={"channelRead0"}, at={@At(value="HEAD")}, cancellable=true)
+    private void onReceivePacket(ChannelHandlerContext channelHandlerContext, Packet<?> packet, CallbackInfo callbackInfo) {
+        EventPacket.Receive event = new EventPacket.Receive(Event.Stage.POST, packet);
+        MinecraftForge.EVENT_BUS.post((Event)event);
+        if (event.isCancelled()) {
+            callbackInfo.cancel();
         }
     }
 }

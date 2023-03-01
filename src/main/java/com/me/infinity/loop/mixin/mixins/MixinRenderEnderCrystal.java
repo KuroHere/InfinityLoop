@@ -1,9 +1,9 @@
 package com.me.infinity.loop.mixin.mixins;
 
-import com.me.infinity.loop.features.modules.client.ClickGui;
+import com.me.infinity.loop.features.modules.client.ClickGui.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.features.modules.render.Wireframe;
-import com.me.infinity.loop.util.renders.ColorUtil;
+import com.me.infinity.loop.util.utils.renders.ColorUtil;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelEnderCrystal;
 import net.minecraft.client.renderer.GlStateManager;

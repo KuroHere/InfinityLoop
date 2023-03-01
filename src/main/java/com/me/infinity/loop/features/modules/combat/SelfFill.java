@@ -1,8 +1,9 @@
 package com.me.infinity.loop.features.modules.combat;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.minecraft.BlockUtil;
+import com.me.infinity.loop.util.utils.minecraft.BlockUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.EnumHand;
@@ -13,7 +14,7 @@ public class SelfFill
     private final Setting<Boolean> packet = this.register(new Setting<Boolean>("PacketPlace", Boolean.FALSE));
 
     public SelfFill() {
-        super("SelfFill", "SelfFills yourself in a hole.", Module.Category.COMBAT, true, false, true);
+        super("SelfFill", "SelfFills yourself in a hole.", ModuleCategory.COMBAT);
     }
 
     @Override
@@ -25,7 +26,7 @@ public class SelfFill
     @Override
     public void onUpdate() {
         BlockPos pos = new BlockPos(SelfFill.mc.player.posX, SelfFill.mc.player.posY, SelfFill.mc.player.posZ);
-        if (SelfFill.mc.world.getBlockState(pos.down()).getBlock() == Blocks.AIR && BlockUtil.isPositionPlaceable(pos.down(), false) == 3) {
+        if (SelfFill.mc.world.getBlockState(pos.down()).getBlock() == Blocks.AIR && BlockUtil.isPositionPlaceable(pos.down(), true, true)) {
             BlockUtil.placeBlock(pos.down(), EnumHand.MAIN_HAND, false, this.packet.getValue(), false);
         }
         if (SelfFill.mc.world.getBlockState(pos.down()).getBlock() == Blocks.OBSIDIAN) {

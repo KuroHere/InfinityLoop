@@ -1,10 +1,11 @@
 package com.me.infinity.loop.mixin.mixins;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.BlockEvent;
-import com.me.infinity.loop.event.events.ProcessRightClickBlockEvent;
+import com.me.infinity.loop.event.Event;
+import com.me.infinity.loop.event.events.player.ProcessRightClickBlockEvent;
+import com.me.infinity.loop.event.events.world.EventBlock;
+import com.me.infinity.loop.event.events.world.EventClickBlock;
 import com.me.infinity.loop.features.modules.misc.BlockTweaks;
-import com.me.infinity.loop.features.modules.player.Speedmine;
 import com.me.infinity.loop.features.modules.player.TpsSync;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,33 +30,29 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = {PlayerControllerMP.class})
 public class MixinPlayerControllerMP {
 
-    @Inject(method={"resetBlockRemoving"}, at={@At(value="HEAD")}, cancellable=true)
-    public void resetBlockRemovingHook(CallbackInfo info) {
-        if (Speedmine.getInstance().isOn() && Speedmine.getInstance().reset.getValue().booleanValue()) {
-            info.cancel();
-        }
-    }
     @Redirect(method = {"onPlayerDamageBlock"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/IBlockState;getPlayerRelativeBlockHardness(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)F"))
     public float getPlayerRelativeBlockHardnessHook(IBlockState state, EntityPlayer player, World worldIn, BlockPos pos) {
         return state.getPlayerRelativeBlockHardness(player, worldIn, pos) * (TpsSync.getInstance().isOn() && TpsSync.getInstance().mining.getValue() ? 1.0f / InfinityLoop.serverManager.getTpsFactor() : 1.0f);
     }
 
-    @Inject(method = {"clickBlock"}, at = {@At(value = "HEAD")}, cancellable = true)
+    @Inject(method={"clickBlock"}, at={@At(value="HEAD")}, cancellable=true)
     private void clickBlockHook(BlockPos pos, EnumFacing face, CallbackInfoReturnable<Boolean> info) {
-        BlockEvent event = new BlockEvent(3, pos, face);
-        MinecraftForge.EVENT_BUS.post(event);
+        EventClickBlock event = new EventClickBlock(pos, face);
+        MinecraftForge.EVENT_BUS.post((Event)event);
     }
 
-    @Inject(method = {"onPlayerDamageBlock"}, at = {@At(value = "HEAD")}, cancellable = true)
+    @Inject(method={"onPlayerDamageBlock"}, at={@At(value="HEAD")}, cancellable=true)
     private void onPlayerDamageBlockHook(BlockPos pos, EnumFacing face, CallbackInfoReturnable<Boolean> info) {
-        BlockEvent event = new BlockEvent(4, pos, face);
-        MinecraftForge.EVENT_BUS.post(event);
+        EventBlock event = new EventBlock(pos, face);
+        MinecraftForge.EVENT_BUS.post((Event)event);
+        if (event.isCancelled()) {
+            info.cancel();
+        }
     }
 
     @Redirect(method={"processRightClickBlock"}, at=@At(value="INVOKE", target="Lnet/minecraft/item/ItemBlock;canPlaceBlockOnSide(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/item/ItemStack;)Z"))

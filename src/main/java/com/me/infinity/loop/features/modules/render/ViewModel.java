@@ -1,8 +1,8 @@
 package com.me.infinity.loop.features.modules.render;
 
-import com.me.infinity.loop.event.events.TransformFirstPersonEvent;
-import com.me.infinity.loop.features.Feature;
+import com.me.infinity.loop.event.events.player.TransformFirstPersonEvent;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listener;
@@ -45,7 +45,7 @@ public class ViewModel extends Module {
     private Listener<TransformFirstPersonEvent> listener2;
 
     public ViewModel() {
-        super("Viewmodel", "Changes to the size and positions of your hands.", Category.RENDER, true, false, false);
+        super("Viewmodel", "Changes to the size and positions of your hands.", ModuleCategory.RENDER);
         this.setInstance();
 
     }

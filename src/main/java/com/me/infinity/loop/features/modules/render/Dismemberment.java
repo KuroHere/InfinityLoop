@@ -1,12 +1,11 @@
 package com.me.infinity.loop.features.modules.render;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.renders.helper.dism.EntityGib;
-import com.me.infinity.loop.util.renders.helper.dism.ParticleBlood;
+import com.me.infinity.loop.util.utils.renders.helper.dism.EntityGib;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -30,7 +29,7 @@ import java.util.Map.Entry;
 public class Dismemberment extends Module {
 
     public Dismemberment() {
-        super("Blood", "Dismemberment", Category.MISC,true, false, false);
+        super("Blood", "Dismemberment(Not Work!)",ModuleCategory.RENDER);
     }
 
     public Setting<Boolean> blood = this.register(new Setting<Boolean>("Blood", false));
@@ -203,17 +202,13 @@ public class Dismemberment extends Module {
                     mY += (double)((living.getRNG().nextFloat() - living.getRNG().nextFloat()) * 0.1F);
                     mZ += Math.sin((double)var5) * (double)var4;
 
-                    spawnParticle(new ParticleBlood(living.world, living.posX, living.posY + 0.5D + (living.getRNG().nextDouble() * 0.7D), living.posZ, living.motionX + mX, living.motionY + mY, living.motionZ + mZ, false));
+                    //RendererHelper.spawnParticle(new ParticleBlood(living.world, living.posX, living.posY + 0.5D + (living.getRNG().nextDouble() * 0.7D), living.posZ, living.motionX + mX, living.motionY + mY, living.motionZ + mZ, false));
                 }
             }
         }
         return true;
     }
     public static int ticks;
-
-    public static void spawnParticle(Particle particle) {
-        //  Minecraft.getMinecraft().world.spawnParticle(particle);
-    }
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event)

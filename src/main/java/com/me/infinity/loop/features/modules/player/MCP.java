@@ -1,7 +1,8 @@
 package com.me.infinity.loop.features.modules.player;
 
 import com.me.infinity.loop.features.modules.Module;
-import com.me.infinity.loop.util.minecraft.InventoryUtil;
+import com.me.infinity.loop.features.modules.ModuleCategory;
+import com.me.infinity.loop.util.utils.minecraft.InventoryUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.util.EnumHand;
@@ -12,7 +13,7 @@ public class MCP
     private boolean clicked = false;
 
     public MCP() {
-        super("MCP", "Throws a pearl", Module.Category.PLAYER, false, false, false);
+        super("MCP", "Throws a pearl", ModuleCategory.PLAYER);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.me.infinity.loop.features.modules.misc;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,7 +21,7 @@ public class AutoGG
     private ConcurrentHashMap<String, Integer> targetedPlayers = null;
 
     public AutoGG() {
-        super("AutoGG", "Sends msg after you kill someone", Module.Category.MISC, true, false, false);
+        super("AutoGG", "Sends msg after you kill someone", ModuleCategory.MISC);
         this.setInstance();
     }
 

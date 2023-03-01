@@ -1,11 +1,11 @@
 package com.me.infinity.loop.features;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.features.ui.InfinityLoopGui;
+import com.me.infinity.loop.features.gui.InfinityLoopGui;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.manager.TextManager;
-import com.me.infinity.loop.util.interfaces.Util;
+import com.me.infinity.loop.util.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;

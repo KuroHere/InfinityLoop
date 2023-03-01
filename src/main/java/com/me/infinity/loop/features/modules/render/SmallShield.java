@@ -1,6 +1,7 @@
 package com.me.infinity.loop.features.modules.render;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 
 public class SmallShield
@@ -12,7 +13,7 @@ public class SmallShield
     public Setting<Float> mainY = this.register(new Setting<Float>("MainHandY", Float.valueOf(0.0f), Float.valueOf(-1.0f), Float.valueOf(1.0f)));
 
     public SmallShield() {
-        super("SmallShield", "Makes you offhand lower.", Module.Category.RENDER, false, false, false);
+        super("SmallShield", "Makes you offhand lower.", ModuleCategory.RENDER);
         this.setInstance();
     }
 

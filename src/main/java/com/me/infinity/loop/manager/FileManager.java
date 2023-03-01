@@ -2,34 +2,31 @@ package com.me.infinity.loop.manager;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
-import com.me.infinity.loop.features.setting.shaders.SettingShader;
-import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FileManager
         extends Feature {
     private final Path base = this.getMkDirectory(this.getRoot(), "loop");
-    private final Path config = this.getMkDirectory(this.base, "config");
+    private final Path config = this.getMkDirectory(this.base, "configs");
 
     private final Path shader = this.getMkDirectory(this.base, "shaders");
 
-    private final List<SettingShader> shaderList = new ArrayList<>();
-    private final Map<String, SettingShader> shaders = new ConcurrentHashMap<>();
     public FileManager() {
         this.getMkDirectory(this.base, "pvp");
-        for (Module.Category category : InfinityLoop.moduleManager.getCategories()) {
+        for (ModuleCategory category : InfinityLoop.moduleManager.getCategories()) {
             this.getMkDirectory(this.config, category.getName());
         }
     }
@@ -85,34 +82,6 @@ public class FileManager
         }
     }
 
-    private void handleShaderDir(File dir)
-    {
-        if (dir.isDirectory()) {
-            for (File file : Objects.requireNonNull(dir.listFiles())) {
-                try
-                {
-                    if (!shaders.containsKey(file.getName())
-                            && file.getName().endsWith(".shader"))
-                    {
-                        SettingShader shader = new SettingShader(new FileInputStream(file), file.getName());
-                        shaders.put(file.getName(), shader);
-                        shaderList.add(shader);
-                    }
-                }
-                catch (IOException e)
-                {
-                    InfinityLoop.getLogger().error("Failed to shader model: " + file.getName() + "!");
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public List<SettingShader> getShaders()
-    {
-        return shaderList;
-    }
-
     private Path getMkDirectory(Path parent, String... paths) {
         if (paths.length < 1) {
             return parent;
@@ -154,19 +123,6 @@ public class FileManager
 
     public Path getMkConfigDirectory(String... names) {
         return this.getMkDirectory(this.getConfig(), this.expandPaths(names).collect(Collectors.joining(File.separator)));
-    }
-
-    // TODO:
-    public SettingShader getInitialShader()
-    {
-        if (!shaderList.isEmpty())
-        {
-            return shaderList.get(0);
-        }
-        else
-        {
-            return new SettingShader("default");
-        }
     }
 
 }

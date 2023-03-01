@@ -1,8 +1,8 @@
 package com.me.infinity.loop.manager;
 
-import com.me.infinity.loop.features.ui.screen.components.Component;
+import com.me.infinity.loop.features.gui.components.Component;
 import com.me.infinity.loop.features.modules.client.Colors;
-import com.me.infinity.loop.util.renders.ColorUtil;
+import com.me.infinity.loop.util.utils.renders.ColorUtil;
 
 import java.awt.*;
 

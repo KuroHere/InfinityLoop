@@ -1,7 +1,8 @@
 package com.me.infinity.loop.features.modules.client;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.ClientEvent;
+import com.me.infinity.loop.event.events.client.ClientEvent;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.Module;
@@ -21,7 +22,7 @@ public class FontMod
     private boolean reloadFont = false;
 
     public FontMod() {
-        super("CustomFont", "CustomFont for all of the clients text. Use the font command.", Module.Category.CLIENT, true, false, false);
+        super("CustomFont", "CustomFont for all of the clients text. Use the font command.", ModuleCategory.CLIENT);
         this.setInstance();
     }
 
@@ -51,7 +52,7 @@ public class FontMod
     @SubscribeEvent
     public void onSettingChange(ClientEvent event) {
         Setting setting;
-        if (event.getStage() == 2 && (setting = event.getSetting()) != null && setting.getFeature().equals(this)) {
+        if (event.isPre() && (setting = event.getSetting()) != null && setting.getFeature().equals(this)) {
             if (setting.getName().equals("FontName") && !FontMod.checkFont(setting.getPlannedValue().toString(), false)) {
                 Command.sendMessage(ChatFormatting.RED + "That font doesnt exist.");
                 event.setCanceled(true);

@@ -4,8 +4,9 @@
 
 package com.me.infinity.loop.features.modules.render;
 
-import com.me.infinity.loop.event.events.Render3DEvent;
+import com.me.infinity.loop.event.events.render.Render3DEvent;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -26,7 +27,7 @@ public class Trajectories extends Module {
     private final Setting<Float> green = this.register(new Setting<>("Green", Float.valueOf(255.0f), Float.valueOf(0.0f), Float.valueOf(255.0f)));
     private final Setting<Float> blue = this.register(new Setting<>("Blue", Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(255.0f)));
     public Trajectories() {
-        super("Trajectories", "Draws trajectories.", Category.RENDER, false, false, false);
+        super("Trajectories", "Draws trajectories.", ModuleCategory.RENDER);
     }
 
     @Override

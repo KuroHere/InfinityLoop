@@ -1,12 +1,13 @@
 package com.me.infinity.loop.features.modules.combat;
 
-import com.me.infinity.loop.event.events.PacketEvent;
-import com.me.infinity.loop.event.events.ProcessRightClickBlockEvent;
+import com.me.infinity.loop.event.events.network.EventPacket;
+import com.me.infinity.loop.event.events.player.ProcessRightClickBlockEvent;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.player.EntityUtil;
-import com.me.infinity.loop.util.minecraft.InventoryUtil;
-import com.me.infinity.loop.util.worlds.Timer;
+import com.me.infinity.loop.util.utils.EntityUtil;
+import com.me.infinity.loop.util.utils.minecraft.InventoryUtil;
+import com.me.infinity.loop.util.utils.worlds.Timer;
 import net.minecraft.block.BlockObsidian;
 import net.minecraft.block.BlockWeb;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -54,7 +55,7 @@ public class Offhand
     private boolean switchedForHealthReason = false;
 
     public Offhand() {
-        super("Offhand", "Allows you to switch up your Offhand.", Module.Category.COMBAT, true, false, false);
+        super("Offhand", "Allows you to switch up your Offhand.", ModuleCategory.COMBAT);
         instance = this;
     }
 
@@ -95,11 +96,11 @@ public class Offhand
     }
 
     @SubscribeEvent
-    public void onPacketSend(PacketEvent.Send event) {
+    public void onPacketSend(EventPacket.Send event) {
         if (!Offhand.fullNullCheck() && Offhand.mc.player.getHeldItemOffhand().getItem() == Items.GOLDEN_APPLE && Offhand.mc.player.getHeldItemMainhand().getItem() == Items.END_CRYSTAL && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown()) {
             CPacketPlayerTryUseItem packet;
             if (event.getPacket() instanceof CPacketPlayerTryUseItemOnBlock) {
-                CPacketPlayerTryUseItemOnBlock packet2 = event.getPacket();
+                CPacketPlayerTryUseItemOnBlock packet2 = (CPacketPlayerTryUseItemOnBlock) event.getPacket();
                 if (packet2.getHand() == EnumHand.MAIN_HAND) {
                     if (this.timer.passedMs(50L)) {
                         Offhand.mc.player.setActiveHand(EnumHand.OFF_HAND);
@@ -107,7 +108,7 @@ public class Offhand
                     }
                     event.setCanceled(true);
                 }
-            } else if (event.getPacket() instanceof CPacketPlayerTryUseItem && (packet = event.getPacket()).getHand() == EnumHand.OFF_HAND && !this.timer.passedMs(50L)) {
+            } else if (event.getPacket() instanceof CPacketPlayerTryUseItem && (packet = (CPacketPlayerTryUseItem) event.getPacket()).getHand() == EnumHand.OFF_HAND && !this.timer.passedMs(50L)) {
                 event.setCanceled(true);
             }
         }

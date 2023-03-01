@@ -1,10 +1,12 @@
 package com.me.infinity.loop.mixin.mixins;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.features.modules.client.ClickGui;
+import com.me.infinity.loop.features.modules.client.ClickGui.ClickGui;
 import com.me.infinity.loop.features.modules.client.Colors;
+import com.me.infinity.loop.features.modules.render.NoCluster;
 import com.me.infinity.loop.features.modules.render.Wireframe;
-import com.me.infinity.loop.util.renders.ColorUtil;
+import com.me.infinity.loop.mixin.MixinInterface;
+import com.me.infinity.loop.util.utils.renders.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,6 +14,7 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
@@ -24,8 +27,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin({RenderLivingBase.class})
-public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends Render<T> {
+@Mixin(value = { RenderLivingBase.class }, priority = 10001)
+public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends Render<T> implements MixinInterface {
     @Shadow
     private static final Logger LOGGER = LogManager.getLogger();
     @Shadow
@@ -34,10 +37,23 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
     protected boolean renderMarker;
 
     float red;
-
     float green;
-
     float blue;
+
+    /**
+     * @author
+     * @reason
+     */
+    protected void mainModel(final T entitylivingbase, final float limbSwing, final float limbSwingAmount, final float ageInTicks, final float netHeadYaw, final float headPitch, final float scaleFactor) {
+        if (MixinRenderLivingBase.mc.player.getDistance(entitylivingbase) < 1.0f && entitylivingbase != MixinRenderLivingBase.mc.player && InfinityLoop.moduleManager.getModuleByClass(NoCluster.class).isEnabled()) {
+            GlStateManager.enableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
+        }
+        if (!this.bindEntityTexture((T) entitylivingbase)) {
+            return;
+        }
+        this.mainModel.render((Entity)entitylivingbase, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
+    }
+
 
     protected MixinRenderLivingBase(RenderManager renderManager) {
         super(renderManager);

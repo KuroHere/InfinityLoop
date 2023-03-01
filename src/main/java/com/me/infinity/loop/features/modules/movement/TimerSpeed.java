@@ -2,8 +2,9 @@ package com.me.infinity.loop.features.modules.movement;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.worlds.Timer;
+import com.me.infinity.loop.util.utils.worlds.Timer;
 
 public class TimerSpeed
         extends Module {
@@ -21,7 +22,7 @@ public class TimerSpeed
     private boolean fast = false;
 
     public TimerSpeed() {
-        super("Timer", "Will speed up the game.", Category.MOVEMENT, false, false, false);
+        super("Timer", "Will speed up the game.", ModuleCategory.MOVEMENT);
     }
 
     @Override

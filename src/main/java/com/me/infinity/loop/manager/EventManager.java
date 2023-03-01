@@ -2,15 +2,21 @@ package com.me.infinity.loop.manager;
 
 import com.google.common.base.Strings;
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.*;
-import com.me.infinity.loop.features.modules.client.ClickGui;
+import com.me.infinity.loop.event.events.network.ConnectionEvent;
+import com.me.infinity.loop.event.events.network.EventDeath;
+import com.me.infinity.loop.event.events.TotemPopEvent;
+import com.me.infinity.loop.event.events.network.EventPacket;
+import com.me.infinity.loop.event.events.player.EventMotionUpdate;
+import com.me.infinity.loop.event.events.render.Render2DEvent;
+import com.me.infinity.loop.event.events.render.Render3DEvent;
+import com.me.infinity.loop.features.modules.client.ClickGui.ClickGui;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.client.HUD;
 import com.me.infinity.loop.features.modules.misc.PopCounter;
-import com.me.infinity.loop.util.renders.GLUProjection;
-import com.me.infinity.loop.util.worlds.Timer;
+import com.me.infinity.loop.util.utils.renders.GLUProjection;
+import com.me.infinity.loop.util.utils.worlds.Timer;
 import me.zero.alpine.fork.listener.Listenable;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.client.Minecraft;
@@ -43,6 +49,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class EventManager extends Feature {
+    public static float visualYaw, visualPitch, prevVisualYaw, prevVisualPitch;
     private final Map<Listenable, List<Listener>> SUBSCRIPTION_CACHE;
     private final Map<Class<?>, List<Listener>> SUBSCRIPTION_MAP;
 
@@ -54,6 +61,24 @@ public class EventManager extends Feature {
     public EventManager() {
         this.SUBSCRIPTION_CACHE = new ConcurrentHashMap<Listenable, List<Listener>>();
         this.SUBSCRIPTION_MAP = new ConcurrentHashMap<Class<?>, List<Listener>>();
+    }
+
+    private float yaw;
+    private float pitch;
+
+    public void updateRotations() {
+        this.yaw = EventManager.mc.player.rotationYaw;
+        this.pitch = EventManager.mc.player.rotationPitch;
+        prevVisualPitch = visualPitch;
+        prevVisualYaw = visualYaw;
+    }
+
+    public void restoreRotations() {
+        visualPitch = mc.player.rotationPitch;
+        visualYaw = mc.player.rotationYaw;
+        EventManager.mc.player.rotationYaw = this.yaw;
+        EventManager.mc.player.rotationYawHead = this.yaw;
+        EventManager.mc.player.rotationPitch = this.pitch;
     }
 
     public void post(final Object event) {
@@ -112,34 +137,34 @@ public class EventManager extends Feature {
         for (EntityPlayer player : mc.world.playerEntities) {
             if (player == null || player.getHealth() > 0.0F)
                 continue;
-            MinecraftForge.EVENT_BUS.post(new DeathEvent(player));
+            MinecraftForge.EVENT_BUS.post(new EventDeath(player));
             PopCounter.getInstance().onDeath(player);
         }
     }
 
     @SubscribeEvent
-    public void onUpdateWalkingPlayer(UpdateWalkingPlayerEvent event) {
+    public void onUpdateWalkingPlayer(EventMotionUpdate event) {
         if (fullNullCheck())
             return;
-        if (event.getStage() == 0) {
+        if (event.isPre()) {
             InfinityLoop.speedManager.updateValues();
             InfinityLoop.rotationManager.updateRotations();
             InfinityLoop.positionManager.updatePosition();
         }
-        if (event.getStage() == 1) {
+        if (event.isPre()) {
             InfinityLoop.rotationManager.restoreRotations();
             InfinityLoop.positionManager.restorePosition();
         }
     }
 
     @SubscribeEvent
-    public void onPacketReceive(final PacketEvent.Receive event) {
-        if (event.getStage() != 0) {
+    public void onPacketReceive(final EventPacket.Receive event) {
+        if (event.isPre()) {
             return;
         }
         InfinityLoop.serverManager.onPacketReceived();
         if (event.getPacket() instanceof SPacketEntityStatus) {
-            final SPacketEntityStatus packet = event.getPacket();
+            final SPacketEntityStatus packet = (SPacketEntityStatus) event.getPacket();
             if (packet.getOpCode() == 35 && packet.getEntity(EventManager.mc.world) instanceof EntityPlayer) {
                 final EntityPlayer player = (EntityPlayer)packet.getEntity(EventManager.mc.world);
                 MinecraftForge.EVENT_BUS.post(new TotemPopEvent(player));
@@ -148,13 +173,13 @@ public class EventManager extends Feature {
             }
         }
         else if (event.getPacket() instanceof SPacketPlayerListItem && !Feature.fullNullCheck() && this.logoutTimer.passedS(1.0)) {
-            final SPacketPlayerListItem packet = event.getPacket();
+            final SPacketPlayerListItem packet = (SPacketPlayerListItem) event.getPacket();
             if (!SPacketPlayerListItem.Action.ADD_PLAYER.equals(packet.getAction()) && !SPacketPlayerListItem.Action.REMOVE_PLAYER.equals(packet.getAction())) {
                 return;
             }
             packet.getEntries().stream().filter(Objects::nonNull).filter(data -> !Strings.isNullOrEmpty(data.getProfile().getName()) || data.getProfile().getId() != null).forEach(data -> {
                 final UUID id;
-                final SPacketPlayerListItem sPacketPlayerListItem = event.getPacket( );
+                final SPacketPlayerListItem sPacketPlayerListItem = (SPacketPlayerListItem) event.getPacket( );
                 final String name;
                 final EntityPlayer entity;
                 String logoutName;
@@ -162,18 +187,18 @@ public class EventManager extends Feature {
                 switch (sPacketPlayerListItem.getAction()) {
                     case ADD_PLAYER: {
                         name = data.getProfile().getName();
-                        MinecraftForge.EVENT_BUS.post(new ConnectionEvent(0, id, name));
+                        MinecraftForge.EVENT_BUS.post(new ConnectionEvent( id, name));
                         break;
                     }
                     case REMOVE_PLAYER: {
                         entity = EventManager.mc.world.getPlayerEntityByUUID(id);
                         if (entity != null) {
                             logoutName = entity.getName();
-                            MinecraftForge.EVENT_BUS.post(new ConnectionEvent(1, entity, id, logoutName));
+                            MinecraftForge.EVENT_BUS.post(new ConnectionEvent( entity, id, logoutName));
                             break;
                         }
                         else {
-                            MinecraftForge.EVENT_BUS.post(new ConnectionEvent(2, id, null));
+                            MinecraftForge.EVENT_BUS.post(new ConnectionEvent( id, null));
                             break;
                         }
                     }

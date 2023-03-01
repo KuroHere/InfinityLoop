@@ -1,7 +1,7 @@
 package com.me.infinity.loop.manager;
 
-import com.me.infinity.loop.features.ui.InfinityLoopGui;
-import com.me.infinity.loop.features.ui.screen.windows.WindowsGui;
+import com.me.infinity.loop.features.gui.InfinityLoopGui;
+import com.me.infinity.loop.features.gui.screen.windows.WindowsGui;
 import com.me.infinity.loop.mixin.MixinInterface;
 import net.minecraft.client.gui.GuiScreen;
 

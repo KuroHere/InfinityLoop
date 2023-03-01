@@ -2,8 +2,10 @@ package com.me.infinity.loop.features.modules.client;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
+import com.me.infinity.loop.features.modules.client.ClickGui.ClickGui;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.renders.ColorUtil;
+import com.me.infinity.loop.util.utils.renders.ColorUtil;
 
 import java.awt.Color;
 import java.util.HashMap;
@@ -26,7 +28,7 @@ public class Colors extends Module {
     public Map<Integer, Integer> colorHeightMap = new HashMap<Integer, Integer>();
 
     public Colors() {
-        super("Colors", "Universal colors.", Module.Category.CLIENT, true, false, true);
+        super("Colors", "Universal colors.", ModuleCategory.CLIENT);
         this.setInstance();
     }
 

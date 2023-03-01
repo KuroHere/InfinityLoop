@@ -1,7 +1,7 @@
 package com.me.infinity.loop.features.command.commands;
 
 import com.me.infinity.loop.features.command.Command;
-import com.me.infinity.loop.features.modules.player.Search;
+import com.me.infinity.loop.features.modules.render.Search;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;

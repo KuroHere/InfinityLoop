@@ -1,10 +1,11 @@
 package com.me.infinity.loop.features.modules.render;
 
-import com.me.infinity.loop.event.events.Render3DEvent;
+import com.me.infinity.loop.event.events.render.Render3DEvent;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.player.EntityUtil;
-import com.me.infinity.loop.util.renders.RenderUtil;
+import com.me.infinity.loop.util.utils.EntityUtil;
+import com.me.infinity.loop.util.utils.renders.RenderUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
@@ -32,7 +33,7 @@ public class ESP
     private final Setting<Integer> alpha = this.register(new Setting<Integer>("Alpha", 255, 0, 255));
 
     public ESP() {
-        super("ESP", "Renders a nice ESP.", Module.Category.RENDER, false, false, false);
+        super("ESP", "Renders a nice ESP.", ModuleCategory.RENDER);
         this.setInstance();
     }
 

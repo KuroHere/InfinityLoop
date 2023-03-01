@@ -2,9 +2,10 @@ package com.me.infinity.loop.features.modules.combat;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.minecraft.InventoryUtil;
-import com.me.infinity.loop.util.worlds.Timer;
+import com.me.infinity.loop.util.utils.minecraft.InventoryUtil;
+import com.me.infinity.loop.util.utils.worlds.Timer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.init.Items;
@@ -29,7 +30,7 @@ public class AutoArmor
     boolean flag;
 
     public AutoArmor() {
-        super("AutoArmor", "Puts Armor on for you.", Module.Category.COMBAT, true, false, false);
+        super("AutoArmor", "Puts Armor on for you.", ModuleCategory.COMBAT);
     }
 
     @Override

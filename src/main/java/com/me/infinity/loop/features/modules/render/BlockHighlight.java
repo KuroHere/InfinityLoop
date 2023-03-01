@@ -1,23 +1,21 @@
 package com.me.infinity.loop.features.modules.render;
 
-import com.me.infinity.loop.event.events.Render3DEvent;
+import com.me.infinity.loop.event.events.render.Render3DEvent;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.renders.ColorUtil;
-import com.me.infinity.loop.util.renders.RenderUtil;
+import com.me.infinity.loop.util.utils.renders.ColorUtil;
+import com.me.infinity.loop.util.utils.renders.RenderUtil;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraftforge.fml.common.Mod;
 
 import java.awt.*;
 
 
 public class BlockHighlight
         extends Module {
-
     private static BlockHighlight INSTANCE = new BlockHighlight();
-
     public Setting<RenderMode> mode = register(new Setting<>("Mode", RenderMode.Defaut));
 
     public Setting<Boolean> gradient = this.register(new Setting<>("Gradient", Boolean.valueOf(true), v -> this.mode.getValue() == RenderMode.Gradient));
@@ -47,7 +45,7 @@ public class BlockHighlight
     private int color;
 
     public BlockHighlight() {
-        super("BlockHighlight", "Highlights the block u look at.", Module.Category.RENDER, false, false, false);
+        super("BlockHighlight", "Highlights the block u look at.", ModuleCategory.RENDER);
         this.setInstance();
     }
 

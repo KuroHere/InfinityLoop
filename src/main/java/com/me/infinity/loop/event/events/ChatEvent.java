@@ -1,11 +1,11 @@
 package com.me.infinity.loop.event.events;
 
-import com.me.infinity.loop.event.EventStage;
+import com.me.infinity.loop.event.Event;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 @Cancelable
 public class ChatEvent
-        extends EventStage {
+        extends Event {
     private final String msg;
 
     public ChatEvent(String msg) {

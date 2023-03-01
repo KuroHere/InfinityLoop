@@ -1,17 +1,18 @@
 package com.me.infinity.loop.features.modules.combat;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.PacketEvent;
-import com.me.infinity.loop.event.events.Render3DEvent;
+import com.me.infinity.loop.event.events.network.EventPacket;
+import com.me.infinity.loop.event.events.render.Render3DEvent;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.features.modules.misc.AutoGG;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.player.EntityUtil;
-import com.me.infinity.loop.util.client.MathUtil;
-import com.me.infinity.loop.util.worlds.Timer;
-import com.me.infinity.loop.util.renders.ColorUtil;
-import com.me.infinity.loop.util.renders.RenderUtil;
+import com.me.infinity.loop.util.utils.EntityUtil;
+import com.me.infinity.loop.util.utils.maths.MathUtil;
+import com.me.infinity.loop.util.utils.worlds.Timer;
+import com.me.infinity.loop.util.utils.renders.ColorUtil;
+import com.me.infinity.loop.util.utils.renders.RenderUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -100,9 +101,9 @@ public class AutoCrystal
     private boolean rotating = false;
 
     public AutoCrystal() {
-        super("AutoCrystal", "NiggaHack ac best ac", Module.Category.COMBAT, true, false, false);
-    }
+        super("AutoCrystal", "NiggaHack ac best ac", ModuleCategory.COMBAT);
 
+    }
     public static List<BlockPos> getSphere(BlockPos loc, float r, int h, boolean hollow, boolean sphere, int plus_y) {
         ArrayList<BlockPos> circleblocks = new ArrayList<BlockPos>();
         int cx = loc.getX();
@@ -132,9 +133,9 @@ public class AutoCrystal
     }
 
     @SubscribeEvent
-    public void onPacketSend(PacketEvent.Send event) {
-        if (event.getStage() == 0 && this.rotate.getValue().booleanValue() && this.rotating && event.getPacket() instanceof CPacketPlayer) {
-            CPacketPlayer packet = event.getPacket();
+    public void onPacketSend(EventPacket.Send event) {
+        if (event.isPre() && this.rotate.getValue().booleanValue() && this.rotating && event.getPacket() instanceof CPacketPlayer) {
+            CPacketPlayer packet = (CPacketPlayer) event.getPacket();
             packet.yaw = this.yaw;
             packet.pitch = this.pitch;
             this.rotating = false;
@@ -319,9 +320,9 @@ public class AutoCrystal
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
-    public void onPacketReceive(PacketEvent.Receive event) {
+    public void onPacketReceive(EventPacket.Receive event) {
         SPacketSpawnObject packet;
-        if (event.getPacket() instanceof SPacketSpawnObject && (packet = event.getPacket()).getType() == 51 && this.predicts.getValue().booleanValue() && this.preditTimer.passedMs(this.attackFactor.getValue().longValue()) && this.predicts.getValue().booleanValue() && this.explode.getValue().booleanValue() && this.packetBreak.getValue().booleanValue() && this.target != null) {
+        if (event.getPacket() instanceof SPacketSpawnObject && (packet = (SPacketSpawnObject) event.getPacket()).getType() == 51 && this.predicts.getValue().booleanValue() && this.preditTimer.passedMs(this.attackFactor.getValue().longValue()) && this.predicts.getValue().booleanValue() && this.explode.getValue().booleanValue() && this.packetBreak.getValue().booleanValue() && this.target != null) {
             if (!this.isPredicting(packet)) {
                 return;
             }

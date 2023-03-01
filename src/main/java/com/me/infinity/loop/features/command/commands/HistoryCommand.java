@@ -1,6 +1,6 @@
 package com.me.infinity.loop.features.command.commands;
 
-import com.me.infinity.loop.util.player.PlayerUtil;
+import com.me.infinity.loop.util.utils.PlayerUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 

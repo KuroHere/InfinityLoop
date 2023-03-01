@@ -2,7 +2,7 @@ package com.me.infinity.loop.manager;
 
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.modules.client.HUD;
-import com.me.infinity.loop.util.worlds.Timer;
+import com.me.infinity.loop.util.utils.worlds.Timer;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;

@@ -1,13 +1,14 @@
 package com.me.infinity.loop.features.modules.player;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 
 public class LiquidInteract
         extends Module {
     private static LiquidInteract INSTANCE = new LiquidInteract();
 
     public LiquidInteract() {
-        super("LiquidInteract", "Interact with liquids", Module.Category.PLAYER, false, false, false);
+        super("LiquidInteract", "Interact with liquids", ModuleCategory.PLAYER);
         this.setInstance();
     }
 

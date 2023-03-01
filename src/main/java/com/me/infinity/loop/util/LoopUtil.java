@@ -18,7 +18,7 @@ import java.net.URLConnection;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.me.infinity.loop.util.interfaces.Util.mc;
+import static com.me.infinity.loop.util.utils.Util.mc;
 
 
 public class LoopUtil {

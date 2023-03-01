@@ -1,8 +1,9 @@
 package com.me.infinity.loop.features.modules.player;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.worlds.Timer;
+import com.me.infinity.loop.util.utils.worlds.Timer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.item.Item;
@@ -19,7 +20,7 @@ public class Replenish
     private final ArrayList<Item> Hotbar = new ArrayList();
 
     public Replenish() {
-        super("Replenish", "Replenishes your hotbar", Module.Category.PLAYER, false, false, false);
+        super("Replenish", "Replenishes your hotbar", ModuleCategory.PLAYER);
     }
 
     @Override

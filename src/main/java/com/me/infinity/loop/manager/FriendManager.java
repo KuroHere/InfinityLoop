@@ -2,16 +2,12 @@ package com.me.infinity.loop.manager;
 
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.command.Command;
-import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.util.LoopUtil;
-import com.me.infinity.loop.util.player.PlayerUtil;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 public class FriendManager
         extends Feature {

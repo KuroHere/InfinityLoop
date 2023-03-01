@@ -1,8 +1,8 @@
 package com.me.infinity.loop.features.modules.player;
 
-import com.me.infinity.loop.event.events.MoveEvent;
-import com.me.infinity.loop.features.Feature;
+import com.me.infinity.loop.event.events.network.MoveEvent;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,7 +15,6 @@ public class AutoDoSmth extends Module {
     public Setting<Boolean> autoSneak = this.register(new Setting<>("AutoSneak", false));
     public Setting<Boolean> autoJump = this.register(new Setting<>("AutoJump", false));
     public Setting<Boolean> autoSpin = this.register(new Setting<>("AutoSpin", false));
-    public Setting<Boolean> clientside = this.register(new Setting<>("ClientSide", false, v -> this.autoSpin.getValue()));
     // yaw
     public Setting<Boolean> yawAnimation = this.register(new Setting("YawAnimation", false , v -> this.autoSpin.getValue()));
     public final Setting<Float> yaw = this.register(new Setting("Yaw",  Float.valueOf(1.0f), Float.valueOf(-10.0f), Float.valueOf(10.0f), v -> this.autoSpin.getValue() && yawAnimation.getValue()));
@@ -24,7 +23,7 @@ public class AutoDoSmth extends Module {
     public final Setting<Float> pitch = this.register(new Setting("Pitch", Float.valueOf(1.0f), Float.valueOf(-10.0f), Float.valueOf(10.0f), v -> this.autoSpin.getValue() && pitchAnimation.getValue()));
 
     public AutoDoSmth() {
-        super("AutoDoSmth", "I dont know why I'm made that", Category.PLAYER, true, false, false);
+        super("AutoDoSmth", "I dont know why I'm made that", ModuleCategory.PLAYER);
         this.setInstance();
     }
 
@@ -41,7 +40,7 @@ public class AutoDoSmth extends Module {
 
     @SubscribeEvent
     public void onSprint(MoveEvent event) {
-        if (event.getStage() == 1 && this.autoSprint.getValue() == Sprint.Rage && (mc.player.movementInput.moveForward != 0.0f || mc.player.movementInput.moveStrafe != 0.0f)) {
+        if (event.isPre() && this.autoSprint.getValue() == Sprint.Rage && (mc.player.movementInput.moveForward != 0.0f || mc.player.movementInput.moveStrafe != 0.0f)) {
             event.setCanceled(true);
         }
     }

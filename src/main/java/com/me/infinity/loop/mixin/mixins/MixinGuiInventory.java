@@ -1,6 +1,6 @@
 package com.me.infinity.loop.mixin.mixins;
 
-import com.me.infinity.loop.util.renders.RenderUtil;
+import com.me.infinity.loop.util.utils.renders.RenderUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -11,14 +11,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(GuiInventory.class)
 public class MixinGuiInventory extends MixinGuiScreen {
-
-
 
     private static float prevRotationYaw = 0.0F;
     private static float prevRotationPitch = 0.0F;

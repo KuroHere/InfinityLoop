@@ -1,6 +1,7 @@
 package com.me.infinity.loop.features.modules.player;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 
 public class TpsSync
@@ -10,7 +11,7 @@ public class TpsSync
     public Setting<Boolean> mining = this.register(new Setting<Boolean>("Mine", Boolean.TRUE));
 
     public TpsSync() {
-        super("TpsSync", "Syncs your client with the TPS.", Module.Category.PLAYER, true, false, false);
+        super("TpsSync", "Syncs your client with the TPS.", ModuleCategory.PLAYER);
         this.setInstance();
     }
 

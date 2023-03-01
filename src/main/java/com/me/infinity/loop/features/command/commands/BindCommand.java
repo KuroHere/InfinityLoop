@@ -4,7 +4,7 @@ import com.me.infinity.loop.InfinityLoop;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.Module;
-import com.me.infinity.loop.features.setting.Bind;
+import com.me.infinity.loop.features.setting.impl.Bind;
 import org.lwjgl.input.Keyboard;
 
 public class BindCommand

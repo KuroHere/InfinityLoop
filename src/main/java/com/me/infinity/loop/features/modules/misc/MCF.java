@@ -1,6 +1,7 @@
 package com.me.infinity.loop.features.modules.misc;
 
 import com.me.infinity.loop.InfinityLoop;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.Module;
@@ -14,7 +15,7 @@ public class MCF
     private boolean clicked = false;
 
     public MCF() {
-        super("MCF", "Middleclick Friends.", Module.Category.MISC, true, false, false);
+        super("MCF", "Middleclick Friends.", ModuleCategory.MISC);
     }
 
     @Override

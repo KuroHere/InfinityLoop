@@ -1,6 +1,7 @@
 package com.me.infinity.loop.features.modules.movement;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -12,7 +13,7 @@ public class ReverseStep
     private final Setting<Boolean> twoBlocks = this.register(new Setting<Boolean>("2Blocks", Boolean.FALSE));
 
     public ReverseStep() {
-        super("ReverseStep", "ReverseStep.", Category.MOVEMENT, true, false, false);
+        super("ReverseStep", "ReverseStep.", ModuleCategory.MOVEMENT);
         this.setInstance();
     }
 

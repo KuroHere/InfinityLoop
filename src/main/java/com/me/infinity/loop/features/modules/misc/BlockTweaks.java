@@ -1,12 +1,12 @@
 package com.me.infinity.loop.features.modules.misc;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.PacketEvent;
+import com.me.infinity.loop.event.events.network.EventPacket;
 import com.me.infinity.loop.features.modules.Module;
-import com.me.infinity.loop.features.modules.player.Speedmine;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.manager.InventoryManager;
-import com.me.infinity.loop.util.player.EntityUtil;
+import com.me.infinity.loop.util.utils.EntityUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -25,7 +25,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -44,7 +43,7 @@ public class BlockTweaks
     public int currentPlayerItem;
 
     public BlockTweaks() {
-        super("BlockTweaks", "Some tweaks for blocks.", Module.Category.PLAYER, true, false, false);
+        super("BlockTweaks", "Some tweaks for blocks.", ModuleCategory.PLAYER);
         this.setInstance();
     }
 
@@ -79,12 +78,7 @@ public class BlockTweaks
         }
     }
 
-    @SubscribeEvent
-    public void onBlockInteract(PlayerInteractEvent.LeftClickBlock event) {
-        if (this.autoTool.getValue().booleanValue() && (Speedmine.getInstance().mode.getValue() != Speedmine.Mode.PACKET || Speedmine.getInstance().isOff() || !Speedmine.getInstance().tweaks.getValue().booleanValue()) && !BlockTweaks.fullNullCheck() && event.getPos() != null) {
-            this.equipBestTool(BlockTweaks.mc.world.getBlockState(event.getPos()));
-        }
-    }
+
 
     @SubscribeEvent
     public void onAttack(AttackEntityEvent event) {
@@ -94,13 +88,13 @@ public class BlockTweaks
     }
 
     @SubscribeEvent
-    public void onPacketSend(PacketEvent.Send event) {
+    public void onPacketSend(EventPacket.Send event) {
         CPacketUseEntity packet;
         Entity entity;
         if (BlockTweaks.fullNullCheck()) {
             return;
         }
-        if (this.noFriendAttack.getValue().booleanValue() && event.getPacket() instanceof CPacketUseEntity && (entity = (packet = event.getPacket()).getEntityFromWorld(BlockTweaks.mc.world)) != null && InfinityLoop.friendManager.isFriend(entity.getName())) {
+        if (this.noFriendAttack.getValue().booleanValue() && event.getPacket() instanceof CPacketUseEntity && (entity = (packet = (CPacketUseEntity) event.getPacket()).getEntityFromWorld(BlockTweaks.mc.world)) != null && InfinityLoop.friendManager.isFriend(entity.getName())) {
             event.setCanceled(true);
         }
     }

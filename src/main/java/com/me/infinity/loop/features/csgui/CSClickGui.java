@@ -2,13 +2,14 @@ package com.me.infinity.loop.features.csgui;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
-import com.me.infinity.loop.features.ui.screen.components.Component;
-import com.me.infinity.loop.features.ui.screen.components.items.Item;
-import com.me.infinity.loop.features.ui.screen.components.items.buttons.ModuleButton;
+import com.me.infinity.loop.features.gui.components.Component;
+import com.me.infinity.loop.features.gui.components.items.Item;
+import com.me.infinity.loop.features.gui.components.items.buttons.ModuleButton;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.modules.client.CSGui;
-import com.me.infinity.loop.util.renders.ColorUtil;
-import com.me.infinity.loop.util.renders.RenderUtil;
+import com.me.infinity.loop.util.utils.renders.ColorUtil;
+import com.me.infinity.loop.util.utils.renders.RenderUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Mouse;
@@ -56,7 +57,7 @@ public class CSClickGui
 
     private void load() {
         int x = -85;
-        for (final Module.Category category : InfinityLoop.moduleManager.getCategories()) {
+        for (final ModuleCategory category : InfinityLoop.moduleManager.getCategories()) {
             this.components.add(new Component(category.getName(), x += 92, 27, true) {
 
                 @Override

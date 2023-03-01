@@ -1,20 +1,24 @@
 package com.me.infinity.loop.manager;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.Render2DEvent;
-import com.me.infinity.loop.event.events.Render3DEvent;
+import com.me.infinity.loop.event.events.render.Render2DEvent;
+import com.me.infinity.loop.event.events.render.Render3DEvent;
+import com.me.infinity.loop.features.Feature;
+import com.me.infinity.loop.features.gui.InfinityLoopGui;
+import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.modules.client.*;
+import com.me.infinity.loop.features.modules.client.ClickGui.ClickGui;
 import com.me.infinity.loop.features.modules.combat.*;
 import com.me.infinity.loop.features.modules.misc.*;
 import com.me.infinity.loop.features.modules.movement.*;
 import com.me.infinity.loop.features.modules.player.*;
 import com.me.infinity.loop.features.modules.render.*;
-import com.me.infinity.loop.util.interfaces.Util;
-import com.mojang.realmsclient.gui.ChatFormatting;
-import com.me.infinity.loop.features.Feature;
-import com.me.infinity.loop.features.ui.InfinityLoopGui;
-import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.render.deatheffects.DeathEffects;
+import com.me.infinity.loop.features.modules.render.motionblur.MotionBlur;
 import com.me.infinity.loop.features.modules.test.Test;
+import com.me.infinity.loop.util.utils.Util;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import org.lwjgl.input.Keyboard;
@@ -53,33 +57,27 @@ public class ModuleManager
         // Combat
         modules.add(new AutoArmor());
         modules.add(new AutoCrystal());
-        modules.add(new AutoMinecart());
-        modules.add(new AutoTrap());
-        modules.add(new AutoWeb());
         modules.add(new Criticals());
         modules.add(new HoleFiller());
         modules.add(new Killaura());
         modules.add(new Offhand());
         modules.add(new SelfFill());
-        modules.add(new Selftrap());
         modules.add(new Surround());
 
         // Misc
         modules.add(new AutoGG());
         modules.add(new BlockTweaks());
-        modules.add(new BuildHeight());
         modules.add(new ChatModifier());
         modules.add(new ExtraTab());
         modules.add(new MCF());
         modules.add(new NoHandShake());
         modules.add(new PopCounter());
         modules.add(new ToolTips());
-        modules.add(new Tracker());
 
         // Movement
+        modules.add(new NoSlow());
         modules.add(new NoVoid());
         modules.add(new ReverseStep());
-        modules.add(new Speed());
         modules.add(new Step());
         modules.add(new TimerSpeed());
 
@@ -92,10 +90,14 @@ public class ModuleManager
         modules.add(new MultiTask());
         modules.add(new Replenish());
         modules.add(new Search());
-        modules.add(new Speedmine());
         modules.add(new TpsSync());
 
         // Render
+        //modules.add(new ShaderESP());
+        modules.add(new MotionBlur());
+        modules.add(new PlayerTrails());
+        modules.add(new DeathEffects());
+        //modules.add(new NoCluster());
         modules.add(new ShadowESP());
         modules.add(new com.me.infinity.loop.features.modules.render.Animation());
         modules.add(new ArrowESP());
@@ -103,7 +105,7 @@ public class ModuleManager
         modules.add(new BreadCrumbs());
         modules.add(new BurrowESP());
         modules.add(new CameraClip());
-        modules.add(new Dismemberment());
+        //modules.add(new Dismemberment());
         modules.add(new ESP());
         modules.add(new FogColor());
         modules.add(new HandChams());
@@ -197,7 +199,7 @@ public class ModuleManager
         return enabledModules;
     }
 
-    public ArrayList<Module> getModulesByCategory(Module.Category category) {
+    public ArrayList<Module> getModulesByCategory(ModuleCategory category) {
         ArrayList<Module> modulesCategory = new ArrayList<Module>();
         modules.forEach(module -> {
             if (module.getCategory() == category) {
@@ -207,8 +209,8 @@ public class ModuleManager
         return modulesCategory;
     }
 
-    public List<Module.Category> getCategories() {
-        return Arrays.asList(Module.Category.values());
+    public List<ModuleCategory> getCategories() {
+        return Arrays.asList(ModuleCategory.values());
     }
 
     public void onLoad() {

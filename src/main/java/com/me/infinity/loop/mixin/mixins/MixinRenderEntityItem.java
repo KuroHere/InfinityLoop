@@ -1,20 +1,29 @@
 package com.me.infinity.loop.mixin.mixins;
 
 import com.me.infinity.loop.features.modules.render.ItemPhysics;
-import net.minecraft.entity.item.*;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.client.*;
-import java.util.*;
-import net.minecraft.util.*;
-import net.minecraft.client.renderer.block.model.*;
-import org.spongepowered.asm.mixin.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.util.math.*;
-import net.minecraft.block.material.*;
-import org.lwjgl.opengl.*;
-import net.minecraft.item.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.entity.*;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.entity.RenderEntityItem;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import org.lwjgl.opengl.GL11;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.Random;
 
 @Mixin(RenderEntityItem.class)
 public abstract class MixinRenderEntityItem extends MixinRenderer<EntityItem>{
@@ -45,6 +54,10 @@ public abstract class MixinRenderEntityItem extends MixinRenderer<EntityItem>{
         return (rotationPitch > 0.0f) ? rotationPitch : ((double)(-rotationPitch));
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     private int transformModelCount(EntityItem itemIn, double x, double y, double z, float p_177077_8_, IBakedModel p_177077_9_)
     {
@@ -101,6 +114,10 @@ public abstract class MixinRenderEntityItem extends MixinRenderer<EntityItem>{
         }
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public void doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
@@ -257,9 +274,9 @@ public abstract class MixinRenderEntityItem extends MixinRenderer<EntityItem>{
 
         for (int k = 0; k < j; ++k)
         {
+            GlStateManager.pushMatrix();
             if (flag1)
             {
-                GlStateManager.pushMatrix();
 
                 if (k > 0)
                 {
@@ -275,7 +292,6 @@ public abstract class MixinRenderEntityItem extends MixinRenderer<EntityItem>{
             }
             else
             {
-                GlStateManager.pushMatrix();
 
                 if (k > 0)
                 {

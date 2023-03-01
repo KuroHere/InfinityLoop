@@ -1,11 +1,11 @@
 package com.me.infinity.loop.features.modules.movement;
 
-import com.me.infinity.loop.event.events.StepEvent;
+import com.me.infinity.loop.event.events.network.StepEvent;
 import com.me.infinity.loop.features.modules.Module;
 
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraft.block.material.Material;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -17,7 +17,7 @@ public class Step
     private static Step instance;
 
     public Step() {
-        super("Step", "Allows you to step up blocks", Category.MOVEMENT, true, false, false);
+        super("Step", "Allows you to step up blocks", ModuleCategory.MOVEMENT);
         instance = this;
     }
 

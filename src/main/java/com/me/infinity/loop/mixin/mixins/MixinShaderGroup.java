@@ -1,6 +1,6 @@
 package com.me.infinity.loop.mixin.mixins;
 
-import com.me.infinity.loop.util.interfaces.IShaderGroup;
+import com.me.infinity.loop.util.utils.interfaces.IShaderGroup;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;
 import net.minecraft.client.shader.ShaderGroup;

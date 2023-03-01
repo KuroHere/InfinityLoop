@@ -2,7 +2,7 @@ package com.me.infinity.loop.manager;
 
 import com.me.infinity.loop.InfinityLoop;
 import com.mojang.realmsclient.gui.ChatFormatting;
-import com.me.infinity.loop.event.events.PacketEvent;
+import com.me.infinity.loop.event.events.network.EventPacket;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.command.Command;
 import net.minecraft.network.play.client.CPacketChatMessage;
@@ -26,9 +26,9 @@ public class ReloadManager
     }
 
     @SubscribeEvent
-    public void onPacketSend(PacketEvent.Send event) {
+    public void onPacketSend(EventPacket.Send event) {
         CPacketChatMessage packet;
-        if (event.getPacket() instanceof CPacketChatMessage && (packet = event.getPacket()).getMessage().startsWith(this.prefix) && packet.getMessage().contains("reload")) {
+        if (event.getPacket() instanceof CPacketChatMessage && (packet = (CPacketChatMessage) event.getPacket()).getMessage().startsWith(this.prefix) && packet.getMessage().contains("reload")) {
             InfinityLoop.load();
             event.setCanceled(true);
         }

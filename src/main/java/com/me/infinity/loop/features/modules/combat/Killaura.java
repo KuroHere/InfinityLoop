@@ -1,13 +1,14 @@
 package com.me.infinity.loop.features.modules.combat;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.UpdateWalkingPlayerEvent;
+import com.me.infinity.loop.event.events.player.EventMotionUpdate;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.player.DamageUtil;
-import com.me.infinity.loop.util.player.EntityUtil;
-import com.me.infinity.loop.util.client.MathUtil;
-import com.me.infinity.loop.util.worlds.Timer;
+import com.me.infinity.loop.util.utils.DamageUtil;
+import com.me.infinity.loop.util.utils.EntityUtil;
+import com.me.infinity.loop.util.utils.maths.MathUtil;
+import com.me.infinity.loop.util.utils.worlds.Timer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,7 +30,7 @@ public class Killaura extends Module {
     public Setting<Boolean> packet = register(new Setting("Packet", Boolean.valueOf(false)));
 
     public Killaura() {
-        super("Killaura", "Kills aura.", Module.Category.COMBAT, true, false, false);
+        super("Killaura", "Kills aura.", ModuleCategory.COMBAT);
     }
 
     public void onTick() {
@@ -38,8 +39,8 @@ public class Killaura extends Module {
     }
 
     @SubscribeEvent
-    public void onUpdateWalkingPlayerEvent(UpdateWalkingPlayerEvent event) {
-        if (event.getStage() == 0 && this.rotate.getValue().booleanValue())
+    public void onUpdateWalkingPlayerEvent(EventMotionUpdate event) {
+        if (event.isPre() && this.rotate.getValue().booleanValue())
             doKillaura();
     }
 

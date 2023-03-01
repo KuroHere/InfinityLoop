@@ -1,6 +1,7 @@
 package com.me.infinity.loop.features.modules.render;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 
 public class CameraClip
@@ -10,7 +11,7 @@ public class CameraClip
     public Setting<Double> distance = this.register(new Setting<>("Distance", 10.0, 0.0, 50.0, v -> this.extend.getValue(), "By how much you want to extend the distance."));
 
     public CameraClip() {
-        super("CameraClip", "Makes your Camera clip.", Module.Category.RENDER, false, false, false);
+        super("CameraClip", "Makes your Camera clip.", ModuleCategory.RENDER);
         this.setInstance();
     }
 

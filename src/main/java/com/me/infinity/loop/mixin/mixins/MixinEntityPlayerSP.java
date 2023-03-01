@@ -1,9 +1,10 @@
 package com.me.infinity.loop.mixin.mixins;
 
+import com.me.infinity.loop.event.Event;
 import com.me.infinity.loop.event.events.ChatEvent;
-import com.me.infinity.loop.event.events.UpdateWalkingPlayerEvent;
+import com.me.infinity.loop.event.events.player.EventMotionUpdate;
 import com.me.infinity.loop.features.modules.player.AutoDoSmth;
-import com.me.infinity.loop.util.interfaces.Util;
+import com.me.infinity.loop.util.utils.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -42,13 +43,13 @@ public abstract class MixinEntityPlayerSP
 
     @Inject(method = {"onUpdateWalkingPlayer"}, at = {@At(value = "HEAD")})
     private void preMotion(CallbackInfo info) {
-        UpdateWalkingPlayerEvent event = new UpdateWalkingPlayerEvent(0);
+        EventMotionUpdate event = new EventMotionUpdate(Event.Stage.PRE);
         MinecraftForge.EVENT_BUS.post(event);
     }
 
     @Inject(method = {"onUpdateWalkingPlayer"}, at = {@At(value = "RETURN")})
     private void postMotion(CallbackInfo info) {
-        UpdateWalkingPlayerEvent event = new UpdateWalkingPlayerEvent(1);
+        EventMotionUpdate event = new EventMotionUpdate(Event.Stage.PRE);
         MinecraftForge.EVENT_BUS.post(event);
     }
 }

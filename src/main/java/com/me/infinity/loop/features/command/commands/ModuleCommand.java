@@ -5,12 +5,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.me.infinity.loop.InfinityLoop;
 import com.me.infinity.loop.features.Feature;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.*;
+import com.me.infinity.loop.features.setting.impl.*;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.Module;
 
 
+import java.awt.*;
 import java.util.Objects;
 
 public class ModuleCommand
@@ -24,7 +27,7 @@ public class ModuleCommand
         Setting setting;
         if (commands.length == 1) {
             ModuleCommand.sendMessage("Modules: ");
-            for (Module.Category category : InfinityLoop.moduleManager.getCategories()) {
+            for (ModuleCategory category : InfinityLoop.moduleManager.getCategories()) {
                 String modules = category.getName() + ": ";
                 for (Module module1 : InfinityLoop.moduleManager.getModulesByCategory(category)) {
                     modules = modules + (module1.isEnabled() ? ChatFormatting.GREEN : ChatFormatting.RED) + module1.getName() + ChatFormatting.WHITE + ", ";
@@ -122,9 +125,7 @@ public class ModuleCommand
                         return;
                     case "ColorSetting":
                         JsonArray array = element.getAsJsonArray();
-                        ((ColorSetting) setting2.getValue()).setColor(array.get(0).getAsInt());
-                        ((ColorSetting) setting2.getValue()).setCycle(array.get(1).getAsBoolean());
-                        ((ColorSetting) setting2.getValue()).setGlobalOffset(array.get(2).getAsInt());
+                        setting2.setValue(new Color(array.getAsInt(), true));
                         return;
                     case "PositionSetting":
                         JsonArray array3 = element.getAsJsonArray();

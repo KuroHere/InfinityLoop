@@ -1,7 +1,8 @@
 package com.me.infinity.loop.features.modules.client;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.ClientEvent;
+import com.me.infinity.loop.event.events.client.ClientEvent;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.csgui.CSClickGui;
@@ -47,7 +48,7 @@ public class CSGui
     private CSClickGui click;
 
     public CSGui() {
-        super("CSGui", "Opens the CSGui", Module.Category.CLIENT, true, false, false);
+        super("CSGui", "Opens the CSGui", ModuleCategory.CLIENT);
         this.setInstance();
     }
 
@@ -71,7 +72,7 @@ public class CSGui
 
     @SubscribeEvent
     public void onSettingChange(ClientEvent event) {
-        if (event.getStage() == 2 && event.getSetting().getFeature().equals(this)) {
+        if (event.isPre() && event.getSetting().getFeature().equals(this)) {
             if (event.getSetting().equals(this.prefix)) {
                 InfinityLoop.commandManager.setPrefix(this.prefix.getPlannedValue());
                 Command.sendMessage("Prefix set to " + ChatFormatting.DARK_GRAY + InfinityLoop.commandManager.getPrefix());

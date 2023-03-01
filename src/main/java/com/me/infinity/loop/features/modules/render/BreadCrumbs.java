@@ -1,17 +1,18 @@
 package com.me.infinity.loop.features.modules.render;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.Render3DEvent;
+import com.me.infinity.loop.event.events.render.Render3DEvent;
 import com.me.infinity.loop.features.modules.Module;
-import com.me.infinity.loop.features.setting.ColorSetting;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 import com.me.infinity.loop.manager.AccessorRenderManager;
-import com.me.infinity.loop.util.client.MathUtil;
-import com.me.infinity.loop.util.worlds.Timer;
+import com.me.infinity.loop.util.utils.maths.MathUtil;
+import com.me.infinity.loop.util.utils.worlds.Timer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class BreadCrumbs extends Module {
@@ -20,13 +21,13 @@ public class BreadCrumbs extends Module {
     ArrayList<BreadCrumb> bcs = new ArrayList<>();
 
     public Setting<Mode> mode = this.register(new Setting<>("Mode", Mode.DEFAULT));
-    public Setting<ColorSetting> color  = register(new Setting<>("Alpha", new ColorSetting(0x8800FF00), v -> this.mode.getValue() == Mode.DEFAULT));
     public Setting<Float> lineWidht = register(new Setting<>("LineWidth", Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(5.0f), v -> this.mode.getValue() == Mode.DEFAULT));
     public Setting<Integer> tickClear = register(new Setting<>("TickClear",  25, 1, 45));
     public Setting<Float> fadeSpeed = register(new Setting<>("FadeSpeed", Float.valueOf(0.4f), Float.valueOf(0.1f), Float.valueOf(2.0f)));
+    public Setting<Color> color  = register(new Setting<>("Alpha", new Color(-1), v -> this.mode.getValue() == Mode.DEFAULT));
 
     public BreadCrumbs() {
-        super("BreadCumbs", "Draw Line behind u", Category.RENDER, true, false, false);
+        super("BreadCumbs", "Draw Line behind u(Will fix crash on enable soon)", ModuleCategory.RENDER);
         this.setInstance();
     }
 
@@ -66,7 +67,7 @@ public class BreadCrumbs extends Module {
     }
 
     @Override
-    public void onToggle() {
+    public void toggle() {
         bcs.clear();
     }
 

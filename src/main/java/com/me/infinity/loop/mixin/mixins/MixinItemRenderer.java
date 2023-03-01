@@ -1,13 +1,13 @@
 package com.me.infinity.loop.mixin.mixins;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.EventEnum;
-import com.me.infinity.loop.event.events.TransformFirstPersonEvent;
+import com.me.infinity.loop.event.Event;
+import com.me.infinity.loop.event.events.player.TransformFirstPersonEvent;
 import com.me.infinity.loop.features.modules.client.Colors;
 import com.me.infinity.loop.features.modules.render.HandChams;
 import com.me.infinity.loop.features.modules.render.SmallShield;
 import com.me.infinity.loop.features.modules.render.ViewModel;
-import com.me.infinity.loop.util.renders.ColorUtil;
+import com.me.infinity.loop.util.utils.renders.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -88,13 +88,13 @@ public abstract class MixinItemRenderer {
 
     @Inject(method = { "transformSideFirstPerson" }, at = { @At("HEAD") })
     public void transformSideFirstPerson(final EnumHandSide hand, final float p_187459_2_, final CallbackInfo callbackInfo) {
-        final TransformFirstPersonEvent event = new TransformFirstPersonEvent(EventEnum.PRE, hand);
+        final TransformFirstPersonEvent event = new TransformFirstPersonEvent(Event.Stage.PRE, hand);
         InfinityLoop.eventManager.post(event);
     }
 
     @Inject(method = { "transformEatFirstPerson" }, at = { @At("HEAD") }, cancellable = true)
     public void transformEatFirstPerson(final float p_187454_1_, final EnumHandSide hand, final ItemStack stack, final CallbackInfo callbackInfo) {
-        final TransformFirstPersonEvent event = new TransformFirstPersonEvent(EventEnum.PRE, hand);
+        final TransformFirstPersonEvent event = new TransformFirstPersonEvent(Event.Stage.PRE, hand);
         InfinityLoop.eventManager.post(event);
         if (ViewModel.getINSTANCE().cancelEating.getValue()) {
             callbackInfo.cancel();
@@ -103,7 +103,7 @@ public abstract class MixinItemRenderer {
 
     @Inject(method = { "transformFirstPerson" }, at = { @At("HEAD") })
     public void transformFirstPerson(final EnumHandSide hand, final float p_187453_2_, final CallbackInfo callbackInfo) {
-        final TransformFirstPersonEvent event = new TransformFirstPersonEvent(EventEnum.PRE, hand);
+        final TransformFirstPersonEvent event = new TransformFirstPersonEvent(Event.Stage.PRE, hand);
         InfinityLoop.eventManager.post(event);
     }
 

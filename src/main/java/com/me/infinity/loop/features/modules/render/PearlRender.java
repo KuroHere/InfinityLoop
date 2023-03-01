@@ -5,14 +5,15 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.Render3DEvent;
-import com.me.infinity.loop.util.player.EntityUtil;
+import com.me.infinity.loop.event.events.render.Render3DEvent;
+import com.me.infinity.loop.features.modules.ModuleCategory;
+import com.me.infinity.loop.util.utils.EntityUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.client.MathUtil;
-import com.me.infinity.loop.util.renders.RenderUtil;
+import com.me.infinity.loop.util.utils.maths.MathUtil;
+import com.me.infinity.loop.util.utils.renders.RenderUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
@@ -31,7 +32,7 @@ public class PearlRender
     public Setting<Boolean> notify = this.register(new Setting<Boolean>("Notify", false));
 
     public PearlRender() {
-        super("PearlRender", "Renders where pearls will go", Category.RENDER, true, false, false);
+        super("PearlRender", "Renders where pearls will go", ModuleCategory.RENDER);
         this.list = new HashMap<EntityPlayer, UUID>();
     }
 

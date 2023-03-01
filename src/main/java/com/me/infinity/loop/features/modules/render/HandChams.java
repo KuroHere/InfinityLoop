@@ -1,6 +1,7 @@
 package com.me.infinity.loop.features.modules.render;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 
 public class HandChams
@@ -13,7 +14,7 @@ public class HandChams
     public Setting<Integer> alpha = this.register(new Setting<Integer>("Alpha", 240, 0, 255));
 
     public HandChams() {
-        super("HandChams", "Changes your hand color.", Module.Category.RENDER, false, false, false);
+        super("HandChams", "Changes your hand color.", ModuleCategory.RENDER);
         this.setInstance();
     }
 

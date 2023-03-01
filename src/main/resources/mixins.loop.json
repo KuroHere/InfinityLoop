@@ -14,7 +14,7 @@
     "MixinRenderPlayer",
     "MixinEntityLivingBase",
     "MixinGuiNewChat",
-    "MixinGuiInventory",
+    "MixinKeyBinding",
     "MixinGuiPlayerTabOverlay",
     "MixinGuiScreen",
     "MixinItemRenderer",

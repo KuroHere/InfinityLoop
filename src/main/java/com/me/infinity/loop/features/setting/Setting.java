@@ -1,7 +1,8 @@
 package com.me.infinity.loop.features.setting;
 
-import com.me.infinity.loop.event.events.ClientEvent;
+import com.me.infinity.loop.event.events.client.ClientEvent;
 import com.me.infinity.loop.features.Feature;
+import com.me.infinity.loop.features.setting.impl.*;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -11,6 +12,8 @@ public class Setting<T> {
     private final String name;
     private final T defaultValue;
     public Minecraft mc;
+
+    public boolean isOpen;
     private T value;
     private T plannedValue;
     private T min;
@@ -214,9 +217,6 @@ public class Setting<T> {
         if (this.isEnumSetting()) {
             return "Enum";
         }
-        if(this.isColorSetting()){
-            return "ColorSetting";
-        }
         if(this.isPositionSetting()){
             return "PositionSetting";
         }
@@ -238,12 +238,10 @@ public class Setting<T> {
         return this.value instanceof Double || this.value instanceof Integer || this.value instanceof Short || this.value instanceof Long || this.value instanceof Float;
     }
 
-    public boolean isColorHeader(){
-        return this.value instanceof ColorSettingHeader;
-    }
+
 
     public boolean isEnumSetting() {
-        return !this.isPositionSetting()&& !this.isColorHeader()  && !this.isNumberSetting() &&!(this.value instanceof PositionSetting) && !(this.value instanceof String)  && !(this.value instanceof ColorSetting) && !(this.value instanceof Parent) && !(this.value instanceof Bind) && !(this.value instanceof SubBind)&& !(this.value instanceof Character) && !(this.value instanceof Boolean);
+        return !this.isNumberSetting() &&!(this.value instanceof PositionSetting) && !(this.value instanceof String) && !(this.value instanceof Parent) && !(this.value instanceof Bind) && !(this.value instanceof SubBind)&& !(this.value instanceof Character) && !(this.value instanceof Boolean);
     }
 
     public boolean isBindSetting() {
@@ -252,10 +250,6 @@ public class Setting<T> {
 
     public boolean  isPositionSetting() {
         return this.value instanceof PositionSetting;
-    }
-
-    public boolean isColorSetting() {
-        return this.value instanceof ColorSetting;
     }
 
     public boolean isStringSetting() {

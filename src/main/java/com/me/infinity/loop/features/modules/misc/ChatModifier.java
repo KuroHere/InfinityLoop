@@ -1,8 +1,9 @@
 package com.me.infinity.loop.features.modules.misc;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.PacketEvent;
+import com.me.infinity.loop.event.events.network.EventPacket;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,7 +16,7 @@ public class ChatModifier
     public boolean check;
 
     public ChatModifier() {
-        super("BetterChat", "Modifies your chat", Module.Category.MISC, true, false, false);
+        super("BetterChat", "Modifies your chat", ModuleCategory.MISC);
         this.setInstance();
     }
 
@@ -31,7 +32,7 @@ public class ChatModifier
     }
 
     @SubscribeEvent
-    public void onPacketSend(PacketEvent.Send event) {
+    public void onPacketSend(EventPacket.Send event) {
         if (event.getPacket() instanceof CPacketChatMessage) {
             String s = ((CPacketChatMessage) event.getPacket()).getMessage();
             this.check = !s.startsWith(InfinityLoop.commandManager.getPrefix());

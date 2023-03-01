@@ -1,26 +1,29 @@
 package com.me.infinity.loop.features.modules;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.ClientEvent;
-import com.me.infinity.loop.event.events.Render2DEvent;
-import com.me.infinity.loop.event.events.Render3DEvent;
+import com.me.infinity.loop.event.events.render.Render2DEvent;
+import com.me.infinity.loop.event.events.render.Render3DEvent;
+import com.me.infinity.loop.event.events.render.RenderEvent;
 import com.me.infinity.loop.features.Feature;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.client.HUD;
-import com.me.infinity.loop.features.setting.Bind;
+import com.me.infinity.loop.features.setting.impl.Bind;
 import com.me.infinity.loop.features.setting.Setting;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-public class Module
+public abstract class Module
         extends Feature {
     private final String description;
-    private final Category category;
+    private final ModuleCategory category;
     public Setting<Boolean> enabled = this.register(new Setting<>("Enabled", false));
     public Setting<Boolean> drawn = this.register(new Setting<>("Drawn", true));
     public Setting<Bind> bind = this.register(new Setting<>("Keybind", new Bind(-1)));
     public Setting<String> displayName;
+    public boolean toggled;
+    public boolean persistent;
     public boolean hasListener;
     public boolean alwaysListening;
     public boolean hidden;
@@ -30,47 +33,38 @@ public class Module
     public float vOffset;
     public boolean sliding;
 
-    public Module(String name, String description, Category category, boolean hasListener, boolean hidden, boolean alwaysListening) {
+    public Module(String name, String description, ModuleCategory category) {
         super(name);
-        this.displayName = this.register(new Setting<String>("DisplayName", name));
+        this.displayName = this.register(new Setting<>("DisplayName", name));
         this.description = description;
         this.category = category;
-        this.hasListener = hasListener;
-        this.hidden = hidden;
-        this.alwaysListening = alwaysListening;
+        this.persistent = false;
     }
 
-    public enum Category {
-        COMBAT("Combat"),
-        MISC("Misc"),
-        RENDER("Render"),
-        MOVEMENT("Movement"),
-        PLAYER("Player"),
-        CLIENT("Client"),
-        TEST("Test");
+    public Module(String name, String description, ModuleCategory category, boolean persistent) {
+        super(name);
+        this.displayName = this.register(new Setting<>("DisplayName", name));
+        this.description = description;
+        this.category = category;
+        this.persistent = persistent;
+        this.persist();
+    }
 
-        private final String name;
-
-        Category(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return this.name;
-        }
+    public ModuleCategory getCategory() {
+        return this.category;
     }
 
     public boolean isSliding() {
         return this.sliding;
     }
 
+    public void onMotionUpdate() {
+    }
+
     public void onEnable() {
     }
 
     public void onDisable() {
-    }
-
-    public void onToggle() {
     }
 
     public void onLoad() {
@@ -88,6 +82,9 @@ public class Module
     public void onUpdate() {
     }
 
+    public void onWorldRender(RenderEvent event) {
+
+    }
     public void onRender2D(Render2DEvent event) {
     }
 
@@ -95,6 +92,21 @@ public class Module
     }
 
     public void onUnload() {
+    }
+
+    public String getHudInfo() {
+        return "";
+    }
+
+    public void onClientTick(final TickEvent.ClientTickEvent event) {
+    }
+
+    public boolean isToggled() {
+        return this.toggled;
+    }
+
+    public void setToggled(final boolean toggled) {
+        this.toggled = toggled;
     }
 
     public String getDisplayInfo() {
@@ -117,9 +129,17 @@ public class Module
         }
     }
 
+    public void persist() {
+        block0: {
+            if (!this.persistent) break block0;
+            this.setToggled(true);
+            MinecraftForge.EVENT_BUS.register((Object)this);
+        }
+    }
+
     public void enable() {
         this.enabled.setValue(Boolean.TRUE);
-        this.onToggle();
+        this.setToggled(true);
         this.onEnable();
         if (HUD.getInstance().notifyToggles.getValue().booleanValue()) {
             TextComponentString text = new TextComponentString(InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.GREEN + this.getDisplayName() + " toggled on.");
@@ -139,15 +159,15 @@ public class Module
             TextComponentString text = new TextComponentString(InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.RED + this.getDisplayName() + " toggled off.");
             Module.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(text, 1);
         }
-        this.onToggle();
+        this.setToggled(false);
         this.onDisable();
     }
 
     public void toggle() {
-        ClientEvent event = new ClientEvent(!this.isEnabled() ? 1 : 0, this);
-        MinecraftForge.EVENT_BUS.post(event);
-        if (!event.isCanceled()) {
-            this.setEnabled(!this.isEnabled());
+        if (this.toggled) {
+            this.disable();
+        } else {
+            this.enable();
         }
     }
 
@@ -180,10 +200,6 @@ public class Module
 
     public void setUndrawn() {
         this.drawn.setValue(null);
-    }
-
-    public Category getCategory() {
-        return this.category;
     }
 
     public String getInfo() {

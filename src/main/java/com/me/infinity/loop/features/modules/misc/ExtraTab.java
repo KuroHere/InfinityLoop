@@ -1,6 +1,7 @@
 package com.me.infinity.loop.features.modules.misc;
 
 import com.me.infinity.loop.InfinityLoop;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
@@ -13,7 +14,7 @@ public class ExtraTab
     public Setting<Integer> size = this.register(new Setting<Integer>("Size", 250, 1, 1000));
 
     public ExtraTab() {
-        super("ExtraTab", "Extends Tab.", Module.Category.MISC, false, false, false);
+        super("ExtraTab", "Extends Tab.", ModuleCategory.MISC);
         this.setInstance();
     }
 

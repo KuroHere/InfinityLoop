@@ -1,17 +1,19 @@
 package com.me.infinity.loop.features.modules.client;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.ClientEvent;
-import com.me.infinity.loop.event.events.Render2DEvent;
-import com.me.infinity.loop.util.player.EntityUtil;
+import com.me.infinity.loop.event.events.client.ClientEvent;
+import com.me.infinity.loop.event.events.render.Render2DEvent;
+import com.me.infinity.loop.features.modules.ModuleCategory;
+import com.me.infinity.loop.features.modules.client.ClickGui.ClickGui;
+import com.me.infinity.loop.util.utils.EntityUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.modules.Module;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.client.MathUtil;
-import com.me.infinity.loop.util.worlds.Timer;
-import com.me.infinity.loop.util.renders.ColorUtil;
-import com.me.infinity.loop.util.renders.RenderUtil;
-import com.me.infinity.loop.util.renders.TextUtil;
+import com.me.infinity.loop.util.utils.maths.MathUtil;
+import com.me.infinity.loop.util.utils.worlds.Timer;
+import com.me.infinity.loop.util.utils.renders.ColorUtil;
+import com.me.infinity.loop.util.utils.renders.RenderUtil;
+import com.me.infinity.loop.util.utils.renders.TextUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Items;
@@ -63,7 +65,7 @@ public class HUD extends Module {
     public Map<Integer, Integer> colorMap;
 
     public HUD() {
-        super("HUD", "HUD Elements rendered on your screen", Module.Category.CLIENT, true, false, false);
+        super("HUD", "HUD Elements rendered on your screen", ModuleCategory.CLIENT);
         this.colorMap = new HashMap<Integer, Integer>();
         setInstance();
     }
@@ -401,7 +403,7 @@ public class HUD extends Module {
 
     @SubscribeEvent
     public void onSettingChange(ClientEvent event) {
-        if (event.getStage() == 2 &&
+        if (event.isPre() &&
                 equals(event.getSetting().getFeature()))
             InfinityLoop.commandManager.getClientMessage();
     }

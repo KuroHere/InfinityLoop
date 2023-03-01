@@ -1,8 +1,8 @@
 package com.me.infinity.loop.manager;
 
 import com.me.infinity.loop.features.Feature;
-import com.me.infinity.loop.util.minecraft.BlockUtil;
-import com.me.infinity.loop.util.player.EntityUtil;
+import com.me.infinity.loop.util.utils.minecraft.BlockUtil;
+import com.me.infinity.loop.util.utils.EntityUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;

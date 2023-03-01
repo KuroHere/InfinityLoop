@@ -1,15 +1,14 @@
 package com.me.infinity.loop.features.modules.render;
 
-import com.me.infinity.loop.event.events.UpdateWalkingPlayerEvent;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.Mod;
 
 public class ShadowESP
         extends Module {
     public ShadowESP() {
-        super("ShadowEsp","ShadowEsp", Category.RENDER, true, false, false);
+        super("ShadowEsp","ShadowEsp", ModuleCategory.RENDER);
     }
 
     @Override
@@ -19,6 +18,11 @@ public class ShadowESP
             player.setGlowing(false);
         }
         super.onDisable();
+        for (Entity entity : ShadowESP.mc.world.playerEntities) {
+            if (!entity.isGlowing()) continue;
+            entity.setGlowing(false);
+        }
+        super.onDisable();
     }
 
     @Override
@@ -26,6 +30,10 @@ public class ShadowESP
         for (Entity player : ShadowESP.mc.world.loadedEntityList) {
             if (!(player instanceof EntityPlayer)) continue;
             player.setGlowing(true);
+        }
+        for (Entity entity : ShadowESP.mc.world.loadedEntityList) {
+            if (!(entity instanceof EntityPlayer)) continue;
+            entity.setGlowing(true);
         }
     }
 }

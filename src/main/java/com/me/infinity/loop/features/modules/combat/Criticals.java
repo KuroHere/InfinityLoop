@@ -1,9 +1,10 @@
 package com.me.infinity.loop.features.modules.combat;
 
-import com.me.infinity.loop.event.events.PacketEvent;
+import com.me.infinity.loop.event.events.network.EventPacket;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.worlds.Timer;
+import com.me.infinity.loop.util.utils.worlds.Timer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketUseEntity;
@@ -18,13 +19,13 @@ public class Criticals
     private final boolean resetTimer = false;
 
     public Criticals() {
-        super("Criticals", "Scores criticals for you", Module.Category.COMBAT, true, false, false);
+        super("Criticals", "Scores criticals for you", ModuleCategory.COMBAT);
     }
 
     @SubscribeEvent
-    public void onPacketSend(PacketEvent.Send event) {
+    public void onPacketSend(EventPacket.Send event) {
         CPacketUseEntity packet;
-        if (event.getPacket() instanceof CPacketUseEntity && (packet = event.getPacket()).getAction() == CPacketUseEntity.Action.ATTACK) {
+        if (event.getPacket() instanceof CPacketUseEntity && (packet = (CPacketUseEntity) event.getPacket()).getAction() == CPacketUseEntity.Action.ATTACK) {
             if (this.resetTimer) {
                 return;
             }

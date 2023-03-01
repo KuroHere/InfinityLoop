@@ -1,23 +1,17 @@
 package com.me.infinity.loop.features.modules.client;
 
-import com.me.infinity.loop.event.events.PerspectiveEvent;
-import com.me.infinity.loop.features.command.Command;
+import com.me.infinity.loop.event.events.render.PerspectiveEvent;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.manager.MotionBlurResourceManager;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.Map;
 
 public class GameChanger
     extends Module {
 
     private static GameChanger INSTANCE = new GameChanger();
     public Setting<Boolean> modelFlip = this.register(new Setting<>("ModelFlip", false));
-    public Setting<Boolean> motionBlur = this.register(new Setting<>("MotionBlur(Don't Work)", false));
-    public final Setting<Float> amount = this.register(new Setting<>("Amount", Float.valueOf(1f), Float.valueOf(0f), Float.valueOf(10f), v -> this .motionBlur.getValue()));
     public Setting<Boolean> aspect = this.register(new Setting<>("Aspect", false));
     public final Setting<Double> aspectValue = this.register(new Setting<>("AspectValue", mc.displayWidth / mc.displayHeight + 0.0, 0.0, 3.0,v -> this.aspect.getValue()));
     public Setting<Boolean> customFov = this.register(new Setting<>("CustomFov", false));
@@ -29,11 +23,9 @@ public class GameChanger
     public final Setting<Integer> ambienceGreen = this.register(new Setting<>("A-Green",255,0,255, v -> customAmbience.getValue()));
     public final Setting<Integer> ambienceBlue = this.register(new Setting<>("A-Blue",255,0,255, v -> customAmbience.getValue()));
     public final Setting<Integer> ambienceAlpha = this.register(new Setting<>("A-Alpha",255,0,255, v -> customAmbience.getValue()));
-    private Map domainResourceManagers;
-    float lastValue;
 
     public GameChanger() {
-        super("GameChanger", "Change Some Minecraft Parameter", Category.CLIENT, true, false, false);
+        super("GameChanger", "Change Some Minecraft Parameter", ModuleCategory.CLIENT);
         this.setInstance();
     }
 
@@ -61,38 +53,6 @@ public class GameChanger
     @Override
     public void onDisable() {
         mc.entityRenderer.stopUseShader();
-    }
-
-    @Override
-    public void onTick() {
-        if (motionBlur.getValue()) {
-            try {
-                float curValue = amount.getValue();
-
-                if (!mc.entityRenderer.isShaderActive() && mc.world != null) {
-                    mc.entityRenderer.loadShader(new ResourceLocation("minecraft", "post/lunar_motionblur.json"));
-                }
-
-                if (domainResourceManagers == null) {
-                    //domainResourceManagers =  ((SimpleReloadableResourceManager) mc.resourceManager).domainResourceManagers;
-                }
-
-                if (!domainResourceManagers.containsKey("lunar_motionblur.json")) {
-                    domainResourceManagers.put("lunar_motionblur.json", new MotionBlurResourceManager());
-                }
-
-                if (curValue != lastValue) {
-                    Command.sendMessage("Motion Blur Reset!");
-                    domainResourceManagers.remove("lunar_motionblur.json");
-                    domainResourceManagers.put("lunar_motionblur.json", new MotionBlurResourceManager());
-                    mc.entityRenderer.loadShader(new ResourceLocation("minecraft", "lunar_motionblur.json"));
-                }
-
-                lastValue = curValue;
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @SubscribeEvent

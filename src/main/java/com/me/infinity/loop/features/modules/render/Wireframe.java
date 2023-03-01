@@ -1,6 +1,7 @@
 package com.me.infinity.loop.features.modules.render;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,7 +21,7 @@ public class Wireframe
     public Setting<Boolean> crystalModel = this.register(new Setting<Boolean>("CrystalModel", Boolean.FALSE));
 
     public Wireframe() {
-        super("Wireframe", "Draws a wireframe esp around other players.", Module.Category.RENDER, false, false, false);
+        super("Wireframe", "Draws a wireframe esp around other players.", ModuleCategory.RENDER);
         this.setInstance();
     }
 

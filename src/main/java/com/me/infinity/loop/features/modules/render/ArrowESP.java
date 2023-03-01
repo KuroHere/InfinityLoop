@@ -1,12 +1,13 @@
 package com.me.infinity.loop.features.modules.render;
 
 import com.google.common.collect.Maps;
-import com.me.infinity.loop.event.events.Render2DEvent;
+import com.me.infinity.loop.event.events.render.Render2DEvent;
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.player.EntityUtil;
-import com.me.infinity.loop.util.renders.RenderUtil;
-import com.me.infinity.loop.util.interfaces.Util;
+import com.me.infinity.loop.util.utils.EntityUtil;
+import com.me.infinity.loop.util.utils.renders.RenderUtil;
+import com.me.infinity.loop.util.utils.Util;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +33,7 @@ public class ArrowESP
     private final EntityListener entityListener = new EntityListener();
 
     public ArrowESP() {
-        super("ArrowESP", "Arrow tracers ", Module.Category.RENDER, true, false, false);
+        super("ArrowESP", "Arrow tracers ", ModuleCategory.RENDER);
     }
 
     @Override
@@ -59,6 +60,9 @@ public class ArrowESP
         });
     }
 
+    public static double interp(double d, double d2) {
+        return d2 + (d - d2) * (double)mc.getRenderPartialTicks();
+    }
 
     private boolean isOnScreen(Vec3d pos) {
         if (!(pos.x > -1.0)) return false;

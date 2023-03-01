@@ -1,13 +1,15 @@
 package com.me.infinity.loop;
 
-import com.me.infinity.loop.features.ui.font.CFontRenderer;
-import com.me.infinity.loop.util.renders.helper.dism.EntityGib;
-import com.me.infinity.loop.util.renders.helper.dism.RenderGib;
-import com.me.infinity.loop.util.renders.helper.ffp.NetworkHandler;
-import com.me.infinity.loop.util.interfaces.Util;
+import com.me.infinity.loop.features.gui.font.CFontRenderer;
+import com.me.infinity.loop.util.utils.IconUtils;
+import com.me.infinity.loop.util.utils.renders.helper.dism.EntityGib;
+import com.me.infinity.loop.util.utils.renders.helper.dism.RenderGib;
+import com.me.infinity.loop.util.utils.renders.helper.ffp.NetworkHandler;
 import com.me.infinity.loop.manager.*;
-import com.me.infinity.loop.util.phobos.GlobalExecutor;
-import com.me.infinity.loop.util.phobos.Sphere;
+import com.me.infinity.loop.util.utils.phobos.GlobalExecutor;
+import com.me.infinity.loop.util.utils.phobos.Sphere;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.Util;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -18,8 +20,12 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import static com.me.infinity.loop.util.utils.Util.mc;
 
 @Mod(modid = "loop", name = "InfinityLoop", version = "0.0.3")
 
@@ -141,8 +147,8 @@ public class InfinityLoop {
         moduleManager.onLoad();
         LOGGER.info("InfinityLoop successfully loaded!\n");
 
-        if(Util.mc.session != null && !alts.contains(Util.mc.session.getUsername())) {
-            alts.add(Util.mc.session.getUsername());
+        if(mc.session != null && !alts.contains(mc.session.getUsername())) {
+            alts.add(mc.session.getUsername());
         }
     }
 
@@ -199,6 +205,19 @@ public class InfinityLoop {
 
     /*--------------------------------------------------------*/
 
+    public static void setWindowIcon() {
+        if (Util.getOSType() != Util.EnumOS.OSX) {
+            try (final InputStream inputStream16x = Minecraft.class.getResourceAsStream("logo.png");
+                 final InputStream inputStream32x = Minecraft.class.getResourceAsStream("logo.png")) {
+                final ByteBuffer[] icons = { IconUtils.INSTANCE.readImageToBuffer(inputStream16x), IconUtils.INSTANCE.readImageToBuffer(inputStream32x) };
+                Display.setIcon((ByteBuffer[])icons);
+            }
+            catch (Exception e) {
+                InfinityLoop.LOGGER.error("Couldn't set Windows Icon", (Throwable)e);
+            }
+        }
+    }
+
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -209,6 +228,7 @@ public class InfinityLoop {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        this.setWindowIcon();
         Display.setTitle("InfinityLoop");
         initTime = System.currentTimeMillis();
         InfinityLoop.load();

@@ -1,6 +1,7 @@
 package com.me.infinity.loop.features.modules.render;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.common.eventhandler.*;
@@ -14,9 +15,10 @@ public class FogColor extends Module
     private final Setting<Integer> green = this.register(new Setting<>("Green", 255, 0, 255));
     private final Setting<Integer> blue = this.register(new Setting<>("Blue", 0, 0, 255));
     private final Setting<Boolean> rainbow = this.register(new Setting<>("Rainbow", false));
+    public Setting<Integer> delay = this.register(new Setting<Object>("Delay", Integer.valueOf(160), Integer.valueOf(0), Integer.valueOf(600), v -> this.rainbow.getValue()));
     private final Setting<Boolean> fog = this.register(new Setting<>("Fog", true));
     public FogColor() {
-        super("FogColor", "Changes the color of the sky", Module.Category.RENDER, false, false, false);
+        super("FogColor", "Changes the color of the sky", ModuleCategory.RENDER);
     }
 
     private void setInstance() {
@@ -60,7 +62,7 @@ public class FogColor extends Module
     }
 
     public void doRainbow() {
-        final float[] tick_color = { System.currentTimeMillis() % 11520L / 11520.0f };
+        final float[] tick_color = {delay.getValue() + System.currentTimeMillis() % 11520L / 11520.0f };
         final int color_rgb_o = Color.HSBtoRGB(tick_color[0], 0.8f, 0.8f);
         this.red.setValue(color_rgb_o >> 16 & 0xFF);
         this.green.setValue(color_rgb_o >> 8 & 0xFF);

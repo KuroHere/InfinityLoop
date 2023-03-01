@@ -1,22 +1,16 @@
 package com.me.infinity.loop.mixin.mixins;
 
-import com.google.common.base.Predicate;
-import com.me.infinity.loop.event.events.PerspectiveEvent;
+import com.me.infinity.loop.event.events.render.PerspectiveEvent;
 import com.me.infinity.loop.features.modules.client.GameChanger;
 import com.me.infinity.loop.features.modules.misc.BlockTweaks;
-import com.me.infinity.loop.features.modules.player.Speedmine;
 import com.me.infinity.loop.features.modules.render.CameraClip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.util.glu.Project;
 import org.spongepowered.asm.mixin.Final;
@@ -43,13 +37,6 @@ public class MixinEntityRenderer {
     @Final
     public int[] lightmapColors;
     Minecraft mc = Minecraft.getMinecraft();
-    @Redirect(method = {"getMouseOver"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/WorldClient;getEntitiesInAABBexcluding(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/AxisAlignedBB;Lcom/google/common/base/Predicate;)Ljava/util/List;"))
-    public List<Entity> getEntitiesInAABBexcluding(WorldClient worldClient, Entity entityIn, AxisAlignedBB boundingBox, Predicate predicate) {
-        if (Speedmine.getInstance().isOn() && (Minecraft.getMinecraft().player.getHeldItemMainhand().getItem() instanceof ItemPickaxe && Speedmine.getInstance().pickaxe.getValue() || Minecraft.getMinecraft().player.getHeldItemMainhand().getItem() == Items.GOLDEN_APPLE && Speedmine.getInstance().noGapTrace.getValue() || Minecraft.getMinecraft().player.getHeldItemMainhand().getItem() == Items.FLINT_AND_STEEL || Minecraft.getMinecraft().player.getHeldItemMainhand().getItem() == Items.TNT_MINECART)) {
-            return new ArrayList<Entity>();
-        }
-        return worldClient.getEntitiesInAABBexcluding(entityIn, boundingBox, predicate);
-    }
 
     @Inject(method = "updateLightmap", at = @At( value = "INVOKE", target = "Lnet/minecraft/client/renderer/texture/DynamicTexture;updateDynamicTexture()V", shift = At.Shift.BEFORE ))
     private void updateTextureHook(float partialTicks, CallbackInfo ci) {

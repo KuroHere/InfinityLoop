@@ -1,13 +1,14 @@
 package com.me.infinity.loop.features.modules.movement;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 
 public class NoVoid
         extends Module {
     public NoVoid() {
-        super("NoVoid", "Glitches you up from void.", Category.MOVEMENT, false, false, false);
+        super("NoVoid", "Glitches you up from void.", ModuleCategory.MOVEMENT);
     }
 
     @Override

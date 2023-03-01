@@ -5,12 +5,13 @@
 package com.me.infinity.loop.features.modules.combat;
 
 import com.me.infinity.loop.features.modules.Module;
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.minecraft.BlockUtil;
-import com.me.infinity.loop.util.minecraft.InventoryUtil;
-import com.me.infinity.loop.util.player.EntityUtil;
-import com.me.infinity.loop.util.worlds.TestUtil;
-import com.me.infinity.loop.util.worlds.Timer;
+import com.me.infinity.loop.util.utils.minecraft.BlockUtil;
+import com.me.infinity.loop.util.utils.minecraft.InventoryUtil;
+import com.me.infinity.loop.util.utils.EntityUtil;
+import com.me.infinity.loop.util.utils.worlds.TestUtil;
+import com.me.infinity.loop.util.utils.worlds.Timer;
 import net.minecraft.block.BlockEnderChest;
 import net.minecraft.block.BlockObsidian;
 import net.minecraft.block.material.Material;
@@ -45,7 +46,7 @@ public class HoleFiller extends Module {
     private int trie;
 
     public HoleFiller() {
-        super("HoleFiller", "Fills holes around you.", Category.COMBAT, true, false, true);
+        super("HoleFiller", "Fills holes around you.", ModuleCategory.COMBAT);
         this.range = (Setting<Integer>) this.register(new Setting("PlaceRange", 8, 0, 10));
         this.delay = (Setting<Integer>) this.register(new Setting("Delay", 50, 0, 250));
         this.blocksPerTick = (Setting<Integer>) this.register(new Setting("BlocksPerTick", 20, 8, 30));

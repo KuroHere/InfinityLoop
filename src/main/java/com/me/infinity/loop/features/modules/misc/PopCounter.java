@@ -1,5 +1,6 @@
 package com.me.infinity.loop.features.modules.misc;
 
+import com.me.infinity.loop.features.modules.ModuleCategory;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.me.infinity.loop.features.command.Command;
 import com.me.infinity.loop.features.modules.Module;
@@ -13,7 +14,7 @@ public class PopCounter
     private static PopCounter INSTANCE = new PopCounter();
 
     public PopCounter() {
-        super("PopCounter", "Counts other players totem pops.", Module.Category.MISC, true, false, false);
+        super("PopCounter", "Counts other players totem pops.", ModuleCategory.MISC);
         this.setInstance();
     }
 

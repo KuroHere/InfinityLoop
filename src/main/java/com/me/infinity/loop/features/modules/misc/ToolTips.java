@@ -1,11 +1,12 @@
 package com.me.infinity.loop.features.modules.misc;
 
-import com.me.infinity.loop.event.events.Render2DEvent;
+import com.me.infinity.loop.event.events.render.Render2DEvent;
 import com.me.infinity.loop.features.modules.Module;
-import com.me.infinity.loop.features.modules.client.ClickGui;
-import com.me.infinity.loop.util.renders.ColorUtil;
-import com.me.infinity.loop.util.renders.RenderUtil;
-import com.me.infinity.loop.util.worlds.Timer;
+import com.me.infinity.loop.features.modules.ModuleCategory;
+import com.me.infinity.loop.features.modules.client.ClickGui.ClickGui;
+import com.me.infinity.loop.util.utils.renders.ColorUtil;
+import com.me.infinity.loop.util.utils.renders.RenderUtil;
+import com.me.infinity.loop.util.utils.worlds.Timer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,7 +35,7 @@ public class ToolTips
     private int textRadarY = 0;
 
     public ToolTips() {
-        super("ShulkerViewer", "Several tweaks for tooltips.", Module.Category.MISC, true, false, false);
+        super("ShulkerViewer", "Several tweaks for tooltips.", ModuleCategory.MISC);
         this.setInstance();
     }
 

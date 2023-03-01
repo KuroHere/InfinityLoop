@@ -1,16 +1,13 @@
 package com.me.infinity.loop.mixin.mixins;
 
 import com.google.common.base.Predicate;
-import com.me.infinity.loop.features.modules.misc.Tracker;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
@@ -22,13 +19,6 @@ public class MixinWorld {
             chunk.getEntitiesOfTypeWithinAABB(entityClass, aabb, listToFill, filter);
         } catch (Exception exception) {
             // empty catch block
-        }
-    }
-
-    @Inject(method = {"onEntityAdded"}, at = {@At(value = "HEAD")})
-    private void onEntityAdded(Entity entityIn, CallbackInfo ci) {
-        if (Tracker.getInstance().isOn()) {
-            Tracker.getInstance().onSpawnEntity(entityIn);
         }
     }
 }

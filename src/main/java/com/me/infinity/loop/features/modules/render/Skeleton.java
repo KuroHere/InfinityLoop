@@ -1,11 +1,12 @@
 package com.me.infinity.loop.features.modules.render;
 
 import com.me.infinity.loop.InfinityLoop;
-import com.me.infinity.loop.event.events.Render3DEvent;
+import com.me.infinity.loop.event.events.render.Render3DEvent;
 import com.me.infinity.loop.features.modules.Module;
-import com.me.infinity.loop.features.modules.client.ClickGui;
+import com.me.infinity.loop.features.modules.ModuleCategory;
+import com.me.infinity.loop.features.modules.client.ClickGui.ClickGui;
 import com.me.infinity.loop.features.setting.Setting;
-import com.me.infinity.loop.util.minecraft.BlockUtil;
+import com.me.infinity.loop.util.utils.minecraft.BlockUtil;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -24,7 +25,7 @@ public class Skeleton
     private final Setting<Integer> alpha = this.register(new Setting<Integer>("Alpha", 255, 0, 255));
 
     public Skeleton() {
-        super("Skeleton", "Draws a skeleton inside the player.", Module.Category.RENDER, false, false, false);
+        super("Skeleton", "Draws a skeleton inside the player.", ModuleCategory.RENDER);
     }
 
     public static void addEntity(EntityPlayer e, ModelPlayer model) {
