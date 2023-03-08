@@ -69,7 +69,7 @@ public class Skeleton
             if (Managers.friendManager.isFriend(e.getName())) {
                 GlStateManager.color(0.0f, 191.0f, 230.0f, (float) this.alpha.getValue().intValue());
             } else {
-                GlStateManager.color((float) ClickGui.getInstance().red.getValue().intValue() / 255.0f, (float) ClickGui.getInstance().green.getValue().intValue() / 255.0f, (float) ClickGui.getInstance().blue.getValue().intValue() / 255.0f, (float) this.alpha.getValue().intValue());
+                GlStateManager.color((float) ClickGui.getInstance().moduleMainC.getPlannedValue().getRed() / 255.0f, (float) ClickGui.getInstance().moduleMainC.getPlannedValue().getGreen() / 255.0f, (float) ClickGui.getInstance().moduleMainC.getPlannedValue().getBlue() / 255.0f, (float) this.alpha.getValue().intValue());
             }
             Vec3d vec = this.getVec3(event, e);
             double x = vec.x - Skeleton.mc.getRenderManager().renderPosX;

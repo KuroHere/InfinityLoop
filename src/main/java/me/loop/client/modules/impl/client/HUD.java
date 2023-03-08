@@ -94,7 +94,7 @@ public class HUD extends Module {
             return;
         int width = this.renderer.scaledWidth;
         int height = this.renderer.scaledHeight;
-        this.color = ColorUtil.toRGBA((ClickGui.getInstance()).red.getValue().intValue(), (ClickGui.getInstance()).green.getValue().intValue(), (ClickGui.getInstance()).blue.getValue().intValue());
+        this.color = ColorUtil.toRGBA(ClickGui.getInstance().moduleMainC.getValue().getRed(), ClickGui.getInstance().moduleMainC.getValue().getGreen(), ClickGui.getInstance().moduleMainC.getValue().getBlue());
         if (this.waterMark.getValue().booleanValue()) {
             String string = this.command.getPlannedValue() + " v0.0.3";
             if ((ClickGui.getInstance()).colorSync.getValue().booleanValue()) {

@@ -1,5 +1,7 @@
 package me.loop.client.gui.windows;
 
+import me.loop.api.utils.impl.renders.ColorUtil;
+import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.client.gui.screen.particles.ParticleSystem;
 import me.loop.client.gui.screen.particles.ParticlesComponent;
 import me.loop.client.gui.windows.window.WindowAltManager;
@@ -10,8 +12,6 @@ import me.loop.client.modules.impl.client.ClickGui.ClickGui;
 import me.loop.client.modules.impl.client.Colors;
 import me.loop.client.modules.impl.client.Windows;
 import me.loop.client.modules.settings.impl.Bind;
-import me.loop.api.utils.impl.renders.ColorUtil;
-import me.loop.api.utils.impl.renders.RenderUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Mouse;
@@ -58,8 +58,8 @@ public class WindowsGui extends GuiScreen {
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         ScaledResolution sr = new ScaledResolution(mc);
-        int color = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue()).getRGB();
-        if (ClickGui.getInstance().background.getValue()) {
+        int color = new Color(ClickGui.getInstance().moduleEnableC.getValue().getRed(), ClickGui.getInstance().moduleEnableC.getValue().getGreen(), ClickGui.getInstance().moduleEnableC.getValue().getBlue()).getRGB();
+        if (ClickGui.getInstance().isOn()) {
             if (ClickGui.getInstance().dark.getValue()) {
                 this.drawDefaultBackground();
             }
@@ -67,7 +67,7 @@ public class WindowsGui extends GuiScreen {
                 RenderUtil.drawBlurryRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight(), ClickGui.getInstance().blurAmount.getValue(), ClickGui.getInstance().blurSize.getValue());
             }
             if (ClickGui.getInstance().gradiant.getValue()) {
-                RenderUtil.drawGradientRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue(), 0, new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().gradiantAlpha.getValue()).getRGB());
+                RenderUtil.drawGradientRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue(), 0, new Color(ClickGui.getInstance().moduleEnableC.getValue().getRed(), ClickGui.getInstance().moduleEnableC.getValue().getGreen(), ClickGui.getInstance().moduleEnableC.getValue().getBlue(), ClickGui.getInstance().gradiantAlpha.getValue()).getRGB());
                 if (ClickGui.getInstance().gradiant.getValue() && ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
                     RenderUtil.drawGradientRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue().intValue(), 0, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : color);
                 }

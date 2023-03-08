@@ -74,24 +74,21 @@ public abstract class Component
         counter1 = new int[]{1};
         float totalItemHeight = this.open ? this.getTotalItemHeight() - 2.0f : 0.0f;
 
-        int color;
         boolean future = getInstance().moduleiconmode.getValue();
 
-        if (Colors.getInstance().isOn() && getInstance().grd.getValue()); {
-            int n = color = getInstance().colorSync.getValue() ? Colors.getInstance().getCurrentColor().getRGB() : ColorUtil.toARGB(getInstance().red.getValue(), getInstance().green.getValue(), getInstance().blue.getValue(), getInstance().alpha.getValue());
-        }
-        if (getInstance().isOn() && getInstance().grd.getValue()); {
-            RenderUtil.drawGradientSideways(this.x, (float)this.y - 1.5f, this.x + this.width, this.y + this.height - 6, new Color(0,0,0,255).getRGB(), color);
-            RenderUtil.drawBorderedRect(this.x + 0.4, (float) this.y + 12.5f + 0.1 - 13, this.x + this.width + 0.1, (float) (this.y + this.height) + totalItemHeight + 0.1, ClickGui.getInstance().getOutlineWidth() - ClickGui.getInstance().getOutlineWidth()*2, new Color(0, 0, 0, 0).getRGB(), color);
+        if (getInstance().isOn()); {
+            RenderUtil.drawGradientSideways(this.x, (float)this.y - 1.5f, this.x + this.width, this.y + this.height - 6, new Color(0,0,0,255).getRGB(), new Color(ClickGui.getInstance().moduleMainC.getValue().getRed(), ClickGui.getInstance().moduleMainC.getValue().getGreen(), ClickGui.getInstance().moduleMainC.getValue().getBlue(), 255).getRGB());
+            RenderUtil.drawBorderedRect(this.x + 0.4, (float) this.y + 12.5f + 0.1 - 13, this.x + this.width + 0.1, (float) (this.y + this.height) + totalItemHeight + 0.1, ClickGui.getInstance().getOutlineWidth() - ClickGui.getInstance().getOutlineWidth() * 2, new Color(0, 0, 0, 0).getRGB(), new Color(ClickGui.getInstance().moduleMainC.getValue().getRed(), ClickGui.getInstance().moduleMainC.getValue().getGreen(), ClickGui.getInstance().moduleMainC.getValue().getBlue(), getInstance().moduleMainC.getValue().getAlpha()).getRGB());
         }
         if (!this.open)  {
-            RenderUtil.drawBorderedRect(this.x, (float)this.y - 1.5f, this.x + this.width, this.y + this.height - 6, ClickGui.getInstance().getOutlineWidth() - ClickGui.getInstance().getOutlineWidth()*2, new Color(0,0,0,0).getRGB(), color);
+            RenderUtil.drawBorderedRect(this.x, (float)this.y - 1.5f, this.x + this.width, this.y + this.height - 6, ClickGui.getInstance().getOutlineWidth() - ClickGui.getInstance().getOutlineWidth()*2, new Color(0,0,0,0).getRGB(), new Color(ClickGui.getInstance().moduleMainC.getValue().getRed(), ClickGui.getInstance().moduleMainC.getValue().getGreen(), ClickGui.getInstance().moduleMainC.getValue().getBlue(), getInstance().moduleMainC.getValue().getAlpha()).getRGB());
         }
 
         Gui.drawRect(this.x, this.y - 2, this.x + this.width, this.y + this.height - 6, new Color(0xCD232323, true).getRGB());
-        RenderUtil.drawOutlineRect(this.x, this.y - 2, this.x + this.width, this.y + this.height - 6, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue())) : new Color(getInstance().red.getValue(), getInstance().green.getValue(), getInstance().blue.getValue(), 240), 0.2f);
+        RenderUtil.drawOutlineRect(this.x, this.y - 2, this.x + this.width, this.y + this.height - 6, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue())) : new Color(ClickGui.getInstance().moduleMainC.getValue().getRed(), ClickGui.getInstance().moduleMainC.getValue().getGreen(), ClickGui.getInstance().moduleMainC.getValue().getBlue(), 240), 0.2f);
         Gui.drawRect(this.x, this.y + height - 5, this.x + this.width, this.y + this.height - 6, new Color(255, 255, 255, 176).getRGB());
         RenderUtil.drawRect(this.x, (float) this.y + 12.5f, this.x + this.width, (float) (this.y + this.height) + totalItemHeight + 5, 0x77000000);
+
         Managers.textManager.drawString(this.getName(), (float)this.x + 3.0f, (float)this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1);
 
         if (future) {

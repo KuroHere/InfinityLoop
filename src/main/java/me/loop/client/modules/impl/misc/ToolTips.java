@@ -134,7 +134,7 @@ public class ToolTips
             RenderUtil.drawTexturedRect(x, y + 16, 0, 16, 176, 57, 500);
             RenderUtil.drawTexturedRect(x, y + 16 + 54, 0, 160, 176, 8, 500);
             GlStateManager.disableDepth();
-            Color color = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), 200);
+            Color color = new Color(ClickGui.getInstance().moduleMainC.getValue().getRed(), ClickGui.getInstance().moduleMainC.getValue().getGreen(), ClickGui.getInstance().moduleMainC.getValue().getBlue(), 200);
             this.renderer.drawStringWithShadow(name == null ? stack.getDisplayName() : name, x + 8, y + 6, ColorUtil.toRGBA(color));
             GlStateManager.enableDepth();
             RenderHelper.enableGUIStandardItemLighting();

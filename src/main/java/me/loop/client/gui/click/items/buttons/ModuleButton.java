@@ -5,6 +5,7 @@ import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.api.utils.impl.renders.helper.RoundedShader;
 import me.loop.client.commands.Command;
+import me.loop.client.gui.InfinityLoopGui;
 import me.loop.client.gui.click.items.Item;
 import me.loop.client.gui.font.FontRender;
 import me.loop.client.modules.Module;
@@ -39,13 +40,9 @@ public class ModuleButton
         ArrayList<Item> newItems = new ArrayList<Item>();
         if (!this.module.getSettings().isEmpty()) {
             newItems.add(new BindButton(this.module.getSettingByName("Keybind")));
-            this.items = newItems;
             for (Setting setting : this.module.getSettings()) {
                 if (setting.getValue() instanceof Boolean && !setting.getName().equals("Enabled")) {
                     newItems.add(new BooleanButton(setting));
-                }
-                if (setting.getValue() instanceof ColorButton) {
-                    newItems.add(new ColorButton(setting));
                 }
                 if (setting.getValue() instanceof Bind && !setting.getName().equalsIgnoreCase("Keybind") && !this.module.getName().equalsIgnoreCase("Hud")) {
                     newItems.add(new BindButton(setting));
@@ -53,14 +50,21 @@ public class ModuleButton
                 if ((setting.getValue() instanceof String || setting.getValue() instanceof Character) && !setting.getName().equalsIgnoreCase("displayName")) {
                     newItems.add(new StringButton(setting));
                 }
-                if (setting.isNumberSetting() && setting.hasRestriction()) {
-                    newItems.add(new Slider(setting));
-                    continue;
+                if (setting.getValue() instanceof Color)
+                    newItems.add(new ColorButton(setting));
+
+                if (setting.isNumberSetting()) {
+                    if (setting.hasRestriction()) {
+                        newItems.add(new SliderButton(setting));
+                        continue;
+                    }
+                    newItems.add(new UnlimitedSlider(setting));
                 }
                 if (!setting.isEnumSetting()) continue;
                 newItems.add(new EnumButton(setting));
             }
         }
+        this.items = newItems;
     }
 
     @Override
@@ -76,37 +80,20 @@ public class ModuleButton
             ClickGui gui = Managers.moduleManager.getModuleByClass(ClickGui.class);
 
             Color outline = new Color(0xCD000000, true);
-            Color fillcolor = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().hoverAlpha.getValue());
+            Color fillcolor = new Color(ClickGui.getInstance().moduleMainC.getValue().getRed(), ClickGui.getInstance().moduleMainC.getValue().getGreen(), ClickGui.getInstance().moduleMainC.getValue().getBlue(), ClickGui.getInstance().hoverAlpha.getValue());
             Color rainbow = new Color(Colors.getInstance().rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : this.color);
 
             if (chart) {
                 if (module.getSettings().size() > 4)
                     if (ClickGui.getInstance().butonIcon.getValue() == ClickEnum.Icon.OpenColse)
-                        FontRender.drawCentString6(module.isOn() ? gui.close.getValue() : gui.open.getValue(), (float) x + (float) width - 8f, (float) y + 6, -1);
+                        FontRender.drawCentString6(module.isListening() ? gui.close.getValue() : gui.open.getValue(), (float) x + (float) width - 8f, (float) y + 6, -1);
             }
             if (bind) {
                 if (!module.getBind().toString().equalsIgnoreCase("none"))
                     FontRender.drawString5(module.getBind().toString(), (float) x + (float) width - FontRender.getStringWidth5(module.getBind().toString()) - 3f, (float) y + 6, -1);
+
             }
-
-            if (this.isHovering(mouseX, mouseY)) {
-
-                if (frame) {
-                    RoundedShader.drawGradientRound(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 3f, outline, outline, outline, outline);
-                    if (ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
-                        RoundedShader.drawRoundOutline(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, rainbow, rainbow);
-                    } else {
-                        RoundedShader.drawRoundOutline(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, fillcolor, fillcolor);
-                    }
-                    Managers.textManager.drawStringWithShadow(this.module.getDescription(), 17.0f, 36.0f, -1);
-                }
-                if (follow) {
-                    RenderUtil.drawRect((float) (mouseX + 10), (float) mouseY, (float) (mouseX + 10 + this.renderer.getStringWidth(this.module.getDescription())), (float) (mouseY + 10), new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), (ClickGui.getInstance().hoverAlpha.getValue() / 2)).getRGB());
-                    RenderUtil.drawBorder((float) (mouseX + 10), (float) mouseY, (float) this.renderer.getStringWidth(this.module.getDescription()), 10.0f, new Color(0xCD000000));
-                    this.renderer.drawStringWithShadow(this.module.getDescription(), (float) (mouseX + 10), (float) mouseY, -1);
-                }
-            }
-
+            RenderUtil.drawOutlineRect(this.x, this.y, this.x + (float) this.width, this.y + (float) this.height - 1.5f, new Color(0x73212121, true), 0.4f);
             if (subOpen) {
                 float height = 1.0f;
                 for (Item item : this.items) {
@@ -120,11 +107,32 @@ public class ModuleButton
                         item.setHeight((int) 15.0f);
                         item.setWidth(width - 9);
                         item.drawScreen(mouseX, mouseY, partialTicks);
+                        if (item instanceof ColorButton)
+                            height += item.getHeight();
                     }
                     item.update();
                 }
             }
-            RenderUtil.drawOutlineRect(this.x, this.y, this.x + (float) this.width, this.y + (float) this.height - 1.5f, new Color(0x73212121, true), 0.4f);
+            if (this.isHovering(mouseX, mouseY)) {
+
+                if (frame) {
+                    RoundedShader.drawGradientRound(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 3f, outline, outline, outline, outline);
+                    if (ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
+                        RoundedShader.drawRoundOutline(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, rainbow, rainbow);
+                    } else {
+                        RoundedShader.drawRoundOutline(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, fillcolor, fillcolor);
+                    }
+                    Managers.textManager.drawStringWithShadow(this.module.getDescription(), 17.0f, 36.0f, -1);
+                }
+                if (follow) {
+
+                    Description descriptionDisplay = InfinityLoopGui.getInstance().getDescription();
+                    descriptionDisplay.setDescription(this.module.getDescription());
+                    descriptionDisplay.setLocation(mouseX + 2, mouseY + 1);
+                    descriptionDisplay.setDraw(true);
+
+                }
+            }
         }
     }
 
