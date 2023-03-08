@@ -1,4 +1,4 @@
-package me.loop.client.gui.components.items;
+package me.loop.client.gui.click.items;
 
 import me.loop.client.Client;
 import me.loop.client.modules.settings.Setting;

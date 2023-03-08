@@ -1,11 +1,11 @@
-package me.loop.client.gui.components.items.buttons;
+package me.loop.client.gui.click.items.buttons;
 
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.Drawable;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.client.gui.InfinityLoopGui;
-import me.loop.client.gui.components.Component;
-import me.loop.client.gui.components.items.Item;
+import me.loop.client.gui.click.Component;
+import me.loop.client.gui.click.items.Item;
 import me.loop.client.modules.impl.client.ClickGui.ClickGui;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;

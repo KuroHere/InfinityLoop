@@ -24,13 +24,13 @@ public class InfinityLoopMenu extends GuiScreen
             if(Managers.moduleManager != null){
                 switch (Managers.moduleManager.getModuleByClass(MainSettings.class).shaderMode.getValue()){
                     case Smoke2:
-                        backgroundShader = new MainMenuShader("/shaders/smoke.fsh");
+                        backgroundShader = new MainMenuShader("/assets/loop/shaders/shader/smoke.fsh");
                         break;
                     case Smoke:
-                        backgroundShader = new MainMenuShader("/shaders/mainmenu.fsh");
+                        backgroundShader = new MainMenuShader("/assets/loop/shaders/shader/mainmenu.fsh");
                         break;
                     case Dicks:
-                        backgroundShader = new MainMenuShader("/shaders/dicks.fsh");
+                        backgroundShader = new MainMenuShader("/assets/loop/shaders/shader/dicks.fsh");
                         break;
                 }
             }

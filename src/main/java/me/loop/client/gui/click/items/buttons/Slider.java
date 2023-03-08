@@ -1,10 +1,10 @@
-package me.loop.client.gui.components.items.buttons;
+package me.loop.client.gui.click.items.buttons;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.client.gui.InfinityLoopGui;
-import me.loop.client.gui.components.Component;
+import me.loop.client.gui.click.Component;
 import me.loop.client.modules.impl.client.ClickGui.ClickGui;
 import me.loop.client.modules.settings.Setting;
 import org.lwjgl.input.Mouse;

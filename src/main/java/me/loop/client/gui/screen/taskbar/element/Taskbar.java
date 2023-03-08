@@ -34,7 +34,7 @@ public class Taskbar extends DrawableComponent {
         glColor4d(1, 1, 1, 1);
 
         // logo
-        mc.getTextureManager().bindTexture(new ResourceLocation("me/client", "imgs/logotransparent.png"));
+        mc.getTextureManager().bindTexture(new ResourceLocation("loop", "imgs/logotransparent.png"));
         GuiScreen.drawModalRectWithCustomSizedTexture(resolution.getScaledWidth() - 129, resolution.getScaledHeight() - 57, 0, 0, 132, 54, 132, 54);
 
         glPopMatrix();

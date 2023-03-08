@@ -14,8 +14,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public abstract class Module
         extends Client {
-    private final String description;
+
     private final Category category;
+    private final String description;
+    public String hudInfo;
     public Setting<Boolean> enabled = this.add(new Setting<Boolean>("Enabled", false));
     public Setting<Boolean> drawn = this.add(new Setting<Boolean>("Drawn", true));
     public Setting<Bind> bind = this.add(new Setting<Bind>("Keybind", new Bind(-1)));
@@ -43,13 +45,7 @@ public abstract class Module
         enabled.setValue(true);
         onEnable();
 
-        Command.sendMessageWithID(ChatFormatting.DARK_AQUA
-                + getName()
-                + "\u00a7r"
-                + ".enabled ="
-                + "\u00a7r"
-                + ChatFormatting.GREEN
-                + " true.", hashCode());
+        Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + ".enabled =" + "\u00a7r" + ChatFormatting.GREEN + " true.", hashCode());
 
         if (isOn() && hasListener) {
             MinecraftForge.EVENT_BUS.register(this);
@@ -60,13 +56,7 @@ public abstract class Module
         enabled.setValue(false);
         onDisable();
 
-        Command.sendMessageWithID(ChatFormatting.DARK_AQUA
-                + getName()
-                + "\u00a7r"
-                + ".enabled ="
-                + "\u00a7r"
-                + ChatFormatting.RED
-                + " false.", hashCode());
+        Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + ".enabled =" + "\u00a7r" + ChatFormatting.RED + " false.", hashCode());
 
         if (hasListener) {
             MinecraftForge.EVENT_BUS.unregister(this);
@@ -194,7 +184,11 @@ public abstract class Module
     }
 
     public String getHudInfo() {
-        return "";
+        return this.hudInfo;
+    }
+
+    public void setHudInfo(String info) {
+        this.hudInfo = info;
     }
 
     public void onMotionUpdate() {

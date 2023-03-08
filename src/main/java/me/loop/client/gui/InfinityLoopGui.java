@@ -4,9 +4,9 @@ import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.client.Client;
-import me.loop.client.gui.components.Component;
-import me.loop.client.gui.components.items.Item;
-import me.loop.client.gui.components.items.buttons.ModuleButton;
+import me.loop.client.gui.click.Component;
+import me.loop.client.gui.click.items.Item;
+import me.loop.client.gui.click.items.buttons.ModuleButton;
 import me.loop.client.gui.screen.anchor.AnchorPoint;
 import me.loop.client.gui.screen.particles.ParticleSystem;
 import me.loop.client.gui.screen.particles.ParticlesComponent;
@@ -62,9 +62,9 @@ public class InfinityLoopGui
     }
 
     private void load() {
-        int x = -108;
+        int x = -80;
         for (final Category category : Managers.moduleManager.getCategories()) {
-            this.components.add(new Component(category.getName(), x += 124, 50, true) {
+            this.components.add(new Component(category.getName(), x += 96, 50, true) {
 
                 @Override
                 public void setupItems() {
@@ -112,6 +112,9 @@ public class InfinityLoopGui
         this.checkMouseWheel();
         ScaledResolution rs = new ScaledResolution(mc);
         if (ClickGui.getInstance().background.getValue()) {
+            if(ClickGui.getInstance().dirt.getValue()){
+                this.drawBackground(1);
+            }
             if (ClickGui.getInstance().dark.getValue()) {
                 this.drawDefaultBackground();
             }

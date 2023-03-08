@@ -23,9 +23,9 @@ public class ConfigPart {
     private int dwheel;
 
 
-    ResourceLocation configpng = new ResourceLocation("me.loop:imgs/configpng.png");
-    ResourceLocation loadpng = new ResourceLocation("me.loop:imgs/loadpng.png");
-    ResourceLocation bin = new ResourceLocation("me.loop:imgs/trashbinnigga.png");
+    ResourceLocation configpng = new ResourceLocation("loop:imgs/configpng.png");
+    ResourceLocation loadpng = new ResourceLocation("loop:imgs/loadpng.png");
+    ResourceLocation bin = new ResourceLocation("loop:imgs/trashbinnigga.png");
 
     public ConfigPart(String name,int posX,int posY, int width,int id){
         this.name = name;

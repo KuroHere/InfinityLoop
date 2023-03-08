@@ -17,13 +17,13 @@ import java.util.List;
 public class ClickGui
         extends Module {
     private static ClickGui INSTANCE = new ClickGui();
-    public Setting<Enum> description = this.add(new Setting("Description", ClickguiEnum.Mode.Frame));
+    public Setting<Enum> description = this.add(new Setting("Description", ClickEnum.Mode.Frame));
     public Setting<Boolean> moduleiconmode = add(new Setting("ModuleIcon",true));
     //public Setting<Boolean> guiGlow= this.add(new Setting("Glow", true));
     //public Setting<Integer> glowOffset = this.add(new Setting<>("GlowOffset", 2, 0, 20, v -> this.guiGlow.getValue()));
-    public Setting<Enum> butonIcon = add(new Setting("ButtonIcon", ClickguiEnum.Icon.OpenColse));
-    public Setting<String> open = add(new Setting("Open: ", "+", v -> this.butonIcon.getValue() == ClickguiEnum.Icon.OpenColse).setRenderName(true));
-    public Setting<String> close = add(new Setting("Close: ", "-", v -> this.butonIcon.getValue() == ClickguiEnum.Icon.OpenColse).setRenderName(true));
+    public Setting<Enum> butonIcon = add(new Setting("ButtonIcon", ClickEnum.Icon.OpenColse));
+    public Setting<String> open = add(new Setting("Open: ", "+", v -> this.butonIcon.getValue() == ClickEnum.Icon.OpenColse).setRenderName(true));
+    public Setting<String> close = add(new Setting("Close: ", "-", v -> this.butonIcon.getValue() == ClickEnum.Icon.OpenColse).setRenderName(true));
     public Setting<Boolean> background= this.add(new Setting("Background", true));
     public Setting<Boolean> particles = this.add(new Setting("Particles", true, v -> this.background.getValue()));
     public Setting<Integer> particleLength = this.add(new Setting<>("ParticlesLength", 80, 0, 300, v -> this.background.getValue() && this.particles.getValue()));
@@ -31,10 +31,12 @@ public class ClickGui
     public Setting<Boolean> blur = this.add(new Setting("Blur", false, v -> this.background.getValue()));
     public Setting<Integer> blurAmount = this.add(new Setting<>("BlurAmount", 2, 0, 20, v -> this.background.getValue() && this.blur.getValue()));
     public Setting<Integer> blurSize = this.add(new Setting<>("BlurSize", 0, 0, 20, v -> this.background.getValue() && this.blur.getValue()));
+    public Setting<Boolean> dirt = this.add(new Setting<Boolean>("Dirt", false));
     public Setting<Boolean> dark = this.add(new Setting("Dark", true, v -> this.background.getValue()));
-    public Setting<Boolean> gradiant = this.add(new Setting("Gradiant", false, v -> this.background.getValue()));
+    public Setting<Boolean> gradiant = this.add(new Setting("BG-Gradiant", false, v -> this.background.getValue()));
     public Setting<Integer> gradiantHeight = this.add(new Setting("GradiantHeight", 0, 0, 255, v -> this.background.getValue() && this.gradiant.getValue()));
     public Setting<Integer> gradiantAlpha = this.add(new Setting<>("GradiantAlpha", 230, 0, 255, v -> this.background.getValue() && this.gradiant.getValue()));
+    public Setting<Boolean> grd = this.add(new Setting<>("ButtonGradiant", false));
     public Setting<Integer> red = this.add(new Setting<>("Red", 160, 0, 255));
     public Setting<Integer> green = this.add(new Setting<>("Green", 10, 0, 255));
     public Setting<Integer> blue = this.add(new Setting<>("Blue", 255, 0, 255));
@@ -99,58 +101,8 @@ public class ClickGui
     }
 
 
+
     /*@Override
-    public void onUpdate() {
-        if (ClickGui.mc.world == null) return;
-        if (!(ClickGui.getInstance().blur.getValue() || ClickGui.mc.currentScreen instanceof GuiContainer || ClickGui.mc.currentScreen instanceof GuiChat || ClickGui.mc.currentScreen instanceof GuiConfirmOpenLink)) {
-            if (!(ClickGui.mc.currentScreen instanceof GuiEditSign)) {
-                if (!(ClickGui.mc.currentScreen instanceof GuiGameOver)) {
-                    if (!(ClickGui.mc.currentScreen instanceof GuiOptions)) {
-                        if (!(ClickGui.mc.currentScreen instanceof GuiIngameMenu)) {
-                            if (!(ClickGui.mc.currentScreen instanceof GuiVideoSettings)) {
-                                if (!(ClickGui.mc.currentScreen instanceof GuiScreenOptionsSounds)) {
-                                    if (!(ClickGui.mc.currentScreen instanceof GuiControls)) {
-                                        if (!(ClickGui.mc.currentScreen instanceof GuiCustomizeSkin)) {
-                                            if (!(ClickGui.mc.currentScreen instanceof GuiModList)) {
-                                                if (ClickGui.mc.entityRenderer.getShaderGroup() == null) return;
-                                                ClickGui.mc.entityRenderer.getShaderGroup().deleteShaderGroup();
-                                                return;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (OpenGlHelper.shadersSupported && mc.getRenderViewEntity() instanceof EntityPlayer) {
-            if (ClickGui.mc.entityRenderer.getShaderGroup() != null) {
-                ClickGui.mc.entityRenderer.getShaderGroup().deleteShaderGroup();
-            }
-            try {
-                ClickGui.mc.entityRenderer.loadShader(new ResourceLocation("shaders/post/blur.json"));
-                return;
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                return;
-            }
-        }
-        if (ClickGui.mc.entityRenderer.getShaderGroup() == null) return;
-        if (ClickGui.mc.entityRenderer != null) return;
-        ClickGui.mc.entityRenderer.getShaderGroup().deleteShaderGroup();
-    }
-
-    @Override
-    public void onDisable() {
-        if (ClickGui.mc.entityRenderer.getShaderGroup() != null) {
-            ClickGui.mc.entityRenderer.getShaderGroup().deleteShaderGroup();
-        }
-    }
-
-    @Override
     public void onUpdate() {
         if(fullNullCheck()) return;
         if(shader.getValue() != BGShader.none) {

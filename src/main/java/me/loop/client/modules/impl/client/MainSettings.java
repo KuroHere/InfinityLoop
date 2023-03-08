@@ -19,7 +19,7 @@ public class MainSettings extends Module {
     public Setting<ShaderModeEn> shaderMode = add(new Setting("ShaderMode", ShaderModeEn.Smoke2, v -> this.mainMenu.getValue()));
 
     public MainSettings() {
-        super("MainSettings", "MAIN MENU", Category.CLIENT, true, false, true);
+        super("MainSettings", "MAIN MENU", Category.CLIENT, true, false, false);
     }
 
     @SubscribeEvent

@@ -53,6 +53,7 @@ public class InfinityLoop {
         textManager.init(true);
 
         moduleManager.onLoad();
+        LOGGER.info("Initialising BetterChat (made by llamalad7)");
         LOGGER.info(MODNAME + "successfully loaded!\n");
 
     }

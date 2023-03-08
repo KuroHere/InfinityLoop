@@ -1,4 +1,4 @@
-package me.loop.client.gui.components.items.buttons;
+package me.loop.client.gui.click.items.buttons;
 
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.RenderUtil;

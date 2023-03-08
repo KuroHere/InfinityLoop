@@ -1,6 +1,6 @@
 package me.loop.client.modules.impl.client.ClickGui;
 
-public class ClickguiEnum {
+public class ClickEnum {
 
     public enum Icon {
         None, ShowBind, OpenColse

@@ -14,7 +14,7 @@ public class MainMenuShader {
 
     public MainMenuShader(String fragmentShaderLocation) throws IOException {
         int program = GL20.glCreateProgram();
-        GL20.glAttachShader(program, this.createShader(MainMenuShader.class.getResourceAsStream("/shaders/passthrough.vsh"), 35633));
+        GL20.glAttachShader(program, this.createShader(MainMenuShader.class.getResourceAsStream("/assets/loop/shaders/shader/passthrough.vsh"), 35633));
         GL20.glAttachShader(program, this.createShader(MainMenuShader.class.getResourceAsStream(fragmentShaderLocation), 35632));
         GL20.glLinkProgram(program);
         int linked = GL20.glGetProgrami(program, 35714);

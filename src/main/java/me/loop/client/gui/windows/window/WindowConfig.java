@@ -1,6 +1,6 @@
 package me.loop.client.gui.windows.window;
 
-import me.loop.client.gui.components.items.buttons.StringButton;
+import me.loop.client.gui.click.items.buttons.StringButton;
 import me.loop.client.gui.windows.window.parts.ConfigPart;
 import me.loop.client.modules.impl.client.ClickGui.ClickGui;
 import me.loop.client.gui.font.FontRender;
@@ -50,7 +50,7 @@ public class WindowConfig {
     static boolean once = false;
 
     public static void once(){
-        file = new File("me/client/");
+        file = new File("loop");
     }
 
     public static void drawScreen(int mouseX, int mouseY, float partialTicks) {

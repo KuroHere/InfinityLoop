@@ -1,6 +1,6 @@
 package me.loop.client.gui.screen.particles;
 
-import me.loop.client.gui.components.Component;
+import me.loop.client.gui.click.Component;
 
 public final class ParticlesComponent extends Component {
 

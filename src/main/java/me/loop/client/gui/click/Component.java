@@ -1,4 +1,4 @@
-package me.loop.client.gui.components;
+package me.loop.client.gui.click;
 
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.maths.ImageUtil;
@@ -6,8 +6,8 @@ import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.client.Client;
 import me.loop.client.gui.InfinityLoopGui;
-import me.loop.client.gui.components.items.Item;
-import me.loop.client.gui.components.items.buttons.Button;
+import me.loop.client.gui.click.items.Item;
+import me.loop.client.gui.click.items.buttons.Button;
 import me.loop.client.modules.impl.client.ClickGui.ClickGui;
 import me.loop.client.modules.impl.client.Colors;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -20,12 +20,13 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static me.loop.client.modules.impl.client.ClickGui.ClickGui.getInstance;
+
 public abstract class Component
         extends Client {
     public static int[] counter1 = new int[]{1};
     private final ArrayList<Item> items = new ArrayList();
     private final ResourceLocation arrow = new ResourceLocation("textures/arrow.png");
-
     private ResourceLocation client = new ResourceLocation("textures/client.png");
     private ResourceLocation combat = new ResourceLocation("textures/combat.png");
     private ResourceLocation misc = new ResourceLocation("textures/misc.png");
@@ -41,7 +42,6 @@ public abstract class Component
     private int height;
     private int angle;
     private boolean open;
-    private boolean hidden = false;
     private boolean visible;
 
     public Component(String name, int x, int y, boolean open) {
@@ -74,34 +74,34 @@ public abstract class Component
         counter1 = new int[]{1};
         float totalItemHeight = this.open ? this.getTotalItemHeight() - 2.0f : 0.0f;
 
-        int color = new Color(255, 0, 0, 162).getRGB();
-        int colorButton1 = new Color(67, 67, 67, 110).getRGB();
-        int colorButton2 = new Color(22, 22, 22, 143).getRGB();
+        int color;
+        boolean future = getInstance().moduleiconmode.getValue();
 
-        if (Colors.getInstance().isOn()); {
-            int n = color = (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : ColorUtil.toARGB(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().alpha.getValue());
+        if (Colors.getInstance().isOn() && getInstance().grd.getValue()); {
+            int n = color = getInstance().colorSync.getValue() ? Colors.getInstance().getCurrentColor().getRGB() : ColorUtil.toARGB(getInstance().red.getValue(), getInstance().green.getValue(), getInstance().blue.getValue(), getInstance().alpha.getValue());
         }
-        if (ClickGui.getInstance().isOn()); {
+        if (getInstance().isOn() && getInstance().grd.getValue()); {
             RenderUtil.drawGradientSideways(this.x, (float)this.y - 1.5f, this.x + this.width, this.y + this.height - 6, new Color(0,0,0,255).getRGB(), color);
+            RenderUtil.drawBorderedRect(this.x + 0.4, (float) this.y + 12.5f + 0.1 - 13, this.x + this.width + 0.1, (float) (this.y + this.height) + totalItemHeight + 0.1, ClickGui.getInstance().getOutlineWidth() - ClickGui.getInstance().getOutlineWidth()*2, new Color(0, 0, 0, 0).getRGB(), color);
         }
-        if (this.open) {
-            RenderUtil.drawGradientSideways(this.x, (float) this.y + 12.5f, this.x + this.width, (float) (this.y + this.height) + totalItemHeight, colorButton2 ,colorButton1);
+        if (!this.open)  {
+            RenderUtil.drawBorderedRect(this.x, (float)this.y - 1.5f, this.x + this.width, this.y + this.height - 6, ClickGui.getInstance().getOutlineWidth() - ClickGui.getInstance().getOutlineWidth()*2, new Color(0,0,0,0).getRGB(), color);
         }
 
         Gui.drawRect(this.x, this.y - 2, this.x + this.width, this.y + this.height - 6, new Color(0xCD232323, true).getRGB());
-        RenderUtil.drawOutlineRect(this.x, this.y - 2, this.x + this.width, this.y + this.height - 6, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue())) : new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), 240), 0.2f);
+        RenderUtil.drawOutlineRect(this.x, this.y - 2, this.x + this.width, this.y + this.height - 6, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue())) : new Color(getInstance().red.getValue(), getInstance().green.getValue(), getInstance().blue.getValue(), 240), 0.2f);
         Gui.drawRect(this.x, this.y + height - 5, this.x + this.width, this.y + this.height - 6, new Color(255, 255, 255, 176).getRGB());
         RenderUtil.drawRect(this.x, (float) this.y + 12.5f, this.x + this.width, (float) (this.y + this.height) + totalItemHeight + 5, 0x77000000);
         Managers.textManager.drawString(this.getName(), (float)this.x + 3.0f, (float)this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1);
 
-        if (!this.open) {
-            if (this.angle > 0) {
-                this.angle -= 6;
+        if (future) {
+            if (!open) {
+                if (angle > 0) {
+                    angle -= 6;
+                }
+            } else if (angle < 180) {
+                angle += 6;
             }
-        } else if (this.angle < 180) {
-            this.angle += 6;
-        }
-        if (ClickGui.getInstance().moduleiconmode.getValue()) {
             GlStateManager.pushMatrix();
             GlStateManager.enableBlend();
             ImageUtil.glColor(new Color(255, 255, 255, 255));
@@ -240,13 +240,6 @@ public abstract class Component
         this.height = height;
     }
 
-    public boolean isHidden() {
-        return this.hidden;
-    }
-
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
-    }
     public boolean isVisible() {
         return visible;
     }
@@ -255,24 +248,16 @@ public abstract class Component
         this.visible = visible;
     }
 
-    public boolean isOpen() {
-        return this.open;
-    }
-
     public final ArrayList<Item> getItems() {
         return this.items;
     }
 
-    public boolean onMouseClicked(int mouseX, int mouseY, int mouseButton) {
-        return false;
-    }
-
-    public static boolean mouseWithinBounds(int mouseX, int mouseY, double x, double y, double width, double height) {
-        return (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height);
-    }
-
     private boolean isHovering(int mouseX, int mouseY) {
-        return mouseX >= this.getX() && mouseX <= this.getX() + this.getWidth() && mouseY >= this.getY() && mouseY <= this.getY() + this.getHeight() - (this.open ? 2 : 0);
+        if (mouseX < this.getX()) return false;
+        if (mouseX > this.getX() + this.getWidth()) return false;
+        if (mouseY < this.getY()) return false;
+        if (mouseY > this.getY() + this.getHeight() - (this.open ? 2 : 0)) return false;
+        return true;
     }
 
     private float getTotalItemHeight() {

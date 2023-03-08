@@ -78,7 +78,7 @@ public class MotionBlur
             MotionBlur.domainResourceManagers.put("motionblur", new MotionBlurResourceManager());
         }
         if (this.Setup) {
-            MotionBlur.mc.entityRenderer.loadShader(new ResourceLocation("me/client", "shaders/motion-blur.json"));
+            MotionBlur.mc.entityRenderer.loadShader(new ResourceLocation("me/client", "assets/loop/shaders/shader/motion-blur.json"));
             MotionBlur.mc.entityRenderer.getShaderGroup().createBindFramebuffers(MotionBlur.mc.displayWidth, MotionBlur.mc.displayHeight);
             this.Setup = false;
         }

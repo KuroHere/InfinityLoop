@@ -61,7 +61,7 @@ public class RenderUtil
     protected static int lastScaleWidth;
     protected static int lastScaleHeight;
     protected static Framebuffer buffer;
-    protected static final ResourceLocation shader = new ResourceLocation("me.loop:shaders/blur.json");
+    protected static final ResourceLocation shader = new ResourceLocation("loop","shaders/blur.json");
 
 
     static {

@@ -82,5 +82,6 @@ public class CommandManager
     public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
+
 }
 

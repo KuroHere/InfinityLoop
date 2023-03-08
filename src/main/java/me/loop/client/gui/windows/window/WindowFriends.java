@@ -2,7 +2,7 @@ package me.loop.client.gui.windows.window;
 
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.RenderUtil;
-import me.loop.client.gui.components.items.buttons.StringButton;
+import me.loop.client.gui.click.items.buttons.StringButton;
 import me.loop.client.gui.font.FontRender;
 import me.loop.client.gui.windows.window.parts.FriendPart;
 import me.loop.client.modules.impl.client.ClickGui.ClickGui;

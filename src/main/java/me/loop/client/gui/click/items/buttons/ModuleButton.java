@@ -1,15 +1,15 @@
-package me.loop.client.gui.components.items.buttons;
+package me.loop.client.gui.click.items.buttons;
 
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.api.utils.impl.renders.helper.RoundedShader;
 import me.loop.client.commands.Command;
-import me.loop.client.gui.components.items.Item;
+import me.loop.client.gui.click.items.Item;
 import me.loop.client.gui.font.FontRender;
 import me.loop.client.modules.Module;
+import me.loop.client.modules.impl.client.ClickGui.ClickEnum;
 import me.loop.client.modules.impl.client.ClickGui.ClickGui;
-import me.loop.client.modules.impl.client.ClickGui.ClickguiEnum;
 import me.loop.client.modules.impl.client.Colors;
 import me.loop.client.modules.settings.Setting;
 import me.loop.client.modules.settings.impl.Bind;
@@ -24,6 +24,7 @@ import java.util.List;
 public class ModuleButton
         extends Button {
     private final Module module;
+    public int[] counter1 = new int[]{1};
     private List<Item> items = new ArrayList<Item>();
     private boolean subOpen;
     private int color;
@@ -66,22 +67,31 @@ public class ModuleButton
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         if (!this.items.isEmpty()) {
+            boolean bind = ClickGui.getInstance().butonIcon.getValue() == ClickEnum.Icon.ShowBind;
+            boolean chart = ClickGui.getInstance().butonIcon.getValue() == ClickEnum.Icon.OpenColse;
+
+            boolean frame = ClickGui.getInstance().description.getValue() == ClickEnum.Mode.Frame;
+            boolean follow = ClickGui.getInstance().description.getValue() == ClickEnum.Mode.Folow;
+
+            ClickGui gui = Managers.moduleManager.getModuleByClass(ClickGui.class);
+
             Color outline = new Color(0xCD000000, true);
             Color fillcolor = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), ClickGui.getInstance().hoverAlpha.getValue());
             Color rainbow = new Color(Colors.getInstance().rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : this.color);
 
-            ClickGui gui = Managers.moduleManager.getModuleByClass(ClickGui.class);
-            if (ClickGui.getInstance().butonIcon.getValue() == ClickguiEnum.Icon.OpenColse) {
+            if (chart) {
                 if (module.getSettings().size() > 4)
-                    if (ClickGui.getInstance().butonIcon.getValue() == ClickguiEnum.Icon.OpenColse)
+                    if (ClickGui.getInstance().butonIcon.getValue() == ClickEnum.Icon.OpenColse)
                         FontRender.drawCentString6(module.isOn() ? gui.close.getValue() : gui.open.getValue(), (float) x + (float) width - 8f, (float) y + 6, -1);
-            } else if (ClickGui.getInstance().butonIcon.getValue() == ClickguiEnum.Icon.ShowBind) {
+            }
+            if (bind) {
                 if (!module.getBind().toString().equalsIgnoreCase("none"))
                     FontRender.drawString5(module.getBind().toString(), (float) x + (float) width - FontRender.getStringWidth5(module.getBind().toString()) - 3f, (float) y + 6, -1);
             }
 
             if (this.isHovering(mouseX, mouseY)) {
-                if (ClickGui.getInstance().description.getValue() == ClickguiEnum.Mode.Frame) {
+
+                if (frame) {
                     RoundedShader.drawGradientRound(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 3f, outline, outline, outline, outline);
                     if (ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
                         RoundedShader.drawRoundOutline(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, rainbow, rainbow);
@@ -89,7 +99,8 @@ public class ModuleButton
                         RoundedShader.drawRoundOutline(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, fillcolor, fillcolor);
                     }
                     Managers.textManager.drawStringWithShadow(this.module.getDescription(), 17.0f, 36.0f, -1);
-                } else if (ClickGui.getInstance().description.getValue() == ClickguiEnum.Mode.Folow) {
+                }
+                if (follow) {
                     RenderUtil.drawRect((float) (mouseX + 10), (float) mouseY, (float) (mouseX + 10 + this.renderer.getStringWidth(this.module.getDescription())), (float) (mouseY + 10), new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), (ClickGui.getInstance().hoverAlpha.getValue() / 2)).getRGB());
                     RenderUtil.drawBorder((float) (mouseX + 10), (float) mouseY, (float) this.renderer.getStringWidth(this.module.getDescription()), 10.0f, new Color(0xCD000000));
                     this.renderer.drawStringWithShadow(this.module.getDescription(), (float) (mouseX + 10), (float) mouseY, -1);
@@ -98,7 +109,8 @@ public class ModuleButton
 
             if (subOpen) {
                 float height = 1.0f;
-                for (Item item : items) {
+                for (Item item : this.items) {
+                    counter1[0] = counter1[0] + 1;
                     if (!item.isHidden()) {
                         if (item instanceof ColorButton) {
                             item.setLocation(x + 1.0f, y + (height + 15.0f));

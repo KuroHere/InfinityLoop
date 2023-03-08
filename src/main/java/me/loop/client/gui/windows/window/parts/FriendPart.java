@@ -26,8 +26,8 @@ public class FriendPart{
 
 
     ResourceLocation head;
-    ResourceLocation crackedSkin = new ResourceLocation("me.loop:imgs/cracked.png");
-    ResourceLocation bin = new ResourceLocation("me.loop:imgs/trashbinnigga.png");
+    ResourceLocation crackedSkin = new ResourceLocation("loop:imgs/cracked.png");
+    ResourceLocation bin = new ResourceLocation("loop:imgs/trashbinnigga.png");
 
     public FriendPart(String name,int posX,int posY, int width,int id){
         this.name = name;

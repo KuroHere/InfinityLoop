@@ -42,6 +42,7 @@ public class ModuleManager
         modules.add(new Test());
 
         // Client
+        modules.add(new BlurExtends());
         modules.add(new CSGui());
         modules.add(new ClickGui());
         modules.add(new RPC());
@@ -87,6 +88,7 @@ public class ModuleManager
         modules.add(new TpsSync());
 
         // Render
+        modules.add(new CustomTime());
         //modules.add(new ShaderESP());
         modules.add(new MotionBlur());
         modules.add(new PlayerTrails());

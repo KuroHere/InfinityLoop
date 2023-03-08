@@ -17,7 +17,7 @@ public class Test extends Module {
     public Setting<enumtesting> enumTest = this.add(new Setting<Object>("EnumTest", enumtesting.Test));
     public Setting<Color> color = this.add(new Setting<>("Color", new Color(0x8800FF00)));
     public Test() {
-        super("Test", "description", Category.RENDER, true, false, false);
+        super("Test", "description", Category.TEST, true, false, false);
     }
 
     @Override
