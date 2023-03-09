@@ -36,7 +36,7 @@ public class MixinPlayerControllerMP {
 
     @Redirect(method = {"onPlayerDamageBlock"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/IBlockState;getPlayerRelativeBlockHardness(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)F"))
     public float getPlayerRelativeBlockHardnessHook(IBlockState state, EntityPlayer player, World worldIn, BlockPos pos) {
-        return state.getPlayerRelativeBlockHardness(player, worldIn, pos) * (TpsSync.getInstance().isOn() && TpsSync.getInstance().mining.getValue() ? 1.0f / Managers.serverManager.getTpsFactor() : 1.0f);
+        return state.getPlayerRelativeBlockHardness(player, worldIn, pos) * (TpsSync.getInstance().isEnabled() && TpsSync.getInstance().mining.getValue() ? 1.0f / Managers.serverManager.getTpsFactor() : 1.0f);
     }
 
     @Inject(method = {"clickBlock"}, at = {@At(value = "HEAD")}, cancellable = true)
@@ -65,7 +65,7 @@ public class MixinPlayerControllerMP {
         IBlockState iblockstate1 = worldIn.getBlockState(pos);
         AxisAlignedBB axisalignedbb = itemBlock.block.getDefaultState().getCollisionBoundingBox(worldIn, pos);
         if (axisalignedbb != Block.NULL_AABB && !worldIn.checkNoEntityCollision(axisalignedbb.offset(pos), null)) {
-            if (BlockTweaks.getINSTANCE().isOn() || !BlockTweaks.getINSTANCE().pickaxe.getValue().booleanValue()) {
+            if (BlockTweaks.getINSTANCE().isEnabled() || !BlockTweaks.getINSTANCE().pickaxe.getValue().booleanValue()) {
                 return false;
             }
         } else if (iblockstate1.getMaterial() == Material.CIRCUITS && itemBlock.block == Blocks.ANVIL) {

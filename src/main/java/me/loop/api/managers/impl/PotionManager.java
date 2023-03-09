@@ -57,6 +57,11 @@ public class PotionManager
         return this.getPotionString(effect);
     }
 
+    public void onTotemPop(EntityPlayer player) {
+        PotionList list = new PotionList();
+        this.potions.put(player, list);
+    }
+
     public static class PotionList {
         private final List<PotionEffect> effects = new ArrayList<PotionEffect>();
 

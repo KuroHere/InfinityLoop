@@ -10,8 +10,8 @@ import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class Animation extends Module {
-    private static Animation INSTANCE = new Animation();
+public class CustomAnimation extends Module {
+    private static CustomAnimation INSTANCE = new CustomAnimation();
     public Setting<Boolean> playersDisableAnimations  = add(new Setting<>("DisableAnimations", false));
 
     public Setting<Mode> mode = this.add(new Setting("OldAnimations", Mode.NoDelay));
@@ -19,14 +19,14 @@ public class Animation extends Module {
     public Setting<Boolean> swing = add(new Setting<>("customSwingAnimation", false));
     public Setting<Integer> speed = add(new Setting<>("Speed", 13, 1, 20,v -> this.swing.getValue()));
 
-    public Animation() {
+    public CustomAnimation() {
         super("Animation", "Change animations.", Category.RENDER, true, false, false);
         this.setInstance();
     }
 
-    public static Animation getInstance() {
+    public static CustomAnimation getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new Animation();
+            INSTANCE = new CustomAnimation();
         }
         return INSTANCE;
     }
@@ -40,22 +40,22 @@ public class Animation extends Module {
             return;
         }
         if (playersDisableAnimations.getValue()) {
-            for (EntityPlayer player : Animation.mc.world.playerEntities) {
+            for (EntityPlayer player : CustomAnimation.mc.world.playerEntities) {
                 player.limbSwing = Float.intBitsToFloat(Float.floatToIntBits(1.8755627E38f) ^ 0x7F0D1A06);
                 player.limbSwingAmount = Float.intBitsToFloat(Float.floatToIntBits(6.103741E37f) ^ 0x7E37AD83);
                 player.prevLimbSwingAmount = Float.intBitsToFloat(Float.floatToIntBits(4.8253957E37f) ^ 0x7E11357F);
             }
         }
         if (this.whatHand.getValue() == WhatHand.Offhand) {
-            Animation.mc.player.swingingHand = EnumHand.OFF_HAND;
+            CustomAnimation.mc.player.swingingHand = EnumHand.OFF_HAND;
         }
-        if (this.mode.getValue() == Mode.NoDelay && Animation.mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9) {
-            Animation.mc.entityRenderer.itemRenderer.equippedProgressMainHand = 1.0f;
-            Animation.mc.entityRenderer.itemRenderer.itemStackMainHand = Animation.mc.player.getHeldItemMainhand();
+        if (this.mode.getValue() == Mode.NoDelay && CustomAnimation.mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9) {
+            CustomAnimation.mc.entityRenderer.itemRenderer.equippedProgressMainHand = 1.0f;
+            CustomAnimation.mc.entityRenderer.itemRenderer.itemStackMainHand = CustomAnimation.mc.player.getHeldItemMainhand();
         }
-        if (this.whatHand.getValue().equals((Object) WhatHand.PacketSwing) && Animation.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && (double) Animation.mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9) {
-            Animation.mc.entityRenderer.itemRenderer.equippedProgressMainHand = 1.0f;
-            Animation.mc.entityRenderer.itemRenderer.itemStackMainHand = Animation.mc.player.getHeldItemMainhand();
+        if (this.whatHand.getValue().equals((Object) WhatHand.PacketSwing) && CustomAnimation.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && (double) CustomAnimation.mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9) {
+            CustomAnimation.mc.entityRenderer.itemRenderer.equippedProgressMainHand = 1.0f;
+            CustomAnimation.mc.entityRenderer.itemRenderer.itemStackMainHand = CustomAnimation.mc.player.getHeldItemMainhand();
         }
     }
 

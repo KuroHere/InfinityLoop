@@ -33,7 +33,7 @@ public abstract class MixinEntityPlayerSP
 
     @Redirect(method={"onLivingUpdate"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/entity/EntityPlayerSP;setSprinting(Z)V", ordinal=2))
     public void onLivingUpdate(EntityPlayerSP entityPlayerSP, boolean sprinting) {
-        if (AutoDoSmth.getINSTANCE().isOn() && AutoDoSmth.getINSTANCE().autoSprint.getValue() == AutoDoSmth.Sprint.Rage && (Util.mc.player.movementInput.moveForward != 0.0f || Util.mc.player.movementInput.moveStrafe != 0.0f)) {
+        if (AutoDoSmth.getINSTANCE().isEnabled() && AutoDoSmth.getINSTANCE().autoSprint.getValue() == AutoDoSmth.Sprint.Rage && (Util.mc.player.movementInput.moveForward != 0.0f || Util.mc.player.movementInput.moveStrafe != 0.0f)) {
             entityPlayerSP.setSprinting(true);
         } else {
             entityPlayerSP.setSprinting(sprinting);

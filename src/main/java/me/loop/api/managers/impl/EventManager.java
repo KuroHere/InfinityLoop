@@ -16,7 +16,6 @@ import me.loop.client.Client;
 import me.loop.client.commands.Command;
 import me.loop.client.modules.impl.client.ClickGui.ClickGui;
 import me.loop.client.modules.impl.client.HUD;
-import me.loop.client.modules.impl.misc.PopCounter;
 import me.zero.alpine.fork.listener.Listenable;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.client.Minecraft;
@@ -55,38 +54,6 @@ public class EventManager extends Client {
 
     private final Timer timer = new Timer();
     private final Timer logoutTimer = new Timer();
-    private boolean keyTimeout;
-    private final Timer switchTimer = new Timer();
-
-    public EventManager() {
-        this.SUBSCRIPTION_CACHE = new ConcurrentHashMap<Listenable, List<Listener>>();
-        this.SUBSCRIPTION_MAP = new ConcurrentHashMap<Class<?>, List<Listener>>();
-    }
-
-    private float yaw;
-    private float pitch;
-
-    public void updateRotations() {
-        this.yaw = EventManager.mc.player.rotationYaw;
-        this.pitch = EventManager.mc.player.rotationPitch;
-        prevVisualPitch = visualPitch;
-        prevVisualYaw = visualYaw;
-    }
-
-    public void restoreRotations() {
-        visualPitch = mc.player.rotationPitch;
-        visualYaw = mc.player.rotationYaw;
-        EventManager.mc.player.rotationYaw = this.yaw;
-        EventManager.mc.player.rotationYawHead = this.yaw;
-        EventManager.mc.player.rotationPitch = this.pitch;
-    }
-
-    public void post(final Object event) {
-        final List<Listener> listeners = this.SUBSCRIPTION_MAP.get(event.getClass());
-        if (listeners != null) {
-            listeners.forEach(listener -> listener.invoke(event));
-        }
-    }
 
     public void init() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -100,23 +67,35 @@ public class EventManager extends Client {
     public void onUpdate(LivingEvent.LivingUpdateEvent event) {
         if (!fullNullCheck() && (event.getEntity().getEntityWorld()).isRemote && event.getEntityLiving().equals(mc.player)) {
             Managers.inventoryManager.update();
+            Managers.totemPopManager.onUpdate();
             Managers.holeManager.update();
             Managers.moduleManager.onUpdate();
             Managers.timerManager.update();
-            if ((HUD.getInstance()).renderingMode.getValue() == HUD.RenderingMode.Length) {
+            if (this.timer.passedMs(HUD.getInstance().moduleListUpdates.getValue().intValue())) {
                 Managers.moduleManager.sortModules(true);
-            } else {
-                Managers.moduleManager.sortModulesABC();
+                Managers.moduleManager.alphabeticallySortModules();
+                this.timer.reset();
             }
         }
-        if(!fullNullCheck()){
-            if(Managers.moduleManager.getModuleByClass(ClickGui.class).getBind().getKey() == -1){
-                Command.sendMessage(ChatFormatting.DARK_RED +  "Default clickgui keybind --> P");
+        if(!fullNullCheck()) {
+            if (Managers.moduleManager.getModuleByClass(ClickGui.class).getBind().getKey() == -1) {
+                Command.sendMessage(ChatFormatting.GRAY + "Default clickgui keybind is: " + ChatFormatting.DARK_RED + "P");
                 Managers.moduleManager.getModuleByClass(ClickGui.class).setBind(Keyboard.getKeyIndex("P"));
             }
         }
     }
-    
+
+    public EventManager() {
+        this.SUBSCRIPTION_CACHE = new ConcurrentHashMap<Listenable, List<Listener>>();
+        this.SUBSCRIPTION_MAP = new ConcurrentHashMap<Class<?>, List<Listener>>();
+    }
+
+    public void post(final Object event) {
+        final List<Listener> listeners = this.SUBSCRIPTION_MAP.get(event.getClass());
+        if (listeners != null) {
+            listeners.forEach(listener -> listener.invoke(event));
+        }
+    }
 
     @SubscribeEvent
     public void onClientConnect(FMLNetworkEvent.ClientConnectedToServerEvent event) {
@@ -126,6 +105,7 @@ public class EventManager extends Client {
 
     @SubscribeEvent
     public void onClientDisconnect(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
+        Managers.totemPopManager.onLogout();
         Managers.moduleManager.onLogout();
     }
 
@@ -138,7 +118,6 @@ public class EventManager extends Client {
             if (player == null || player.getHealth() > 0.0F)
                 continue;
             MinecraftForge.EVENT_BUS.post(new EventDeath(player));
-            PopCounter.getInstance().onDeath(player);
         }
     }
 
@@ -168,7 +147,7 @@ public class EventManager extends Client {
             if (packet.getOpCode() == 35 && packet.getEntity(EventManager.mc.world) instanceof EntityPlayer) {
                 final EntityPlayer player = (EntityPlayer)packet.getEntity(EventManager.mc.world);
                 MinecraftForge.EVENT_BUS.post(new TotemPopEvent(player));
-                PopCounter.getInstance().onTotemPop(player);
+                Managers.totemPopManager.onTotemPop(player);
                 Managers.positionManager.onTotemPop(player);
             }
         }

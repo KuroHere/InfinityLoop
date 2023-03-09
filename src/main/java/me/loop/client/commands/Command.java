@@ -5,6 +5,7 @@ import me.loop.api.managers.Managers;
 import me.loop.client.Client;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentBase;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,6 +40,22 @@ public abstract class Command
             mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new ChatMessage(Managers.commandManager.getPrefix() + ChatFormatting.GRAY + message), id);
         }
     }
+
+    public static void sendOverwriteMessage(String message, int id, boolean notification) {
+        TextComponentString component = new TextComponentString(message);
+        Command.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(component, id);
+        if (notification) {
+            Managers.notificationManager.addNotification(message, 3000L);
+        }
+    }
+
+    public static void sendMessage(String message, boolean notification) {
+        Command.sendSilentMessage(Managers.commandManager.getClientMessage() + " " + "\u00a7r" + message);
+        if (notification) {
+            Managers.notificationManager.addNotification(message, 3000L);
+        }
+    }
+
 
     public String getDescription() {
         return this.description;

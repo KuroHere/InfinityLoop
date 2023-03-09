@@ -24,6 +24,19 @@ public class Client
     public Client() {
     }
 
+    //On Off
+
+    public boolean isEnabled() {
+        if (this instanceof Module) {
+            return ((Module) this).isOn();
+        }
+        return false;
+    }
+
+    public boolean isDisabled() {
+        return !this.isEnabled();
+    }
+
     //Settings
 
     public void reset() {
@@ -41,6 +54,20 @@ public class Client
         }
 
         return setting;
+    }
+
+    public void unAdd(Setting settingIn) {
+        ArrayList<Setting> removeList = new ArrayList<Setting>();
+        for (Setting setting : this.settings) {
+            if (!setting.equals(settingIn)) continue;
+            removeList.add(setting);
+        }
+        if (!removeList.isEmpty()) {
+            this.settings.removeAll(removeList);
+        }
+        if (this instanceof Module && Client.mc.currentScreen instanceof InfinityLoopGui) {
+            InfinityLoopGui.getInstance().updateModule((Module) this);
+        }
     }
 
     public Setting getSettingByName(String name) {

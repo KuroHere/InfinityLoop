@@ -21,7 +21,7 @@ public abstract class MixinEntityPlayer
 
     @Inject(method={"getCooldownPeriod"}, at={@At(value="HEAD")}, cancellable=true)
     private void getCooldownPeriodHook(CallbackInfoReturnable<Float> callbackInfoReturnable) {
-        if (TpsSync.getInstance().isOn() && TpsSync.getInstance().attack.getValue().booleanValue()) {
+        if (TpsSync.getInstance().isEnabled() && TpsSync.getInstance().attack.getValue().booleanValue()) {
             callbackInfoReturnable.setReturnValue(Float.valueOf((float)(1.0 / ((EntityPlayer)EntityPlayer.class.cast((Object)this)).getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getBaseValue() * 20.0 * (double) Managers.serverManager.getTpsFactor())));
         }
     }

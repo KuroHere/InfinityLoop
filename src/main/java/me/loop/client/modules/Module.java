@@ -5,12 +5,18 @@ import me.loop.api.events.impl.client.ClientEvent;
 import me.loop.api.events.impl.render.Render2DEvent;
 import me.loop.api.events.impl.render.Render3DEvent;
 import me.loop.api.managers.Managers;
+import me.loop.api.utils.impl.Util;
 import me.loop.client.Client;
 import me.loop.client.commands.Command;
+import me.loop.client.modules.impl.client.HUD;
 import me.loop.client.modules.settings.Setting;
 import me.loop.client.modules.settings.impl.Bind;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public abstract class Module
         extends Client {
@@ -28,8 +34,10 @@ public abstract class Module
     public float arrayListOffset = 0.0f;
     public float arrayListVOffset = 0.0f;
     public float offset;
+
     public float vOffset;
     public boolean sliding;
+    public Animation animation;
 
     public Module(String name, String description, Category category, boolean hasListener, boolean hidden, boolean alwaysListening) {
         super(name);
@@ -39,51 +47,65 @@ public abstract class Module
         this.hasListener = hasListener;
         this.hidden = hidden;
         this.alwaysListening = alwaysListening;
+        this.animation = new Animation(this);
+    }
+
+    public boolean isOn() {
+        return this.enabled.getValue();
+    }
+
+    public boolean isOff() {
+        return this.enabled.getValue() == false;
+    }
+
+    public void setEnabled(boolean enabled) {
+        if (enabled) {
+            this.enable();
+        } else {
+            this.disable();
+        }
     }
 
     public void enable() {
-        enabled.setValue(true);
-        onEnable();
+        this.enabled.setValue(true);
+        this.onToggle();
+        this.onEnable();
 
         Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + ".enabled =" + "\u00a7r" + ChatFormatting.GREEN + " true.", hashCode());
 
-        if (isOn() && hasListener) {
+
+        if (this.isOn() && this.hasListener && !this.alwaysListening) {
             MinecraftForge.EVENT_BUS.register(this);
         }
     }
 
     public void disable() {
-        enabled.setValue(false);
-        onDisable();
+        if (this.hasListener && !this.alwaysListening) {
+            MinecraftForge.EVENT_BUS.unregister(this);
+        }
+        this.enabled.setValue(false);
+        this.onToggle();
+        this.onDisable();
 
         Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + ".enabled =" + "\u00a7r" + ChatFormatting.RED + " false.", hashCode());
 
-        if (hasListener) {
-            MinecraftForge.EVENT_BUS.unregister(this);
-        }
     }
 
     public void toggle() {
-        ClientEvent event = new ClientEvent(!isOn() ? 1 : 0, this);
+        ClientEvent event = new ClientEvent(!this.isEnabled() ? 1 : 0, this);
         MinecraftForge.EVENT_BUS.post(event);
-
         if (!event.isCanceled()) {
-
-            if (!isOn()) {
-                enable();
-
-            } else {
-                disable();
-            }
+            this.setEnabled(!this.isEnabled());
         }
     }
 
-    public boolean isOn() {
-        return enabled.getValue();
+    public void onEnable() {
     }
 
-    public boolean isOff() {
-        return !enabled.getValue();
+    public void onDisable() {
+    }
+
+    public void onToggle() {
     }
 
     public boolean isDrawn() {
@@ -100,12 +122,6 @@ public abstract class Module
 
     public boolean isSliding() {
         return this.sliding;
-    }
-
-    public void onEnable() {
-    }
-
-    public void onDisable() {
     }
 
     public void onLoad() {
@@ -172,10 +188,6 @@ public abstract class Module
         this.bind.setValue(new Bind(key));
     }
 
-    public String getFullArrayString() {
-        return this.getDisplayName() + ChatFormatting.GRAY + (this.getDisplayInfo() != null ? " [" + ChatFormatting.WHITE + this.getDisplayInfo() + ChatFormatting.GRAY + "]" : "");
-    }
-
     public void setUndrawn() {
         this.drawn.setValue(null);
     }
@@ -183,14 +195,56 @@ public abstract class Module
     public void onClientTick(final TickEvent.ClientTickEvent event) {
     }
 
-    public String getHudInfo() {
-        return this.hudInfo;
-    }
-
     public void setHudInfo(String info) {
         this.hudInfo = info;
     }
 
     public void onMotionUpdate() {
+    }
+
+    public String getFullArrayString() {
+        return this.getDisplayName() + ChatFormatting.GRAY + (this.getDisplayInfo() != null ? " [" + ChatFormatting.WHITE + this.getDisplayInfo() + ChatFormatting.GRAY + "]" : "");
+    }
+
+    public class Animation
+            extends Thread {
+        public Module module;
+        public float offset;
+        public float vOffset;
+        public String lastText;
+        public boolean shouldMetaSlide;
+        ScheduledExecutorService service;
+
+        public Animation(Module module) {
+            super("Animation");
+            this.service = Executors.newSingleThreadScheduledExecutor();
+            this.module = module;
+        }
+
+        @Override
+        public void run() {
+            String text = this.module.getDisplayName() + "\u00a77" + (this.module.getDisplayInfo() != null ? " [\u00a7f" + this.module.getDisplayInfo() + "\u00a77" + "]" : "");
+            this.module.offset = (float) Module.this.renderer.getStringWidth(text) / HUD.getInstance().animationHorizontalTime.getValue().floatValue();
+            this.module.vOffset = (float) Module.this.renderer.getFontHeight() / HUD.getInstance().animationVerticalTime.getValue().floatValue();
+            if (this.module.isEnabled() && HUD.getInstance().animationHorizontalTime.getValue() != 1) {
+                if (this.module.arrayListOffset > this.module.offset && Util.mc.world != null) {
+                    this.module.arrayListOffset -= this.module.offset;
+                    this.module.sliding = true;
+                }
+            } else if (this.module.isDisabled() && HUD.getInstance().animationHorizontalTime.getValue() != 1) {
+                if (this.module.arrayListOffset < (float) Module.this.renderer.getStringWidth(text) && Util.mc.world != null) {
+                    this.module.arrayListOffset += this.module.offset;
+                    this.module.sliding = true;
+                } else {
+                    this.module.sliding = false;
+                }
+            }
+        }
+
+        @Override
+        public void start() {
+            System.out.println("Starting animation thread for " + this.module.getName());
+            this.service.scheduleAtFixedRate(this, 0L, 1L, TimeUnit.MILLISECONDS);
+        }
     }
 }

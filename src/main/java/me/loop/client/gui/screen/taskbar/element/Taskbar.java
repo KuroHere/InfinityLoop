@@ -20,13 +20,13 @@ public class Taskbar extends DrawableComponent {
     public void drawComponent() {
         ScaledResolution resolution = new ScaledResolution(mc);
         if (ClickGui.getInstance().colorSync.getValue()) {
-            RenderUtil.drawOutlineRect(0, 0, resolution.getScaledWidth(), 30, new Color(Colors.getInstance().red.getValue(), Colors.getInstance().green.getValue(), Colors.getInstance().blue.getValue(), 250), 3f);
+            RenderUtil.drawOutlineRect(0, 0, resolution.getScaledWidth(), 30, new Color(Colors.getInstance().colors.getValue().getCurrentColor().getRed(), Colors.getInstance().colors.getValue().getCurrentColor().getGreen(), Colors.getInstance().colors.getValue().getCurrentColor().getBlue(), 255), 3f);
         } else {
             RenderUtil.drawOutlineRect(0, 0, resolution.getScaledWidth(), 30,  new Color(ClickGui.getInstance().moduleMainC.getValue().getRed(), ClickGui.getInstance().moduleMainC.getValue().getGreen(), ClickGui.getInstance().moduleMainC.getValue().getBlue(), 250), 3f);
             //RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 31, new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), 250).getRGB());
         }
         if (ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
-            RenderUtil.drawOutlineRect(0, 0, resolution.getScaledWidth(), 30, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue())) : new Color(Colors.getInstance().red.getValue(), Colors.getInstance().green.getValue(), Colors.getInstance().blue.getValue()), 3f);
+            RenderUtil.drawOutlineRect(0, 0, resolution.getScaledWidth(), 30, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue())) : new Color(Colors.getInstance().colors.getValue().getCurrentColor().getRed(), Colors.getInstance().colors.getValue().getCurrentColor().getGreen(), Colors.getInstance().colors.getValue().getCurrentColor().getBlue()), 3f);
         }
         RenderUtil.drawRect(0, 0, resolution.getScaledWidth(), 30, new Color(23, 23, 29).getRGB());
         glPushMatrix();

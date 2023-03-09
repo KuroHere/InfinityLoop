@@ -1,4 +1,4 @@
-package me.loop.api.utils.impl.renders.shaders;
+package me.loop.client.gui.mainmenu;
 
 import me.loop.api.utils.impl.Util;
 import net.minecraft.client.gui.ScaledResolution;

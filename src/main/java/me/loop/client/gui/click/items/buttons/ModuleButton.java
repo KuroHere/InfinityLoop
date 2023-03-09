@@ -197,7 +197,7 @@ public class ModuleButton
 
     @Override
     public boolean getState() {
-        return this.module.isOn();
+        return this.module.isEnabled();
     }
 }
 

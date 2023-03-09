@@ -1,10 +1,7 @@
 package me.loop.client.modules;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import me.loop.api.events.impl.render.Render2DEvent;
 import me.loop.api.events.impl.render.Render3DEvent;
-import me.loop.api.managers.Managers;
-import me.loop.api.utils.impl.Util;
 import me.loop.client.Client;
 import me.loop.client.gui.InfinityLoopGui;
 import me.loop.client.modules.impl.client.*;
@@ -25,25 +22,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class ModuleManager
         extends Client {
     public static ArrayList<Module> modules = new ArrayList();
     public List<Module> sortedModules = new ArrayList<Module>();
-    public List<String> sortedModulesABC = new ArrayList<String>();
-    public Animation animationThread;
+    public List<Module> alphabeticallySortedModules = new ArrayList<Module>();
 
     public void init() {
         // Test
         modules.add(new Test());
 
         // Client
+        modules.add(new DisplayNotify());
+        modules.add(new DisplayNotify());
         modules.add(new BlurExtends());
-        modules.add(new CSGui());
         modules.add(new ClickGui());
         modules.add(new RPC());
         modules.add(new GameChanger());
@@ -61,13 +55,12 @@ public class ModuleManager
         modules.add(new Offhand());
 
         // Misc
+        modules.add(new Notifications());
         modules.add(new AutoGG());
         modules.add(new BlockTweaks());
         modules.add(new ChatModifier());
-        modules.add(new ExtraTab());
         modules.add(new MCF());
         modules.add(new NoHandShake());
-        modules.add(new PopCounter());
         modules.add(new ToolTips());
 
         // Movement
@@ -95,7 +88,7 @@ public class ModuleManager
         modules.add(new DeathEffects());
         //modules.add(new NoCluster());
         modules.add(new ShadowESP());
-        modules.add(new me.loop.client.modules.impl.render.Animation());
+        modules.add(new CustomAnimation());
         modules.add(new ArrowESP());
         modules.add(new BlockHighlight());
         modules.add(new BreadCrumbs());
@@ -110,11 +103,18 @@ public class ModuleManager
         modules.add(new PearlRender());
         modules.add(new Skeleton());
         modules.add(new SmallShield());
-        modules.add(new Trajectories());;
+        modules.add(new Trajectories());
+
+        for (Module module : this.modules) {
+            module.animation.start();
+        }
+    }
+    public <T extends Module> T getModuleT(Class<T> clazz) {
+        return (T)((Module)this.modules.stream().filter(module -> module.getClass() == clazz).map(module -> module).findFirst().orElse(null));
     }
 
     public Module getModuleByName(String name) {
-        for (Module module : modules) {
+        for (Module module : this.modules) {
             if (!module.getName().equalsIgnoreCase(name)) continue;
             return module;
         }
@@ -122,24 +122,24 @@ public class ModuleManager
     }
 
     public <T extends Module> T getModuleByClass(Class<T> clazz) {
-        for (Module module : modules) {
+        for (Module module : this.modules) {
             if (!clazz.isInstance(module)) continue;
             return (T) module;
         }
         return null;
     }
 
-    public void enableModule(Class<Module> clazz) {
-        Module module = this.getModuleByClass(clazz);
+    public void enableModule(Class clazz) {
+        Object module = this.getModuleByClass(clazz);
         if (module != null) {
-            module.enable();
+            ((Module) module).enable();
         }
     }
 
-    public void disableModule(Class<Module> clazz) {
-        Module module = this.getModuleByClass(clazz);
+    public void disableModule(Class clazz) {
+        Object module = this.getModuleByClass(clazz);
         if (module != null) {
-            module.disable();
+            ((Module) module).disable();
         }
     }
 
@@ -157,21 +157,18 @@ public class ModuleManager
         }
     }
 
-    public boolean isModuleEnabled(final String name) {
-        final Module module = this.modules.stream().filter(ModuleManager::isModuleEnabled).findFirst().orElse(null);
+    public boolean isModuleEnabled(String name) {
+        Module module = this.getModuleByName(name);
         return module != null && module.isOn();
     }
 
-    private static boolean isModuleEnabled(Module module) {
-        return false;
-    }
-
-    public static boolean isModuleEnabled(final String name, final Module m) {
-        return m.getName().equals(name);
+    public boolean isModuleEnabled(Class clazz) {
+        Object module = this.getModuleByClass(clazz);
+        return module != null && ((Module) module).isOn();
     }
 
     public Module getModuleByDisplayName(String displayName) {
-        for (Module module : modules) {
+        for (Module module : this.modules) {
             if (!module.getDisplayName().equalsIgnoreCase(displayName)) continue;
             return module;
         }
@@ -179,21 +176,10 @@ public class ModuleManager
     }
 
     public ArrayList<Module> getEnabledModules() {
-        ArrayList<Module> modules = new ArrayList<>();
-
+        ArrayList<Module> enabledModules = new ArrayList<Module>();
         for (Module module : this.modules) {
-            if (!module.isOn()) continue;
-            modules.add(module);
-        }
-
-        return modules;
-    }
-
-    public ArrayList<String> getEnabledModulesName() {
-        ArrayList<String> enabledModules = new ArrayList<String>();
-        for (Module module : modules) {
-            if (!module.isOn() || !module.isDrawn()) continue;
-            enabledModules.add(module.getFullArrayString());
+            if (!module.isEnabled() && !module.isSliding()) continue;
+            enabledModules.add(module);
         }
         return enabledModules;
     }
@@ -213,33 +199,32 @@ public class ModuleManager
     }
 
     public void onLoad() {
-        modules.stream().filter(Module::isListening).forEach(((EventBus) MinecraftForge.EVENT_BUS)::register);
-        modules.forEach(Module::onLoad);
+        this.modules.stream().filter(Module::isListening).forEach(((EventBus) MinecraftForge.EVENT_BUS)::register);
+        this.modules.forEach(Module::onLoad);
     }
 
     public void onUpdate() {
-        modules.stream().filter(Module::isOn).forEach(Module::onUpdate);
+        this.modules.stream().filter(Client::isEnabled).forEach(Module::onUpdate);
     }
 
     public void onTick() {
-        modules.stream().filter(Module::isOn).forEach(Module::onTick);
+        this.modules.stream().filter(Client::isEnabled).forEach(Module::onTick);
     }
 
     public void onRender2D(Render2DEvent event) {
-        modules.stream().filter(Module::isOn).forEach(module -> module.onRender2D(event));
+        this.modules.stream().filter(Client::isEnabled).forEach(module -> module.onRender2D(event));
     }
 
     public void onRender3D(Render3DEvent event) {
-        modules.stream().filter(Module::isOn).forEach(module -> module.onRender3D(event));
+        this.modules.stream().filter(Client::isEnabled).forEach(module -> module.onRender3D(event));
     }
 
     public void sortModules(boolean reverse) {
         this.sortedModules = this.getEnabledModules().stream().filter(Module::isDrawn).sorted(Comparator.comparing(module -> this.renderer.getStringWidth(module.getFullArrayString()) * (reverse ? -1 : 1))).collect(Collectors.toList());
     }
 
-    public void sortModulesABC() {
-        this.sortedModulesABC = new ArrayList<String>(this.getEnabledModulesName());
-        this.sortedModulesABC.sort(String.CASE_INSENSITIVE_ORDER);
+    public void alphabeticallySortModules() {
+        this.alphabeticallySortedModules = this.getEnabledModules().stream().filter(Module::isDrawn).sorted(Comparator.comparing(Module::getDisplayName)).collect(Collectors.toList());
     }
 
     public void onLogout() {
@@ -272,67 +257,14 @@ public class ModuleManager
         });
     }
 
-    private class Animation
-            extends Thread {
-        public Module module;
-        public float offset;
-        public float vOffset;
-        ScheduledExecutorService service;
-
-        public Animation() {
-            super("Animation");
-            this.service = Executors.newSingleThreadScheduledExecutor();
+    public List<Module> getAnimationModules(Category category) {
+        ArrayList<Module> animationModules = new ArrayList<Module>();
+        for (Module module : this.getEnabledModules()) {
+            if (module.getCategory() != category || module.isDisabled() || !module.isSliding() || !module.isDrawn())
+                continue;
+            animationModules.add(module);
         }
-
-        @Override
-        public void run() {
-            if (HUD.getInstance().renderingMode.getValue() == HUD.RenderingMode.Length) {
-                for (Module module : ModuleManager.this.sortedModules) {
-                    String text = module.getDisplayName() + ChatFormatting.GRAY + (module.getDisplayInfo() != null ? " [" + ChatFormatting.WHITE + module.getDisplayInfo() + ChatFormatting.GRAY + "]" : "");
-                    module.offset = (float) ModuleManager.this.renderer.getStringWidth(text) / HUD.getInstance().animationHorizontalTime.getValue().floatValue();
-                    module.vOffset = (float) ModuleManager.this.renderer.getFontHeight() / HUD.getInstance().animationVerticalTime.getValue().floatValue();
-                    if (module.isOn() && HUD.getInstance().animationHorizontalTime.getValue() != 1) {
-                        if (!(module.arrayListOffset > module.offset) || Util.mc.world == null) continue;
-                        module.arrayListOffset -= module.offset;
-                        module.sliding = true;
-                        continue;
-                    }
-                    if (!module.isOff() || HUD.getInstance().animationHorizontalTime.getValue() == 1) continue;
-                    if (module.arrayListOffset < (float) ModuleManager.this.renderer.getStringWidth(text) && Util.mc.world != null) {
-                        module.arrayListOffset += module.offset;
-                        module.sliding = true;
-                        continue;
-                    }
-                    module.sliding = false;
-                }
-            } else {
-                for (String e : ModuleManager.this.sortedModulesABC) {
-                    Module module = Managers.moduleManager.getModuleByName(e);
-                    String text = module.getDisplayName() + ChatFormatting.GRAY + (module.getDisplayInfo() != null ? " [" + ChatFormatting.WHITE + module.getDisplayInfo() + ChatFormatting.GRAY + "]" : "");
-                    module.offset = (float) ModuleManager.this.renderer.getStringWidth(text) / HUD.getInstance().animationHorizontalTime.getValue().floatValue();
-                    module.vOffset = (float) ModuleManager.this.renderer.getFontHeight() / HUD.getInstance().animationVerticalTime.getValue().floatValue();
-                    if (module.isOn() && HUD.getInstance().animationHorizontalTime.getValue() != 1) {
-                        if (!(module.arrayListOffset > module.offset) || Util.mc.world == null) continue;
-                        module.arrayListOffset -= module.offset;
-                        module.sliding = true;
-                        continue;
-                    }
-                    if (!module.isOff() || HUD.getInstance().animationHorizontalTime.getValue() == 1) continue;
-                    if (module.arrayListOffset < (float) ModuleManager.this.renderer.getStringWidth(text) && Util.mc.world != null) {
-                        module.arrayListOffset += module.offset;
-                        module.sliding = true;
-                        continue;
-                    }
-                    module.sliding = false;
-                }
-            }
-        }
-
-        @Override
-        public void start() {
-            System.out.println("Starting animation thread.");
-            this.service.scheduleAtFixedRate(this, 0L, 1L, TimeUnit.MILLISECONDS);
-        }
+        return animationModules;
     }
 }
 

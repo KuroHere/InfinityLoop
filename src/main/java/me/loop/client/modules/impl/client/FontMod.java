@@ -1,11 +1,10 @@
 package me.loop.client.modules.impl.client;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import me.loop.api.events.impl.client.ClientEvent;
 import me.loop.api.managers.Managers;
 import me.loop.client.commands.Command;
-import me.loop.client.modules.Module;
 import me.loop.client.modules.Category;
+import me.loop.client.modules.Module;
 import me.loop.client.modules.settings.Setting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -15,10 +14,13 @@ public class FontMod
         extends Module {
     private static FontMod INSTANCE = new FontMod();
     public Setting<String> fontName = this.add(new Setting<String>("FontName", "Arial", "Name of the font."));
-    public Setting<Boolean> antiAlias = this.add(new Setting<Boolean>("AntiAlias", Boolean.valueOf(true), "Smoother font."));
-    public Setting<Boolean> fractionalMetrics = this.add(new Setting<Boolean>("Metrics", Boolean.valueOf(true), "Thinner font."));
     public Setting<Integer> fontSize = this.add(new Setting<Integer>("Size", Integer.valueOf(18), Integer.valueOf(12), Integer.valueOf(30), "Size of the font."));
     public Setting<Integer> fontStyle = this.add(new Setting<Integer>("Style", Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(3), "Style of the font."));
+    public Setting<Boolean> antiAlias = this.add(new Setting<Boolean>("AntiAlias", Boolean.valueOf(true), "Smoother font."));
+    public Setting<Boolean> fractionalMetrics = this.add(new Setting<Boolean>("Metrics", Boolean.valueOf(true), "Thinner font."));
+    public Setting<Boolean> shadow = this.add(new Setting<Boolean>("Shadow", Boolean.valueOf(true), "Less shadow offset font."));
+    public Setting<Boolean> showFonts = this.add(new Setting<Boolean>("Fonts", Boolean.valueOf(false), "Shows all fonts."));
+    public Setting<Boolean> full = this.add(new Setting<Boolean>("Full", false));
     private boolean reloadFont = false;
 
     public FontMod() {
@@ -52,9 +54,9 @@ public class FontMod
     @SubscribeEvent
     public void onSettingChange(ClientEvent event) {
         Setting setting;
-        if (event.getStage() == 0 && (setting = event.getSetting()) != null && setting.getClient().equals(this)) {
+        if (event.getStage() == 2 && (setting = event.getSetting()) != null && setting.getClient().equals(this)) {
             if (setting.getName().equals("FontName") && !FontMod.checkFont(setting.getPlannedValue().toString(), false)) {
-                Command.sendMessage(ChatFormatting.RED + "That font doesnt exist.");
+                Command.sendMessage("\u00a7cThat font doesnt exist.");
                 event.setCanceled(true);
                 return;
             }
@@ -64,10 +66,14 @@ public class FontMod
 
     @Override
     public void onTick() {
+        if (this.showFonts.getValue().booleanValue()) {
+            FontMod.checkFont("Hello", true);
+            Command.sendMessage("Current Font: " + this.fontName.getValue());
+            this.showFonts.setValue(false);
+        }
         if (this.reloadFont) {
             Managers.textManager.init(false);
             this.reloadFont = false;
         }
     }
 }
-

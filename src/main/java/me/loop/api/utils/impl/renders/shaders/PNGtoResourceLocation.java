@@ -27,7 +27,7 @@ public class PNGtoResourceLocation {
 
         BufferedImage bufferedImage = null;
         try {
-            bufferedImage = ImageIO.read(new File("me/client/temp/heads/" + name + "." + format));
+            bufferedImage = ImageIO.read(new File("loop/temp/heads/" + name + "." + format));
         } catch (Exception e) {
             return null;
         }
@@ -41,7 +41,7 @@ public class PNGtoResourceLocation {
     public static ResourceLocation getCustomImg(String name,String format) {
         BufferedImage bufferedImage = null;
         try {
-            bufferedImage = ImageIO.read(new File("me/client/images/" + name + "." + format));
+            bufferedImage = ImageIO.read(new File("loop/images/" + name + "." + format));
         } catch (Exception e) {
             return null;
         }

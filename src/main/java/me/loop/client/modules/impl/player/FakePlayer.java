@@ -1,176 +1,114 @@
 package me.loop.client.modules.impl.player;
 
-import me.loop.api.events.impl.network.EventPacket;
-import me.loop.api.events.impl.player.EventPlayerUpdate;
-import me.loop.client.commands.Command;
-import me.loop.client.modules.Module;
-import me.loop.client.modules.Category;
-import me.loop.client.modules.settings.Setting;
-import me.loop.api.utils.impl.DamageUtil;
 import com.mojang.authlib.GameProfile;
-import com.mojang.realmsclient.gui.ChatFormatting;
+import me.loop.client.modules.Category;
+import me.loop.client.modules.Module;
+import me.loop.client.modules.settings.Setting;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SPacketExplosion;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
-public class FakePlayer extends Module
-{
-    private static FakePlayer INSTANCE;
-    private final Setting<Boolean> pops;
-    private final Setting<Boolean> totemPopParticle;
-    private final Setting<Boolean> totemPopSound;
-    public Setting<Boolean> move;
-    public Setting<Type> type;
-    public Setting<Integer> chaseX;
-    public Setting<Integer> chaseY;
-    public Setting<Integer> chaseZ;
-    public EntityOtherPlayerMP fakePlayer;
+public class FakePlayer
+        extends Module {
+    private static FakePlayer INSTANCE = new FakePlayer();
+    public List<Integer> fakePlayerIdList = new ArrayList<Integer>();
+    public Setting<Boolean> moving = this.add(new Setting("Moving", false));
+    private EntityOtherPlayerMP otherPlayer;
 
     public FakePlayer() {
-        super("FakePlayer", "Spawns a FakePlayer for testing.", Category.PLAYER, true, false, false);
-        this.pops = (Setting<Boolean>)this.add(new Setting("TotemPops", true));
-        this.totemPopParticle = (Setting<Boolean>)this.add(new Setting("TotemPopParticle", true));
-        this.totemPopSound = (Setting<Boolean>)this.add(new Setting("TotemPopSound", true));
-        this.move = (Setting<Boolean>)this.add(new Setting("Move", true));
-        this.type = (Setting<Type>)this.add(new Setting("MovementMode", Type.NONE, v -> this.move.getValue()));
-        this.chaseX = (Setting<Integer>)this.add(new Setting("ChaseX", 4, 1, 120, v -> this.move.getValue() && this.type.getValue() == Type.CHASE));
-        this.chaseY = (Setting<Integer>)this.add(new Setting("ChaseY", 4, 1, 120, v -> this.move.getValue() && this.type.getValue() == Type.CHASE));
-        this.chaseZ = (Setting<Integer>)this.add(new Setting("ChaseZ", 4, 1, 120, v -> this.move.getValue() && this.type.getValue() == Type.CHASE));
+        super("FakePlayer", "Spawns fake player", Category.PLAYER, false, false, false);
+        this.setInstance();
     }
 
     public static FakePlayer getInstance() {
-        if (FakePlayer.INSTANCE == null) {
-            FakePlayer.INSTANCE = new FakePlayer();
+        if (INSTANCE == null) {
+            INSTANCE = new FakePlayer();
         }
-        return FakePlayer.INSTANCE;
+        return INSTANCE;
     }
 
+    private void setInstance() {
+        INSTANCE = this;
+    }
+
+    public void onTick() {
+        if (otherPlayer != null) {
+            Random random = new Random();
+            otherPlayer.moveForward = mc.player.moveForward + (random.nextInt(5) / 10F);
+            otherPlayer.moveStrafing = mc.player.moveStrafing + (random.nextInt(5) / 10F);
+            if (moving.getValue()) travel(otherPlayer.moveStrafing, otherPlayer.moveVertical, otherPlayer.moveForward);
+        }
+    }
+
+    public void travel(float strafe, float vertical, float forward) {
+        double d0 = otherPlayer.posY;
+        float f1 = 0.8F;
+        float f2 = 0.02F;
+        float f3 = (float) EnchantmentHelper.getDepthStriderModifier(otherPlayer);
+
+        if (f3 > 3.0F) {
+            f3 = 3.0F;
+        }
+
+        if (!otherPlayer.onGround) {
+            f3 *= 0.5F;
+        }
+
+        if (f3 > 0.0F) {
+            f1 += (0.54600006F - f1) * f3 / 3.0F;
+            f2 += (otherPlayer.getAIMoveSpeed() - f2) * f3 / 4.0F;
+        }
+
+        otherPlayer.moveRelative(strafe, vertical, forward, f2);
+        otherPlayer.move(MoverType.SELF, otherPlayer.motionX, otherPlayer.motionY, otherPlayer.motionZ);
+        otherPlayer.motionX *= (double) f1;
+        otherPlayer.motionY *= 0.800000011920929D;
+        otherPlayer.motionZ *= (double) f1;
+
+        if (!otherPlayer.hasNoGravity()) {
+            otherPlayer.motionY -= 0.02D;
+        }
+
+        if (otherPlayer.collidedHorizontally && otherPlayer.isOffsetPositionInLiquid(otherPlayer.motionX, otherPlayer.motionY + 0.6000000238418579D - otherPlayer.posY + d0, otherPlayer.motionZ)) {
+            otherPlayer.motionY = 0.30000001192092896D;
+        }
+    }
+
+    @Override
     public void onEnable() {
-        if (FakePlayer.mc.world == null || FakePlayer.mc.player == null) {
-            this.disable();
-        }
-        else {
-            final UUID playerUUID = FakePlayer.mc.player.getUniqueID();
-            (this.fakePlayer = new EntityOtherPlayerMP((World)FakePlayer.mc.world, new GameProfile(UUID.fromString(playerUUID.toString()), FakePlayer.mc.player.getDisplayNameString()))).copyLocationAndAnglesFrom((Entity)FakePlayer.mc.player);
-            this.fakePlayer.inventory.copyInventory(FakePlayer.mc.player.inventory);
-            FakePlayer.mc.world.addEntityToWorld(-7777, (Entity)this.fakePlayer);
-            Command.sendMessage(ChatFormatting.GREEN + "FakePlayer name KuroHere was born in the world");
-        }
-    }
-
-    @SubscribeEvent
-    public void onTick(final EventPlayerUpdate event) {
-        if (this.pops.getValue()) {
-            if (this.fakePlayer != null) {
-                this.fakePlayer.inventory.offHandInventory.set(0,(ItemStack) new ItemStack(Items.TOTEM_OF_UNDYING));
-                if (this.fakePlayer.getHealth() <= 0.0f) {
-                    this.fakePop((Entity)this.fakePlayer);
-                    this.fakePlayer.setHealth(20.0f);
-                    //final InfinityLoop infinityLoop = this.infinityLoop;
-                    //InfinityLoop.popListener.handlePop((EntityPlayer)this.fakePlayer);
-                }
-            }
-            if (this.move.getValue() && !this.type.getValue().equals(Type.CHASE)) {
-                this.travel(this.fakePlayer.moveStrafing, this.fakePlayer.moveVertical, this.fakePlayer.moveForward);
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onRender(final RenderWorldLastEvent event) {
-        if (this.type.getValue().equals(Type.CHASE)) {
-            this.fakePlayer.posX = FakePlayer.mc.player.posX + this.chaseX.getValue();
-            this.fakePlayer.posY = this.chaseY.getValue();
-            this.fakePlayer.posZ = FakePlayer.mc.player.posZ + this.chaseZ.getValue();
-        }
-    }
-
-    @SubscribeEvent
-    public void onPacketReceive(final EventPacket.Receive event) {
-        if (this.fakePlayer == null) {
+        if (mc.world == null || mc.player == null) {
+            toggle();
             return;
         }
-        if (event.getPacket() instanceof SPacketExplosion) {
-            final SPacketExplosion explosion = (SPacketExplosion)event.getPacket();
-            if (this.fakePlayer.getDistance(explosion.getX(), explosion.getY(), explosion.getZ()) <= 15.0) {
-                final double damage = DamageUtil.calculateDamage(explosion.getX(), explosion.getY(), explosion.getZ(), (Entity)this.fakePlayer);
-                if (damage > 0.0 && this.pops.getValue()) {
-                    this.fakePlayer.setHealth((float)(this.fakePlayer.getHealth() - MathHelper.clamp(damage, 0.0, 999.0)));
-                }
-            }
-        }
+        this.fakePlayerIdList = new ArrayList<Integer>();
+
+        this.addFakePlayer(-100);
     }
 
-    public void travel(final float strafe, final float vertical, final float forward) {
-        final double d0 = this.fakePlayer.posY;
-        float f1 = 0.8f;
-        float f2 = 0.02f;
-        float f3 = (float)EnchantmentHelper.getDepthStriderModifier((EntityLivingBase)this.fakePlayer);
-        if (f3 > 3.0f) {
-            f3 = 3.0f;
+    public void addFakePlayer(int entityId) {
+        if (otherPlayer == null) {
+            otherPlayer = new EntityOtherPlayerMP(mc.world, new GameProfile(UUID.randomUUID(), "|Clown|"));
+            otherPlayer.copyLocationAndAnglesFrom(mc.player);
+            otherPlayer.inventory.copyInventory(mc.player.inventory);
         }
-        if (!this.fakePlayer.onGround) {
-            f3 *= 0.5f;
-        }
-        if (f3 > 0.0f) {
-            f1 += (0.54600006f - f1) * f3 / 3.0f;
-            f2 += (this.fakePlayer.getAIMoveSpeed() - f2) * f3 / 4.0f;
-        }
-        this.fakePlayer.moveRelative(strafe, vertical, forward, f2);
-        this.fakePlayer.move(MoverType.SELF, this.fakePlayer.motionX, this.fakePlayer.motionY, this.fakePlayer.motionZ);
-        final EntityOtherPlayerMP fakePlayer = this.fakePlayer;
-        fakePlayer.motionX *= f1;
-        final EntityOtherPlayerMP fakePlayer2 = this.fakePlayer;
-        fakePlayer2.motionY *= 0.800000011920929;
-        final EntityOtherPlayerMP fakePlayer3 = this.fakePlayer;
-        fakePlayer3.motionZ *= f1;
-        if (!this.fakePlayer.hasNoGravity()) {
-            final EntityOtherPlayerMP fakePlayer4 = this.fakePlayer;
-            fakePlayer4.motionY -= 0.02;
-        }
-        if (this.fakePlayer.collidedHorizontally && this.fakePlayer.isOffsetPositionInLiquid(this.fakePlayer.motionX, this.fakePlayer.motionY + 0.6000000238418579 - this.fakePlayer.posY + d0, this.fakePlayer.motionZ)) {
-            this.fakePlayer.motionY = 0.30000001192092896;
-        }
+        mc.world.addEntityToWorld(entityId, otherPlayer);
+        this.fakePlayerIdList.add(entityId);
+
     }
 
+    @Override
     public void onDisable() {
-        if (this.fakePlayer != null && FakePlayer.mc.world != null) {
-            FakePlayer.mc.world.removeEntityFromWorld(-7777);
-            Command.sendMessage(ChatFormatting.GREEN + "FakePlayer name KuroHere got remove");
-            this.fakePlayer = null;
+        for (int id : this.fakePlayerIdList) {
+            FakePlayer.mc.world.removeEntityFromWorld(id);
         }
-    }
-
-    private void fakePop(final Entity entity) {
-        if (this.totemPopParticle.getValue()) {
-            FakePlayer.mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.TOTEM, 30);
+        if (otherPlayer != null) {
+            mc.world.removeEntity(otherPlayer);
+            otherPlayer = null;
         }
-        if (this.totemPopSound.getValue()) {
-            FakePlayer.mc.world.playSound(entity.posX, entity.posY, entity.posZ, SoundEvents.ITEM_TOTEM_USE, entity.getSoundCategory(), 1.0f, 1.0f, false);
-        }
-    }
-
-    static {
-        FakePlayer.INSTANCE = new FakePlayer();
-    }
-
-    public enum Type
-    {
-        NONE,
-        CHASE,
-        STATIC;
     }
 }

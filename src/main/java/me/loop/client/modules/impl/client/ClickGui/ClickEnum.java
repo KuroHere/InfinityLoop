@@ -5,6 +5,7 @@ public class ClickEnum {
     public enum Settings {
         Main,
         Color,
+        Misc,
         BackGround,
     }
 

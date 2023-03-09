@@ -1,6 +1,7 @@
 package me.loop.api.managers.impl;
 
 import me.loop.api.managers.Managers;
+import me.loop.api.utils.impl.maths.MathUtil;
 import me.loop.api.utils.impl.worlds.Timer;
 import me.loop.client.Client;
 import me.loop.client.gui.font.CustomFont;
@@ -8,6 +9,7 @@ import me.loop.client.modules.impl.client.FontMod;
 import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
+
 
 public class TextManager
         extends Client {
@@ -36,27 +38,62 @@ public class TextManager
     }
 
     public float drawString(String text, float x, float y, int color, boolean shadow) {
-        if (Managers.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
+        if (Managers.moduleManager.isModuleEnabled(FontMod.class)) {
             if (shadow) {
-                this.customFont.drawStringWithShadow(text, x, y, color);
-            } else {
-                this.customFont.drawString(text, x, y, color);
+                return this.customFont.drawStringWithShadow(text, x, y, color);
             }
-            return x;
+            return this.customFont.drawString(text, x, y, color);
         }
-        TextManager.mc.fontRenderer.drawString(text, x, y, color, shadow);
-        return x;
+        return TextManager.mc.fontRenderer.drawString(text, x, y, color, shadow);
+    }
+
+    public void drawRainbowString(String text, float x, float y, int startColor, float factor, boolean shadow) {
+        Color currentColor = new Color(startColor);
+        float hueIncrement = 1.0f / factor;
+        String[] rainbowStrings = text.split("\u00a7.");
+        float currentHue = Color.RGBtoHSB(currentColor.getRed(), currentColor.getGreen(), currentColor.getBlue(), null)[0];
+        float saturation = Color.RGBtoHSB(currentColor.getRed(), currentColor.getGreen(), currentColor.getBlue(), null)[1];
+        float brightness = Color.RGBtoHSB(currentColor.getRed(), currentColor.getGreen(), currentColor.getBlue(), null)[2];
+        int currentWidth = 0;
+        boolean shouldRainbow = true;
+        boolean shouldContinue = false;
+        for (int i = 0; i < text.length(); ++i) {
+            char currentChar = text.charAt(i);
+            char nextChar = text.charAt(MathUtil.clamp(i + 1, 0, text.length() - 1));
+            if ((String.valueOf(currentChar) + nextChar).equals("\u00a7r")) {
+                shouldRainbow = false;
+            } else if ((String.valueOf(currentChar) + nextChar).equals("\u00a7+")) {
+                shouldRainbow = true;
+            }
+            if (shouldContinue) {
+                shouldContinue = false;
+                continue;
+            }
+            if ((String.valueOf(currentChar) + nextChar).equals("\u00a7r")) {
+                String escapeString = text.substring(i);
+                this.drawString(escapeString, x + (float) currentWidth, y, Color.WHITE.getRGB(), shadow);
+                break;
+            }
+            this.drawString(String.valueOf(currentChar).equals("\u00a7") ? "" : String.valueOf(currentChar), x + (float) currentWidth, y, shouldRainbow ? currentColor.getRGB() : Color.WHITE.getRGB(), shadow);
+            if (String.valueOf(currentChar).equals("\u00a7")) {
+                shouldContinue = true;
+            }
+            currentWidth += this.getStringWidth(String.valueOf(currentChar));
+            if (String.valueOf(currentChar).equals(" ")) continue;
+            currentColor = new Color(Color.HSBtoRGB(currentHue, saturation, brightness));
+            currentHue += hueIncrement;
+        }
     }
 
     public int getStringWidth(String text) {
-        if (Managers.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
+        if (Managers.moduleManager.isModuleEnabled(FontMod.class)) {
             return this.customFont.getStringWidth(text);
         }
         return TextManager.mc.fontRenderer.getStringWidth(text);
     }
 
     public int getFontHeight() {
-        if (Managers.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
+        if (Managers.moduleManager.isModuleEnabled(FontMod.class)) {
             String text = "A";
             return this.customFont.getStringHeight(text);
         }
@@ -86,8 +123,8 @@ public class TextManager
         if (flag && this.scaleFactor % 2 != 0 && this.scaleFactor != 1) {
             --this.scaleFactor;
         }
-        double scaledWidthD = this.scaledWidth / this.scaleFactor;
-        double scaledHeightD = this.scaledHeight / this.scaleFactor;
+        double scaledWidthD = (double) this.scaledWidth / (double) this.scaleFactor;
+        double scaledHeightD = (double) this.scaledHeight / (double) this.scaleFactor;
         this.scaledWidth = MathHelper.ceil(scaledWidthD);
         this.scaledHeight = MathHelper.ceil(scaledHeightD);
     }

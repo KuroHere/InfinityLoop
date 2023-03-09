@@ -76,7 +76,7 @@ public abstract class Component
 
         boolean future = getInstance().moduleiconmode.getValue();
 
-        if (getInstance().isOn()); {
+        if (getInstance().isEnabled()); {
             RenderUtil.drawGradientSideways(this.x, (float)this.y - 1.5f, this.x + this.width, this.y + this.height - 6, new Color(0,0,0,255).getRGB(), new Color(ClickGui.getInstance().moduleMainC.getValue().getRed(), ClickGui.getInstance().moduleMainC.getValue().getGreen(), ClickGui.getInstance().moduleMainC.getValue().getBlue(), 255).getRGB());
             RenderUtil.drawBorderedRect(this.x + 0.4, (float) this.y + 12.5f + 0.1 - 13, this.x + this.width + 0.1, (float) (this.y + this.height) + totalItemHeight + 0.1, ClickGui.getInstance().getOutlineWidth() - ClickGui.getInstance().getOutlineWidth() * 2, new Color(0, 0, 0, 0).getRGB(), new Color(ClickGui.getInstance().moduleMainC.getValue().getRed(), ClickGui.getInstance().moduleMainC.getValue().getGreen(), ClickGui.getInstance().moduleMainC.getValue().getBlue(), getInstance().moduleMainC.getValue().getAlpha()).getRGB());
         }
@@ -89,7 +89,14 @@ public abstract class Component
         Gui.drawRect(this.x, this.y + height - 5, this.x + this.width, this.y + this.height - 6, new Color(255, 255, 255, 176).getRGB());
         RenderUtil.drawRect(this.x, (float) this.y + 12.5f, this.x + this.width, (float) (this.y + this.height) + totalItemHeight + 5, 0x77000000);
 
-        Managers.textManager.drawString(this.getName(), (float)this.x + 3.0f, (float)this.y - 4.0f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1);
+        if (ClickGui.getInstance().shader.getValue().booleanValue()) {
+            RenderUtil.drawColorShader(this.x, (int)((double)this.y - 1.5), this.x + this.width, this.y + this.height + (int)totalItemHeight, ColorUtil.toRGBA(new Color(ClickGui.getInstance().shaderC.getValue().getRed(), ClickGui.getInstance().shaderC.getValue().getGreen(), ClickGui.getInstance().shaderC.getValue().getBlue(), ClickGui.getInstance().shaderC.getValue().getAlpha())), ClickGui.getInstance().shaderRadius.getValue());
+        }
+        if (ClickGui.getInstance().categoryTextCenter.getValue().booleanValue()) {
+            Managers.textManager.drawStringWithShadow(this.getName(), (float)this.x + (float)(this.width / 2) - (float)(this.renderer.getStringWidth(this.getName()) / 2), (float)this.y - 4.0f - (float)InfinityLoopGui.getClickGui().getTextOffset(), -1);
+        } else {
+            Managers.textManager.drawStringWithShadow(this.getName(), (float)this.x + 3.0f, (float)this.y - 4.0f - (float)InfinityLoopGui.getClickGui().getTextOffset(), -1);
+        }
 
         if (future) {
             if (!open) {

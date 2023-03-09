@@ -1,6 +1,6 @@
 package me.loop.api.utils.impl.renders.helper;
 
-import me.loop.api.utils.impl.renders.shaders.ShaderUtil;
+import me.loop.client.gui.mainmenu.ShaderUtil;
 import me.loop.api.utils.impl.renders.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;

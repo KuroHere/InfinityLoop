@@ -1,6 +1,6 @@
 package me.loop.asm.mixins;
 
-import me.loop.client.modules.impl.render.Animation;
+import me.loop.client.modules.impl.render.CustomAnimation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
@@ -28,9 +28,9 @@ public abstract class MixinEntityLivingBase
 
     @Inject(method = "getArmSwingAnimationEnd", at = @At("HEAD"), cancellable = true)
     private void yesido(CallbackInfoReturnable<Integer> cir) {
-        if(Animation.getInstance().isOn() && Animation.getInstance().swing.getValue()) {
-            if(isPotionActive(MobEffects.HASTE)) cir.setReturnValue(Animation.getInstance().speed.getValue() - (getActivePotionEffect(MobEffects.HASTE).getAmplifier()));
-            else cir.setReturnValue(isPotionActive(MobEffects.MINING_FATIGUE) ? Animation.getInstance().speed.getValue() + (getActivePotionEffect(MobEffects.MINING_FATIGUE).getAmplifier() + 1) * 2 : Animation.getInstance().speed.getValue());
+        if(CustomAnimation.getInstance().isEnabled() && CustomAnimation.getInstance().swing.getValue()) {
+            if(isPotionActive(MobEffects.HASTE)) cir.setReturnValue(CustomAnimation.getInstance().speed.getValue() - (getActivePotionEffect(MobEffects.HASTE).getAmplifier()));
+            else cir.setReturnValue(isPotionActive(MobEffects.MINING_FATIGUE) ? CustomAnimation.getInstance().speed.getValue() + (getActivePotionEffect(MobEffects.MINING_FATIGUE).getAmplifier() + 1) * 2 : CustomAnimation.getInstance().speed.getValue());
         }
     }
 }

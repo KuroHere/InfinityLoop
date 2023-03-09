@@ -52,6 +52,9 @@ public class InfinityLoop {
 
         textManager.init(true);
 
+        totemPopManager.init();
+        LOGGER.info("TotemPopManager loaded.");
+
         moduleManager.onLoad();
         LOGGER.info("Initialising BetterChat (made by llamalad7)");
         LOGGER.info(MODNAME + "successfully loaded!\n");

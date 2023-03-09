@@ -18,6 +18,8 @@ public class Managers extends InfinityLoop {
 
     /*-----------------    MANAGERS  ---------------------*/
 
+    public static TotemPopManager totemPopManager;
+    public static NotificationManager notificationManager;
     public static CommandManager commandManager;
     public static FriendManager friendManager;
     public static FpsManagement fpsManagement;
@@ -85,6 +87,8 @@ public class Managers extends InfinityLoop {
         }
         /*------------------------------------- */
 
+        totemPopManager = new TotemPopManager();
+        notificationManager = new NotificationManager();
         networkHandler = new NetworkHandler();
         textManager = new TextManager();
         fpsManagement = new FpsManagement();
@@ -126,6 +130,8 @@ public class Managers extends InfinityLoop {
         onUnload();
         Display.setTitle("Minecraft 1.12.2");
 
+        totemPopManager = null;
+        notificationManager = null;
         networkHandler = null;
         fontRenderer = null;
         eventManager = null;

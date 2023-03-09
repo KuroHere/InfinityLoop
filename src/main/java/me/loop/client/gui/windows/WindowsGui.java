@@ -59,25 +59,23 @@ public class WindowsGui extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         ScaledResolution sr = new ScaledResolution(mc);
         int color = new Color(ClickGui.getInstance().moduleEnableC.getValue().getRed(), ClickGui.getInstance().moduleEnableC.getValue().getGreen(), ClickGui.getInstance().moduleEnableC.getValue().getBlue()).getRGB();
-        if (ClickGui.getInstance().isOn()) {
-            if (ClickGui.getInstance().dark.getValue()) {
-                this.drawDefaultBackground();
+
+        if (ClickGui.getInstance().dark.getValue()) {
+            this.drawDefaultBackground();
+        }
+        if (ClickGui.getInstance().blur.getValue()) {
+            RenderUtil.drawBlurryRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight(), ClickGui.getInstance().blurAmount.getValue(), ClickGui.getInstance().blurSize.getValue());
+        }
+        if (ClickGui.getInstance().gradiant.getValue()) {
+            RenderUtil.drawGradientRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue(), 0, new Color(ClickGui.getInstance().moduleEnableC.getValue().getRed(), ClickGui.getInstance().moduleEnableC.getValue().getGreen(), ClickGui.getInstance().moduleEnableC.getValue().getBlue(), ClickGui.getInstance().gradiantAlpha.getValue()).getRGB());
+            if (ClickGui.getInstance().gradiant.getValue() && ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
+                RenderUtil.drawGradientRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue().intValue(), 0, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : color);
             }
-            if (ClickGui.getInstance().blur.getValue()) {
-                RenderUtil.drawBlurryRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight(), ClickGui.getInstance().blurAmount.getValue(), ClickGui.getInstance().blurSize.getValue());
-            }
-            if (ClickGui.getInstance().gradiant.getValue()) {
-                RenderUtil.drawGradientRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue(), 0, new Color(ClickGui.getInstance().moduleEnableC.getValue().getRed(), ClickGui.getInstance().moduleEnableC.getValue().getGreen(), ClickGui.getInstance().moduleEnableC.getValue().getBlue(), ClickGui.getInstance().gradiantAlpha.getValue()).getRGB());
-                if (ClickGui.getInstance().gradiant.getValue() && ClickGui.getInstance().colorSync.getValue() && Colors.getInstance().rainbow.getValue()) {
-                    RenderUtil.drawGradientRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight() + ClickGui.getInstance().gradiantHeight.getValue().intValue(), 0, (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue(), ClickGui.getInstance().hoverAlpha.getValue()).getRGB()) : color);
-                }
-            }
-            if (this.particleSystem != null && ClickGui.getInstance().particles.getValue()) {
-                this.particleSystem.render(mouseX, mouseY);
-            }
-            else {
-                this.particleSystem = new ParticleSystem(new ScaledResolution(this.mc));
-            }
+        }
+        if (this.particleSystem != null && ClickGui.getInstance().particles.getValue()) {
+            this.particleSystem.render(mouseX, mouseY);
+        } else {
+            this.particleSystem = new ParticleSystem(new ScaledResolution(this.mc));
         }
         if(Windows.getInstance().altmanager.getValue())
             WindowAltManager.drawScreen(mouseX,mouseY, partialTicks);

@@ -67,8 +67,8 @@ public class ColorButton extends Button {
         Managers.textManager.drawStringWithShadow(getName(), x + 2.3f, y - 1.7f - (float) InfinityLoopGui.getClickGui().getTextOffset(), -1);
         if (setting.isOpen) {
             drawPicker(setting, (int) x + 4, (int) y + 15, (int) x + 4, (int) y + 103, (int) x + 4, (int) y + 95, mouseX, mouseY);
-            Managers.textManager.drawStringWithShadow(isInsideCopy(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Copy" : "Copy", x + 25f, y + 113, -1);
-            Managers.textManager.drawStringWithShadow(isInsidePaste(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Paste" : "Paste", x + 60f, y + 113, -1);
+            Managers.textManager.drawStringWithShadow(isInsideCopy(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Copy" : "Copy", x + 20f, y + 113, -1);
+            Managers.textManager.drawStringWithShadow(isInsidePaste(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Paste" : "Paste", x + 55f, y + 113, -1);
             setting.setValue(finalColor);
 
         }
@@ -119,11 +119,11 @@ public class ColorButton extends Button {
     }
 
     public boolean isInsideCopy(int mouseX, int mouseY) {
-        return mouseOver((int) x + 25, (int) y + 113, (int) (x + 25) + Managers.textManager.getStringWidth("Copy"), (int) (y + 112) + Managers.textManager.getFontHeight(), mouseX, mouseY);
+        return mouseOver((int) x + 20, (int) y + 113, (int) (x + 25) + Managers.textManager.getStringWidth("Copy"), (int) (y + 112) + Managers.textManager.getFontHeight(), mouseX, mouseY);
     }
 
     public boolean isInsidePaste(int mouseX, int mouseY) {
-        return mouseOver((int) x + 60, (int) y + 113, (int) (x + 60) + Managers.textManager.getStringWidth("Paste"), (int) (y + 112) + Managers.textManager.getFontHeight(), mouseX, mouseY);
+        return mouseOver((int) x + 55, (int) y + 113, (int) (x + 60) + Managers.textManager.getStringWidth("Paste"), (int) (y + 112) + Managers.textManager.getFontHeight(), mouseX, mouseY);
     }
 
     public void drawPicker(Setting setting, int pickerX, int pickerY, int hueSliderX, int hueSliderY, int alphaSliderX, int alphaSliderY, int mouseX, int mouseY) {

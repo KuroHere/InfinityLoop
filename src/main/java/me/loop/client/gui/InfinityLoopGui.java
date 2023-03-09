@@ -116,7 +116,7 @@ public class InfinityLoopGui
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.checkMouseWheel();
         ScaledResolution rs = new ScaledResolution(mc);
-        if (ClickGui.getInstance().isOn()) {
+        if (ClickGui.getInstance().isEnabled()) {
             if(ClickGui.getInstance().dirt.getValue()){
                 this.drawBackground(1);
             }

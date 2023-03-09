@@ -25,6 +25,9 @@ public class CommandManager
         this.commands.add(new FriendCommand());
         this.commands.add(new HelpCommand());
         this.commands.add(new UnloadCommand());
+        this.commands.add(new FakePlayerCommand());
+        this.commands.add(new ToggleCommand());
+        this.commands.add(new PeekCommand());
         this.commands.add(new ReloadSoundCommand());
     }
 

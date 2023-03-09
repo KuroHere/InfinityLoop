@@ -61,7 +61,7 @@ public abstract class MixinRenderEntityItem extends MixinRenderer<EntityItem>{
     @Overwrite
     private int transformModelCount(EntityItem itemIn, double x, double y, double z, float p_177077_8_, IBakedModel p_177077_9_)
     {
-        if (ItemPhysics.INSTANCE.isOn())
+        if (ItemPhysics.INSTANCE.isEnabled())
         {
             final ItemStack itemstack = itemIn.getItem();
             final Item item2 = itemstack.getItem();
@@ -121,7 +121,7 @@ public abstract class MixinRenderEntityItem extends MixinRenderer<EntityItem>{
     @Overwrite
     public void doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        if (ItemPhysics.INSTANCE.isOn())
+        if (ItemPhysics.INSTANCE.isEnabled())
         {
             rotation = (System.nanoTime() - tick) / 3000000.0 * 1.0;
             if (!mc.inGameHasFocus) {

@@ -18,7 +18,6 @@ public class Setting<T> {
     private T max;
     private boolean hasRestriction;
     public boolean isOpen;
-
     private boolean shouldRenderStringName;
     private Predicate<T> visibility;
     private String description;
