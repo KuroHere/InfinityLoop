@@ -45,6 +45,10 @@ public class Client
         }
     }
 
+    public void clearSettings() {
+        this.settings = new ArrayList<Setting>();
+    }
+
     public Setting add(Setting setting) {
         setting.setClient(this);
         settings.add(setting);
@@ -97,11 +101,6 @@ public class Client
     public static boolean fullNullCheck() {
         return Client.mc.player == null || Client.mc.world == null;
     }
-
-    public static boolean spawnCheck() {
-        return (mc.player.ticksExisted > 15);
-    }
-
 
 }
 

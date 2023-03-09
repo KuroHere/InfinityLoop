@@ -4,6 +4,7 @@
   "package": "me.loop.asm",
   "refmap": "mixins.loop.refmap.json",
   "mixins": [
+    "accessors.IGuiScreen",
     "accessors.IEntityRenderer",
     "accessors.IRenderManager",
     "mixins.MixinBlockLiquid",

@@ -19,7 +19,7 @@ public class TimerManager
     }
 
     public void update() {
-        if (this.module != null && this.module.isOn()) {
+        if (this.module != null && this.module.isEnabled()) {
             this.timer = this.module.speed;
         }
         TimerManager.mc.timer.tickLength = 50.0f / (this.timer <= 0.0f ? 0.1f : this.timer);

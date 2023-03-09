@@ -72,19 +72,19 @@ public abstract class MixinMinecraft implements IMinecraft {
         }
     }
 
+    @Inject(method={"displayGuiScreen"}, at={@At(value="HEAD")})
+    private void displayGuiScreenHook(GuiScreen screen, CallbackInfo ci) {
+        if (screen instanceof GuiMainMenu && Managers.moduleManager != null && Managers.moduleManager.getModuleByClass(MainSettings.class).mainMenu.getValue()) {
+            mc.displayGuiScreen(new InfinityLoopMenu());
+        }
+    }
+
     @Inject(method={"runGameLoop"}, at={@At(value="HEAD")})
     private void onRunGameLoopPre(CallbackInfo ci) {
         long currentTime = this.getTime();
         int deltaTime = (int)(currentTime - this.lastFrame);
         this.lastFrame = currentTime;
         RenderUtil.deltaTime = deltaTime;
-    }
-
-    @Inject(method={"displayGuiScreen"}, at={@At(value="HEAD")})
-    private void displayGuiScreenHook(GuiScreen screen, CallbackInfo ci) {
-        if (screen instanceof GuiMainMenu && Managers.moduleManager != null && Managers.moduleManager.getModuleByClass(MainSettings.class).mainMenu.getValue()) {
-            mc.displayGuiScreen(new InfinityLoopMenu());
-        }
     }
 
     @Redirect(method={"createDisplay"}, at=@At(value="INVOKE", target="Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V"))

@@ -23,11 +23,11 @@ public abstract class Module
 
     private final Category category;
     private final String description;
-    public String hudInfo;
     public Setting<Boolean> enabled = this.add(new Setting<Boolean>("Enabled", false));
     public Setting<Boolean> drawn = this.add(new Setting<Boolean>("Drawn", true));
-    public Setting<Bind> bind = this.add(new Setting<Bind>("Keybind", new Bind(-1)));
+    public Setting<Bind> bind = this.add(new Setting<Bind>("Bind", new Bind(-1)));
     public Setting<String> displayName;
+    public String hudInfo;
     public boolean hasListener;
     public boolean alwaysListening;
     public boolean hidden;
@@ -50,55 +50,6 @@ public abstract class Module
         this.animation = new Animation(this);
     }
 
-    public boolean isOn() {
-        return this.enabled.getValue();
-    }
-
-    public boolean isOff() {
-        return this.enabled.getValue() == false;
-    }
-
-    public void setEnabled(boolean enabled) {
-        if (enabled) {
-            this.enable();
-        } else {
-            this.disable();
-        }
-    }
-
-    public void enable() {
-        this.enabled.setValue(true);
-        this.onToggle();
-        this.onEnable();
-
-        Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + ".enabled =" + "\u00a7r" + ChatFormatting.GREEN + " true.", hashCode());
-
-
-        if (this.isOn() && this.hasListener && !this.alwaysListening) {
-            MinecraftForge.EVENT_BUS.register(this);
-        }
-    }
-
-    public void disable() {
-        if (this.hasListener && !this.alwaysListening) {
-            MinecraftForge.EVENT_BUS.unregister(this);
-        }
-        this.enabled.setValue(false);
-        this.onToggle();
-        this.onDisable();
-
-        Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + ".enabled =" + "\u00a7r" + ChatFormatting.RED + " false.", hashCode());
-
-    }
-
-    public void toggle() {
-        ClientEvent event = new ClientEvent(!this.isEnabled() ? 1 : 0, this);
-        MinecraftForge.EVENT_BUS.post(event);
-        if (!event.isCanceled()) {
-            this.setEnabled(!this.isEnabled());
-        }
-    }
-
     public void onEnable() {
     }
 
@@ -106,22 +57,6 @@ public abstract class Module
     }
 
     public void onToggle() {
-    }
-
-    public boolean isDrawn() {
-        return drawn.getValue();
-    }
-
-    public void setDrawn(boolean drawn) {
-        this.drawn.setValue(drawn);
-    }
-
-    public boolean isListening() {
-        return hasListener && isOn();
-    }
-
-    public boolean isSliding() {
-        return this.sliding;
     }
 
     public void onLoad() {
@@ -152,6 +87,53 @@ public abstract class Module
         return null;
     }
 
+    public boolean isOn() {
+        return this.enabled.getValue();
+    }
+
+    public boolean isOff() {
+        return this.enabled.getValue() == false;
+    }
+
+    public void setEnabled(boolean enabled) {
+        if (enabled) {
+            this.enable();
+        } else {
+            this.disable();
+        }
+    }
+
+    public void enable() {
+        this.enabled.setValue(true);
+        this.onToggle();
+        this.onEnable();
+
+        Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + "enabled =" + "\u00a7r" + ChatFormatting.GREEN + " true", hashCode());
+
+        if (this.isOn() && this.hasListener && !this.alwaysListening) {
+            MinecraftForge.EVENT_BUS.register(this);
+        }
+    }
+
+    public void disable() {
+        if (this.hasListener && !this.alwaysListening) {
+            MinecraftForge.EVENT_BUS.unregister(this);
+        }
+        this.enabled.setValue(false);
+        this.onToggle();
+        this.onDisable();
+
+        Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + "enabled =" + "\u00a7r" + ChatFormatting.RED + " false", hashCode());
+
+    }
+
+    public void toggle() {
+        ClientEvent event = new ClientEvent(!this.isEnabled() ? 1 : 0, this);
+        MinecraftForge.EVENT_BUS.post(event);
+        if (!event.isCanceled()) {
+            this.setEnabled(!this.isEnabled());
+        }
+    }
 
     public String getDisplayName() {
         return this.displayName.getValue();
@@ -161,15 +143,27 @@ public abstract class Module
         Module module = Managers.moduleManager.getModuleByDisplayName(name);
         Module originalModule = Managers.moduleManager.getModuleByName(name);
         if (module == null && originalModule == null) {
-            Command.sendMessage(this.getDisplayName() + ", name: " + this.getName() + ", has been renamed to: " + name);
+            Command.sendMessage(this.getDisplayName() + ", Original name: " + this.getName() + ", has been renamed to: " + name);
             this.displayName.setValue(name);
             return;
         }
-        Command.sendMessage(ChatFormatting.RED + "A module of this name already exists.");
+        Command.sendMessage("\u00a7cA module of this name already exists.");
     }
 
     public String getDescription() {
         return this.description;
+    }
+
+    public boolean isSliding() {
+        return this.sliding;
+    }
+
+    public boolean isDrawn() {
+        return this.drawn.getValue();
+    }
+
+    public void setDrawn(boolean drawn) {
+        this.drawn.setValue(drawn);
     }
 
     public Category getCategory() {
@@ -188,6 +182,14 @@ public abstract class Module
         this.bind.setValue(new Bind(key));
     }
 
+    public boolean listening() {
+        return this.hasListener && this.isOn() || this.alwaysListening;
+    }
+
+    public String getFullArrayString() {
+        return this.getDisplayName() + "\u00a78" + (this.getDisplayInfo() != null ? " [\u00a7r" + this.getDisplayInfo() + "\u00a78" + "]" : "");
+    }
+
     public void setUndrawn() {
         this.drawn.setValue(null);
     }
@@ -200,10 +202,6 @@ public abstract class Module
     }
 
     public void onMotionUpdate() {
-    }
-
-    public String getFullArrayString() {
-        return this.getDisplayName() + ChatFormatting.GRAY + (this.getDisplayInfo() != null ? " [" + ChatFormatting.WHITE + this.getDisplayInfo() + ChatFormatting.GRAY + "]" : "");
     }
 
     public class Animation

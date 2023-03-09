@@ -199,7 +199,7 @@ public class ModuleManager
     }
 
     public void onLoad() {
-        this.modules.stream().filter(Module::isListening).forEach(((EventBus) MinecraftForge.EVENT_BUS)::register);
+        this.modules.stream().filter(Module::listening).forEach(((EventBus) MinecraftForge.EVENT_BUS)::register);
         this.modules.forEach(Module::onLoad);
     }
 
