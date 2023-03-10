@@ -86,7 +86,7 @@ public class ModuleButton
             if (chart) {
                 if (module.getSettings().size() > 4)
                     if (ClickGui.getInstance().butonIcon.getValue() == ClickEnum.Icon.OpenColse)
-                        FontRender.drawCentString6(module.isListening() ? gui.close.getValue() : gui.open.getValue(), (float) x + (float) width - 8f, (float) y + 6, -1);
+                        FontRender.drawCentString6(module.listening() ? gui.close.getValue() : gui.open.getValue(), (float) x + (float) width - 8f, (float) y + 6, -1);
             }
             if (bind) {
                 if (!module.getBind().toString().equalsIgnoreCase("none"))
@@ -109,6 +109,8 @@ public class ModuleButton
                         item.drawScreen(mouseX, mouseY, partialTicks);
                         if (item instanceof ColorButton)
                             height += item.getHeight();
+                        if (item instanceof EnumButton && ((EnumButton) item).setting.isOpen)
+                            height += ((EnumButton) item).setting.getValue().getClass().getEnumConstants().length * 15;
                     }
                     item.update();
                 }

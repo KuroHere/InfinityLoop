@@ -38,7 +38,7 @@ public class TextManager
     }
 
     public float drawString(String text, float x, float y, int color, boolean shadow) {
-        if (Managers.moduleManager.isModuleEnabled(FontMod.class)) {
+        if (Managers.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
             if (shadow) {
                 return this.customFont.drawStringWithShadow(text, x, y, color);
             }
@@ -86,14 +86,14 @@ public class TextManager
     }
 
     public int getStringWidth(String text) {
-        if (Managers.moduleManager.isModuleEnabled(FontMod.class)) {
+        if (Managers.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
             return this.customFont.getStringWidth(text);
         }
         return TextManager.mc.fontRenderer.getStringWidth(text);
     }
 
     public int getFontHeight() {
-        if (Managers.moduleManager.isModuleEnabled(FontMod.class)) {
+        if (Managers.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
             String text = "A";
             return this.customFont.getStringHeight(text);
         }

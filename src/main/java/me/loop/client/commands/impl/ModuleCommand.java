@@ -30,7 +30,7 @@ public class ModuleCommand
             for (Category category : Managers.moduleManager.getCategories()) {
                 String modules = category.getName() + ": ";
                 for (Module module1 : Managers.moduleManager.getModulesByCategory(category)) {
-                    modules = modules + (module1.isOn() ? ChatFormatting.GREEN : ChatFormatting.RED) + module1.getName() + ChatFormatting.WHITE + ", ";
+                    modules = modules + (module1.isEnabled() ? ChatFormatting.GREEN : ChatFormatting.RED) + module1.getName() + ChatFormatting.WHITE + ", ";
                 }
                 ModuleCommand.sendMessage(modules);
             }

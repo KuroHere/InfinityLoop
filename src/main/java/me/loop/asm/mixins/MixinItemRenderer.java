@@ -43,15 +43,15 @@ public abstract class MixinItemRenderer {
             float yOffset = 0.0f;
             this.injection = false;
             if (hand == EnumHand.MAIN_HAND) {
-                if (offset.isEnabled()) {
+                if (offset.isOn()) {
                     xOffset = offset.mainX.getValue().floatValue();
                     yOffset = offset.mainY.getValue().floatValue();
                 }
-            } else if (offset.isEnabled()) {
+            } else if (offset.isOn()) {
                 xOffset = offset.offX.getValue().floatValue();
                 yOffset = offset.offY.getValue().floatValue();
             }
-            if (HandChams.getINSTANCE().isEnabled() && hand == EnumHand.MAIN_HAND && stack.isEmpty()) {
+            if (HandChams.getINSTANCE().isOn() && hand == EnumHand.MAIN_HAND && stack.isEmpty()) {
                 if (HandChams.getINSTANCE().mode.getValue().equals(HandChams.RenderMode.WIREFRAME)) {
                     this.renderItemInFirstPerson(player, p_187457_2_, p_187457_3_, hand, p_187457_5_ + xOffset, stack, p_187457_7_ + yOffset);
                 }
@@ -75,9 +75,9 @@ public abstract class MixinItemRenderer {
                 GlStateManager.popAttrib();
                 GlStateManager.popMatrix();
             }
-            if (SmallShield.getINSTANCE().isEnabled() && (!stack.isEmpty || HandChams.getINSTANCE().isDisabled())) {
+            if (SmallShield.getINSTANCE().isOn() && (!stack.isEmpty || HandChams.getINSTANCE().isOff())) {
                 this.renderItemInFirstPerson(player, p_187457_2_, p_187457_3_, hand, p_187457_5_ + xOffset, stack, p_187457_7_ + yOffset);
-            } else if (!stack.isEmpty || HandChams.getINSTANCE().isDisabled()) {
+            } else if (!stack.isEmpty || HandChams.getINSTANCE().isOff()) {
                 this.renderItemInFirstPerson(player, p_187457_2_, p_187457_3_, hand, p_187457_5_, stack, p_187457_7_);
             }
             this.injection = true;

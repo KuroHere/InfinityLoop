@@ -40,7 +40,7 @@ public abstract class MixinEntityRenderer {
 
     @Inject(method = "updateLightmap", at = @At( value = "INVOKE", target = "Lnet/minecraft/client/renderer/texture/DynamicTexture;updateDynamicTexture()V", shift = At.Shift.BEFORE ))
     private void updateTextureHook(float partialTicks, CallbackInfo ci) {
-        if (GameChanger.getInstance().isEnabled() && GameChanger.getInstance().customAmbience.getValue()) {
+        if (GameChanger.getInstance().isOn() && GameChanger.getInstance().customAmbience.getValue()) {
             for (int i = 0; i < this.lightmapColors.length; ++i) {
                 Color ambientColor = new Color(GameChanger.getInstance().ambienceRed.getValue(),GameChanger.getInstance().ambienceGreen.getValue(), GameChanger.getInstance().ambienceBlue.getValue(), GameChanger.getInstance().ambienceAlpha.getValue());
                 int alpha = ambientColor.getAlpha();
@@ -80,12 +80,12 @@ public abstract class MixinEntityRenderer {
 
     @ModifyVariable(method={"orientCamera"}, ordinal=3, at=@At(value="STORE", ordinal=0), require=1)
     public double changeCameraDistanceHook(double range) {
-        return CameraClip.getInstance().isEnabled() && CameraClip.getInstance().extend.getValue() != false ? CameraClip.getInstance().distance.getValue() : range;
+        return CameraClip.getInstance().isOn() && CameraClip.getInstance().extend.getValue() != false ? CameraClip.getInstance().distance.getValue() : range;
     }
 
     @ModifyVariable(method={"orientCamera"}, ordinal=7, at=@At(value="STORE", ordinal=0), require=1)
     public double orientCameraHook(double range) {
-        return CameraClip.getInstance().isEnabled() && CameraClip.getInstance().extend.getValue() != false ? CameraClip.getInstance().distance.getValue() : (CameraClip.getInstance().isEnabled() && CameraClip.getInstance().extend.getValue() == false ? 4.0 : range);
+        return CameraClip.getInstance().isOn() && CameraClip.getInstance().extend.getValue() != false ? CameraClip.getInstance().distance.getValue() : (CameraClip.getInstance().isOn() && CameraClip.getInstance().extend.getValue() == false ? 4.0 : range);
     }
 
     private int[] toRGBAArray(int colorBuffer) {
@@ -105,7 +105,7 @@ public abstract class MixinEntityRenderer {
 
     @Redirect(method = {"getMouseOver"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/WorldClient;getEntitiesInAABBexcluding(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/AxisAlignedBB;Lcom/google/common/base/Predicate;)Ljava/util/List;"))
     public List<Entity> getEntitiesInAABBexcludingHook(WorldClient worldClient, Entity entityIn, AxisAlignedBB boundingBox, com.google.common.base.Predicate<? super Entity> predicate) {
-        if (BlockTweaks.getINSTANCE().isEnabled() && (!BlockTweaks.getINSTANCE().pickaxe.getValue() || this.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe)) {
+        if (BlockTweaks.getINSTANCE().isOn() && (!BlockTweaks.getINSTANCE().pickaxe.getValue() || this.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe)) {
             return new ArrayList<>();
         }
         return worldClient.getEntitiesInAABBexcluding(entityIn, boundingBox, predicate);

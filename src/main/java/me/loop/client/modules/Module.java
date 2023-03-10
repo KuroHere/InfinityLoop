@@ -1,6 +1,5 @@
 package me.loop.client.modules;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import me.loop.api.events.impl.client.ClientEvent;
 import me.loop.api.events.impl.render.Render2DEvent;
 import me.loop.api.events.impl.render.Render3DEvent;
@@ -108,7 +107,7 @@ public abstract class Module
         this.onToggle();
         this.onEnable();
 
-        Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + "enabled =" + "\u00a7r" + ChatFormatting.GREEN + " true", hashCode());
+        //Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + "enabled =" + "\u00a7r" + ChatFormatting.GREEN + " true", hashCode());
 
         if (this.isOn() && this.hasListener && !this.alwaysListening) {
             MinecraftForge.EVENT_BUS.register(this);
@@ -123,7 +122,7 @@ public abstract class Module
         this.onToggle();
         this.onDisable();
 
-        Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + "enabled =" + "\u00a7r" + ChatFormatting.RED + " false", hashCode());
+        //Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + "enabled =" + "\u00a7r" + ChatFormatting.RED + " false", hashCode());
 
     }
 

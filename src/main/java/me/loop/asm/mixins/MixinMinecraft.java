@@ -13,6 +13,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.crash.CrashReport;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import javax.annotation.Nullable;
 
@@ -40,19 +42,31 @@ public abstract class MixinMinecraft implements IMinecraft {
     @Shadow
     public abstract void displayGuiScreen(@Nullable GuiScreen var1);
 
+    @Inject(method = {"runTickKeyboard"}, at = {@At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", ordinal = 0)}, locals = LocalCapture.CAPTURE_FAILSOFT)
+    private void onRunTickKeyboard(CallbackInfo ci, int i) {
+        if (Keyboard.getEventKeyState() && Managers.moduleManager != null) {
+            Managers.moduleManager.onKeyPressed(i);
+        }
+    }
+
     @Inject(method = {"shutdownMinecraftApplet"}, at = {@At(value = "HEAD")})
     private void stopClient(CallbackInfo callbackInfo) {
         this.unload();
     }
 
     @Redirect(method = {"run"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayCrashReport(Lnet/minecraft/crash/CrashReport;)V"))
-    public void displayCrashReport(Minecraft minecraft, CrashReport crashReport) {
+    public void displayCrashReportHook(Minecraft minecraft, CrashReport crashReport) {
+        this.unload();
+    }
+
+    @Inject(method = {"shutdown"}, at = {@At(value = "HEAD")})
+    public void shutdownHook(CallbackInfo info) {
         this.unload();
     }
 
     private void unload() {
         Managers.LOGGER.info("Initiated client shutdown!");
-        Managers.unload(false);
+        Managers.onUnload();
         Managers.LOGGER.info("Finished client shutdown!");
     }
 

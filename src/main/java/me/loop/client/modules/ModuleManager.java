@@ -109,9 +109,6 @@ public class ModuleManager
             module.animation.start();
         }
     }
-    public <T extends Module> T getModuleT(Class<T> clazz) {
-        return (T)((Module)this.modules.stream().filter(module -> module.getClass() == clazz).map(module -> module).findFirst().orElse(null));
-    }
 
     public Module getModuleByName(String name) {
         for (Module module : this.modules) {
@@ -162,9 +159,9 @@ public class ModuleManager
         return module != null && module.isOn();
     }
 
-    public boolean isModuleEnabled(Class clazz) {
-        Object module = this.getModuleByClass(clazz);
-        return module != null && ((Module) module).isOn();
+    public boolean isModuleEnabled(Class<Module> clazz) {
+        Module module = this.getModuleByClass(clazz);
+        return module != null && module.isOn();
     }
 
     public Module getModuleByDisplayName(String displayName) {
@@ -250,7 +247,7 @@ public class ModuleManager
         if (eventKey == 0 || !Keyboard.getEventKeyState() || ModuleManager.mc.currentScreen instanceof InfinityLoopGui) {
             return;
         }
-        modules.forEach(module -> {
+        this.modules.forEach(module -> {
             if (module.getBind().getKey() == eventKey) {
                 module.toggle();
             }
