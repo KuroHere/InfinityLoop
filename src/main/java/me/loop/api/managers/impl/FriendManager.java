@@ -1,8 +1,8 @@
 package me.loop.api.managers.impl;
 
 import me.loop.api.utils.LoopUtil;
-import me.loop.client.Client;
-import me.loop.client.commands.Command;
+import me.loop.feature.Feature;
+import me.loop.feature.commands.Command;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.io.*;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FriendManager
-        extends Client {
+        extends Feature {
     public static List<String> friends = new ArrayList<>();
 
     public FriendManager() {

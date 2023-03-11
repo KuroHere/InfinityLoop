@@ -3,7 +3,7 @@ package me.loop.asm.mixins;
 import me.loop.api.events.impl.ChatEvent;
 import me.loop.api.events.impl.player.EventMotionUpdate;
 import me.loop.api.utils.impl.Util;
-import me.loop.client.modules.impl.player.AutoDoSmth;
+import me.loop.feature.modules.impl.player.AutoDoSmth;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;

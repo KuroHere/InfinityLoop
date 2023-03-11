@@ -3,7 +3,7 @@ package me.loop.api.utils;
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
 import me.loop.api.managers.Managers;
-import me.loop.client.modules.impl.client.MainSettings;
+import me.loop.feature.modules.impl.client.MainSettings;
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

@@ -1,7 +1,5 @@
 package me.loop.api.events;
 
-import me.loop.InfinityLoop;
-
 public abstract class Event
         extends net.minecraftforge.fml.common.eventhandler.Event {
     private int stage;
@@ -21,13 +19,5 @@ public abstract class Event
         this.stage = stage;
     }
 
-    public void cancel() {
-        try {
-            setCanceled(true);
-
-        } catch (Exception e) {
-            InfinityLoop.LOGGER.info(getClass().toString() + " Isn't cancellable!");
-        }
-    }
 }
 

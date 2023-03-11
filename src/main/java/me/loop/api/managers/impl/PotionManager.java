@@ -1,7 +1,7 @@
 package me.loop.api.managers.impl;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.loop.client.Client;
+import me.loop.feature.Feature;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PotionManager
-        extends Client {
+        extends Feature {
     private final Map<EntityPlayer, PotionList> potions = new ConcurrentHashMap<EntityPlayer, PotionList>();
 
     public List<PotionEffect> getOwnPotions() {

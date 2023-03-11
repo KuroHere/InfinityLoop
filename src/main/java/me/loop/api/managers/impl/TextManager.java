@@ -3,16 +3,16 @@ package me.loop.api.managers.impl;
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.maths.MathUtil;
 import me.loop.api.utils.impl.worlds.Timer;
-import me.loop.client.Client;
-import me.loop.client.gui.font.CustomFont;
-import me.loop.client.modules.impl.client.FontMod;
+import me.loop.feature.Feature;
+import me.loop.feature.gui.font.CustomFont;
+import me.loop.feature.modules.impl.client.FontMod;
 import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
 
 
 public class TextManager
-        extends Client {
+        extends Feature {
     private final Timer idleTimer = new Timer();
     public int scaledWidth;
     public int scaledHeight;

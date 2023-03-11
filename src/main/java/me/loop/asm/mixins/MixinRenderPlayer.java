@@ -1,6 +1,6 @@
 package me.loop.asm.mixins;
 
-import me.loop.client.modules.impl.client.GameChanger;
+import me.loop.feature.modules.impl.client.GameChanger;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;

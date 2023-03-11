@@ -1,0 +1,26 @@
+package me.loop.feature.modules.impl.client.ClickGui;
+
+public class ClickEnum {
+
+    public enum Settings {
+        Main,
+        Color,
+        Misc,
+        BackGround,
+    }
+
+    public enum Icon {
+        None, ShowBind, OpenColse;
+    }
+
+    public enum SliderType {
+        Fill,
+        Line;
+    }
+
+    public enum Mode {
+        Frame,
+        Folow,
+        None
+    }
+}

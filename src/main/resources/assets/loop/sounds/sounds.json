@@ -1,0 +1,12 @@
+{
+  "csgo_hitmarker": {
+    "category": "player",
+    "subtitle": "csgo_hitmarker",
+    "sounds": [{ "name": "loop:hit1.ogg", "stream": false }]
+  },
+  "cod_hitmarker": {
+    "category": "player",
+    "subtitle": "cod_hitmarker",
+    "sounds": [{ "name": "loop:hitmarker.ogg", "stream": false }]
+  }
+}

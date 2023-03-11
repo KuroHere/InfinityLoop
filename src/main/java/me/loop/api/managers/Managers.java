@@ -3,8 +3,8 @@ package me.loop.api.managers;
 import me.loop.InfinityLoop;
 import me.loop.api.managers.impl.*;
 import me.loop.api.utils.impl.renders.helper.ffp.NetworkHandler;
-import me.loop.client.gui.font.CFontRenderer;
-import me.loop.client.modules.ModuleManager;
+import me.loop.feature.gui.font.CFontRenderer;
+import me.loop.feature.modules.ModuleManager;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;

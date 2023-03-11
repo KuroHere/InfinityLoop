@@ -1,6 +1,6 @@
 package me.loop.asm.mixins;
 
-import me.loop.client.modules.impl.render.Skeleton;
+import me.loop.feature.modules.impl.render.Skeleton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.entity.Entity;

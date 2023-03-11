@@ -1,6 +1,6 @@
 package me.loop.asm.mixins;
 
-import me.loop.client.modules.impl.misc.ToolTips;
+import me.loop.feature.modules.impl.misc.ToolTips;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;

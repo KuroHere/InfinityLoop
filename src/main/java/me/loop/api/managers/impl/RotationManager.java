@@ -1,14 +1,14 @@
 package me.loop.api.managers.impl;
 
 import me.loop.api.utils.impl.RotationUtil;
-import me.loop.client.Client;
+import me.loop.feature.Feature;
 import me.loop.api.utils.impl.maths.MathUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 public class RotationManager
-        extends Client {
+        extends Feature {
     private float yaw;
     private float pitch;
 

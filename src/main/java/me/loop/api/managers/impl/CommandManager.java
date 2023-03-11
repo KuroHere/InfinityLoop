@@ -1,15 +1,15 @@
 package me.loop.api.managers.impl;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.loop.client.Client;
-import me.loop.client.commands.Command;
-import me.loop.client.commands.impl.*;
+import me.loop.feature.Feature;
+import me.loop.feature.commands.Command;
+import me.loop.feature.commands.impl.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class CommandManager
-        extends Client {
+        extends Feature {
     private final ArrayList<Command> commands = new ArrayList();
     private String prefix = ".";
 

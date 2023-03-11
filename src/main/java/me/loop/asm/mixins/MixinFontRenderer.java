@@ -1,8 +1,8 @@
 package me.loop.asm.mixins;
 
 import me.loop.api.managers.Managers;
-import me.loop.client.modules.impl.client.FontMod;
-import me.loop.client.modules.impl.client.HUD;
+import me.loop.feature.modules.impl.client.FontMod;
+import me.loop.feature.modules.impl.client.HUD;
 import net.minecraft.client.gui.FontRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
