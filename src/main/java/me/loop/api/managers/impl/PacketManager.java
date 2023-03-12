@@ -1,13 +1,13 @@
 package me.loop.api.managers.impl;
 
-import me.loop.feature.Feature;
+import me.loop.client.Client;
 import net.minecraft.network.Packet;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PacketManager
-        extends Feature {
+        extends Client {
     private final List<Packet<?>> noEventPackets = new ArrayList();
 
     public void sendPacketNoEvent(Packet<?> packet) {

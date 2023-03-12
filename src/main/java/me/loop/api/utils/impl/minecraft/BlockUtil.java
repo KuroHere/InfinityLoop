@@ -6,7 +6,7 @@ import me.loop.api.utils.impl.EntityUtil;
 import me.loop.api.utils.impl.RotationUtil;
 import me.loop.api.utils.impl.Util;
 import me.loop.api.utils.impl.maths.MathUtil;
-import me.loop.feature.commands.Command;
+import me.loop.client.commands.Command;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

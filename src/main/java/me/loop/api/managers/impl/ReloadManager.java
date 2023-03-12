@@ -1,8 +1,8 @@
 package me.loop.api.managers.impl;
 
 import me.loop.InfinityLoop;
-import me.loop.feature.Feature;
-import me.loop.feature.commands.Command;
+import me.loop.client.Client;
+import me.loop.client.commands.Command;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import me.loop.api.events.impl.network.EventPacket;
 import net.minecraft.network.play.client.CPacketChatMessage;
@@ -10,7 +10,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ReloadManager
-        extends Feature {
+        extends Client {
     public String prefix;
 
     public void init(String prefix) {

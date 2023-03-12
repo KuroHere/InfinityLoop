@@ -1,11 +1,11 @@
 package me.loop.api.managers.impl;
 
 import me.loop.api.managers.Managers;
-import me.loop.feature.Feature;
-import me.loop.feature.modules.impl.movement.TimerSpeed;
+import me.loop.client.Client;
+import me.loop.client.modules.impl.movement.TimerSpeed;
 
 public class TimerManager
-        extends Feature {
+        extends Client {
     private float timer = 1.0f;
     private TimerSpeed module;
 

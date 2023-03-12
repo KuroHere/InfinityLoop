@@ -1,13 +1,13 @@
 package me.loop.api.managers.impl;
 
-import me.loop.feature.Feature;
+import me.loop.client.Client;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.client.CPacketPlayer;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class PositionManager extends Feature {
+public class PositionManager extends Client {
     private final Map<EntityPlayer, PotionManager.PotionList> potions;
 
     public PositionManager() {

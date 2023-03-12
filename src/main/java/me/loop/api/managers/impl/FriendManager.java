@@ -1,8 +1,8 @@
 package me.loop.api.managers.impl;
 
 import me.loop.api.utils.LoopUtil;
-import me.loop.feature.Feature;
-import me.loop.feature.commands.Command;
+import me.loop.client.Client;
+import me.loop.client.commands.Command;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.io.*;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FriendManager
-        extends Feature {
+        extends Client {
     public static List<String> friends = new ArrayList<>();
 
     public FriendManager() {
@@ -38,7 +38,7 @@ public class FriendManager
 
     public static void loadFriends(){
         try {
-            File file = new File("me/client/misc/friends.txt");
+            File file = new File("loop/misc/friends.txt");
 
             if (file.exists()) {
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -52,7 +52,7 @@ public class FriendManager
     }
 
     public static void saveFriends() {
-        File file = new File("me/client/misc/friends.txt");
+        File file = new File("loop/misc/friends.txt");
         try {
             file.createNewFile();
         } catch (Exception ignored){

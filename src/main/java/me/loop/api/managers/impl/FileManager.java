@@ -1,8 +1,8 @@
 package me.loop.api.managers.impl;
 
 import me.loop.api.managers.Managers;
-import me.loop.feature.Feature;
-import me.loop.feature.modules.Category;
+import me.loop.client.Client;
+import me.loop.client.modules.Category;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FileManager
-        extends Feature {
+        extends Client {
     private final Path base = this.getMkDirectory(this.getRoot(), "loop");
     private final Path config = this.getMkDirectory(this.base, "configs");
 

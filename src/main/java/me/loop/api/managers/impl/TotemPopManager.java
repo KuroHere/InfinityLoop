@@ -2,10 +2,10 @@ package me.loop.api.managers.impl;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import me.loop.api.managers.Managers;
-import me.loop.feature.Feature;
-import me.loop.feature.commands.Command;
-import me.loop.feature.modules.impl.client.ModuleTools;
-import me.loop.feature.modules.impl.misc.Notifications;
+import me.loop.client.Client;
+import me.loop.client.commands.Command;
+import me.loop.client.modules.impl.client.ModuleTools;
+import me.loop.client.modules.impl.misc.Notifications;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.HashSet;
@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TotemPopManager
-        extends Feature {
+        extends Client {
     private final Set<EntityPlayer> toAnnounce = new HashSet<>();
     private Notifications notifications;
     private Map<EntityPlayer, Integer> poplist = new ConcurrentHashMap<>();

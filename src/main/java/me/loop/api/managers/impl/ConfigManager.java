@@ -2,14 +2,14 @@ package me.loop.api.managers.impl;
 
 import com.google.gson.*;
 import me.loop.api.managers.Managers;
+import me.loop.api.modules.Module;
+import me.loop.api.modules.ModuleManager;
 import me.loop.api.utils.impl.Util;
-import me.loop.feature.commands.Command;
-import me.loop.feature.modules.Module;
-import me.loop.feature.modules.ModuleManager;
-import me.loop.feature.modules.impl.render.Search;
-import me.loop.feature.modules.settings.Setting;
-import me.loop.feature.modules.settings.impl.Bind;
-import me.loop.feature.modules.settings.impl.EnumConverter;
+import me.loop.client.commands.Command;
+import me.loop.client.modules.impl.render.Search;
+import me.loop.client.modules.settings.Setting;
+import me.loop.client.modules.settings.impl.Bind;
+import me.loop.client.modules.settings.impl.EnumConverter;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 
@@ -201,8 +201,8 @@ public class ConfigManager implements Util {
                             try {
                                 EnumConverter converter = new EnumConverter(((Enum) setting2.getValue()).getClass());
                                 Enum value = converter.doBackward(mobject.getAsJsonPrimitive(setting2.getName()));
-                                setting2.setValue((value == null) ? setting2.getDefaultValue() : value);
-                            } catch (Exception ignored) {
+                                setting2.setValue(value == null ? setting2.getDefaultValue() : value);
+                            } catch (Exception e) {
                             }
                             break;
                         }

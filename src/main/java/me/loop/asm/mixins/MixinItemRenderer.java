@@ -3,9 +3,9 @@ package me.loop.asm.mixins;
 import me.loop.api.events.impl.player.TransformFirstPersonEvent;
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.ColorUtil;
-import me.loop.feature.modules.impl.client.Colors;
-import me.loop.feature.modules.impl.render.HandChams;
-import me.loop.feature.modules.impl.render.SmallShield;
+import me.loop.client.modules.impl.client.Colors;
+import me.loop.client.modules.impl.render.HandChams;
+import me.loop.client.modules.impl.render.SmallShield;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -30,9 +30,6 @@ public abstract class MixinItemRenderer {
 
     @Shadow
     public abstract void renderItemInFirstPerson(AbstractClientPlayer var1, float var2, float var3, EnumHand var4, float var5, ItemStack var6, float var7);
-
-    @Shadow
-    protected abstract void renderArmFirstPerson(float var1, float var2, EnumHandSide var3);
 
     @Inject(method = {"renderItemInFirstPerson(Lnet/minecraft/client/entity/AbstractClientPlayer;FFLnet/minecraft/util/EnumHand;FLnet/minecraft/item/ItemStack;F)V"}, at = {@At(value = "HEAD")}, cancellable = true)
     public void renderItemInFirstPersonHook(AbstractClientPlayer player, float p_187457_2_, float p_187457_3_, EnumHand hand, float p_187457_5_, ItemStack stack, float p_187457_7_, CallbackInfo info) {

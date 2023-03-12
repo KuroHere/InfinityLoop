@@ -3,9 +3,9 @@ package me.loop.asm.mixins;
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.minecraft.IMinecraft;
 import me.loop.api.utils.impl.renders.RenderUtil;
-import me.loop.feature.gui.mainmenu.InfinityLoopMenu;
-import me.loop.feature.modules.impl.client.MainSettings;
-import me.loop.feature.modules.impl.player.MultiTask;
+import me.loop.client.gui.mainmenu.InfinityLoopMenu;
+import me.loop.client.modules.impl.client.MainSettings;
+import me.loop.client.modules.impl.player.MultiTask;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -38,9 +38,6 @@ public abstract class MixinMinecraft implements IMinecraft {
     public long getTime() {
         return Sys.getTime() * 1000L / Sys.getTimerResolution();
     }
-
-    @Shadow
-    public abstract void displayGuiScreen(@Nullable GuiScreen var1);
 
     @Inject(method = {"runTickKeyboard"}, at = {@At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", ordinal = 0)}, locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onRunTickKeyboard(CallbackInfo ci, int i) {

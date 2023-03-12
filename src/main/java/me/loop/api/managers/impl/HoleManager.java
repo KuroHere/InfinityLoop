@@ -1,7 +1,7 @@
 package me.loop.api.managers.impl;
 
 import me.loop.api.utils.impl.minecraft.BlockUtil;
-import me.loop.feature.Feature;
+import me.loop.client.Client;
 import me.loop.api.utils.impl.EntityUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class HoleManager
-        extends Feature {
+        extends Client {
     private static final BlockPos[] surroundOffset = BlockUtil.toBlockPos(EntityUtil.getOffsets(0, true));
     private final List<BlockPos> midSafety = new ArrayList<BlockPos>();
     private List<BlockPos> holes = new ArrayList<BlockPos>();

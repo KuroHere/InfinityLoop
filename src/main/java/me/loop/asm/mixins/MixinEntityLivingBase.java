@@ -1,6 +1,6 @@
 package me.loop.asm.mixins;
 
-import me.loop.feature.modules.impl.render.CustomAnimation;
+import me.loop.client.modules.impl.render.CustomAnimation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;

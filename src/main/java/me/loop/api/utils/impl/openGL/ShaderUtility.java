@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL20.GL_LINK_STATUS;
 
 
 public class ShaderUtility implements MixinInterface {
-    public static ShaderUtility shader = new ShaderUtility("me/client/shaders/white.frag");
+    public static ShaderUtility shader = new ShaderUtility("loop/shaders/white.frag");
     private final int programID;
 
     public ShaderUtility(String fragmentShaderLoc, String vertexShaderLoc) {

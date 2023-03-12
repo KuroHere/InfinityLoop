@@ -12,10 +12,10 @@ import me.loop.api.events.impl.render.Render3DEvent;
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.GLUProjection;
 import me.loop.api.utils.impl.worlds.Timer;
-import me.loop.feature.Feature;
-import me.loop.feature.commands.Command;
-import me.loop.feature.modules.impl.client.ClickGui.ClickGui;
-import me.loop.feature.modules.impl.client.HUD;
+import me.loop.client.Client;
+import me.loop.client.commands.Command;
+import me.loop.client.modules.impl.client.ClickGui.ClickGui;
+import me.loop.client.modules.impl.client.HUD;
 import me.zero.alpine.fork.listener.Listenable;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.client.Minecraft;
@@ -47,7 +47,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class EventManager extends Feature {
+public class EventManager extends Client {
     public static float visualYaw, visualPitch, prevVisualYaw, prevVisualPitch;
     private final Map<Listenable, List<Listener>> SUBSCRIPTION_CACHE;
     private final Map<Class<?>, List<Listener>> SUBSCRIPTION_MAP;
@@ -151,7 +151,7 @@ public class EventManager extends Feature {
                 Managers.positionManager.onTotemPop(player);
             }
         }
-        else if (event.getPacket() instanceof SPacketPlayerListItem && !Feature.fullNullCheck() && this.logoutTimer.passedS(1.0)) {
+        else if (event.getPacket() instanceof SPacketPlayerListItem && !Client.fullNullCheck() && this.logoutTimer.passedS(1.0)) {
             final SPacketPlayerListItem packet = (SPacketPlayerListItem) event.getPacket();
             if (!SPacketPlayerListItem.Action.ADD_PLAYER.equals(packet.getAction()) && !SPacketPlayerListItem.Action.REMOVE_PLAYER.equals(packet.getAction())) {
                 return;
@@ -193,7 +193,7 @@ public class EventManager extends Feature {
     public void onWorldRender(RenderWorldLastEvent event) {
         if (event.isCanceled())
             return;
-        mc.profiler.startSection("me/client");
+        mc.profiler.startSection("loop");
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
         GlStateManager.disableAlpha();

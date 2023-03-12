@@ -3,7 +3,7 @@ package me.loop.api.utils;
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
 import me.loop.api.managers.Managers;
-import me.loop.feature.modules.impl.client.MainSettings;
+import me.loop.client.modules.impl.client.MainSettings;
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -94,7 +94,7 @@ public class LoopUtil {
                     e.printStackTrace();
                 }
                 try {
-                    ImageIO.write(img, "png", new File("me/client/temp/heads/" + nickname + ".png"));
+                    ImageIO.write(img, "png", new File("loop/temp/heads/" + nickname + ".png"));
                 } catch (IOException e) {
                     System.out.println("Couldn't create/send the output image.");
                     e.printStackTrace();
@@ -156,7 +156,7 @@ public class LoopUtil {
                     e.printStackTrace();
                 }
                 try {
-                    ImageIO.write(img, "png", new File("me/client/temp/skins/" + nickname + ".png"));
+                    ImageIO.write(img, "png", new File("loop/temp/skins/" + nickname + ".png"));
                 } catch (IOException e) {
                     System.out.println("Couldn't create/send the output image.");
                     e.printStackTrace();
@@ -189,7 +189,7 @@ public class LoopUtil {
             return;
         (new Thread(() -> {
             try {
-                File tmp = new File("me/client" + File.separator + "temp" + File.separator +   "capes");
+                File tmp = new File("loop" + File.separator + "temp" + File.separator +   "capes");
                 if (!tmp.exists()) {
                     tmp.mkdirs();
                 }
@@ -202,7 +202,7 @@ public class LoopUtil {
                     String cape = colune.split(":")[1];
                     URL capeUrl = new URL("https://raw.githubusercontent.com/Pan4ur/cape/main/" + cape + ".png");
                     BufferedImage capeImage = ImageIO.read(capeUrl);
-                    ImageIO.write(capeImage, "png", new File("me/client/temp/capes/" + name + ".png"));
+                    ImageIO.write(capeImage, "png", new File("loop/temp/capes/" + name + ".png"));
                     userCapes.add(new Pair<>(name, capeImage));
                 }
             } catch (Exception ignored) {

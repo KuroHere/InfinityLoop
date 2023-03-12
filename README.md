@@ -23,8 +23,8 @@
 
 ## A couple of words to say:
 
-- This is oyvey paste, meme feature was made by me(**Kuro_Here**).
-- 90% code is from other opensrc feature.
-- Don't expect too much from this feature.
+- This is oyvey paste, meme client was made by me(**Kuro_Here**).
+- 90% code is from other opensrc client.
+- Don't expect too much from this client.
 
 `fck u guys`

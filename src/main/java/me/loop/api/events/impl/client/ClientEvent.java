@@ -1,19 +1,19 @@
 package me.loop.api.events.impl.client;
 
 import me.loop.api.events.Event;
-import me.loop.feature.Feature;
-import me.loop.feature.modules.settings.Setting;
+import me.loop.client.Client;
+import me.loop.client.modules.settings.Setting;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 @Cancelable
 public class ClientEvent
         extends Event {
-    private Feature feature;
+    private Client client;
     private Setting setting;
 
-    public ClientEvent(int stage, Feature feature) {
+    public ClientEvent(int stage, Client client) {
         super(stage);
-        this.feature = feature;
+        this.client = client;
     }
 
     public ClientEvent(Setting setting) {
@@ -21,8 +21,8 @@ public class ClientEvent
         this.setting = setting;
     }
 
-    public Feature getFeature() {
-        return this.feature;
+    public Client getFeature() {
+        return this.client;
     }
 
     public Setting getSetting() {

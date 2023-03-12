@@ -1,8 +1,8 @@
 package me.loop.api.managers.impl;
 
 import me.loop.api.utils.impl.renders.ColorUtil;
-import me.loop.feature.gui.click.Component;
-import me.loop.feature.modules.impl.client.Colors;
+import me.loop.client.gui.click.Component;
+import me.loop.client.modules.impl.client.Colors;
 
 import java.awt.*;
 

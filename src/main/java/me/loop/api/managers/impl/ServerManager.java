@@ -1,15 +1,15 @@
 package me.loop.api.managers.impl;
 
 import me.loop.api.utils.impl.worlds.Timer;
-import me.loop.feature.Feature;
-import me.loop.feature.modules.impl.client.HUD;
+import me.loop.client.Client;
+import me.loop.client.modules.impl.client.HUD;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Objects;
 
 public class ServerManager
-        extends Feature {
+        extends Client {
     private final float[] tpsCounts = new float[10];
     private final DecimalFormat format = new DecimalFormat("##.00#");
     private final Timer timer = new Timer();

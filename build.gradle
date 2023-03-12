@@ -15,12 +15,14 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
         classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+        classpath 'com.peterabeles.gversion:com.peterabeles.gversion.gradle.plugin:1.5.0'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'com.peterabeles.gversion'
 apply plugin: 'java'
 
 compileJava.options.encoding = 'UTF-8'
@@ -35,9 +37,9 @@ compileJava {
 }
 
 minecraft {
-    version = '1.12.2-14.23.5.2847'
+    version = project.forgeVersion
     runDir = 'run'
-    mappings = 'stable_39'
+    mappings = project.mcpVersion
     coreMod = 'me.loop.asm.mixin.LoopMixinLoader'
     makeObfSourceJar = false
 }
