@@ -1,6 +1,6 @@
 package me.loop.api.managers.impl;
 
-import me.loop.client.Client;
+import me.loop.mods.Mod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
@@ -8,7 +8,7 @@ import net.minecraft.util.math.MathHelper;
 import java.util.HashMap;
 
 public class SpeedManager
-        extends Client {
+        extends Mod {
     public static final double LAST_JUMP_INFO_DURATION_DEFAULT = 3.0;
     public static boolean didJumpThisTick = false;
     public static boolean isJumping = false;

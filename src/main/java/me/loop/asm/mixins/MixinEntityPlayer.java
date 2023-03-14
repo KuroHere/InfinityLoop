@@ -2,7 +2,7 @@ package me.loop.asm.mixins;
 
 import com.mojang.authlib.GameProfile;
 import me.loop.api.managers.Managers;
-import me.loop.client.modules.impl.player.TpsSync;
+import me.loop.mods.modules.impl.player.TpsSync;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;

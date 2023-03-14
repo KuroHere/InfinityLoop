@@ -3,16 +3,16 @@ package me.loop.api.managers.impl;
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.maths.MathUtil;
 import me.loop.api.utils.impl.worlds.Timer;
-import me.loop.client.Client;
-import me.loop.client.gui.font.CustomFont;
-import me.loop.client.modules.impl.client.FontMod;
+import me.loop.mods.Mod;
+import me.loop.mods.gui.font.CustomFont;
+import me.loop.mods.modules.impl.client.FontMod;
 import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
 
 
 public class TextManager
-        extends Client {
+        extends Mod {
     private final Timer idleTimer = new Timer();
     public int scaledWidth;
     public int scaledHeight;
@@ -38,7 +38,7 @@ public class TextManager
     }
 
     public float drawString(String text, float x, float y, int color, boolean shadow) {
-        if (Managers.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
+        if (Managers.moduleManager.isModuleEnabled(FontMod.INSTANCE.getName())) {
             if (shadow) {
                 return this.customFont.drawStringWithShadow(text, x, y, color);
             }
@@ -86,14 +86,14 @@ public class TextManager
     }
 
     public int getStringWidth(String text) {
-        if (Managers.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
+        if (Managers.moduleManager.isModuleEnabled(FontMod.INSTANCE.getName())) {
             return this.customFont.getStringWidth(text);
         }
         return TextManager.mc.fontRenderer.getStringWidth(text);
     }
 
     public int getFontHeight() {
-        if (Managers.moduleManager.isModuleEnabled(FontMod.getInstance().getName())) {
+        if (Managers.moduleManager.isModuleEnabled(FontMod.INSTANCE.getName())) {
             String text = "A";
             return this.customFont.getStringHeight(text);
         }

@@ -1,42 +1,23 @@
 package me.loop.api.managers.impl;
 
-import me.loop.api.managers.Managers;
-import me.loop.client.Client;
-import me.loop.client.modules.impl.movement.TimerSpeed;
+import me.loop.mods.Mod;
 
 public class TimerManager
-        extends Client {
+        extends Mod {
     private float timer = 1.0f;
-    private TimerSpeed module;
 
-    public void init() {
-        this.module = Managers.moduleManager.getModuleByClass(TimerSpeed.class);
+    public void set(float factor) {
+
+        if (factor < 0.1f) factor = 0.1f;
+
+        timer = factor;
     }
 
-    public void unload() {
-        this.timer = 1.0f;
-        TimerManager.mc.timer.tickLength = 50.0f;
-    }
-
-    public void update() {
-        if (this.module != null && this.module.isEnabled()) {
-            this.timer = this.module.speed;
-        }
-        TimerManager.mc.timer.tickLength = 50.0f / (this.timer <= 0.0f ? 0.1f : this.timer);
-    }
-
-    public void setTimer(float timer) {
-        if (timer > 0.0f) {
-            this.timer = timer;
-        }
-    }
-
-    public float getTimer() {
-        return this.timer;
-    }
-
-    @Override
     public void reset() {
-        this.timer = 1.0f;
+        timer = 1;
+    }
+
+    public float get() {
+        return timer;
     }
 }

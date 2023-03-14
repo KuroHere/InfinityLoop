@@ -2,14 +2,13 @@ package me.loop.api.managers.impl;
 
 import com.google.gson.*;
 import me.loop.api.managers.Managers;
-import me.loop.api.modules.Module;
-import me.loop.api.modules.ModuleManager;
+import me.loop.mods.modules.Module;
 import me.loop.api.utils.impl.Util;
-import me.loop.client.commands.Command;
-import me.loop.client.modules.impl.render.Search;
-import me.loop.client.modules.settings.Setting;
-import me.loop.client.modules.settings.impl.Bind;
-import me.loop.client.modules.settings.impl.EnumConverter;
+import me.loop.mods.commands.Command;
+import me.loop.mods.modules.impl.render.Search;
+import me.loop.mods.settings.Setting;
+import me.loop.mods.settings.Bind;
+import me.loop.mods.settings.EnumConverter;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 
@@ -33,16 +32,6 @@ public class ConfigManager implements Util {
     public static File DiscordEmbeds = new File(TempFolder, "embeds");
     public static File MiscFolder = new File(MainFolder, "misc");
     public static File KitsFolder = new File(MiscFolder, "kits");
-    //friends
-    //enemies
-    //webhook
-    //rpc
-    //autoEz
-    //currentcfg
-    //macro
-    //search
-    //alts
-
 
     public static void init() {
         if (!MainFolder.exists()) MainFolder.mkdirs();
@@ -72,10 +61,9 @@ public class ConfigManager implements Util {
             save(currentConfig);
         }
 
-        Managers.moduleManager.onUnload();
         Managers.moduleManager.onUnloadPost();
         load(file);
-        Managers.moduleManager.onLoad();
+        Managers.moduleManager.onUnloadPre();
 
     }
 

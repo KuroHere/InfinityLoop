@@ -7,6 +7,7 @@
     "accessors.IGuiScreen",
     "accessors.IEntityRenderer",
     "accessors.IRenderManager",
+    "mixins.MixinGuiChat",
     "mixins.MixinBlockLiquid",
     "mixins.MixinEntityPlayer",
     "mixins.MixinEntityPlayerSP",

@@ -1,7 +1,7 @@
 package me.loop.api.utils.impl.renders.helper.dism;
 
 import me.loop.api.managers.Managers;
-import me.loop.client.modules.impl.render.Dismemberment;
+import me.loop.mods.modules.impl.render.Dismemberment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;

@@ -3,14 +3,12 @@ package me.loop.api.managers;
 import me.loop.InfinityLoop;
 import me.loop.api.managers.impl.*;
 import me.loop.api.utils.impl.renders.helper.ffp.NetworkHandler;
-import me.loop.client.gui.font.CFontRenderer;
-import me.loop.api.modules.ModuleManager;
+import me.loop.mods.gui.font.CFontRenderer;
+import me.loop.api.managers.impl.ModuleManager;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
 import java.util.Objects;
-
-import static me.loop.api.utils.impl.Util.mc;
 
 public class Managers extends InfinityLoop {
 
@@ -70,7 +68,6 @@ public class Managers extends InfinityLoop {
             reloadManager = null;
         }
 
-        ConfigManager.init();
 
         /*------------    FONTS    ------------ */
         try {
@@ -85,6 +82,7 @@ public class Managers extends InfinityLoop {
         } catch ( Exception e ) {
             e.printStackTrace( );
         }
+
         /*------------------------------------- */
 
         totemPopManager = new TotemPopManager();
@@ -109,10 +107,26 @@ public class Managers extends InfinityLoop {
         holeManager = new HoleManager();
         timerManager = new TimerManager();
 
+        ConfigManager.init();
+        ConfigManager.load(ConfigManager.getCurrentConfig());
 
-        if(mc.session != null && !alts.contains(mc.session.getUsername())) {
-            alts.add(mc.session.getUsername());
-        }
+        Managers.moduleManager.init();
+        LOGGER.info("Modules loaded.");
+
+        eventManager.init();
+        LOGGER.info("EventManager loaded.");
+
+        textManager.init(true);
+
+        totemPopManager.init();
+        LOGGER.info("TotemPopManager loaded.");
+
+        FriendManager.loadFriends();
+        moduleManager.onUnloadPre();
+
+        //if(mc.session != null && !alts.contains(mc.session.getUsername())) {
+            //alts.add(mc.session.getUsername());
+        //}
     }
 
     /*--------------------    UNLOAD  ------------------------*/
@@ -121,6 +135,7 @@ public class Managers extends InfinityLoop {
 
         ConfigManager.saveAlts();
         ConfigManager.saveSearch();
+        FriendManager.saveFriends();
 
         if (unload) {
             reloadManager = new ReloadManager();
@@ -156,7 +171,7 @@ public class Managers extends InfinityLoop {
 
         if (isLoaded()) {
             eventManager.onUnload();
-            moduleManager.onUnload();
+            moduleManager.onUnloadPre();
             ConfigManager.save(ConfigManager.getCurrentConfig());
             moduleManager.onUnloadPost();
 

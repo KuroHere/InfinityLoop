@@ -1,13 +1,13 @@
 package me.loop.api.managers.impl;
 
-import me.loop.client.Client;
+import me.loop.mods.Mod;
 import net.minecraft.network.Packet;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PacketManager
-        extends Client {
+        extends Mod {
     private final List<Packet<?>> noEventPackets = new ArrayList();
 
     public void sendPacketNoEvent(Packet<?> packet) {

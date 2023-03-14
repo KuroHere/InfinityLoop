@@ -1,6 +1,6 @@
 package me.loop.api.utils.impl.renders;
 
-import me.loop.client.modules.impl.client.Colors;
+import me.loop.mods.modules.impl.client.Colors;
 
 import java.awt.*;
 

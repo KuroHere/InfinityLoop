@@ -4,18 +4,18 @@ import com.google.common.base.Strings;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import me.loop.api.events.impl.TotemPopEvent;
 import me.loop.api.events.impl.network.ConnectionEvent;
-import me.loop.api.events.impl.network.EventDeath;
-import me.loop.api.events.impl.network.EventPacket;
+import me.loop.api.events.impl.network.DeathEvent;
+import me.loop.api.events.impl.network.PacketEvent;
 import me.loop.api.events.impl.player.EventMotionUpdate;
 import me.loop.api.events.impl.render.Render2DEvent;
 import me.loop.api.events.impl.render.Render3DEvent;
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.GLUProjection;
 import me.loop.api.utils.impl.worlds.Timer;
-import me.loop.client.Client;
-import me.loop.client.commands.Command;
-import me.loop.client.modules.impl.client.ClickGui.ClickGui;
-import me.loop.client.modules.impl.client.HUD;
+import me.loop.mods.Mod;
+import me.loop.mods.commands.Command;
+import me.loop.mods.modules.impl.client.ClickGui.ClickGui;
+import me.loop.mods.modules.impl.client.HUD;
 import me.zero.alpine.fork.listener.Listenable;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.client.Minecraft;
@@ -47,7 +47,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class EventManager extends Client {
+public class EventManager extends Mod {
     public static float visualYaw, visualPitch, prevVisualYaw, prevVisualPitch;
     private final Map<Listenable, List<Listener>> SUBSCRIPTION_CACHE;
     private final Map<Class<?>, List<Listener>> SUBSCRIPTION_MAP;
@@ -66,11 +66,11 @@ public class EventManager extends Client {
     @SubscribeEvent
     public void onUpdate(LivingEvent.LivingUpdateEvent event) {
         if (!fullNullCheck() && (event.getEntity().getEntityWorld()).isRemote && event.getEntityLiving().equals(mc.player)) {
-            Managers.inventoryManager.update();
+
             Managers.totemPopManager.onUpdate();
+            Managers.inventoryManager.update();
             Managers.holeManager.update();
             Managers.moduleManager.onUpdate();
-            Managers.timerManager.update();
             if (this.timer.passedMs(HUD.getInstance().moduleListUpdates.getValue().intValue())) {
                 Managers.moduleManager.sortModules(true);
                 Managers.moduleManager.alphabeticallySortModules();
@@ -117,7 +117,7 @@ public class EventManager extends Client {
         for (EntityPlayer player : mc.world.playerEntities) {
             if (player == null || player.getHealth() > 0.0F)
                 continue;
-            MinecraftForge.EVENT_BUS.post(new EventDeath(player));
+            MinecraftForge.EVENT_BUS.post(new DeathEvent(player));
         }
     }
 
@@ -137,7 +137,7 @@ public class EventManager extends Client {
     }
 
     @SubscribeEvent
-    public void onPacketReceive(final EventPacket.Receive event) {
+    public void onPacketReceive(final PacketEvent.Receive event) {
         if (event.getStage() != 0) {
             return;
         }
@@ -151,7 +151,7 @@ public class EventManager extends Client {
                 Managers.positionManager.onTotemPop(player);
             }
         }
-        else if (event.getPacket() instanceof SPacketPlayerListItem && !Client.fullNullCheck() && this.logoutTimer.passedS(1.0)) {
+        else if (event.getPacket() instanceof SPacketPlayerListItem && !Mod.fullNullCheck() && this.logoutTimer.passedS(1.0)) {
             final SPacketPlayerListItem packet = (SPacketPlayerListItem) event.getPacket();
             if (!SPacketPlayerListItem.Action.ADD_PLAYER.equals(packet.getAction()) && !SPacketPlayerListItem.Action.REMOVE_PLAYER.equals(packet.getAction())) {
                 return;
@@ -246,7 +246,7 @@ public class EventManager extends Client {
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (Keyboard.getEventKeyState())
-            Managers.moduleManager.onKeyPressed(Keyboard.getEventKey());
+            Managers.moduleManager.onKeyInput(Keyboard.getEventKey());
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

@@ -1,11 +1,11 @@
 package me.loop.asm.mixins;
 
 import me.loop.api.events.Event;
-import me.loop.api.events.impl.player.ProcessRightClickBlockEvent;
-import me.loop.api.events.impl.world.EventBlock;
+import me.loop.api.events.impl.player.RightClickBlockEvent;
+import me.loop.api.events.impl.world.BlockEvent;
 import me.loop.api.managers.Managers;
-import me.loop.client.modules.impl.misc.BlockTweaks;
-import me.loop.client.modules.impl.player.TpsSync;
+import me.loop.mods.modules.impl.misc.BlockTweaks;
+import me.loop.mods.modules.impl.player.TpsSync;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -41,13 +41,13 @@ public class MixinPlayerControllerMP {
 
     @Inject(method = {"clickBlock"}, at = {@At(value = "HEAD")}, cancellable = true)
     private void clickBlockHook(BlockPos pos, EnumFacing face, CallbackInfoReturnable<Boolean> info) {
-        EventBlock event = new EventBlock(3, pos, face);
+        BlockEvent event = new BlockEvent(3, pos, face);
         MinecraftForge.EVENT_BUS.post(event);
     }
 
     @Inject(method={"onPlayerDamageBlock"}, at={@At(value="HEAD")}, cancellable=true)
     private void onPlayerDamageBlockHook(BlockPos pos, EnumFacing face, CallbackInfoReturnable<Boolean> info) {
-        EventBlock event = new EventBlock(4,pos, face);
+        BlockEvent event = new BlockEvent(4,pos, face);
         MinecraftForge.EVENT_BUS.post((Event)event);
         if (event.isCanceled()) {
             info.cancel();
@@ -76,7 +76,7 @@ public class MixinPlayerControllerMP {
 
     @Inject(method = {"processRightClickBlock"}, at = {@At(value = "HEAD")}, cancellable = true)
     public void processRightClickBlock(EntityPlayerSP player, WorldClient worldIn, BlockPos pos, EnumFacing direction, Vec3d vec, EnumHand hand, CallbackInfoReturnable<EnumActionResult> cir) {
-        ProcessRightClickBlockEvent event = new ProcessRightClickBlockEvent(pos, hand, Minecraft.instance.player.getHeldItem(hand));
+        RightClickBlockEvent event = new RightClickBlockEvent(pos, hand, Minecraft.instance.player.getHeldItem(hand));
         MinecraftForge.EVENT_BUS.post(event);
         if (event.isCanceled()) {
             cir.cancel();

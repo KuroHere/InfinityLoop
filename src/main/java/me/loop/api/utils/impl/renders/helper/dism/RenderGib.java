@@ -1,7 +1,7 @@
 package me.loop.api.utils.impl.renders.helper.dism;
 
 import me.loop.api.managers.Managers;
-import me.loop.client.modules.impl.render.Dismemberment;
+import me.loop.mods.modules.impl.render.Dismemberment;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;

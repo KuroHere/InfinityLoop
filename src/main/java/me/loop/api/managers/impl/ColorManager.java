@@ -1,8 +1,8 @@
 package me.loop.api.managers.impl;
 
 import me.loop.api.utils.impl.renders.ColorUtil;
-import me.loop.client.gui.click.Component;
-import me.loop.client.modules.impl.client.Colors;
+import me.loop.mods.gui.click.Component;
+import me.loop.mods.modules.impl.client.Colors;
 
 import java.awt.*;
 
@@ -11,6 +11,7 @@ public class ColorManager {
     private float green = 1.0f;
     private float blue = 1.0f;
     private float alpha = 1.0f;
+    private Color current = new Color(-1);
 
     private Color color;
     public ColorManager() {
@@ -20,6 +21,25 @@ public class ColorManager {
         this.alpha = 1.0f;
         this.color = new Color(this.red, this.green, this.blue, this.alpha);
     }
+
+    public boolean isRainbow() {
+        return Colors.getInstance().rainbow.getValue();
+    }
+
+    //Getters
+
+    public Color getCurrent() {
+        if (isRainbow()) {
+            return getRainbow();
+        }
+
+        return current;
+    }
+
+    public Color getRainbow() {
+        return ColorUtil.rainbow(Colors.getInstance().rainbowHue.getValue());
+    }
+
 
     public Color getColor() {
         return this.color;
@@ -83,5 +103,6 @@ public class ColorManager {
         this.alpha = alpha;
         this.updateColor();
     }
+
 }
 

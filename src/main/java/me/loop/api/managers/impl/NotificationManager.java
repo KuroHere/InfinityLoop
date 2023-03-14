@@ -2,8 +2,8 @@ package me.loop.api.managers.impl;
 
 
 import me.loop.api.managers.Managers;
-import me.loop.client.gui.notifications.Notifications;
-import me.loop.client.modules.impl.client.HUD;
+import me.loop.mods.gui.other.notifications.Notifications;
+import me.loop.mods.modules.impl.client.HUD;
 
 import java.util.ArrayList;
 

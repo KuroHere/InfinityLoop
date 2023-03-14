@@ -1,6 +1,6 @@
 package me.loop.api.utils.impl;
 
-import me.loop.client.modules.impl.client.GameChanger;
+import me.loop.mods.modules.impl.client.GameChanger;
 import me.loop.api.utils.impl.maths.MathUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

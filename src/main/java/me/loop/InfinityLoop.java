@@ -1,7 +1,6 @@
 package me.loop;
 
 import me.loop.api.managers.Managers;
-import me.loop.api.managers.impl.ConfigManager;
 import me.loop.api.utils.impl.IconUtils;
 import me.loop.api.utils.impl.phobos.GlobalExecutor;
 import me.loop.api.utils.impl.phobos.Sphere;
@@ -22,7 +21,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-import static me.loop.api.managers.Managers.*;
+import static me.loop.api.managers.Managers.networkHandler;
 
 @Mod(modid = "infinityloop", name = "InfinityLoop", version = "0.0.3")
 
@@ -40,23 +39,10 @@ public class InfinityLoop {
         LOGGER.info("Loading InfinityLoop...");
 
         Managers.load();
-        LOGGER.info("Managers loaded.");
 
-        moduleManager.init();
-        LOGGER.info("Modules loaded.");
-
-        ConfigManager.load(ConfigManager.getCurrentConfig());
-
-        eventManager.init();
-        LOGGER.info("EventManager loaded.");
-
-        textManager.init(true);
-
-        totemPopManager.init();
-        LOGGER.info("TotemPopManager loaded.");
-
-        moduleManager.onLoad();
-        LOGGER.info("Initialising BetterChat (made by llamalad7)");
+        if (InfinityLoop.INSTANCE == null) {
+            InfinityLoop.INSTANCE = new InfinityLoop();
+        }
 
         LOGGER.info(MODNAME + "successfully loaded!\n");
 
@@ -68,13 +54,14 @@ public class InfinityLoop {
         Managers.unload(force);
 
         LOGGER.info("InfinityLoop unloaded!\n");
+
     }
 
     public static void setWindowIcon() {
         if (Util.getOSType() != Util.EnumOS.OSX) {
 
-            try (InputStream inputStream16x = Minecraft.class.getResourceAsStream("loop/imgs/icon16x.png"); InputStream inputStream32x = Minecraft.class.getResourceAsStream("/assets/minecraft/textures/mio/constant/icon32x.png")) {
-
+            try (InputStream inputStream16x = Minecraft.class.getResourceAsStream("loop/imgs/icon16x.png");
+                 InputStream inputStream32x = Minecraft.class.getResourceAsStream("loop/imgs/icon32x.png")) {
                 ByteBuffer[] icons = new ByteBuffer[]{IconUtils.INSTANCE.readImageToBuffer(inputStream16x), IconUtils.INSTANCE.readImageToBuffer(inputStream32x)};
                 Display.setIcon(icons);
 

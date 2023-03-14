@@ -1,7 +1,7 @@
 package me.loop.api.utils.impl.minecraft;
 
-import me.loop.client.modules.settings.Setting;
-import me.loop.client.modules.settings.impl.Bind;
+import me.loop.mods.settings.Setting;
+import me.loop.mods.settings.Bind;
 import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;

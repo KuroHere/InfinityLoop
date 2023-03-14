@@ -3,7 +3,7 @@ package me.loop;
 import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
-import me.loop.client.modules.impl.client.RPC;
+import me.loop.mods.modules.impl.client.RPC;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.*;
 

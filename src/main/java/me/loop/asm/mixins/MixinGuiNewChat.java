@@ -1,6 +1,6 @@
 package me.loop.asm.mixins;
 
-import me.loop.client.modules.impl.misc.ChatModifier;
+import me.loop.mods.modules.impl.misc.ChatModifier;
 import net.minecraft.client.gui.ChatLine;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiNewChat;

@@ -3,7 +3,7 @@ package me.loop.api.utils.impl;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.maths.MathUtil;
-import me.loop.client.modules.impl.player.FakePlayer;
+import me.loop.mods.modules.impl.player.FakePlayer;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;

@@ -1,6 +1,6 @@
 package me.loop.asm.mixins;
 
-import me.loop.api.events.impl.player.EventKey;
+import me.loop.api.events.impl.player.KeyEvent;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -17,7 +17,7 @@ public class MixinKeyBinding {
 
     @Inject(method={"isKeyDown"}, at={@At(value="RETURN")}, cancellable=true)
     private void isKeyDown(CallbackInfoReturnable<Boolean> info) {
-        EventKey event = new EventKey(0, info.getReturnValue(), this.pressed);
+        KeyEvent event = new KeyEvent(0, info.getReturnValue(), this.pressed);
         MinecraftForge.EVENT_BUS.post((Event)event);
         info.setReturnValue(event.info);
     }
