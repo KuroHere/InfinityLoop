@@ -1,4 +1,4 @@
-package me.loop.api.managers.impl;
+package me.loop.api.managers;
 
 import me.loop.mods.Mod;
 

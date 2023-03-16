@@ -1,7 +1,7 @@
 package me.loop.mods;
 
-import me.loop.api.managers.Managers;
-import me.loop.api.managers.impl.TextManager;
+import me.loop.InfinityLoop;
+import me.loop.api.managers.TextManager;
 import me.loop.api.utils.impl.Util;
 import me.loop.mods.gui.InfinityLoopGui;
 import me.loop.mods.modules.Module;
@@ -13,7 +13,7 @@ import java.util.List;
 public class Mod
         implements Util {
     public List<Setting> settings = new ArrayList<Setting>();
-    public TextManager renderer = Managers.textManager;
+    public TextManager renderer = InfinityLoop.textManager;
     private String name;
 
     public Mod(String name) {

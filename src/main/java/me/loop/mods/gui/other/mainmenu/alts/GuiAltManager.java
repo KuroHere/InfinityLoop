@@ -1,6 +1,6 @@
 package me.loop.mods.gui.other.mainmenu.alts;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.LoopUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.api.utils.impl.renders.helper.RoundedShader;
@@ -35,8 +35,8 @@ public class GuiAltManager extends GuiScreen
 
     public GuiAltManager() {
         try {
-            if(Managers.moduleManager != null){
-                switch (Managers.moduleManager.getModuleByClass(MainSettings.class).shaderMode.getValue()) {
+            if(InfinityLoop.moduleManager != null){
+                switch (InfinityLoop.moduleManager.getModuleByClass(MainSettings.class).shaderMode.getValue()) {
                     case Smoke2:
                         backgroundShader = new MainMenuShader("/shaders/smoke.fsh");
                         break;
@@ -77,7 +77,7 @@ public class GuiAltManager extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         ScaledResolution sr = new ScaledResolution(this.mc);
         GlStateManager.disableCull();
-        this.backgroundShader.useShader(sr.getScaledWidth() * 2, sr.getScaledHeight() * 2, (float)mouseX, (float)mouseY, (float)(System.currentTimeMillis() - Managers.initTime) / 1000.0F);
+        this.backgroundShader.useShader(sr.getScaledWidth() * 2, sr.getScaledHeight() * 2, (float)mouseX, (float)mouseY, (float)(System.currentTimeMillis() - InfinityLoop.initTime) / 1000.0F);
         checkMouseWheel();
 
         GL11.glBegin(7);
@@ -101,7 +101,7 @@ public class GuiAltManager extends GuiScreen
 
         int alts_y = 0;
 
-        for(String alt : Managers.alts){
+        for(String alt : InfinityLoop.alts){
             altscomponents.add(new AltCompoment((int) (half_w - 105), 30 + alts_y + dwheel, alt));
             alts_y += 49;
         }
@@ -126,7 +126,7 @@ public class GuiAltManager extends GuiScreen
 
         //half_w - 15, halh_h + 10, 30,  10
         if((mouseX > half_w - 15) && (mouseX < half_w + 15) && (mouseY > halh_h + 10) && (mouseY < halh_h + 20) && Mouse.isButtonDown(0) && listening){
-            Managers.alts.add(add_name);
+            InfinityLoop.alts.add(add_name);
             add_name = "";
             listening = false;
         }
@@ -152,7 +152,7 @@ public class GuiAltManager extends GuiScreen
         }
         if (x >= sr.getScaledWidth() / 2 + 4 && x <= sr.getScaledWidth() / 2 + 111 && y >= sr.getScaledHeight() - 135 && y <= sr.getScaledHeight() - 100) {
             String name = "Th" + (int)(Math.random() * 10000);
-            Managers.alts.add(name);
+            InfinityLoop.alts.add(name);
             try {
                 new Thread(() -> LoopUtil.saveUserAvatar("https://minotar.net/helm/" + name +"/16.png", name));
             } catch (Exception e){}
@@ -170,7 +170,7 @@ public class GuiAltManager extends GuiScreen
                     return;
                 }
                 case 28: {
-                    Managers.alts.add(add_name);
+                    InfinityLoop.alts.add(add_name);
                     LoopUtil.saveUserAvatar("https://minotar.net/helm/" + add_name + "/16.png", add_name);
                     add_name = "";
                     listening = false;

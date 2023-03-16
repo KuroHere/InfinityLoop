@@ -1,6 +1,6 @@
 package me.loop.asm.mixins;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.renders.MotionBlur;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.mods.gui.other.mainmenu.InfinityLoopMenu;
@@ -40,8 +40,8 @@ public abstract class MixinMinecraft {
 
     @Inject(method = {"runTickKeyboard"}, at = {@At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", ordinal = 0)}, locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onRunTickKeyboard(CallbackInfo ci, int i) {
-        if (Keyboard.getEventKeyState() && Managers.moduleManager != null) {
-            Managers.moduleManager.onKeyInput(i);
+        if (Keyboard.getEventKeyState() && InfinityLoop.moduleManager != null) {
+            InfinityLoop.moduleManager.onKeyInput(i);
         }
     }
 
@@ -61,9 +61,9 @@ public abstract class MixinMinecraft {
     }
 
     private void unload() {
-        Managers.LOGGER.info("Initiated client shutdown!");
-        Managers.onUnload();
-        Managers.LOGGER.info("Finished client shutdown!");
+        InfinityLoop.LOGGER.info("Initiated client shutdown!");
+        InfinityLoop.onUnload();
+        InfinityLoop.LOGGER.info("Finished client shutdown!");
     }
 
     @Redirect(method = {"sendClickBlockToController"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;isHandActive()Z"))
@@ -77,14 +77,14 @@ public abstract class MixinMinecraft {
     }
     @Inject(method={"runTick()V"}, at={@At(value="RETURN")})
     private void runTick(CallbackInfo callbackInfo) {
-        if (Minecraft.getMinecraft().currentScreen instanceof GuiMainMenu && Managers.moduleManager != null && Managers.moduleManager.getModuleByClass(MainSettings.class).mainMenu.getValue()) {
+        if (Minecraft.getMinecraft().currentScreen instanceof GuiMainMenu && InfinityLoop.moduleManager != null && InfinityLoop.moduleManager.getModuleByClass(MainSettings.class).mainMenu.getValue()) {
             Minecraft.getMinecraft().displayGuiScreen(new InfinityLoopMenu());
         }
     }
 
     @Inject(method={"displayGuiScreen"}, at={@At(value="HEAD")})
     private void displayGuiScreenHook(GuiScreen screen, CallbackInfo ci) {
-        if (screen instanceof GuiMainMenu && Managers.moduleManager != null && Managers.moduleManager.getModuleByClass(MainSettings.class).mainMenu.getValue()) {
+        if (screen instanceof GuiMainMenu && InfinityLoop.moduleManager != null && InfinityLoop.moduleManager.getModuleByClass(MainSettings.class).mainMenu.getValue()) {
             mc.displayGuiScreen(new InfinityLoopMenu());
         }
     }

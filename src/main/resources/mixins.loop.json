@@ -8,6 +8,7 @@
     "accessors.IEntityRenderer",
     "accessors.IRenderManager",
     "mixins.MixinGuiChat",
+    "mixins.MixinNetHandlerPlayClient",
     "mixins.MixinBlockLiquid",
     "mixins.MixinEntityPlayer",
     "mixins.MixinEntityPlayerSP",

@@ -1,7 +1,7 @@
 package me.loop.api.utils.impl;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.maths.MathUtil;
 import me.loop.mods.modules.impl.player.FakePlayer;
 import net.minecraft.block.*;
@@ -401,7 +401,7 @@ public class EntityUtil
     }
 
     public static boolean isntValid(Entity entity, double range) {
-        return entity == null || EntityUtil.isDead(entity) || entity.equals(EntityUtil.mc.player) || entity instanceof EntityPlayer && Managers.friendManager.isFriend(entity.getName()) || EntityUtil.mc.player.getDistanceSq(entity) > MathUtil.square(range);
+        return entity == null || EntityUtil.isDead(entity) || entity.equals(EntityUtil.mc.player) || entity instanceof EntityPlayer && InfinityLoop.friendManager.isFriend(entity.getName()) || EntityUtil.mc.player.getDistanceSq(entity) > MathUtil.square(range);
     }
 
     public static boolean isValid(Entity entity, double range) {
@@ -486,7 +486,7 @@ public class EntityUtil
 
     public static Color getColor(Entity entity, int red, int green, int blue, int alpha, boolean colorFriends) {
         Color color = new Color((float) red / 255.0f, (float) green / 255.0f, (float) blue / 255.0f, (float) alpha / 255.0f);
-        if (entity instanceof EntityPlayer && colorFriends && Managers.friendManager.isFriend((EntityPlayer) entity)) {
+        if (entity instanceof EntityPlayer && colorFriends && InfinityLoop.friendManager.isFriend((EntityPlayer) entity)) {
             color = new Color(0.33333334f, 1.0f, 1.0f, (float) alpha / 255.0f);
         }
         return color;
@@ -583,7 +583,7 @@ public class EntityUtil
                 distanceSB.append("c");
             }
             distanceSB.append(distance);
-            output.put(healthSB + " " + (Managers.friendManager.isFriend(player) ? ChatFormatting.AQUA : ChatFormatting.RED) + player.getName() + " " + distanceSB + " \u00c2\u00a7f0", (int) EntityUtil.mc.player.getDistance(player));
+            output.put(healthSB + " " + (InfinityLoop.friendManager.isFriend(player) ? ChatFormatting.AQUA : ChatFormatting.RED) + player.getName() + " " + distanceSB + " \u00c2\u00a7f0", (int) EntityUtil.mc.player.getDistance(player));
             healthSB.setLength(0);
             distanceSB.setLength(0);
         }

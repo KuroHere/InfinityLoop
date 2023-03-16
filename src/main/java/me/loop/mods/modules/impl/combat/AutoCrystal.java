@@ -1,15 +1,15 @@
 package me.loop.mods.modules.impl.combat;
 
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.network.PacketEvent;
 import me.loop.api.events.impl.render.Render3DEvent;
-import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.EntityUtil;
 import me.loop.api.utils.impl.maths.MathUtil;
 import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.api.utils.impl.worlds.Timer;
-import me.loop.mods.modules.Module;
 import me.loop.mods.modules.Category;
+import me.loop.mods.modules.Module;
 import me.loop.mods.modules.impl.client.Colors;
 import me.loop.mods.modules.impl.misc.AutoGG;
 import me.loop.mods.settings.Setting;
@@ -294,7 +294,7 @@ public class AutoCrystal
             }
             this.realTarget = this.target;
             if (AutoGG.getINSTANCE().isOn()) {
-                AutoGG autoGG = (AutoGG) Managers.moduleManager.getModuleByName("AutoGG");
+                AutoGG autoGG = (AutoGG) InfinityLoop.moduleManager.getModuleByName("AutoGG");
                 autoGG.addTargetedPlayer(this.target.getName());
             }
             if (this.hotBarSlot != -1 && this.autoswitch.getValue().booleanValue() && !AutoCrystal.mc.player.isPotionActive(MobEffects.WEAKNESS)) {
@@ -420,7 +420,7 @@ public class AutoCrystal
     EntityPlayer getTarget() {
         EntityPlayer closestPlayer = null;
         for (EntityPlayer entity : AutoCrystal.mc.world.playerEntities) {
-            if (AutoCrystal.mc.player == null || AutoCrystal.mc.player.isDead || entity.isDead || entity == AutoCrystal.mc.player || Managers.friendManager.isFriend(entity.getName()) || entity.getDistance(AutoCrystal.mc.player) > 12.0f)
+            if (AutoCrystal.mc.player == null || AutoCrystal.mc.player.isDead || entity.isDead || entity == AutoCrystal.mc.player || InfinityLoop.friendManager.isFriend(entity.getName()) || entity.getDistance(AutoCrystal.mc.player) > 12.0f)
                 continue;
             this.armorTarget = false;
             for (ItemStack is : entity.getArmorInventoryList()) {

@@ -1,7 +1,7 @@
 package me.loop.asm.mixins;
 
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.player.TransformFirstPersonEvent;
-import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.mods.modules.impl.client.Colors;
 import me.loop.mods.modules.impl.render.HandChams;
@@ -84,14 +84,14 @@ public abstract class MixinItemRenderer {
     @Inject(method = { "transformSideFirstPerson" }, at = { @At("HEAD") })
     public void transformSideFirstPerson(final EnumHandSide hand, final float p_187459_2_, final CallbackInfo callbackInfo) {
         final TransformFirstPersonEvent event = new TransformFirstPersonEvent(hand);
-        Managers.eventManager.post(event);
+        InfinityLoop.eventManager.post(event);
     }
 
 
     @Inject(method = { "transformFirstPerson" }, at = { @At("HEAD") })
     public void transformFirstPerson(final EnumHandSide hand, final float p_187453_2_, final CallbackInfo callbackInfo) {
         final TransformFirstPersonEvent event = new TransformFirstPersonEvent(hand);
-        Managers.eventManager.post(event);
+        InfinityLoop.eventManager.post(event);
     }
 
 }

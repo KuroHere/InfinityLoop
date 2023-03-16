@@ -1,4 +1,4 @@
-package me.loop.api.managers.impl;
+package me.loop.api.managers;
 
 import me.loop.api.events.impl.render.Render2DEvent;
 import me.loop.api.events.impl.render.Render3DEvent;
@@ -119,12 +119,15 @@ public class ModuleManager extends Mod {
         this.alphabeticallySortedModules = this.getEnabledModules().stream().filter(Module::isDrawn).sorted(Comparator.comparing(Module::getDisplayName)).collect(Collectors.toList());
     }
 
-    public List<Module> getAnimationModules(Category category) {
-        ArrayList<Module> animationModules = new ArrayList<Module>();
-        for (Module module : this.getEnabledModules()) {
-            if (module.getCategory() != category || module.isDisabled() || !module.isSliding() || !module.isDrawn())
-                continue;
-            animationModules.add(module);
+    public List<Module> getAnimationModules(final Category category) {
+        final ArrayList<Module> animationModules = new ArrayList<Module>();
+        for (final Module module : this.getEnabledModules()) {
+            if (module.getCategory() == category && !module.isDisabled() && module.isSliding()) {
+                if (!module.isDrawn()) {
+                    continue;
+                }
+                animationModules.add(module);
+            }
         }
         return animationModules;
     }

@@ -1,7 +1,7 @@
 package me.loop.mods.gui.other.windows.window.parts;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.api.utils.impl.renders.shaders.PNGtoResourceLocation;
 import me.loop.mods.gui.font.FontRender;
@@ -61,7 +61,7 @@ public class FriendPart{
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if(isHoveringDelButton(mouseX,mouseY)){
-            Managers.friendManager.removeFriend(name);
+            InfinityLoop.friendManager.removeFriend(name);
         }
     }
 

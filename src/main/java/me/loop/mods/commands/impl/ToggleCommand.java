@@ -1,6 +1,6 @@
 package me.loop.mods.commands.impl;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.mods.commands.Command;
 import me.loop.mods.modules.Module;
 
@@ -14,7 +14,7 @@ public class ToggleCommand
     public void execute(String[] commands) {
         if (commands.length == 2) {
             String name = commands[0].replaceAll("_", " ");
-            Module module = Managers.moduleManager.getModuleByName(name);
+            Module module = InfinityLoop.moduleManager.getModuleByName(name);
             if (module != null) {
                 module.toggle();
             } else {

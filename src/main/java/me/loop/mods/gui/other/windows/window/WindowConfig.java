@@ -4,7 +4,7 @@ import me.loop.mods.gui.click.items.buttons.StringButton;
 import me.loop.mods.gui.other.windows.window.parts.ConfigPart;
 import me.loop.mods.modules.impl.client.ClickGui.ClickGui;
 import me.loop.mods.gui.font.FontRender;
-import me.loop.api.managers.impl.ConfigManager;
+import me.loop.api.managers.ConfigManager;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Mouse;

@@ -1,9 +1,9 @@
 package me.loop.asm.mixins;
 
+import me.loop.InfinityLoop;
 import me.loop.api.events.Event;
 import me.loop.api.events.impl.player.RightClickBlockEvent;
 import me.loop.api.events.impl.world.BlockEvent;
-import me.loop.api.managers.Managers;
 import me.loop.mods.modules.impl.player.BlockTweaks;
 import me.loop.mods.modules.impl.player.TpsSync;
 import net.minecraft.block.Block;
@@ -36,7 +36,7 @@ public class MixinPlayerControllerMP {
 
     @Redirect(method = {"onPlayerDamageBlock"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/IBlockState;getPlayerRelativeBlockHardness(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)F"))
     public float getPlayerRelativeBlockHardnessHook(IBlockState state, EntityPlayer player, World worldIn, BlockPos pos) {
-        return state.getPlayerRelativeBlockHardness(player, worldIn, pos) * (TpsSync.getInstance().isOn() && TpsSync.getInstance().mining.getValue() ? 1.0f / Managers.serverManager.getTpsFactor() : 1.0f);
+        return state.getPlayerRelativeBlockHardness(player, worldIn, pos) * (TpsSync.getInstance().isOn() && TpsSync.getInstance().mining.getValue() ? 1.0f / InfinityLoop.serverManager.getTpsFactor() : 1.0f);
     }
 
     @Inject(method = {"clickBlock"}, at = {@At(value = "HEAD")}, cancellable = true)

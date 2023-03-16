@@ -1,14 +1,14 @@
-package me.loop.api.managers.impl;
+package me.loop.api.managers;
 
 import com.google.gson.*;
-import me.loop.api.managers.Managers;
-import me.loop.mods.modules.Module;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.Util;
 import me.loop.mods.commands.Command;
+import me.loop.mods.modules.Module;
 import me.loop.mods.modules.impl.render.Search;
-import me.loop.mods.settings.Setting;
 import me.loop.mods.settings.Bind;
 import me.loop.mods.settings.EnumConverter;
+import me.loop.mods.settings.Setting;
 import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
 
@@ -19,8 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ConfigManager implements Util {
@@ -64,9 +64,9 @@ public class ConfigManager implements Util {
             save(currentConfig);
         }
 
-        Managers.moduleManager.onUnloadPost();
+        InfinityLoop.moduleManager.onUnloadPost();
         load(file);
-        Managers.moduleManager.onUnloadPre();
+        InfinityLoop.moduleManager.onUnloadPre();
 
     }
 
@@ -339,7 +339,7 @@ public class ConfigManager implements Util {
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                     while (reader.ready()) {
                         String name = reader.readLine();
-                        Managers.alts.add(name);
+                        InfinityLoop.alts.add(name);
                     }
 
                 }
@@ -356,7 +356,7 @@ public class ConfigManager implements Util {
 
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            for (String name : Managers.alts) {
+            for (String name : InfinityLoop.alts) {
                 writer.write(name + "\n");
             }
         } catch (Exception ignored){}

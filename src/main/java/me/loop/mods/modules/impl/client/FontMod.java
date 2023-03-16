@@ -1,7 +1,7 @@
 package me.loop.mods.modules.impl.client;
 
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.client.ClientEvent;
-import me.loop.api.managers.Managers;
 import me.loop.mods.commands.Command;
 import me.loop.mods.modules.Category;
 import me.loop.mods.modules.Module;
@@ -62,7 +62,7 @@ public class FontMod
             this.showFonts.setValue(false);
         }
         if (this.reloadFont) {
-            Managers.textManager.init(false);
+            InfinityLoop.textManager.init(false);
             this.reloadFont = false;
         }
     }

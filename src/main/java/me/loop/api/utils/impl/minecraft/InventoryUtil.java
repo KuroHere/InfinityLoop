@@ -1,6 +1,6 @@
 package me.loop.api.utils.impl.minecraft;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.Util;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -185,7 +185,7 @@ public class InventoryUtil
                     switchedItemSwitched[0] = true;
                 } else if (back && switchedItem) {
                     switchedItemSwitched[0] = false;
-                    Managers.inventoryManager.recoverSilent(lastHotbarSlot);
+                    InfinityLoop.inventoryManager.recoverSilent(lastHotbarSlot);
                 }
                 switchedItemSwitched[1] = true;
                 break;
@@ -217,7 +217,7 @@ public class InventoryUtil
                     switchedItemSwitched[0] = true;
                 } else if (back && switchedItem) {
                     switchedItemSwitched[0] = false;
-                    Managers.inventoryManager.recoverSilent(lastHotbarSlot);
+                    InfinityLoop.inventoryManager.recoverSilent(lastHotbarSlot);
                 }
                 switchedItemSwitched[1] = true;
                 break;

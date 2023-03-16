@@ -4,14 +4,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.mods.Mod;
 import me.loop.mods.commands.Command;
-import me.loop.mods.modules.Module;
 import me.loop.mods.modules.Category;
-import me.loop.mods.settings.Setting;
+import me.loop.mods.modules.Module;
 import me.loop.mods.settings.Bind;
 import me.loop.mods.settings.EnumConverter;
+import me.loop.mods.settings.Setting;
 
 import java.awt.*;
 import java.util.Objects;
@@ -27,18 +27,18 @@ public class ModuleCommand
         Setting setting;
         if (commands.length == 1) {
             ModuleCommand.sendMessage("Modules: ");
-            for (Category category : Managers.moduleManager.getCategories()) {
+            for (Category category : InfinityLoop.moduleManager.getCategories()) {
                 String modules = category.getName() + ": ";
-                for (Module module1 : Managers.moduleManager.getModulesByCategory(category)) {
+                for (Module module1 : InfinityLoop.moduleManager.getModulesByCategory(category)) {
                     modules = modules + (module1.isEnabled() ? ChatFormatting.GREEN : ChatFormatting.RED) + module1.getName() + ChatFormatting.WHITE + ", ";
                 }
                 ModuleCommand.sendMessage(modules);
             }
             return;
         }
-        Module module = Managers.moduleManager.getModuleByDisplayName(commands[0]);
+        Module module = InfinityLoop.moduleManager.getModuleByDisplayName(commands[0]);
         if (module == null) {
-            module = Managers.moduleManager.getModuleByName(commands[0]);
+            module = InfinityLoop.moduleManager.getModuleByName(commands[0]);
             if (module == null) {
                 ModuleCommand.sendMessage("This module doesnt exist.");
                 return;

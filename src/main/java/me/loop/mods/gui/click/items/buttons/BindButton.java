@@ -1,7 +1,7 @@
 package me.loop.mods.gui.click.items.buttons;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.mods.gui.InfinityLoopGui;
 import me.loop.mods.modules.impl.client.ClickGui.ClickGui;
@@ -23,11 +23,11 @@ public class BindButton
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 7.4f, this.y + (float) this.height - 0.5f, this.getState() ? (!this.isHovering(mouseX, mouseY) ? 0x11555555 : -2007673515) : (!this.isHovering(mouseX, mouseY) ? Managers.colorManager.getColorWithAlpha(Managers.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue()) : Managers.colorManager.getColorWithAlpha(Managers.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue())));
+        RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 7.4f, this.y + (float) this.height - 0.5f, this.getState() ? (!this.isHovering(mouseX, mouseY) ? 0x11555555 : -2007673515) : (!this.isHovering(mouseX, mouseY) ? InfinityLoop.colorManager.getColorWithAlpha(InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue()) : InfinityLoop.colorManager.getColorWithAlpha(InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue())));
         if (this.isListening) {
-            Managers.textManager.drawStringWithShadow("Press a Key...", this.x + 2.3f, this.y - 1.7f - (float) InfinityLoopGui.INSTANCE.getTextOffset(), -1);
+            InfinityLoop.textManager.drawStringWithShadow("Press a Key...", this.x + 2.3f, this.y - 1.7f - (float) InfinityLoopGui.INSTANCE.getTextOffset(), -1);
         } else {
-            Managers.textManager.drawStringWithShadow(this.setting.getName() + " " + ChatFormatting.GRAY + this.setting.getValue().toString().toUpperCase(), this.x + 2.3f, this.y - 1.7f - (float) InfinityLoopGui.INSTANCE.getTextOffset(), this.getState() ? -1 : -5592406);
+            InfinityLoop.textManager.drawStringWithShadow(this.setting.getName() + " " + ChatFormatting.GRAY + this.setting.getValue().toString().toUpperCase(), this.x + 2.3f, this.y - 1.7f - (float) InfinityLoopGui.INSTANCE.getTextOffset(), this.getState() ? -1 : -5592406);
         }
 
     }

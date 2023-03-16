@@ -1,7 +1,7 @@
 package me.loop.mods.modules.impl.misc;
 
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.network.PacketEvent;
-import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.TextUtil;
 import me.loop.mods.modules.Category;
 import me.loop.mods.modules.Module;
@@ -49,7 +49,7 @@ public class ChatModifier
     public void onPacketSend(PacketEvent.Send event) {
         if (event.getPacket() instanceof CPacketChatMessage) {
             String s = ((CPacketChatMessage) event.getPacket()).getMessage();
-            this.check = !s.startsWith(Managers.commandManager.getPrefix());
+            this.check = !s.startsWith(InfinityLoop.commandManager.getPrefix());
         }
     }
 

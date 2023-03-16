@@ -1,13 +1,13 @@
 package me.loop.mods.modules.impl.combat;
 
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.player.EventMotionUpdate;
-import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.DamageUtil;
 import me.loop.api.utils.impl.EntityUtil;
 import me.loop.api.utils.impl.maths.MathUtil;
 import me.loop.api.utils.impl.worlds.Timer;
-import me.loop.mods.modules.Module;
 import me.loop.mods.modules.Category;
+import me.loop.mods.modules.Module;
 import me.loop.mods.settings.Setting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,14 +49,14 @@ public class Killaura extends Module {
             target = null;
             return;
         }
-        int wait = !this.delay.getValue().booleanValue() ? 0 : (int) (DamageUtil.getCooldownByWeapon(mc.player) * (this.tps.getValue().booleanValue() ? Managers.serverManager.getTpsFactor() : 1.0F));
+        int wait = !this.delay.getValue().booleanValue() ? 0 : (int) (DamageUtil.getCooldownByWeapon(mc.player) * (this.tps.getValue().booleanValue() ? InfinityLoop.serverManager.getTpsFactor() : 1.0F));
         if (!this.timer.passedMs(wait))
             return;
         target = getTarget();
         if (target == null)
             return;
         if (this.rotate.getValue().booleanValue())
-            Managers.rotationManager.lookAtEntity(target);
+            InfinityLoop.rotationManager.lookAtEntity(target);
         EntityUtil.attackEntity(target, this.packet.getValue().booleanValue(), true);
         this.timer.reset();
     }

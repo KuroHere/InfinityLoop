@@ -1,6 +1,6 @@
 package me.loop.mods.gui.other.mainmenu;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.api.utils.impl.renders.helper.RoundedShader;
 import me.loop.mods.gui.font.FontRender;
@@ -21,8 +21,8 @@ public class InfinityLoopMenu extends GuiScreen
 
     public InfinityLoopMenu() {
         try {
-            if(Managers.moduleManager != null){
-                switch (Managers.moduleManager.getModuleByClass(MainSettings.class).shaderMode.getValue()){
+            if(InfinityLoop.moduleManager != null){
+                switch (InfinityLoop.moduleManager.getModuleByClass(MainSettings.class).shaderMode.getValue()){
                     case Smoke2:
                         backgroundShader = new MainMenuShader("/shaders/smoke.fsh");
                         break;
@@ -56,7 +56,7 @@ public class InfinityLoopMenu extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         ScaledResolution sr = new ScaledResolution(this.mc);
         GlStateManager.disableCull();
-        this.backgroundShader.useShader((int) (sr.getScaledWidth() * 2.0f), (int) (sr.getScaledHeight() * 2.0f), (float)mouseX, (float)mouseY, (float)(System.currentTimeMillis() - Managers.initTime) / 1000.0F);
+        this.backgroundShader.useShader((int) (sr.getScaledWidth() * 2.0f), (int) (sr.getScaledHeight() * 2.0f), (float)mouseX, (float)mouseY, (float)(System.currentTimeMillis() - InfinityLoop.initTime) / 1000.0F);
         GL11.glBegin(7);
         GL11.glVertex2f(-1.0F, -1F);
         GL11.glVertex2f(-1.0F, 1.0F);

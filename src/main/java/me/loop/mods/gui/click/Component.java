@@ -1,6 +1,6 @@
 package me.loop.mods.gui.click;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.maths.ImageUtil;
 import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
@@ -91,9 +91,9 @@ public abstract class Component
             RenderUtil.drawColorShader(this.x, (int)((double)this.y - 1.5), this.x + this.width, this.y + this.height + (int)totalItemHeight, ColorUtil.toRGBA(new Color(ClickGui.INSTANCE.shaderC.getValue().getRed(), ClickGui.INSTANCE.shaderC.getValue().getGreen(), ClickGui.INSTANCE.shaderC.getValue().getBlue(), ClickGui.INSTANCE.shaderC.getValue().getAlpha())), ClickGui.INSTANCE.shaderRadius.getValue());
         }
         if (ClickGui.INSTANCE.categoryTextCenter.getValue().booleanValue()) {
-            Managers.textManager.drawStringWithShadow(this.getName(), (float)this.x + (float)(this.width / 2) - (float)(this.renderer.getStringWidth(this.getName()) / 2), (float)this.y - 4.0f - (float)InfinityLoopGui.INSTANCE.getTextOffset(), -1);
+            InfinityLoop.textManager.drawStringWithShadow(this.getName(), (float)this.x + (float)(this.width / 2) - (float)(this.renderer.getStringWidth(this.getName()) / 2), (float)this.y - 4.0f - (float)InfinityLoopGui.INSTANCE.getTextOffset(), -1);
         } else {
-            Managers.textManager.drawStringWithShadow(this.getName(), (float)this.x + 3.0f, (float)this.y - 4.0f - (float)InfinityLoopGui.INSTANCE.getTextOffset(), -1);
+            InfinityLoop.textManager.drawStringWithShadow(this.getName(), (float)this.x + 3.0f, (float)this.y - 4.0f - (float)InfinityLoopGui.INSTANCE.getTextOffset(), -1);
         }
 
         if (future) {

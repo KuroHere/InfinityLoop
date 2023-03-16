@@ -1,6 +1,6 @@
 package me.loop.mods.commands.impl;
 
-import me.loop.api.managers.impl.ConfigManager;
+import me.loop.api.managers.ConfigManager;
 import me.loop.mods.commands.Command;
 
 import java.awt.*;

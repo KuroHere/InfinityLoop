@@ -1,9 +1,9 @@
 package me.loop.mods.modules.impl.client;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.renders.ColorUtil;
-import me.loop.mods.modules.Module;
 import me.loop.mods.modules.Category;
+import me.loop.mods.modules.Module;
 import me.loop.mods.modules.impl.client.ClickGui.ClickGui;
 import me.loop.mods.settings.Setting;
 
@@ -50,7 +50,7 @@ public class Colors extends Module {
             tempHue += 0.0013071896f;
         }
         if (ClickGui.INSTANCE.colorSync.getValue()) {
-            Managers.colorManager.setColor(INSTANCE.getCurrentColor().getRed(), INSTANCE.getCurrentColor().getGreen(), INSTANCE.getCurrentColor().getBlue(), ClickGui.INSTANCE.hoverAlpha.getValue());
+            InfinityLoop.colorManager.setColor(INSTANCE.getCurrentColor().getRed(), INSTANCE.getCurrentColor().getGreen(), INSTANCE.getCurrentColor().getBlue(), ClickGui.INSTANCE.hoverAlpha.getValue());
         }
     }
 

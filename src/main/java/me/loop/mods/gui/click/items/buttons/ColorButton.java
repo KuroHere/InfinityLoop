@@ -1,7 +1,7 @@
 package me.loop.mods.gui.click.items.buttons;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.mods.commands.Command;
@@ -65,11 +65,11 @@ public class ColorButton extends Button {
             e.printStackTrace();
         }
         RenderUtil.drawRect(x, y, x + (float) width + 7.4f, y + (float) height - 0.5f, !isHovering(mouseX, mouseY) ? 0x11555555 : -2007673515);
-        Managers.textManager.drawStringWithShadow(getName(), x + 2.3f, y - 1.7f - (float) InfinityLoopGui.INSTANCE.getTextOffset(), -1);
+        InfinityLoop.textManager.drawStringWithShadow(getName(), x + 2.3f, y - 1.7f - (float) InfinityLoopGui.INSTANCE.getTextOffset(), -1);
         if (setting.isOpen) {
             drawPicker(setting, (int) x, (int) y + 15, (int) x, (int) y + 103, (int) x, (int) y + 95, mouseX, mouseY);
-            Managers.textManager.drawStringWithShadow(isInsideCopy(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Copy" : "Copy", x + 2.3f, y + 113, -1);
-            Managers.textManager.drawStringWithShadow(isInsidePaste(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Paste" : "Paste", x - 2.3f, y + 113, -1);
+            InfinityLoop.textManager.drawStringWithShadow(isInsideCopy(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Copy" : "Copy", x + 2.3f, y + 113, -1);
+            InfinityLoop.textManager.drawStringWithShadow(isInsidePaste(mouseX, mouseY) ? ChatFormatting.UNDERLINE + "Paste" : "Paste", x - 2.3f, y + 113, -1);
             setting.setValue(finalColor);
 
         }
@@ -120,11 +120,11 @@ public class ColorButton extends Button {
     }
 
     public boolean isInsideCopy(int mouseX, int mouseY) {
-        return mouseOver((int) ((int) x + 2.3f), (int) y + 113, (int) (x + 2.3f) + Managers.textManager.getStringWidth("Copy"), (int) (y + 112) + Managers.textManager.getFontHeight(), mouseX, mouseY);
+        return mouseOver((int) ((int) x + 2.3f), (int) y + 113, (int) (x + 2.3f) + InfinityLoop.textManager.getStringWidth("Copy"), (int) (y + 112) + InfinityLoop.textManager.getFontHeight(), mouseX, mouseY);
     }
 
     public boolean isInsidePaste(int mouseX, int mouseY) {
-        return mouseOver((int) ((int) x - 2.3f), (int) y + 113, (int) (x - 2.3f) + Managers.textManager.getStringWidth("Paste"), (int) (y + 112) + Managers.textManager.getFontHeight(), mouseX, mouseY);
+        return mouseOver((int) ((int) x - 2.3f), (int) y + 113, (int) (x - 2.3f) + InfinityLoop.textManager.getStringWidth("Paste"), (int) (y + 112) + InfinityLoop.textManager.getFontHeight(), mouseX, mouseY);
     }
 
     public void drawPicker(Setting setting, int pickerX, int pickerY, int hueSliderX, int hueSliderY, int alphaSliderX, int alphaSliderY, int mouseX, int mouseY) {

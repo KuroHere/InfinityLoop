@@ -1,7 +1,7 @@
 package me.loop.mods.commands;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.mods.Mod;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentBase;
@@ -37,7 +37,7 @@ public abstract class Command
 
     public static void sendMessageWithID(String message, int id) {
         if (!nullCheck()) {
-            mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new ChatMessage(Managers.commandManager.getPrefix() + ChatFormatting.GRAY + message), id);
+            mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new ChatMessage(InfinityLoop.commandManager.getPrefix() + ChatFormatting.GRAY + message), id);
         }
     }
 
@@ -45,14 +45,14 @@ public abstract class Command
         TextComponentString component = new TextComponentString(message);
         Command.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(component, id);
         if (notification) {
-            Managers.notificationManager.addNotification(message, 3000L);
+            InfinityLoop.notificationManager.addNotification(message, 3000L);
         }
     }
 
     public static void sendMessage(String message, boolean notification) {
-        Command.sendSilentMessage(Managers.commandManager.getClientMessage() + " " + "\u00a7r" + message);
+        Command.sendSilentMessage(InfinityLoop.commandManager.getClientMessage() + " " + "\u00a7r" + message);
         if (notification) {
-            Managers.notificationManager.addNotification(message, 3000L);
+            InfinityLoop.notificationManager.addNotification(message, 3000L);
         }
     }
 
@@ -67,7 +67,7 @@ public abstract class Command
 
 
     public static void sendMessage(String message) {
-        Command.sendSilentMessage(Managers.commandManager.getClientMessage() + " " + ChatFormatting.GRAY + message);
+        Command.sendSilentMessage(InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.GRAY + message);
     }
 
     public static void sendSilentMessage(String message) {
@@ -78,7 +78,7 @@ public abstract class Command
     }
 
     public static String getCommandPrefix() {
-        return Managers.commandManager.getPrefix();
+        return InfinityLoop.commandManager.getPrefix();
     }
 
     public abstract void execute(String[] var1);

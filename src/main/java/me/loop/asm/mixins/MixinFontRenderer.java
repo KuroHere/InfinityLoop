@@ -1,6 +1,6 @@
 package me.loop.asm.mixins;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.mods.modules.impl.client.FontMod;
 import me.loop.mods.modules.impl.client.HUD;
 import net.minecraft.client.gui.FontRenderer;
@@ -25,8 +25,8 @@ public abstract class MixinFontRenderer {
 
         FontMod fontMod = FontMod.INSTANCE;
 
-        if (fontMod.isOn() && fontMod.full.getValue() && Managers.textManager != null) {
-            float result = Managers.textManager.drawString(text, x, y, color, dropShadow);
+        if (fontMod.isOn() && fontMod.full.getValue() && InfinityLoop.textManager != null) {
+            float result = InfinityLoop.textManager.drawString(text, x, y, color, dropShadow);
             info.setReturnValue((int) result);
         }
     }
@@ -34,7 +34,7 @@ public abstract class MixinFontRenderer {
     @Redirect(method = {"drawString(Ljava/lang/String;FFIZ)I"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;renderString(Ljava/lang/String;FFIZ)I"))
     public int renderStringHook(FontRenderer fontrenderer, String text, float x, float y, int color, boolean dropShadow) {
 
-        if (Managers.moduleManager != null && HUD.getInstance().shadow.getValue() && dropShadow) {
+        if (InfinityLoop.moduleManager != null && HUD.getInstance().shadow.getValue() && dropShadow) {
             return this.renderString(text, x - 0.5f, y - 0.5f, color, true);
         }
         return this.renderString(text, x, y, color, dropShadow);

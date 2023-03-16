@@ -1,7 +1,7 @@
-package me.loop.api.managers.impl;
+package me.loop.api.managers;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.mods.Mod;
 import me.loop.mods.commands.Command;
 import me.loop.mods.modules.impl.client.ModuleTools;
@@ -53,11 +53,11 @@ public class TotemPopManager
                         return text;
                     }
                     case NONE: {
-                        return Managers.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " popped " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totem.";
+                        return InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " popped " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totem.";
                     }
                 }
             } else {
-                return Managers.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " popped " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totem.";
+                return InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " popped " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totem.";
             }
         } else {
             if (ModuleTools.getInstance().isEnabled()) {
@@ -75,11 +75,11 @@ public class TotemPopManager
                         return text;
                     }
                     case NONE: {
-                        return Managers.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " popped " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totems.";
+                        return InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " popped " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totems.";
                     }
                 }
             } else {
-                return Managers.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " popped " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totems.";
+                return InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " popped " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totems.";
             }
         }
         return "";
@@ -91,7 +91,7 @@ public class TotemPopManager
     }
 
     public void init() {
-        this.notifications = Managers.moduleManager.getModuleByClass(Notifications.class);
+        this.notifications = InfinityLoop.moduleManager.getModuleByClass(Notifications.class);
     }
 
     public void onTotemPop(EntityPlayer player) {
@@ -119,12 +119,12 @@ public class TotemPopManager
                         return text;
                     }
                     case NONE: {
-                        return Managers.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " died after popping " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totem!";
+                        return InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " died after popping " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totem!";
 
                     }
                 }
             } else {
-                return Managers.commandManager.getClientMessage() + ChatFormatting.WHITE + player.getName() + " died after popping " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totem!";
+                return InfinityLoop.commandManager.getClientMessage() + ChatFormatting.WHITE + player.getName() + " died after popping " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totem!";
 
             }
         } else {
@@ -143,12 +143,12 @@ public class TotemPopManager
                         return text;
                     }
                     case NONE: {
-                        return Managers.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " died after popping " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totems!";
+                        return InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " died after popping " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totems!";
 
                     }
                 }
             } else {
-                return Managers.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " died after popping " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totems!";
+                return InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + player.getName() + " died after popping " + ChatFormatting.GREEN + this.getTotemPops(player) + ChatFormatting.WHITE + " Totems!";
             }
         }
         return null;

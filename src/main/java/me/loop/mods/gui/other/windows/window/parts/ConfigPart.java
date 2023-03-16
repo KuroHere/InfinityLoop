@@ -2,7 +2,7 @@ package me.loop.mods.gui.other.windows.window.parts;
 
 import me.loop.mods.commands.Command;
 import me.loop.mods.gui.font.FontRender;
-import me.loop.api.managers.impl.ConfigManager;
+import me.loop.api.managers.ConfigManager;
 import me.loop.api.utils.impl.Util;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import net.minecraft.client.renderer.GlStateManager;

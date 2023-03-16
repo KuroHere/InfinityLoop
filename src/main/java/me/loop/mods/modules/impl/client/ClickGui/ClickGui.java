@@ -1,7 +1,7 @@
 package me.loop.mods.modules.impl.client.ClickGui;
 
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.client.ClientEvent;
-import me.loop.api.managers.Managers;
 import me.loop.mods.gui.InfinityLoopGui;
 import me.loop.mods.gui.screen.anchor.AnchorPoint;
 import me.loop.mods.modules.Category;
@@ -89,15 +89,15 @@ public class ClickGui
 
     @SubscribeEvent
     public void onSettingChange(ClientEvent event) {
-        Managers.colorManager.setColor(this.moduleMainC.getPlannedValue().getRed(), this.moduleMainC.getPlannedValue().getGreen(), this.moduleMainC.getPlannedValue().getBlue(), this.moduleMainC.getPlannedValue().getAlpha());
+        InfinityLoop.colorManager.setColor(this.moduleMainC.getPlannedValue().getRed(), this.moduleMainC.getPlannedValue().getGreen(), this.moduleMainC.getPlannedValue().getBlue(), this.moduleMainC.getPlannedValue().getAlpha());
     }
 
     @Override
     public void onLoad() {
         if (this.colorSync.getValue()) {
-            Managers.colorManager.setColor(Colors.getInstance().getCurrentColor().getRed(), Colors.getInstance().getCurrentColor().getGreen(), Colors.getInstance().getCurrentColor().getBlue(), this.alpha.getValue());
+            InfinityLoop.colorManager.setColor(Colors.getInstance().getCurrentColor().getRed(), Colors.getInstance().getCurrentColor().getGreen(), Colors.getInstance().getCurrentColor().getBlue(), this.alpha.getValue());
         } else {
-            Managers.colorManager.setColor(this.moduleMainC.getPlannedValue().getRed(), this.moduleMainC.getPlannedValue().getGreen(), this.moduleMainC.getPlannedValue().getBlue(), this.moduleMainC.getPlannedValue().getAlpha());
+            InfinityLoop.colorManager.setColor(this.moduleMainC.getPlannedValue().getRed(), this.moduleMainC.getPlannedValue().getGreen(), this.moduleMainC.getPlannedValue().getBlue(), this.moduleMainC.getPlannedValue().getAlpha());
         }
     }
 

@@ -4,8 +4,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import me.loop.InfinityLoop;
 import me.loop.api.events.impl.client.ClientEvent;
 import me.loop.api.events.impl.render.Render2DEvent;
-import me.loop.api.managers.Managers;
-import me.loop.api.managers.impl.TextManager;
+import me.loop.api.managers.TextManager;
 import me.loop.api.utils.impl.EntityUtil;
 import me.loop.api.utils.impl.maths.MathUtil;
 import me.loop.api.utils.impl.renders.ColorUtil;
@@ -139,7 +138,7 @@ public class HUD extends Module {
 
     @Override
     public void onUpdate() {
-        for (final Module module : Managers.moduleManager.sortedModules) {
+        for (final Module module : InfinityLoop.moduleManager.sortedModules) {
             if (module.isDisabled() && module.arrayListOffset == 0.0f) {
                 module.sliding = true;
             }
@@ -216,16 +215,16 @@ public class HUD extends Module {
         int j = this.renderingUp.getValue() ? 0 : ((HUD.mc.currentScreen instanceof GuiChat) ? 14 : 0);
         if (this.arrayList.getValue()) {
             if (this.renderingUp.getValue()) {
-                for (int k = 0; k < (this.alphabeticalSorting.getValue() ? Managers.moduleManager.alphabeticallySortedModules.size() : Managers.moduleManager.sortedModules.size()); ++k) {
-                    final Module module = this.alphabeticalSorting.getValue() ? Managers.moduleManager.alphabeticallySortedModules.get(k) : Managers.moduleManager.sortedModules.get(k);
+                for (int k = 0; k < (this.alphabeticalSorting.getValue() ? InfinityLoop.moduleManager.alphabeticallySortedModules.size() : InfinityLoop.moduleManager.sortedModules.size()); ++k) {
+                    final Module module = this.alphabeticalSorting.getValue() ? InfinityLoop.moduleManager.alphabeticallySortedModules.get(k) : InfinityLoop.moduleManager.sortedModules.get(k);
                     final String text = module.getDisplayName() + ChatFormatting.GRAY + ((module.getDisplayInfo() != null) ? (" [" + ChatFormatting.WHITE + module.getDisplayInfo() + ChatFormatting.GRAY + "]") : "");
                     this.renderer.drawString(text, (width - 2 - this.renderer.getStringWidth(text)), (2 + j * 10), ClickGui.INSTANCE.colorSync.getValue() && (Colors.getInstance()).rainbow.getValue().booleanValue() ? (((Colors.getInstance()).rainbowModeA.getValue() == Colors.rainbowModeArray.Up) ? ColorUtil.rainbow(counter1[0] * (Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB() : ColorUtil.rainbow((Colors.getInstance()).rainbowHue.getValue().intValue()).getRGB()) : this.color, true);
                     j++;
                     counter1[0] = counter1[0] + 1;
                 }
             } else {
-                for (int k = 0; k < (this.alphabeticalSorting.getValue() ? Managers.moduleManager.alphabeticallySortedModules.size() : Managers.moduleManager.sortedModules.size()); ++k) {
-                    final Module module = this.alphabeticalSorting.getValue() ? Managers.moduleManager.alphabeticallySortedModules.get(Managers.moduleManager.alphabeticallySortedModules.size() - 1 - k) : Managers.moduleManager.sortedModules.get(k);
+                for (int k = 0; k < (this.alphabeticalSorting.getValue() ? InfinityLoop.moduleManager.alphabeticallySortedModules.size() : InfinityLoop.moduleManager.sortedModules.size()); ++k) {
+                    final Module module = this.alphabeticalSorting.getValue() ? InfinityLoop.moduleManager.alphabeticallySortedModules.get(InfinityLoop.moduleManager.alphabeticallySortedModules.size() - 1 - k) : InfinityLoop.moduleManager.sortedModules.get(k);
                     final String text = module.getDisplayName() + ChatFormatting.GRAY + ((module.getDisplayInfo() != null) ? (" [" + ChatFormatting.WHITE + module.getDisplayInfo() + ChatFormatting.GRAY + "]") : "");
                     final TextManager renderer = this.renderer;
                     final String text5 = text;
@@ -240,7 +239,7 @@ public class HUD extends Module {
         int k = this.renderingUp.getValue() ? ((HUD.mc.currentScreen instanceof GuiChat) ? 0 : 0) : 0;
         if (this.renderingUp.getValue()) {
             if (this.serverBrand.getValue()) {
-                final String text2 = grayString + "Server brand " + ChatFormatting.WHITE + Managers.serverManager.getServerBrand();
+                final String text2 = grayString + "Server brand " + ChatFormatting.WHITE + InfinityLoop.serverManager.getServerBrand();
                 final TextManager renderer2 = this.renderer;
                 final String text6 = text2;
                 final float x2 = (float) (width - (this.renderer.getStringWidth(text2) + 2));
@@ -250,8 +249,8 @@ public class HUD extends Module {
                 counter1[0] = counter1[0] + 1;
             }
             if (this.potions.getValue()) {
-                for (final PotionEffect effect : Managers.potionManager.getOwnPotions()) {
-                    final String text3 = this.altPotionsColors.getValue() ? Managers.potionManager.getPotionString(effect) : Managers.potionManager.getColoredPotionString(effect);
+                for (final PotionEffect effect : InfinityLoop.potionManager.getOwnPotions()) {
+                    final String text3 = this.altPotionsColors.getValue() ? InfinityLoop.potionManager.getPotionString(effect) : InfinityLoop.potionManager.getColoredPotionString(effect);
                     final TextManager renderer3 = this.renderer;
                     final String text7 = text3;
                     final float x3 = (float) (width - (this.renderer.getStringWidth(text3) + 2));
@@ -262,7 +261,7 @@ public class HUD extends Module {
                 }
             }
             if (this.speed.getValue()) {
-                final String text2 = grayString + "Speed " + ChatFormatting.WHITE + Managers.speedManager.getSpeedKpH() + " km/h";
+                final String text2 = grayString + "Speed " + ChatFormatting.WHITE + InfinityLoop.speedManager.getSpeedKpH() + " km/h";
                 final TextManager renderer4 = this.renderer;
                 final String text8 = text2;
                 final float x4 = (float) (width - (this.renderer.getStringWidth(text2) + 2));
@@ -295,7 +294,7 @@ public class HUD extends Module {
                 }
             }
             if (this.tps.getValue()) {
-                final String text2 = grayString + "TPS " + ChatFormatting.WHITE + Managers.serverManager.getTPS();
+                final String text2 = grayString + "TPS " + ChatFormatting.WHITE + InfinityLoop.serverManager.getTPS();
                 final TextManager renderer7 = this.renderer;
                 final String text11 = text2;
                 final float x7 = (float) (width - (this.renderer.getStringWidth(text2) + 2));
@@ -347,19 +346,19 @@ public class HUD extends Module {
             }
         } else {
             if (this.serverBrand.getValue()) {
-                final String text2 = grayString + "Server brand " + ChatFormatting.WHITE + Managers.serverManager.getServerBrand();
+                final String text2 = grayString + "Server brand " + ChatFormatting.WHITE + InfinityLoop.serverManager.getServerBrand();
                 this.renderer.drawString(text2, (float) (width - (this.renderer.getStringWidth(text2) + 2)), (float) (2 + k++ * 10), (this.rolling.getValue() && this.rainbow.getValue()) ? this.colorMap.get(2 + k * 10) : this.color, true);
                 counter1[0] = counter1[0] + 1;
             }
             if (this.potions.getValue()) {
-                for (final PotionEffect effect : Managers.potionManager.getOwnPotions()) {
-                    final String text3 = this.altPotionsColors.getValue() ? Managers.potionManager.getPotionString(effect) : Managers.potionManager.getColoredPotionString(effect);
+                for (final PotionEffect effect : InfinityLoop.potionManager.getOwnPotions()) {
+                    final String text3 = this.altPotionsColors.getValue() ? InfinityLoop.potionManager.getPotionString(effect) : InfinityLoop.potionManager.getColoredPotionString(effect);
                     this.renderer.drawString(text3, (float) (width - (this.renderer.getStringWidth(text3) + 2)), (float) (2 + k++ * 10), (this.rolling.getValue() && this.rainbow.getValue()) ? this.colorMap.get(2 + k * 10) : (this.altPotionsColors.getValue() ? this.potionColorMap.get(effect.getPotion()).getRGB() : this.color), true);
                     counter1[0] = counter1[0] + 1;
                 }
             }
             if (this.speed.getValue()) {
-                final String text2 = grayString + "Speed " + ChatFormatting.WHITE + Managers.speedManager.getSpeedKpH() + " km/h";
+                final String text2 = grayString + "Speed " + ChatFormatting.WHITE + InfinityLoop.speedManager.getSpeedKpH() + " km/h";
                 this.renderer.drawString(text2, (float) (width - (this.renderer.getStringWidth(text2) + 2)), (float) (2 + k++ * 10), (this.rolling.getValue() && this.rainbow.getValue()) ? this.colorMap.get(2 + k * 10) : this.color, true);
                 counter1[0] = counter1[0] + 1;
             }
@@ -377,12 +376,12 @@ public class HUD extends Module {
                 }
             }
             if (this.tps.getValue()) {
-                final String text2 = grayString + "TPS " + ChatFormatting.WHITE + Managers.serverManager.getTPS();
+                final String text2 = grayString + "TPS " + ChatFormatting.WHITE + InfinityLoop.serverManager.getTPS();
                 this.renderer.drawString(text2, (float) (width - (this.renderer.getStringWidth(text2) + 2)), (float) (2 + k++ * 10), (this.rolling.getValue() && this.rainbow.getValue()) ? this.colorMap.get(2 + k * 10) : this.color, true);
                 counter1[0] = counter1[0] + 1;
             }
             final String fpsText = grayString + "FPS " + ChatFormatting.WHITE + Minecraft.debugFPS;
-            final String text = grayString + "Ping " + ChatFormatting.WHITE + Managers.serverManager.getPing();
+            final String text = grayString + "Ping " + ChatFormatting.WHITE + InfinityLoop.serverManager.getPing();
             if (this.renderer.getStringWidth(text) > this.renderer.getStringWidth(fpsText)) {
                 if (this.ping.getValue()) {
                     this.renderer.drawString(text, (float) (width - (this.renderer.getStringWidth(text) + 2)), (float) (2 + k++ * 10), (this.rolling.getValue() && this.rainbow.getValue()) ? this.colorMap.get(2 + k * 10) : this.color, true);
@@ -411,13 +410,13 @@ public class HUD extends Module {
         final int hposX = (int) (HUD.mc.player.posX * nether);
         final int hposZ = (int) (HUD.mc.player.posZ * nether);
         if (this.renderingUp.getValue()) {
-            Managers.notificationManager.handleNotifications(height - (k + 16));
+            InfinityLoop.notificationManager.handleNotifications(height - (k + 16));
         } else {
-            Managers.notificationManager.handleNotifications(height - (j + 16));
+            InfinityLoop.notificationManager.handleNotifications(height - (j + 16));
         }
         k = ((HUD.mc.currentScreen instanceof GuiChat) ? 14 : 0);
         final String coordinates = String.valueOf(ChatFormatting.WHITE) + posX + ChatFormatting.GRAY + " [" + hposX + "], " + ChatFormatting.WHITE + posY + ChatFormatting.GRAY + ", " + ChatFormatting.WHITE + posZ + ChatFormatting.GRAY + " [" + hposZ + "]";
-        final String text4 = (this.direction.getValue() ? (Managers.rotationManager.getDirection4D(false) + " ") : "") + (this.coords.getValue() ? coordinates : "") + "";
+        final String text4 = (this.direction.getValue() ? (InfinityLoop.rotationManager.getDirection4D(false) + " ") : "") + (this.coords.getValue() ? coordinates : "") + "";
         final TextManager renderer12 = this.renderer;
         final String text16 = text4;
         final float x12 = 2.0f;
@@ -486,8 +485,8 @@ public class HUD extends Module {
 
     public void renderLag() {
         final int width = this.renderer.scaledWidth;
-        if (Managers.serverManager.isServerNotResponding()) {
-            final String text = ((this.lag.getValue() == LagNotify.GRAY) ? ChatFormatting.GRAY : ChatFormatting.RED) + "Server not responding: " + MathUtil.round(Managers.serverManager.serverRespondingTime() / 1000.0f, 1) + "s.";
+        if (InfinityLoop.serverManager.isServerNotResponding()) {
+            final String text = ((this.lag.getValue() == LagNotify.GRAY) ? ChatFormatting.GRAY : ChatFormatting.RED) + "Server not responding: " + MathUtil.round(InfinityLoop.serverManager.serverRespondingTime() / 1000.0f, 1) + "s.";
             this.renderer.drawString(text, width / 2.0f - this.renderer.getStringWidth(text) / 2.0f + 2.0f, 20.0f, (this.rolling.getValue() && this.rainbow.getValue()) ? this.colorMap.get(20) : this.color, true);
         }
     }

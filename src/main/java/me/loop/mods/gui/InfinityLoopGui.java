@@ -1,6 +1,6 @@
 package me.loop.mods.gui;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.mods.Mod;
@@ -60,13 +60,13 @@ public class InfinityLoopGui
 
     private void load() {
         int x = -80;
-        for (final Category category : Managers.moduleManager.getCategories()) {
+        for (final Category category : InfinityLoop.moduleManager.getCategories()) {
             this.components.add(new Component(category.getName(), x += 96, 50, true) {
 
                 @Override
                 public void setupItems() {
                     counter1 = new int[]{1};
-                    Managers.moduleManager.getModulesByCategory(category).forEach(module -> {
+                    InfinityLoop.moduleManager.getModulesByCategory(category).forEach(module -> {
                         if (!module.hidden) {
                             this.addButton(new ModuleButton(module));
                         }

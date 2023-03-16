@@ -1,10 +1,10 @@
 package me.loop.mods.modules.impl.combat;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.minecraft.InventoryUtil;
 import me.loop.api.utils.impl.worlds.Timer;
-import me.loop.mods.modules.Module;
 import me.loop.mods.modules.Category;
+import me.loop.mods.modules.Module;
 import me.loop.mods.settings.Setting;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -64,7 +64,7 @@ public class AutoArmor
             int slot3;
             ItemStack chest;
             int slot4;
-            if (this.mendingTakeOff.getValue().booleanValue() && InventoryUtil.holdingItem(ItemExpBottle.class) && AutoArmor.mc.gameSettings.keyBindUseItem.isKeyDown() && AutoArmor.mc.world.playerEntities.stream().noneMatch(e -> e != AutoArmor.mc.player && !Managers.friendManager.isFriend(e.getName()) && AutoArmor.mc.player.getDistance(e) <= (float) this.closestEnemy.getValue().intValue()) && !this.flag) {
+            if (this.mendingTakeOff.getValue().booleanValue() && InventoryUtil.holdingItem(ItemExpBottle.class) && AutoArmor.mc.gameSettings.keyBindUseItem.isKeyDown() && AutoArmor.mc.world.playerEntities.stream().noneMatch(e -> e != AutoArmor.mc.player && !InfinityLoop.friendManager.isFriend(e.getName()) && AutoArmor.mc.player.getDistance(e) <= (float) this.closestEnemy.getValue().intValue()) && !this.flag) {
                 int goods;
                 int dam;
                 int takeOff = 0;
@@ -132,7 +132,7 @@ public class AutoArmor
                 this.getSlotOn(8, slot);
             }
         }
-        if (this.timer.passedMs((int) ((float) this.delay.getValue().intValue() * Managers.serverManager.getTpsFactor()))) {
+        if (this.timer.passedMs((int) ((float) this.delay.getValue().intValue() * InfinityLoop.serverManager.getTpsFactor()))) {
             if (!this.taskList.isEmpty()) {
                 for (int i = 0; i < this.actions.getValue(); ++i) {
                     InventoryUtil.Task task = this.taskList.poll();

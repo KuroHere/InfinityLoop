@@ -1,6 +1,6 @@
 package me.loop.api.utils.impl.renders.helper.dism;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.mods.modules.impl.render.Dismemberment;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -61,7 +61,7 @@ public class RenderGib extends Render<EntityGib>
         //  bindTexture();
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, MathHelper.clamp(gib.groundTime >= Managers.moduleManager.getModuleByClass(Dismemberment.class).gibGroundTime.getValue() ? 1.0F - (gib.groundTime - Managers.moduleManager.getModuleByClass(Dismemberment.class).gibGroundTime.getValue() + par9) / 20F : 1.0F, 0F, 1F));
+        GlStateManager.color(1.0F, 1.0F, 1.0F, MathHelper.clamp(gib.groundTime >= InfinityLoop.moduleManager.getModuleByClass(Dismemberment.class).gibGroundTime.getValue() ? 1.0F - (gib.groundTime - InfinityLoop.moduleManager.getModuleByClass(Dismemberment.class).gibGroundTime.getValue() + par9) / 20F : 1.0F, 0F, 1F));
         GlStateManager.alphaFunc(GL11.GL_GREATER, 0.003921569F);
 
         GlStateManager.translate(par2, par4, par6);

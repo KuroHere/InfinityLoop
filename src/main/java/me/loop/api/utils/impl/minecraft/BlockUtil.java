@@ -1,7 +1,7 @@
 package me.loop.api.utils.impl.minecraft;
 
 import com.google.common.util.concurrent.AtomicDouble;
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.EntityUtil;
 import me.loop.api.utils.impl.RotationUtil;
 import me.loop.api.utils.impl.Util;
@@ -269,7 +269,7 @@ public class BlockUtil
             sneaking = true;
         }
         if (rotate) {
-            Managers.rotationManager.lookAtVec3d(hitVec);
+            InfinityLoop.rotationManager.lookAtVec3d(hitVec);
         }
         BlockUtil.rightClickBlock(neighbour, hitVec, hand, opposite, packet);
         BlockUtil.mc.player.swingArm(EnumHand.MAIN_HAND);

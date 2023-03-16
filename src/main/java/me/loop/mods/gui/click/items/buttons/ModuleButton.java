@@ -1,15 +1,15 @@
 package me.loop.mods.gui.click.items.buttons;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.loop.api.managers.Managers;
-import me.loop.mods.gui.InfinityLoopGui;
-import me.loop.mods.modules.Module;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.maths.ImageUtil;
 import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.api.utils.impl.renders.helper.RoundedShader;
+import me.loop.mods.gui.InfinityLoopGui;
 import me.loop.mods.gui.click.items.Item;
 import me.loop.mods.gui.font.FontRender;
+import me.loop.mods.modules.Module;
 import me.loop.mods.modules.impl.client.ClickGui.ClickEnum;
 import me.loop.mods.modules.impl.client.ClickGui.ClickGui;
 import me.loop.mods.modules.impl.client.Colors;
@@ -121,7 +121,7 @@ public class ModuleButton
                     } else {
                         RoundedShader.drawRoundOutline(15.0f, 35.0f, 10 + this.renderer.getStringWidth(this.module.getDescription()), (float) (10), 2.8f, 0.1f, fillcolor, fillcolor);
                     }
-                    Managers.textManager.drawStringWithShadow(this.module.getDescription(), 17.0f, 36.0f, -1);
+                    InfinityLoop.textManager.drawStringWithShadow(this.module.getDescription(), 17.0f, 36.0f, -1);
                 }
                 if (follow) {
 
@@ -153,7 +153,7 @@ public class ModuleButton
         }
         if (chart) {
             if (module.getSettings().size() > 4) {
-                ClickGui gui = Managers.moduleManager.getModuleByClass(ClickGui.class);
+                ClickGui gui = InfinityLoop.moduleManager.getModuleByClass(ClickGui.class);
                 String color = (module.isOn() || chart) ? "" : "" + ChatFormatting.GRAY;
                 String gear = subOpen ? gui.close.getValue() : gui.open.getValue();
 

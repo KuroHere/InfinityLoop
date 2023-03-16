@@ -1,7 +1,8 @@
-package me.loop.api.managers.impl;
+package me.loop.api.managers;
 
 import com.google.common.base.Strings;
 import com.mojang.realmsclient.gui.ChatFormatting;
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.TotemPopEvent;
 import me.loop.api.events.impl.network.ConnectionEvent;
 import me.loop.api.events.impl.network.DeathEvent;
@@ -9,7 +10,6 @@ import me.loop.api.events.impl.network.PacketEvent;
 import me.loop.api.events.impl.player.EventMotionUpdate;
 import me.loop.api.events.impl.render.Render2DEvent;
 import me.loop.api.events.impl.render.Render3DEvent;
-import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.renders.GLUProjection;
 import me.loop.api.utils.impl.worlds.Timer;
 import me.loop.mods.Mod;
@@ -67,21 +67,21 @@ public class EventManager extends Mod {
     public void onUpdate(LivingEvent.LivingUpdateEvent event) {
         if (!fullNullCheck() && (event.getEntity().getEntityWorld()).isRemote && event.getEntityLiving().equals(mc.player)) {
 
-            Managers.moduleManager.onUpdate();
-            Managers.totemPopManager.onUpdate();
-            Managers.inventoryManager.update();
-            Managers.holeManager.update();
+            InfinityLoop.moduleManager.onUpdate();
+            InfinityLoop.totemPopManager.onUpdate();
+            InfinityLoop.inventoryManager.update();
+            InfinityLoop.holeManager.update();
 
             if (this.timer.passedMs(HUD.getInstance().moduleListUpdates.getValue().intValue())) {
-                Managers.moduleManager.sortModules(true);
-                Managers.moduleManager.alphabeticallySortModules();
+                InfinityLoop.moduleManager.sortModules(true);
+                InfinityLoop.moduleManager.alphabeticallySortModules();
                 this.timer.reset();
             }
         }
         if(!fullNullCheck()) {
-            if (Managers.moduleManager.getModuleByClass(ClickGui.class).getBind().getKey() == -1) {
+            if (InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).getBind().getKey() == -1) {
                 Command.sendMessage(ChatFormatting.GRAY + "Default clickgui keybind is: " + ChatFormatting.GREEN + "P");
-                Managers.moduleManager.getModuleByClass(ClickGui.class).setBind(Keyboard.getKeyIndex("P"));
+                InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).setBind(Keyboard.getKeyIndex("P"));
             }
         }
     }
@@ -101,20 +101,20 @@ public class EventManager extends Mod {
     @SubscribeEvent
     public void onClientConnect(FMLNetworkEvent.ClientConnectedToServerEvent event) {
         this.logoutTimer.reset();
-        Managers.moduleManager.onLogin();
+        InfinityLoop.moduleManager.onLogin();
     }
 
     @SubscribeEvent
     public void onClientDisconnect(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
-        Managers.totemPopManager.onLogout();
-        Managers.moduleManager.onLogout();
+        InfinityLoop.totemPopManager.onLogout();
+        InfinityLoop.moduleManager.onLogout();
     }
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (fullNullCheck())
             return;
-        Managers.moduleManager.onTick();
+        InfinityLoop.moduleManager.onTick();
         for (EntityPlayer player : mc.world.playerEntities) {
             if (player == null || player.getHealth() > 0.0F)
                 continue;
@@ -127,13 +127,13 @@ public class EventManager extends Mod {
         if (fullNullCheck())
             return;
         if (event.getStage() == 0) {
-            Managers.speedManager.updateValues();
-            Managers.rotationManager.updateRotations();
-            Managers.positionManager.updatePosition();
+            InfinityLoop.speedManager.updateValues();
+            InfinityLoop.rotationManager.updateRotations();
+            InfinityLoop.positionManager.updatePosition();
         }
         if (event.getStage() == 1) {
-            Managers.rotationManager.restoreRotations();
-            Managers.positionManager.restorePosition();
+            InfinityLoop.rotationManager.restoreRotations();
+            InfinityLoop.positionManager.restorePosition();
         }
     }
 
@@ -142,14 +142,14 @@ public class EventManager extends Mod {
         if (event.getStage() != 0) {
             return;
         }
-        Managers.serverManager.onPacketReceived();
+        InfinityLoop.serverManager.onPacketReceived();
         if (event.getPacket() instanceof SPacketEntityStatus) {
             final SPacketEntityStatus packet = (SPacketEntityStatus) event.getPacket();
             if (packet.getOpCode() == 35 && packet.getEntity(EventManager.mc.world) instanceof EntityPlayer) {
                 final EntityPlayer player = (EntityPlayer)packet.getEntity(EventManager.mc.world);
                 MinecraftForge.EVENT_BUS.post(new TotemPopEvent(player));
-                Managers.totemPopManager.onTotemPop(player);
-                Managers.positionManager.onTotemPop(player);
+                InfinityLoop.totemPopManager.onTotemPop(player);
+                InfinityLoop.positionManager.onTotemPop(player);
             }
         }
         else if (event.getPacket() instanceof SPacketPlayerListItem && !Mod.fullNullCheck() && this.logoutTimer.passedS(1.0)) {
@@ -186,7 +186,7 @@ public class EventManager extends Mod {
             });
         }
         else if (event.getPacket() instanceof SPacketTimeUpdate) {
-            Managers.serverManager.update();
+            InfinityLoop.serverManager.update();
         }
     }
 
@@ -212,7 +212,7 @@ public class EventManager extends Mod {
         GL11.glGetInteger(2978, viewPort);
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         projection.updateMatrices(viewPort, modelView, projectionPort, (double)scaledResolution.getScaledWidth() / (double) Minecraft.getMinecraft().displayWidth, (double)scaledResolution.getScaledHeight() / (double)Minecraft.getMinecraft().displayHeight);
-        Managers.moduleManager.onRender3D(render3dEvent);
+        InfinityLoop.moduleManager.onRender3D(render3dEvent);
         GlStateManager.glLineWidth(1.0f);
         GlStateManager.shadeModel(7424);
         GlStateManager.disableBlend();
@@ -231,7 +231,7 @@ public class EventManager extends Mod {
     @SubscribeEvent
     public void renderHUD(RenderGameOverlayEvent.Post event) {
         if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR)
-            Managers.textManager.updateResolution();
+            InfinityLoop.textManager.updateResolution();
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -239,7 +239,7 @@ public class EventManager extends Mod {
         if (event.getType().equals(RenderGameOverlayEvent.ElementType.TEXT)) {
             ScaledResolution resolution = new ScaledResolution(mc);
             Render2DEvent render2DEvent = new Render2DEvent(event.getPartialTicks(), resolution);
-            Managers.moduleManager.onRender2D(render2DEvent);
+            InfinityLoop.moduleManager.onRender2D(render2DEvent);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
@@ -247,7 +247,7 @@ public class EventManager extends Mod {
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (Keyboard.getEventKeyState())
-            Managers.moduleManager.onKeyInput(Keyboard.getEventKey());
+            InfinityLoop.moduleManager.onKeyInput(Keyboard.getEventKey());
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -257,7 +257,7 @@ public class EventManager extends Mod {
             try {
                 mc.ingameGUI.getChatGUI().addToSentMessages(event.getMessage());
                 if (event.getMessage().length() > 1) {
-                    Managers.commandManager.executeCommand(event.getMessage().substring(Command.getCommandPrefix().length() - 1));
+                    InfinityLoop.commandManager.executeCommand(event.getMessage().substring(Command.getCommandPrefix().length() - 1));
                 } else {
                     Command.sendMessage("Please enter a command.");
                 }

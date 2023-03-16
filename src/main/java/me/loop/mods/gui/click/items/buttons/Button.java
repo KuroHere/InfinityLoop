@@ -1,6 +1,6 @@
 package me.loop.mods.gui.click.items.buttons;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.renders.Drawable;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.mods.gui.InfinityLoopGui;
@@ -23,8 +23,8 @@ public class Button
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width, this.y + (float) this.height - 1.5f, this.getState() ? (!this.isHovering(mouseX, mouseY) ? Managers.colorManager.getColorWithAlpha(Managers.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue()) : Managers.colorManager.getColorWithAlpha(Managers.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue())) : (!this.isHovering(mouseX, mouseY) ? new Color(0x273B3B3B, true).getRGB() : new Color(0x4D3B3B3B, true).getRGB()));
-        Managers.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 2.0f - (float) InfinityLoopGui.INSTANCE.getTextOffset(), this.getState() ? -1 : -5592406);
+        RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width, this.y + (float) this.height - 1.5f, this.getState() ? (!this.isHovering(mouseX, mouseY) ? InfinityLoop.colorManager.getColorWithAlpha(InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).hoverAlpha.getValue()) : InfinityLoop.colorManager.getColorWithAlpha(InfinityLoop.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue())) : (!this.isHovering(mouseX, mouseY) ? new Color(0x273B3B3B, true).getRGB() : new Color(0x4D3B3B3B, true).getRGB()));
+        InfinityLoop.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 2.0f - (float) InfinityLoopGui.INSTANCE.getTextOffset(), this.getState() ? -1 : -5592406);
         Drawable.drawBlurredShadow((int) x, (int) (y + height), (int) width, 1, 9, new Color(0, 0, 0, 192));
     }
 

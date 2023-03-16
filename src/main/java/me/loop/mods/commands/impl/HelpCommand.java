@@ -1,7 +1,7 @@
 package me.loop.mods.commands.impl;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.mods.commands.Command;
 
 public class HelpCommand
@@ -13,8 +13,8 @@ public class HelpCommand
     @Override
     public void execute(String[] commands) {
         HelpCommand.sendMessage("Commands: ");
-        for (Command command : Managers.commandManager.getCommands()) {
-            HelpCommand.sendMessage(ChatFormatting.GRAY + Managers.commandManager.getPrefix() + command.getName());
+        for (Command command : InfinityLoop.commandManager.getCommands()) {
+            HelpCommand.sendMessage(ChatFormatting.GRAY + InfinityLoop.commandManager.getPrefix() + command.getName());
         }
     }
 }

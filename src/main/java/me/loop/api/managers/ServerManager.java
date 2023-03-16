@@ -1,4 +1,4 @@
-package me.loop.api.managers.impl;
+package me.loop.api.managers;
 
 import me.loop.api.utils.impl.worlds.Timer;
 import me.loop.mods.Mod;

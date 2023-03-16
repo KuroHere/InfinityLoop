@@ -1,6 +1,6 @@
 package me.loop.api.utils.impl.renders.helper.dism;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.mods.modules.impl.render.Dismemberment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -283,12 +283,12 @@ public class EntityGib extends Entity
         if(onGround || handleWaterMovement())
         {
             groundTime++;
-            if(groundTime > Managers.moduleManager.getModuleByClass(Dismemberment.class).gibGroundTime.getValue() + 20)
+            if(groundTime > InfinityLoop.moduleManager.getModuleByClass(Dismemberment.class).gibGroundTime.getValue() + 20)
             {
                 setDead();
             }
         }
-        else if(groundTime > Managers.moduleManager.getModuleByClass(Dismemberment.class).gibGroundTime.getValue())
+        else if(groundTime > InfinityLoop.moduleManager.getModuleByClass(Dismemberment.class).gibGroundTime.getValue())
         {
             groundTime--;
         }
@@ -296,7 +296,7 @@ public class EntityGib extends Entity
         {
             groundTime = 0;
         }
-        if(liveTime + Managers.moduleManager.getModuleByClass(Dismemberment.class).gibTime.getValue() < Dismemberment.ticks)
+        if(liveTime + InfinityLoop.moduleManager.getModuleByClass(Dismemberment.class).gibTime.getValue() < Dismemberment.ticks)
         {
             setDead();
         }

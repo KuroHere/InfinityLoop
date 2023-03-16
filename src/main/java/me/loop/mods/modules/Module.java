@@ -1,10 +1,10 @@
 package me.loop.mods.modules;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.client.ClientEvent;
 import me.loop.api.events.impl.render.Render2DEvent;
 import me.loop.api.events.impl.render.Render3DEvent;
-import me.loop.api.managers.Managers;
 import me.loop.mods.Mod;
 import me.loop.mods.commands.Command;
 import me.loop.mods.settings.Bind;
@@ -209,8 +209,8 @@ public abstract class Module
     }
 
     public void setDisplayName(String name) {
-        Module module = Managers.moduleManager.getModuleByDisplayName(name);
-        Module originalModule = Managers.moduleManager.getModuleByName(name);
+        Module module = InfinityLoop.moduleManager.getModuleByDisplayName(name);
+        Module originalModule = InfinityLoop.moduleManager.getModuleByName(name);
         if (module == null && originalModule == null) {
             Command.sendMessage(this.getDisplayName() + ", Original name: " + this.getName() + ", has been renamed to: " + name);
             this.displayName.setValue(name);

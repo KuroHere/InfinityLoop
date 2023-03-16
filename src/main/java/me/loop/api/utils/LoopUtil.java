@@ -2,7 +2,7 @@ package me.loop.api.utils;
 
 import com.google.common.collect.Maps;
 import javafx.util.Pair;
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.mods.modules.impl.client.MainSettings;
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
@@ -185,7 +185,7 @@ public class LoopUtil {
     private static final List<Pair<String, BufferedImage>> userCapes = new ArrayList<>();
 
     public static void syncCapes(){
-        if(!Managers.moduleManager.getModuleByClass(MainSettings.class).DownloadCapes.getValue())
+        if(!InfinityLoop.moduleManager.getModuleByClass(MainSettings.class).DownloadCapes.getValue())
             return;
         (new Thread(() -> {
             try {

@@ -1,10 +1,10 @@
 package me.loop.mods.modules.impl.misc;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.client.ClientEvent;
 import me.loop.api.events.impl.network.PacketEvent;
-import me.loop.api.managers.Managers;
-import me.loop.api.managers.impl.ConfigManager;
+import me.loop.api.managers.ConfigManager;
 import me.loop.api.utils.impl.renders.TextUtil;
 import me.loop.api.utils.impl.worlds.Timer;
 import me.loop.mods.commands.Command;
@@ -47,7 +47,7 @@ public class Notifications
     private boolean check;
 
     public Notifications() {
-        super("Notifications", "Sends Messages.", Category.CLIENT);
+        super("Notifications", "Sends Messages.", Category.CLIENT, true, false);
         this.setInstance();
     }
 
@@ -102,7 +102,7 @@ public class Notifications
                     if (player.getName().equals(Notifications.mc.player.getName()) || this.knownPlayers.contains(player))
                         continue;
                     this.knownPlayers.add(player);
-                    if (Managers.friendManager.isFriend(player)) {
+                    if (InfinityLoop.friendManager.isFriend(player)) {
                         Command.sendMessage("Player \u00a7a" + player.getName() + "\u00a7r" + " entered your visual range" + (this.coords.getValue() ? " at (" + (int) player.posX + ", " + (int) player.posY + ", " + (int) player.posZ + ")!" : "!"), this.popUp.getValue());
                     } else {
                         Command.sendMessage("Player \u00a7c" + player.getName() + "\u00a7r" + " entered your visual range" + (this.coords.getValue() ? " at (" + (int) player.posX + ", " + (int) player.posY + ", " + (int) player.posZ + ")!" : "!"), this.popUp.getValue());
@@ -118,7 +118,7 @@ public class Notifications
                     if (tickPlayerList.contains(player)) continue;
                     this.knownPlayers.remove(player);
                     if (this.leaving.getValue()) {
-                        if (Managers.friendManager.isFriend(player)) {
+                        if (InfinityLoop.friendManager.isFriend(player)) {
                             Command.sendMessage("Player \u00a7a" + player.getName() + "\u00a7r" + " left your visual range" + (this.coords.getValue() ? " at (" + (int) player.posX + ", " + (int) player.posY + ", " + (int) player.posZ + ")!" : "!"), this.popUp.getValue());
                         } else {
                             Command.sendMessage("Player \u00a7c" + player.getName() + "\u00a7r" + " left your visual range" + (this.coords.getValue() ? " at (" + (int) player.posX + ", " + (int) player.posY + ", " + (int) player.posZ + ")!" : "!"), this.popUp.getValue());
@@ -160,7 +160,7 @@ public class Notifications
         if (ModuleTools.getInstance().isEnabled()) {
             switch (ModuleTools.getInstance().notifier.getValue()) {
                 case INFINITYLOOP: {
-                    TextComponentString text = new TextComponentString((Managers.commandManager.getClientMessage()) + " " + ChatFormatting.BOLD + module.getDisplayName() + ChatFormatting.RESET + ChatFormatting.GREEN + " enabled.");
+                    TextComponentString text = new TextComponentString((InfinityLoop.commandManager.getClientMessage()) + " " + ChatFormatting.BOLD + module.getDisplayName() + ChatFormatting.RESET + ChatFormatting.GREEN + " enabled.");
                     return text;
                 }
                 case FUTURE: {
@@ -217,7 +217,7 @@ public class Notifications
                 }
             }
         }
-        TextComponentString text = new TextComponentString(Managers.commandManager.getClientMessage() + " " + ChatFormatting.GREEN + module.getDisplayName() + " toggled on.");
+        TextComponentString text = new TextComponentString(InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.GREEN + module.getDisplayName() + " toggled on.");
         return text;
     }
 
@@ -225,7 +225,7 @@ public class Notifications
         if (ModuleTools.getInstance().isEnabled()) {
             switch (ModuleTools.getInstance().notifier.getValue()) {
                 case INFINITYLOOP: {
-                    TextComponentString text = new TextComponentString((Managers.commandManager.getClientMessage()) + " " + ChatFormatting.BOLD + module.getDisplayName() + ChatFormatting.RESET + ChatFormatting.RED + " disabled.");
+                    TextComponentString text = new TextComponentString((InfinityLoop.commandManager.getClientMessage()) + " " + ChatFormatting.BOLD + module.getDisplayName() + ChatFormatting.RESET + ChatFormatting.RED + " disabled.");
                     return text;
                 }
                 case FUTURE: {
@@ -282,7 +282,7 @@ public class Notifications
                 }
             }
         }
-        TextComponentString text = new TextComponentString(Managers.commandManager.getClientMessage() + " " + ChatFormatting.RED + module.getDisplayName() + " toggled off.");
+        TextComponentString text = new TextComponentString(InfinityLoop.commandManager.getClientMessage() + " " + ChatFormatting.RED + module.getDisplayName() + " toggled off.");
         return text;
     }
 

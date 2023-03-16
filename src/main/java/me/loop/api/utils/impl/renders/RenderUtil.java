@@ -1,6 +1,6 @@
 package me.loop.api.utils.impl.renders;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.EntityUtil;
 import me.loop.api.utils.impl.PlayerUtil;
 import me.loop.api.utils.impl.Util;
@@ -1274,8 +1274,8 @@ public class RenderUtil
         GlStateManager.pushMatrix();
         RenderUtil.glBillboardDistanceScaled((float) pos.getX() + 0.5f, (float) pos.getY() + 0.5f, (float) pos.getZ() + 0.5f, RenderUtil.mc.player, 1.0f);
         GlStateManager.disableDepth();
-        GlStateManager.translate(-((double) Managers.textManager.getStringWidth((text)) / 2.0), 0.0, 0.0);
-        Managers.textManager.drawStringWithShadow((text), 0.0f, 0.0f, -5592406);
+        GlStateManager.translate(-((double) InfinityLoop.textManager.getStringWidth((text)) / 2.0), 0.0, 0.0);
+        InfinityLoop.textManager.drawStringWithShadow((text), 0.0f, 0.0f, -5592406);
         GlStateManager.popMatrix();
     }
 

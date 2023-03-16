@@ -1,7 +1,7 @@
-package me.loop.api.managers.impl;
+package me.loop.api.managers;
 
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.mods.gui.other.notifications.Notifications;
 import me.loop.mods.modules.impl.client.HUD;
 
@@ -13,7 +13,7 @@ public class NotificationManager {
     public void handleNotifications(int posY) {
         for (int i = 0; i < this.getNotifications().size(); ++i) {
             this.getNotifications().get(i).onDraw(posY);
-            posY -= Managers.moduleManager.getModuleByClass(HUD.class).renderer.getFontHeight() + 5;
+            posY -= InfinityLoop.moduleManager.getModuleByClass(HUD.class).renderer.getFontHeight() + 5;
         }
     }
 

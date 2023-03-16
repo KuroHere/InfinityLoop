@@ -1,6 +1,6 @@
 package me.loop.asm.mixins;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.maths.ImageUtil;
 import me.loop.asm.MixinInterface;
 import net.minecraft.client.gui.GuiChat;
@@ -25,7 +25,7 @@ public abstract class MixinGuiChat implements MixinInterface {
     public void keyTypedHook(char typedChar, int keyCode, CallbackInfo info) {
 
         if ((mc.currentScreen instanceof GuiChat)) {
-            shouldDrawOutline = inputField.getText().startsWith(Managers.commandManager.getPrefix());
+            shouldDrawOutline = inputField.getText().startsWith(InfinityLoop.commandManager.getPrefix());
 
         } else {
             shouldDrawOutline = false;
@@ -43,7 +43,7 @@ public abstract class MixinGuiChat implements MixinInterface {
             glDisable(GL_BLEND);
             glDisable(GL_TEXTURE_2D);
 
-            ImageUtil.glColor(Managers.colorManager.getCurrent());
+            ImageUtil.glColor(InfinityLoop.colorManager.getCurrent());
 
             glLineWidth(1.5f);
             glBegin(GL_LINES);

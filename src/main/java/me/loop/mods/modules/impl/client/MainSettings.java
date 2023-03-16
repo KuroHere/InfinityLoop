@@ -1,11 +1,11 @@
 package me.loop.mods.modules.impl.client;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.client.ClientEvent;
-import me.loop.api.managers.Managers;
 import me.loop.mods.commands.Command;
-import me.loop.mods.modules.Module;
 import me.loop.mods.modules.Category;
+import me.loop.mods.modules.Module;
 import me.loop.mods.settings.Setting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -27,15 +27,15 @@ public class MainSettings extends Module {
     public void onSettingChange(ClientEvent event) {
         if (event.getStage() == 0 && event.getSetting().getClient().equals(this)) {
             if (event.getSetting().equals(this.prefix)) {
-                Managers.commandManager.setPrefix(this.prefix.getPlannedValue());
-                Command.sendMessage("Prefix set to " + ChatFormatting.DARK_GRAY + Managers.commandManager.getPrefix());
+                InfinityLoop.commandManager.setPrefix(this.prefix.getPlannedValue());
+                Command.sendMessage("Prefix set to " + ChatFormatting.DARK_GRAY + InfinityLoop.commandManager.getPrefix());
             }
         }
     }
 
     @Override
     public void onLoad() {
-        Managers.commandManager.setPrefix(this.prefix.getValue());
+        InfinityLoop.commandManager.setPrefix(this.prefix.getValue());
     }
 
     public enum ShaderModeEn {

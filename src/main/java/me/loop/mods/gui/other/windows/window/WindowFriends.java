@@ -1,6 +1,6 @@
 package me.loop.mods.gui.other.windows.window;
 
-import me.loop.api.managers.Managers;
+import me.loop.InfinityLoop;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.mods.gui.click.items.buttons.StringButton;
 import me.loop.mods.gui.font.FontRender;
@@ -86,7 +86,7 @@ public class WindowFriends {
             FontRender.drawCentString5("ADD", ((posX + width - 7f - 40f) + (posX + width - 7f)) / 2f, posY + height - 18 + 5, new Color(0x69FFFFFF, true).getRGB());
         }
 
-        for (String friend : Managers.friendManager.getFriends()) {
+        for (String friend : InfinityLoop.friendManager.getFriends()) {
             if(already.contains(friend)){
                 continue;
             }
@@ -127,7 +127,7 @@ public class WindowFriends {
                 return;
             }
             if(keyCode == 28){
-                Managers.friendManager.addFriend(addString);
+                InfinityLoop.friendManager.addFriend(addString);
                 addString = "Type here";
                 listeningString = false;
                 return;
@@ -156,7 +156,7 @@ public class WindowFriends {
             if(Objects.equals(addString, "Type here")){
                 return;
             }
-            Managers.friendManager.addFriend(addString);
+            InfinityLoop.friendManager.addFriend(addString);
             listeningString = false;
         }
         if(isInWindow(mouseX,mouseY)){

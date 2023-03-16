@@ -1,11 +1,11 @@
 package me.loop.mods.modules.impl.player;
 
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.network.PacketEvent;
-import me.loop.api.managers.Managers;
-import me.loop.api.managers.impl.InventoryManager;
+import me.loop.api.managers.InventoryManager;
 import me.loop.api.utils.impl.EntityUtil;
-import me.loop.mods.modules.Module;
 import me.loop.mods.modules.Category;
+import me.loop.mods.modules.Module;
 import me.loop.mods.settings.Setting;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -94,7 +94,7 @@ public class BlockTweaks
         if (BlockTweaks.fullNullCheck()) {
             return;
         }
-        if (this.noFriendAttack.getValue().booleanValue() && event.getPacket() instanceof CPacketUseEntity && (entity = (packet = (CPacketUseEntity) event.getPacket()).getEntityFromWorld(BlockTweaks.mc.world)) != null && Managers.friendManager.isFriend(entity.getName())) {
+        if (this.noFriendAttack.getValue().booleanValue() && event.getPacket() instanceof CPacketUseEntity && (entity = (packet = (CPacketUseEntity) event.getPacket()).getEntityFromWorld(BlockTweaks.mc.world)) != null && InfinityLoop.friendManager.isFriend(entity.getName())) {
             event.setCanceled(true);
         }
     }

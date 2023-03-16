@@ -1,14 +1,14 @@
 package me.loop.mods.modules.impl.render;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import me.loop.InfinityLoop;
 import me.loop.api.events.impl.render.Render3DEvent;
-import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.EntityUtil;
 import me.loop.api.utils.impl.maths.MathUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
 import me.loop.mods.commands.Command;
-import me.loop.mods.modules.Module;
 import me.loop.mods.modules.Category;
+import me.loop.mods.modules.Module;
 import me.loop.mods.settings.Setting;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -81,7 +81,7 @@ public class PearlRender
                 } else if (faceing.equals("east")) {
                     faceing = "west";
                 }
-                Command.sendMessage(Managers.friendManager.isFriend(closestPlayer.getName()) ? (ChatFormatting.AQUA + closestPlayer.getName() + ChatFormatting.DARK_GRAY + " has just thrown a pearl heading " + faceing + "!") : (ChatFormatting.RED + closestPlayer.getName() + ChatFormatting.DARK_GRAY + " has just thrown a pearl heading " + faceing + "!"));
+                Command.sendMessage(InfinityLoop.friendManager.isFriend(closestPlayer.getName()) ? (ChatFormatting.AQUA + closestPlayer.getName() + ChatFormatting.DARK_GRAY + " has just thrown a pearl heading " + faceing + "!") : (ChatFormatting.RED + closestPlayer.getName() + ChatFormatting.DARK_GRAY + " has just thrown a pearl heading " + faceing + "!"));
                 this.flag = false;
             }
         }

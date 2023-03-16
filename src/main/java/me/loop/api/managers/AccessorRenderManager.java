@@ -1,4 +1,4 @@
-package me.loop.api.managers.impl;
+package me.loop.api.managers;
 
 import net.minecraft.client.renderer.entity.RenderManager;
 import org.spongepowered.asm.mixin.Mixin;
