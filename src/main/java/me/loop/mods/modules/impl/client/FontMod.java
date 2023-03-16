@@ -44,7 +44,7 @@ public class FontMod
     @SubscribeEvent
     public void onSettingChange(ClientEvent event) {
         Setting setting;
-        if (event.getStage() == 2 && (setting = event.getSetting()) != null && setting.getClient().equals(this)) {
+        if (event.getStage() == 2 && (setting = event.getSetting()) != null && setting.getMod().equals(this)) {
             if (setting.getName().equals("FontName") && !FontMod.checkFont(setting.getPlannedValue().toString(), false)) {
                 Command.sendMessage("\u00a7cThat font doesnt exist.");
                 event.setCanceled(true);

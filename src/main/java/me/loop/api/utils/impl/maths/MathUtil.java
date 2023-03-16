@@ -13,8 +13,7 @@ import java.util.*;
 
 public class MathUtil
         implements Util {
-    private static final Random random = new Random();
-
+    public static final Random random = new Random();
     public static int getRandom(int min, int max) {
         return min + random.nextInt(max - min + 1);
     }

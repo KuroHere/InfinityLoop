@@ -1,4 +1,4 @@
-package me.loop.mods.gui.screen.particles;
+package me.loop.mods.gui.screen.effects.particles;
 
 import me.loop.mods.gui.click.Component;
 

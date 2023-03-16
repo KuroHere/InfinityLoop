@@ -2,8 +2,8 @@ package me.loop.mods.gui.other.windows;
 
 import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.api.utils.impl.renders.RenderUtil;
-import me.loop.mods.gui.screen.particles.ParticleSystem;
-import me.loop.mods.gui.screen.particles.ParticlesComponent;
+import me.loop.mods.gui.screen.effects.particles.ParticleSystem;
+import me.loop.mods.gui.screen.effects.particles.ParticlesComponent;
 import me.loop.mods.gui.other.windows.window.WindowAltManager;
 import me.loop.mods.gui.other.windows.window.WindowConfig;
 import me.loop.mods.gui.other.windows.window.WindowFriends;

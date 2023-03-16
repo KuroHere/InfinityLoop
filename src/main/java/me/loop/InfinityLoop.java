@@ -1,7 +1,7 @@
 package me.loop;
 
 import me.loop.api.managers.*;
-import me.loop.api.utils.impl.IconUtils;
+import me.loop.api.utils.impl.IconUtil;
 import me.loop.api.utils.impl.phobos.Sphere;
 import me.loop.api.utils.impl.renders.helper.dism.EntityGib;
 import me.loop.api.utils.impl.renders.helper.dism.RenderGib;
@@ -28,22 +28,21 @@ import java.util.Objects;
 @Mod(modid = "infinityloop", name = "InfinityLoop", version = "0.0.3")
 
 public class InfinityLoop {
-    public static final String MODID = "infinityloop", MODNAME = "InfinityLoop", MODVER = "0.0.3";
+    public static final String
+            MODID = "infinityloop",
+            MODNAME = "InfinityLoop",
+            MODVER = "0.0.3";
+    public static final Logger LOGGER = LogManager.getLogger("InfinityLoop");
 
     @Mod.Instance
     public static InfinityLoop INSTANCE;
-    public static long initTime;
     private static boolean unloaded;
+    public static long initTime;
     public static java.util.List<String> alts = new ArrayList<>();
 
-    /*--------------------    LOGGER  ------------------------*/
-
-    public static final Logger LOGGER;
     static {
-        LOGGER = LogManager.getLogger("InfinityLoop");
         unloaded = false;
     }
-
 
     /*-----------------    MANAGERS  ---------------------*/
 
@@ -80,14 +79,9 @@ public class InfinityLoop {
     public static CFontRenderer fontRenderer8;
 
 
+
     /*---------------------    LOAD  -------------------------*/
     public static void load() {
-        ConfigManager.loadAlts();
-        ConfigManager.loadSearch();
-
-        if (InfinityLoop.INSTANCE == null) {
-            InfinityLoop.INSTANCE = new InfinityLoop();
-        }
 
         LOGGER.info("Loading InfinityLoop...");
         unloaded = false;
@@ -96,9 +90,17 @@ public class InfinityLoop {
             reloadManager = null;
         }
 
+        ConfigManager.loadAlts();
+        ConfigManager.loadSearch();
         ConfigManager.init();
 
+        if (InfinityLoop.INSTANCE == null) {
+            InfinityLoop.INSTANCE = new InfinityLoop();
+        }
+
+
         /*------------    FONTS    ------------ */
+
         try {
             fontRenderer = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(InfinityLoop.class.getResourceAsStream("/fonts/ThunderFont2.ttf"))).deriveFont( 24.f ), true, true );
             fontRenderer2 = new CFontRenderer( Font.createFont( Font.TRUETYPE_FONT, Objects.requireNonNull(InfinityLoop.class.getResourceAsStream("/fonts/ThunderFont3.ttf"))).deriveFont( 36.f ), true, true );
@@ -133,36 +135,38 @@ public class InfinityLoop {
         holeManager = new HoleManager();
         timerManager = new TimerManager();
 
-        LOGGER.info("Managers loaded.");
         moduleManager.init();
         LOGGER.info("Modules loaded.");
-        ConfigManager.load(ConfigManager.getCurrentConfig());
         eventManager.init();
         LOGGER.info("EventManager loaded.");
         textManager.init(true);
+        LOGGER.info("TextManager loaded.");
+        FriendManager.loadFriends();
+        ConfigManager.load(ConfigManager.getCurrentConfig());
+
         moduleManager.onLoad();
         LOGGER.info(MODNAME + "successfully loaded!\n");
 
         /*if(mc.session != null && !alts.contains(mc.session.getUsername())) {
             alts.add(mc.session.getUsername());
         }*/
-        LOGGER.info(MODNAME + " initialized!\n");
     }
 
     /*--------------------    UNLOAD  ------------------------*/
 
-    public static void unload(boolean unload) {
+    public static void unload(boolean initReloadManager) {
         Display.setTitle("Minecraft 1.12.2");
-        LOGGER.info("\n\nUnloading InfinityLoop by KuroHere");
-        if (unload) {
+        if (initReloadManager) {
             reloadManager = new ReloadManager();
             reloadManager.init(commandManager != null ? commandManager.getPrefix() : ".");
         }
+
         ConfigManager.saveAlts();
         ConfigManager.saveSearch();
+        FriendManager.saveFriends();
+
         if (!unloaded) {
             eventManager.onUnload();
-
             moduleManager.onUnloadPre();
             ConfigManager.save(ConfigManager.getCurrentConfig());
             moduleManager.onUnloadPost();
@@ -201,6 +205,7 @@ public class InfinityLoop {
         if (!unloaded) {
             eventManager.onUnload();
             moduleManager.onUnloadPre();
+            ConfigManager.save(ConfigManager.getCurrentConfig());
             moduleManager.onUnloadPost();
             unloaded = true;
         }
@@ -211,15 +216,20 @@ public class InfinityLoop {
 
     public static void setWindowIcon() {
         if (Util.getOSType() != Util.EnumOS.OSX) {
-            try (final InputStream inputStream16x = Minecraft.class.getResourceAsStream("loop/imgs/icon16x.png");
-                 final InputStream inputStream32x = Minecraft.class.getResourceAsStream("loop/imgs/icon32x.png")) {
-                final ByteBuffer[] icons = { IconUtils.INSTANCE.readImageToBuffer(inputStream16x), IconUtils.INSTANCE.readImageToBuffer(inputStream32x) };
-                Display.setIcon((ByteBuffer[])icons);
+            try (final InputStream inputStream16x = Minecraft.class.getResourceAsStream("/assets/minecraft/textures/icon16x.png");
+                 final InputStream inputStream32x = Minecraft.class.getResourceAsStream("/assets/minecraft/textures/icon32x.png")) {
+                final ByteBuffer[] icons = { IconUtil.INSTANCE.readImageToBuffer(inputStream16x), IconUtil.INSTANCE.readImageToBuffer(inputStream32x) };
+                Display.setIcon(icons);
             }
             catch (Exception e) {
-                InfinityLoop.LOGGER.error("Couldn't set Windows Icon", (Throwable)e);
+                InfinityLoop.LOGGER.error("Couldn't set Windows Icon", e);
             }
         }
+    }
+
+    //IDK why I'm doing that
+    private void setWindowsIcon() {
+        InfinityLoop.setWindowIcon();
     }
 
     @Mod.EventHandler
@@ -232,14 +242,10 @@ public class InfinityLoop {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         Display.setTitle(MODNAME + " | " + MODVER);
-        this.setWindowIcon();
+        setWindowsIcon();
 
         InfinityLoop.load();
         initTime = System.currentTimeMillis();
         MinecraftForge.EVENT_BUS.register(networkHandler);
-    }
-
-    static {
-        unloaded = false;
     }
 }

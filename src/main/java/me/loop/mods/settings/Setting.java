@@ -14,7 +14,7 @@ public class Setting<T> {
     private Mod mod;
     private final T defaultValue;
     private T value, plannedValue, min, max;
-    public boolean isOpen, hasRestriction, shouldRenderStringName, booleanValue, hideAlpha;
+    public boolean isOpen, restriction, shouldRenderStringName, booleanValue, hideAlpha;
     private String description;
 
     public Setting(String name, T defaultValue) {
@@ -41,7 +41,8 @@ public class Setting<T> {
         this.max = max;
         this.plannedValue = defaultValue;
         this.description = description;
-        this.hasRestriction = true;
+
+        this. restriction = true;
     }
 
     public Setting(String name, T defaultValue, T min, T max) {
@@ -52,7 +53,8 @@ public class Setting<T> {
         this.max = max;
         this.plannedValue = defaultValue;
         this.description = "";
-        this.hasRestriction = true;
+
+        this. restriction = true;
     }
 
     public Setting(String name, T defaultValue, T min, T max, Predicate<T> visibility, String description) {
@@ -64,7 +66,8 @@ public class Setting<T> {
         this.plannedValue = defaultValue;
         this.visibility = visibility;
         this.description = description;
-        this.hasRestriction = true;
+
+        this. restriction = true;
     }
 
     public Setting(String name, T defaultValue, T min, T max, Predicate<T> visibility) {
@@ -76,7 +79,8 @@ public class Setting<T> {
         this.plannedValue = defaultValue;
         this.visibility = visibility;
         this.description = "";
-        this.hasRestriction = true;
+
+        this. restriction = true;
     }
 
     public Setting(String name, T defaultValue, Predicate<T> visibility) {
@@ -95,31 +99,8 @@ public class Setting<T> {
         return this.value;
     }
 
-    public void setValue(T value) {
-        this.setPlannedValue(value);
-        if (this.hasRestriction) {
-            if (((Number) this.min).floatValue() > ((Number) value).floatValue()) {
-                this.setPlannedValue(this.min);
-            }
-            if (((Number) this.max).floatValue() < ((Number) value).floatValue()) {
-                this.setPlannedValue(this.max);
-            }
-        }
-        ClientEvent event = new ClientEvent(this);
-        MinecraftForge.EVENT_BUS.post(event);
-        if (!event.isCanceled()) {
-            this.value = this.plannedValue;
-        } else {
-            this.plannedValue = this.value;
-        }
-    }
-
     public T getPlannedValue() {
         return this.plannedValue;
-    }
-
-    public void setPlannedValue(T value) {
-        this.plannedValue = value;
     }
 
     public T getMin() {
@@ -138,27 +119,12 @@ public class Setting<T> {
         this.max = max;
     }
 
-    public Mod getClient() {
+    public Mod getMod() {
         return this.mod;
-    }
-
-    public void setMod(Mod mod) {
-        this.mod = mod;
     }
 
     public String currentEnumName() {
         return EnumConverter.getProperName((Enum) this.value);
-    }
-
-    public void increaseEnum() {
-        this.plannedValue = (T) EnumConverter.increaseEnum((Enum) this.value);
-        ClientEvent event = new ClientEvent(this);
-        MinecraftForge.EVENT_BUS.post(event);
-        if (!event.isCanceled()) {
-            this.value = this.plannedValue;
-        } else {
-            this.plannedValue = this.value;
-        }
     }
 
     public String getType() {
@@ -208,8 +174,8 @@ public class Setting<T> {
         return this.value.toString();
     }
 
-    public boolean hasRestriction() {
-        return this.hasRestriction;
+    public boolean restriction() {
+        return this. restriction;
     }
 
     public Setting<T> setRenderName(boolean renderName) {
@@ -224,8 +190,64 @@ public class Setting<T> {
         return this.visibility.test(this.getValue());
     }
 
-    public static boolean nullCheck() {
-        return Mod.mc.player == null;
+    //General setters
+
+    public void setValue(T valueIn) {
+        setPlannedValue(valueIn);
+
+        if (restriction) {
+
+            if (((Number) min).floatValue() > ((Number) valueIn).floatValue()) {
+                setPlannedValue(min);
+            }
+
+            if (((Number) max).floatValue() < ((Number) valueIn).floatValue()) {
+                setPlannedValue(max);
+            }
+        }
+
+        ClientEvent event = new ClientEvent(this);
+        MinecraftForge.EVENT_BUS.post(event);
+
+        if (!event.isCanceled()) {
+            value = plannedValue;
+
+        } else {
+            plannedValue = value;
+        }
+    }
+
+    public void setPlannedValue(T valueIn) {
+        plannedValue = valueIn;
+    }
+
+    public void setMod(Mod modIn) {
+        mod = modIn;
+    }
+
+    //Enum setters
+
+    public void setEnumValue(String value) {
+        for (Enum e : ((Enum) this.value).getClass().getEnumConstants()) {
+
+            if (!e.name().equalsIgnoreCase(value)) continue;
+
+            this.value = (T) e;
+        }
+    }
+
+    public void increaseEnum() {
+        plannedValue = (T) EnumConverter.increaseEnum((Enum) value);
+
+        ClientEvent event = new ClientEvent(this);
+        MinecraftForge.EVENT_BUS.post(event);
+
+        if (!event.isCanceled()) {
+            value = plannedValue;
+
+        } else {
+            plannedValue = value;
+        }
     }
 
     //Color picker setters
@@ -237,7 +259,7 @@ public class Setting<T> {
 
     public Setting<T> injectBoolean(boolean valueIn) {
         if (value instanceof Color) {
-            hasRestriction = true;
+             restriction = true;
             booleanValue = valueIn;
         }
 
@@ -254,5 +276,8 @@ public class Setting<T> {
         return this;
     }
 
+    public static boolean nullCheck() {
+        return Mod.mc.player == null;
+    }
 }
 

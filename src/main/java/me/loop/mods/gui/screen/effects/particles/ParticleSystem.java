@@ -1,4 +1,4 @@
-package me.loop.mods.gui.screen.particles;
+package me.loop.mods.gui.screen.effects.particles;
 
 import me.loop.mods.modules.impl.client.ClickGui.ClickGui;
 import me.loop.mods.modules.impl.client.Colors;

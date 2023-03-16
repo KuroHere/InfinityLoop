@@ -25,7 +25,7 @@ public class MainSettings extends Module {
 
     @SubscribeEvent
     public void onSettingChange(ClientEvent event) {
-        if (event.getStage() == 0 && event.getSetting().getClient().equals(this)) {
+        if (event.getStage() == 0 && event.getSetting().getMod().equals(this)) {
             if (event.getSetting().equals(this.prefix)) {
                 InfinityLoop.commandManager.setPrefix(this.prefix.getPlannedValue());
                 Command.sendMessage("Prefix set to " + ChatFormatting.DARK_GRAY + InfinityLoop.commandManager.getPrefix());

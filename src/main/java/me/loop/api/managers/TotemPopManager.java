@@ -20,7 +20,7 @@ public class TotemPopManager
     private Map<EntityPlayer, Integer> poplist = new ConcurrentHashMap<>();
 
     public void onUpdate() {
-        if (this.notifications.totemAnnounce.passedMs(this.notifications.delay.getValue()) && this.notifications.isOn() && this.notifications.totemPops.getValue()) {
+       //if (this.notifications.totemAnnounce.passedMs(this.notifications.delay.getValue()) && this.notifications.isOn() && this.notifications.totemPops.getValue()) {
             for (EntityPlayer player : this.toAnnounce) {
                 if (player == null) continue;
                 int playerNumber = 0;
@@ -33,7 +33,7 @@ public class TotemPopManager
                 this.notifications.totemAnnounce.reset();
                 break;
             }
-        }
+        //}
     }
 
     public String pop(EntityPlayer player) {

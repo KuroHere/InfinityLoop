@@ -59,7 +59,7 @@ public class ModuleButton
                     newItems.add(new ColorButton(setting));
 
                 if (setting.isNumberSetting()) {
-                    if (setting.hasRestriction()) {
+                    if (setting.restriction()) {
                         newItems.add(new SliderButton(setting));
                         continue;
                     }
