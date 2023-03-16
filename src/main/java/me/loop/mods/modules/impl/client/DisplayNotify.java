@@ -48,7 +48,7 @@ public class DisplayNotify
     public Setting<Integer> descBlue = this.add(new Setting<Object>("DescriptionBlue", 170, 0, 255));
 
     public DisplayNotify() {
-        super("DisplayNotify", "notifications for stuffs.", Category.CLIENT);
+        super("DisplayNotify", "notifications for stuffs.", Category.CLIENT, true, false);
         INSTANCE = this;
     }
 

@@ -66,6 +66,25 @@ public class ColorUtil {
         return (a & 0xFF) << 24 | (r & 0xFF) << 16 | (g & 0xFF) << 8 | (b & 0xFF);
     }
 
+    public static Color interpolate(float value, Color start, Color end) {
+        float sr = (float)start.getRed() / 255.0F;
+        float sg = (float)start.getGreen() / 255.0F;
+        float sb = (float)start.getBlue() / 255.0F;
+        float sa = (float)start.getAlpha() / 255.0F;
+
+        float er = (float)end.getRed() / 255.0F;
+        float eg = (float)end.getGreen() / 255.0F;
+        float eb = (float)end.getBlue() / 255.0F;
+        float ea = (float)end.getAlpha() / 255.0F;
+
+        float r = sr * value + er * (1.0F - value);
+        float g = sg * value + eg * (1.0F - value);
+        float b = sb * value + eb * (1.0F - value);
+        float a = sa * value + ea * (1.0F - value);
+
+        return new Color(r, g, b, a);
+    }
+
     public boolean isRainbow() {
         return rainbow;
     }

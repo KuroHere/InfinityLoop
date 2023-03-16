@@ -1,5 +1,6 @@
 package me.loop.mods.modules.impl.test;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import me.loop.mods.commands.Command;
 import me.loop.mods.modules.Module;
 import me.loop.mods.modules.Category;
@@ -17,12 +18,12 @@ public class Test extends Module {
     public Setting<enumtesting> enumTest = this.add(new Setting<Object>("EnumTest", enumtesting.Test));
     public Setting<Color> color = this.add(new Setting<>("Color", new Color(0x8800FF00)));
     public Test() {
-        super("Test", "description", Category.TEST);
+        super("Test", "description", Category.TEST, true, false);
     }
 
     @Override
     public void onEnable() {
-        Command.sendMessage("Just A TestPlace!!");
+        Command.sendMessage(ChatFormatting.AQUA + "Just A TestPlace!!");
         this.disable();
     }
     public enum enumtesting {

@@ -101,7 +101,7 @@ public class AutoCrystal
     private boolean rotating = false;
 
     public AutoCrystal() {
-        super("AutoCrystal", "NiggaHack ac best ac", Category.COMBAT);
+        super("AutoCrystal", "NiggaHack ac best ac", Category.COMBAT, true, false);
 
     }
     public static List<BlockPos> getSphere(BlockPos loc, float r, int h, boolean hollow, boolean sphere, int plus_y) {

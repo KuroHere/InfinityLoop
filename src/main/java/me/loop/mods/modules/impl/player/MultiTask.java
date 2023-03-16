@@ -8,7 +8,7 @@ public class MultiTask
     private static MultiTask INSTANCE = new MultiTask();
 
     public MultiTask() {
-        super("MultiTask", "Allows you to eat while mining.", Category.PLAYER);
+        super("MultiTask", "Allows you to eat while mining.", Category.PLAYER, true, false);
         this.setInstance();
     }
 

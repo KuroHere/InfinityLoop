@@ -19,7 +19,7 @@ public class Criticals
     private final boolean resetTimer = false;
 
     public Criticals() {
-        super("Criticals", "Scores criticals for you", Category.COMBAT);
+        super("Criticals", "Scores criticals for you", Category.COMBAT, true, false);
     }
 
     @SubscribeEvent

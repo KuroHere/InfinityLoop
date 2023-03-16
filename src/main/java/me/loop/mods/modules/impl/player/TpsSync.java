@@ -11,7 +11,7 @@ public class TpsSync
     public Setting<Boolean> mining = this.add(new Setting<Boolean>("Mine", Boolean.TRUE));
 
     public TpsSync() {
-        super("TpsSync", "Syncs your client with the TPS.", Category.PLAYER);
+        super("TpsSync", "Syncs your client with the TPS.", Category.PLAYER, true, false);
         this.setInstance();
     }
 

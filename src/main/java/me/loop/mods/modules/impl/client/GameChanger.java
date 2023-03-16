@@ -25,7 +25,7 @@ public class GameChanger
     public final Setting<Integer> ambienceAlpha = this.add(new Setting<>("A-Alpha",255,0,255, v -> customAmbience.getValue()));
 
     public GameChanger() {
-        super("GameChanger", "Change Some Minecraft Parameter", Category.CLIENT);
+        super("GameChanger", "Change Some Minecraft Parameter", Category.CLIENT, true, false);
         this.setInstance();
     }
 

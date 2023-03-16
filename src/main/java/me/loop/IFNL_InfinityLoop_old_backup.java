@@ -1,28 +1,67 @@
-package me.loop.api.managers;
+package me.loop;
 
-import me.loop.InfinityLoop;
 import me.loop.api.managers.impl.*;
-import me.loop.api.utils.impl.renders.helper.ffp.NetworkHandler;
+import me.loop.api.utils.impl.IconUtils;
+import me.loop.api.utils.impl.phobos.Sphere;
+import me.loop.api.utils.impl.renders.helper.dism.EntityGib;
+import me.loop.api.utils.impl.renders.helper.dism.RenderGib;
+import me.loop.asm.accessors.GlobalExecutor;
 import me.loop.mods.gui.font.CFontRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.Util;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class Managers extends InfinityLoop {
+import static me.loop.api.managers.Managers.networkHandler;
+import static me.loop.api.utils.impl.Util.mc;
 
-    private static boolean loaded = true;
+
+// OLD BACKUP FOR TESTING
+// U NEEDS TO REMOVE MANAGERS.CLASS
+
+@Mod(modid = "infinityloop", name = "InfinityLoop", version = "0.0.3")
+
+public class IFNL_InfinityLoop_old_backup {
+    public static final String MODID = "infinityloop", MODNAME = "InfinityLoop", MODVER = "0.0.3";
+
+    @Mod.Instance
+    public static IFNL_InfinityLoop_old_backup INSTANCE;
+    public static long initTime;
+    public static java.util.List<String> alts = new ArrayList<>();
+
+    /*--------------------    LOGGER  ------------------------*/
+
+    public static final Logger LOGGER;
+    static {
+        LOGGER = LogManager.getLogger("InfinityLoop");
+        unloaded = false;
+    }
+
+    public static Logger getLogger()
+    {
+        return LOGGER;
+    }
+
 
     /*-----------------    MANAGERS  ---------------------*/
 
-    public static TotemPopManager totemPopManager;
-    public static NotificationManager notificationManager;
     public static CommandManager commandManager;
     public static FriendManager friendManager;
     public static ModuleManager moduleManager;
     public static PacketManager packetManager;
     public static ColorManager colorManager;
-    public static NetworkHandler networkHandler;
     public static HoleManager holeManager;
     public static InventoryManager inventoryManager;
     public static PotionManager potionManager;
@@ -35,7 +74,6 @@ public class Managers extends InfinityLoop {
     public static EventManager eventManager;
     public static TextManager textManager;
     public static TimerManager timerManager;
-
 
     /*-----------------    Fonts  ---------------------*/
 
@@ -54,13 +92,13 @@ public class Managers extends InfinityLoop {
         ConfigManager.loadAlts();
         ConfigManager.loadSearch();
         LOGGER.info("\n\nLoading InfinityLoop by KuroHere");
-
-        loaded = true;
+        unloaded = false;
         if (reloadManager != null) {
             reloadManager.unload();
             reloadManager = null;
         }
 
+        ConfigManager.init();
 
         /*------------    FONTS    ------------ */
         try {
@@ -75,12 +113,8 @@ public class Managers extends InfinityLoop {
         } catch ( Exception e ) {
             e.printStackTrace( );
         }
-
         /*------------------------------------- */
 
-        totemPopManager = new TotemPopManager();
-        notificationManager = new NotificationManager();
-        networkHandler = new NetworkHandler();
         textManager = new TextManager();
         commandManager = new CommandManager();
         friendManager = new FriendManager();
@@ -97,45 +131,43 @@ public class Managers extends InfinityLoop {
         configManager = new ConfigManager();
         holeManager = new HoleManager();
         timerManager = new TimerManager();
-
-        ConfigManager.init();
-        ConfigManager.load(ConfigManager.getCurrentConfig());
-
-        Managers.moduleManager.init();
+        LOGGER.info("Managers loaded.");
+        moduleManager.init();
         LOGGER.info("Modules loaded.");
-
+        ConfigManager.load(ConfigManager.getCurrentConfig());
         eventManager.init();
         LOGGER.info("EventManager loaded.");
-
         textManager.init(true);
+        moduleManager.onLoad();
+        LOGGER.info("InfinityLoop successfully loaded!\n");
 
-        totemPopManager.init();
-        LOGGER.info("TotemPopManager loaded.");
-
-        FriendManager.loadFriends();
-        moduleManager.onUnloadPre();
-
+        if(mc.session != null && !alts.contains(mc.session.getUsername())) {
+            alts.add(mc.session.getUsername());
+        }
     }
 
     /*--------------------    UNLOAD  ------------------------*/
 
-    public static void unload(boolean initReloadManager) {
+    private static boolean unloaded;
 
-        ConfigManager.saveAlts();
-        ConfigManager.saveSearch();
-        FriendManager.saveFriends();
-
-        if (initReloadManager) {
+    public static void unload(boolean unload) {
+        Display.setTitle("Minecraft 1.12.2");
+        LOGGER.info("\n\nUnloading InfinityLoop by KuroHere");
+        if (unload) {
             reloadManager = new ReloadManager();
             reloadManager.init(commandManager != null ? commandManager.getPrefix() : ".");
         }
+        ConfigManager.saveAlts();
+        ConfigManager.saveSearch();
+        if (!unloaded) {
+            eventManager.onUnload();
 
-        onUnload();
-        Display.setTitle("Minecraft 1.12.2");
+            moduleManager.onUnloadPre();
+            ConfigManager.save(ConfigManager.getCurrentConfig());
+            moduleManager.onUnloadPost();
+            unloaded = true;
+        }
 
-        totemPopManager = null;
-        notificationManager = null;
-        networkHandler = null;
         fontRenderer = null;
         eventManager = null;
         friendManager = null;
@@ -152,23 +184,50 @@ public class Managers extends InfinityLoop {
         moduleManager = null;
         textManager = null;
         timerManager = null;
+        LOGGER.info("InfinityLoop unloaded!\n");
     }
 
-    public static void onUnload() {
+    /*--------------------    RELOAD  ------------------------*/
 
-        if (isLoaded()) {
-            eventManager.onUnload();
-            moduleManager.onUnloadPre();
-            ConfigManager.save(ConfigManager.getCurrentConfig());
-            moduleManager.onUnloadPost();
+    public static void reload() {
+        InfinityLoop.unload(false);
+        InfinityLoop.load();
+    }
 
-            loaded = false;
+
+    /*--------------------------------------------------------*/
+
+    public static void setWindowIcon() {
+        if (Util.getOSType() != Util.EnumOS.OSX) {
+            try (final InputStream inputStream16x = Minecraft.class.getResourceAsStream("loop/imgs/icon16x.png");
+                 final InputStream inputStream32x = Minecraft.class.getResourceAsStream("loop/imgs/icon32x.png")) {
+                final ByteBuffer[] icons = { IconUtils.INSTANCE.readImageToBuffer(inputStream16x), IconUtils.INSTANCE.readImageToBuffer(inputStream32x) };
+                Display.setIcon((ByteBuffer[])icons);
+            }
+            catch (Exception e) {
+                InfinityLoop.LOGGER.error("Couldn't set Windows Icon", (Throwable)e);
+            }
         }
     }
 
-    //Getters
 
-    public static boolean isLoaded() {
-        return loaded;
+    @Mod.EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        RenderingRegistry.registerEntityRenderingHandler(EntityGib.class, RenderGib::new);
+        GlobalExecutor.EXECUTOR.submit(() -> Sphere.cacheSphere());
+        LOGGER.info("KuroHere!");
+    }
+
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent event) {
+        this.setWindowIcon();
+        Display.setTitle("InfinityLoop");
+        initTime = System.currentTimeMillis();
+        InfinityLoop.load();
+        MinecraftForge.EVENT_BUS.register(networkHandler);
+    }
+
+    static {
+        unloaded = false;
     }
 }

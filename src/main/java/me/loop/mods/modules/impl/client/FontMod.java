@@ -25,7 +25,7 @@ public class FontMod
     private boolean reloadFont = false;
 
     public FontMod() {
-        super("CustomFont", "CustomFont for all of the clients text. Use the font command.", Category.CLIENT);
+        super("CustomFont", "CustomFont for all of the clients text. Use the font command.", Category.CLIENT, true, false);
         INSTANCE = this;
     }
 

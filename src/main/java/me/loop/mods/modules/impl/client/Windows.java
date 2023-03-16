@@ -11,7 +11,7 @@ public class Windows extends Module {
     private static Windows INSTANCE = new Windows();
 
     public Windows() {
-        super("Windows", "Windows", Category.CLIENT);
+        super("Windows", "Windows", Category.CLIENT, true, false);
         this.setInstance();
     }
 

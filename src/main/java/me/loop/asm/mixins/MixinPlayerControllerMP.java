@@ -4,7 +4,7 @@ import me.loop.api.events.Event;
 import me.loop.api.events.impl.player.RightClickBlockEvent;
 import me.loop.api.events.impl.world.BlockEvent;
 import me.loop.api.managers.Managers;
-import me.loop.mods.modules.impl.misc.BlockTweaks;
+import me.loop.mods.modules.impl.player.BlockTweaks;
 import me.loop.mods.modules.impl.player.TpsSync;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

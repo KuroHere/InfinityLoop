@@ -254,5 +254,9 @@ public class MathUtil
     public static Vec3d roundVector(final Vec3d vec3d, final int places) {
         return new Vec3d(roundToPlaces(vec3d.x, places), roundToPlaces(vec3d.y, places), roundToPlaces(vec3d.z, places));
     }
+
+    public static double normalize(double value, double min, double max) {
+        return (value - min) / (max - min);
+    }
 }
 

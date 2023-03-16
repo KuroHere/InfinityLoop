@@ -13,7 +13,7 @@ public class RPC
     public Setting<Boolean> users = this.add(new Setting<>("users", false));
 
     public RPC() {
-        super("RPC", "Discord rich presence", Category.CLIENT);
+        super("RPC", "Discord rich presence", Category.CLIENT, true, false);
         RPC.INSTANCE = this;
     }
 

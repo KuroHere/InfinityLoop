@@ -14,7 +14,7 @@ public class HandChams
     public Setting<Integer> alpha = this.add(new Setting<Integer>("Alpha", 240, 0, 255));
 
     public HandChams() {
-        super("HandChams", "Changes your hand color.", Category.RENDER);
+        super("HandChams", "Changes your hand color.", Category.RENDER, true, false);
         this.setInstance();
     }
 

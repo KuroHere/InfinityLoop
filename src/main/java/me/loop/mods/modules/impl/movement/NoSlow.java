@@ -21,7 +21,7 @@ public class NoSlow extends Module {
     private static NoSlow instance;
 
     public NoSlow() {
-        super("NoSlow", "No Slow", Category.MOVEMENT);
+        super("NoSlow", "No Slow", Category.MOVEMENT, true, false);
         instance = this;
     }
 

@@ -20,7 +20,7 @@ public class CustomAnimation extends Module {
     public Setting<Integer> speed = add(new Setting<>("Speed", 13, 1, 20,v -> this.swing.getValue()));
 
     public CustomAnimation() {
-        super("Animation", "Change animations.", Category.RENDER);
+        super("Animation", "Change animations.", Category.RENDER, true, false);
         this.setInstance();
     }
 

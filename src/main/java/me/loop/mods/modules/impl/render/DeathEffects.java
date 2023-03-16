@@ -40,7 +40,7 @@ public class DeathEffects extends Module {
     final Object sync = new Object();
 
     public DeathEffects() {
-        super("DeathEffects", "Spawn a thunder to the loser", Category.RENDER);
+        super("DeathEffects", "Spawn a thunder to the loser", Category.RENDER, true, false);
 
     }
 

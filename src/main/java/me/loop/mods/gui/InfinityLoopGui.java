@@ -30,19 +30,35 @@ public class InfinityLoopGui
         extends GuiScreen {
 
     public static InfinityLoopGui INSTANCE;
-    private final TaskbarStage taskbarStage = new TaskbarStage();
-    private static Description description;
-    public ParticleSystem particleSystem;
-    private ParticlesComponent particlesComponent;
-    private int color;
     private final ArrayList<Component> components = new ArrayList();
+    private final TaskbarStage taskbarStage = new TaskbarStage();
+    private ParticlesComponent particlesComponent;
+    public ParticleSystem particleSystem;
+    private static Description description;
+
+    private int color;
 
     public InfinityLoopGui() {
-        this.onLoad();
+        this.setInstance();
+        this.load();
     }
 
-    private void onLoad() {
+    public static InfinityLoopGui getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new InfinityLoopGui();
+        }
+        return INSTANCE;
+    }
+
+    public static InfinityLoopGui getClickGui() {
+        return InfinityLoopGui.getInstance();
+    }
+
+    private void setInstance() {
         INSTANCE = this;
+    }
+
+    private void load() {
         int x = -80;
         for (final Category category : Managers.moduleManager.getCategories()) {
             this.components.add(new Component(category.getName(), x += 96, 50, true) {
@@ -50,25 +66,26 @@ public class InfinityLoopGui
                 @Override
                 public void setupItems() {
                     counter1 = new int[]{1};
-
-                    Managers.moduleManager.getModulesByCategory(category).forEach(module -> addButton(new ModuleButton(module)));
+                    Managers.moduleManager.getModulesByCategory(category).forEach(module -> {
+                        if (!module.hidden) {
+                            this.addButton(new ModuleButton(module));
+                        }
+                    });
                 }
             });
         }
-
         components.forEach(components -> components.getItems().sort(Comparator.comparing(Mod::getName)));
     }
 
     public void updateModule(Module module) {
-        for (Component component : components) {
-
+        block0: for (Component component : this.components) {
             for (Item item : component.getItems()) {
-
                 if (!(item instanceof ModuleButton)) continue;
-                ModuleButton button = (ModuleButton) item;
+                ModuleButton button = (ModuleButton)item;
                 Module mod = button.getModule();
                 if (module == null || !module.equals(mod)) continue;
                 button.initSettings();
+                continue block0;
             }
         }
     }
@@ -93,6 +110,7 @@ public class InfinityLoopGui
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.checkMouseWheel();
         ScaledResolution sr = new ScaledResolution(mc);
+        description.setDraw(false);
         if (ClickGui.INSTANCE.isOn()) {
             if(ClickGui.INSTANCE.dirt.getValue()){
                 this.drawBackground(1);

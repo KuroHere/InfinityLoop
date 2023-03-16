@@ -45,7 +45,7 @@ public class BlockHighlight
     private int color;
 
     public BlockHighlight() {
-        super("BlockHighlight", "Highlights the block u look at.", Category.RENDER);
+        super("BlockHighlight", "Highlights the block u look at.", Category.RENDER, true, false);
         this.setInstance();
     }
 

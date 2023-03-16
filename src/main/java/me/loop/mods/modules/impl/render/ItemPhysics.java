@@ -10,7 +10,7 @@ public class ItemPhysics extends Module {
     public final Setting<Float> Scaling = this.add(new Setting("Scaling", Float.valueOf(0.5f), Float.valueOf(0.0f), Float.valueOf(10.0f)));
 
     public ItemPhysics() {
-        super("ItemPhysics", "Apply physics to items.", Category.RENDER);
+        super("ItemPhysics", "Apply physics to items.", Category.RENDER, true, false);
         this.setInstance();
     }
 

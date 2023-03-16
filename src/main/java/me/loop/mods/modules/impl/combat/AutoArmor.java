@@ -30,7 +30,7 @@ public class AutoArmor
     boolean flag;
 
     public AutoArmor() {
-        super("AutoArmor", "Puts Armor on for you.", Category.COMBAT);
+        super("AutoArmor", "Puts Armor on for you.", Category.COMBAT, true, false);
     }
 
     @Override

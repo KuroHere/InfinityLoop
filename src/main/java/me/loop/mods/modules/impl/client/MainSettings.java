@@ -20,7 +20,7 @@ public class MainSettings extends Module {
     public Setting<Boolean> ofFastRender = this.add(new Setting<>("TurnOffFastRender", true));
 
     public MainSettings() {
-        super("MainSettings", "MAIN MENU", Category.CLIENT);
+        super("MainSettings", "MAIN MENU", Category.CLIENT, true, false);
     }
 
     @SubscribeEvent

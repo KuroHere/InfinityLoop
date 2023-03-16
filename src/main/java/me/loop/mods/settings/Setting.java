@@ -14,7 +14,7 @@ public class Setting<T> {
     private Mod mod;
     private final T defaultValue;
     private T value, plannedValue, min, max;
-    public boolean isOpen, hasRestriction, shouldRenderStringName, booleanValue;
+    public boolean isOpen, hasRestriction, shouldRenderStringName, booleanValue, hideAlpha;
     private String description;
 
     public Setting(String name, T defaultValue) {
@@ -227,5 +227,32 @@ public class Setting<T> {
     public static boolean nullCheck() {
         return Mod.mc.player == null;
     }
+
+    //Color picker setters
+
+    /**
+     * injectBoolean() is for adding a boolean value to a color picker (i.e. to add an option to enable/disable a color).
+     * @param valueIn is the boolean value that'll be set by default.
+     */
+
+    public Setting<T> injectBoolean(boolean valueIn) {
+        if (value instanceof Color) {
+            hasRestriction = true;
+            booleanValue = valueIn;
+        }
+
+        return this;
+    }
+
+    /**
+     * hideAlpha() is for disabling the alpha slider in color pickers which don't need it.
+     */
+
+    public Setting<T> hideAlpha() {
+        hideAlpha = true;
+
+        return this;
+    }
+
 }
 

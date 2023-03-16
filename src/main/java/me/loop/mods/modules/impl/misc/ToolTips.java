@@ -64,7 +64,7 @@ public class ToolTips
     private int textRadarY = 0;
 
     public ToolTips() {
-        super("ToolTips", "Several tweaks for tooltips.", Category.MISC);
+        super("ToolTips", "Several tweaks for tooltips.", Category.MISC, true, false);
         this.setInstance();
     }
 

@@ -1,4 +1,4 @@
-package me.loop.mods.modules.impl.misc;
+package me.loop.mods.modules.impl.player;
 
 import me.loop.api.events.impl.network.PacketEvent;
 import me.loop.api.managers.Managers;
@@ -43,7 +43,7 @@ public class BlockTweaks
     public int currentPlayerItem;
 
     public BlockTweaks() {
-        super("BlockTweaks", "Some tweaks for blocks.", Category.PLAYER);
+        super("BlockTweaks", "Some tweaks for blocks.", Category.PLAYER, true, false);
         this.setInstance();
     }
 

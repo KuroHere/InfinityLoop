@@ -8,7 +8,7 @@ import net.minecraft.item.ItemExpBottle;
 public class FastPlace
         extends Module {
     public FastPlace() {
-        super("FastPlace", "Fast everything.", Category.PLAYER);
+        super("FastPlace", "Fast everything.", Category.PLAYER, true, false);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class Colors extends Module {
     public Map<Integer, Integer> colorHeightMap = new HashMap<Integer, Integer>();
 
     public Colors() {
-        super("Colors", "Universal colors.", Category.CLIENT);
+        super("Colors", "Universal colors.", Category.CLIENT, true, false);
         this.setInstance();
     }
 

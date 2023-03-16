@@ -4,7 +4,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import me.loop.api.events.impl.client.ClientEvent;
 import me.loop.api.events.impl.network.PacketEvent;
 import me.loop.api.managers.Managers;
-import me.loop.api.managers.impl.FileManager;
+import me.loop.api.managers.impl.ConfigManager;
 import me.loop.api.utils.impl.renders.TextUtil;
 import me.loop.api.utils.impl.worlds.Timer;
 import me.loop.mods.commands.Command;
@@ -131,7 +131,7 @@ public class Notifications
     }
 
     public void loadFile() {
-        List<String> fileInput = FileManager.readTextFileAllLines(fileName);
+        List<String> fileInput = ConfigManager.readTextFileAllLines(fileName);
         Iterator<String> i = fileInput.iterator();
         modules.clear();
         while (i.hasNext()) {

@@ -32,7 +32,7 @@ public class PearlRender
     public Setting<Boolean> notify = this.add(new Setting<Boolean>("Notify", false));
 
     public PearlRender() {
-        super("PearlRender", "Renders where pearls will go", Category.RENDER);
+        super("PearlRender", "Renders where pearls will go", Category.RENDER, true, false);
         this.list = new HashMap<EntityPlayer, UUID>();
     }
 

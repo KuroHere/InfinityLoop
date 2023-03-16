@@ -70,19 +70,26 @@ public class ClickGui
     public Setting<Integer> gradiantAlpha = this.add(new Setting<>("GradiantAlpha", 230, 0, 255, v -> this.setting.getValue() == ClickEnum.Settings.BackGround && this.gradiant.getValue()));
     private List<AnchorPoint> anchorPoints = new ArrayList<>();
     public ClickGui() {
-        super("ClickGui", "Opens the ClickGui", Category.CLIENT);
-    }
-
-    @SubscribeEvent
-    public void onSettingChange(ClientEvent event) {
-        Managers.colorManager.setColor(this.moduleMainC.getPlannedValue().getRed(), this.moduleMainC.getPlannedValue().getGreen(), this.moduleMainC.getPlannedValue().getBlue(), this.moduleMainC.getPlannedValue().getAlpha());
+        super("ClickGui", "Opens the ClickGui", Category.CLIENT, true, false);
     }
 
     @Override
     public void onEnable() {
         if (mc.world != null) {
-            mc.displayGuiScreen(InfinityLoopGui.INSTANCE);
+            mc.displayGuiScreen(new InfinityLoopGui());
         }
+    }
+
+    @Override
+    public void onDisable() {
+        if (mc.currentScreen instanceof InfinityLoopGui) {
+            mc.displayGuiScreen(null);
+        }
+    }
+
+    @SubscribeEvent
+    public void onSettingChange(ClientEvent event) {
+        Managers.colorManager.setColor(this.moduleMainC.getPlannedValue().getRed(), this.moduleMainC.getPlannedValue().getGreen(), this.moduleMainC.getPlannedValue().getBlue(), this.moduleMainC.getPlannedValue().getAlpha());
     }
 
     @Override

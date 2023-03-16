@@ -34,7 +34,6 @@ public class InfinityLoop {
     public static java.util.List<String> alts = new ArrayList<>();
     public static long initTime;
 
-
     public static void load() {
         LOGGER.info("Loading InfinityLoop...");
 
@@ -46,6 +45,10 @@ public class InfinityLoop {
 
         LOGGER.info(MODNAME + "successfully loaded!\n");
 
+        //if(me.loop.api.utils.impl.Util.mc.session != null && !alts.contains(me.loop.api.utils.impl.Util.mc.session.getUsername())) {
+            //alts.add(me.loop.api.utils.impl.Util.mc.session.getUsername());
+        //}
+
     }
 
     public static void unload(boolean force) {
@@ -55,6 +58,11 @@ public class InfinityLoop {
 
         LOGGER.info("InfinityLoop unloaded!\n");
 
+    }
+
+    public static void reload() {
+        InfinityLoop.unload(false);
+        InfinityLoop.load();
     }
 
     public static void setWindowIcon() {

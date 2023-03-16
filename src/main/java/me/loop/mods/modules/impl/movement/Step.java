@@ -17,7 +17,7 @@ public class Step
     private static Step instance;
 
     public Step() {
-        super("Step", "Allows you to step up blocks", Category.MOVEMENT);
+        super("Step", "Allows you to step up blocks", Category.MOVEMENT, true, false);
         instance = this;
     }
 

@@ -26,7 +26,7 @@ public class Trajectories extends Module {
     private final Setting<Float> green = this.add(new Setting<>("Green", Float.valueOf(255.0f), Float.valueOf(0.0f), Float.valueOf(255.0f)));
     private final Setting<Float> blue = this.add(new Setting<>("Blue", Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(255.0f)));
     public Trajectories() {
-        super("Trajectories", "Draws trajectories.", Category.RENDER);
+        super("Trajectories", "Draws trajectories.", Category.RENDER, true, false);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class HoleESP
     private int currentAlpha = 0;
 
     public HoleESP() {
-        super("HoleESP", "Shows safe spots.", Category.RENDER);
+        super("HoleESP", "Shows safe spots.", Category.RENDER, true, false);
         this.setInstance();
     }
 

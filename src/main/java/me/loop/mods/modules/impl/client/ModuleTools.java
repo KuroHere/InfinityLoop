@@ -12,7 +12,7 @@ public class ModuleTools extends Module {
     public Setting<TextUtil.Color> abyssColor = this.add(new Setting<>("AbyssTextColor", TextUtil.Color.AQUA, color -> this.notifier.getValue() == Notifier.ABYSS));
 
     public ModuleTools() {
-        super("ModuleTools", "Change settings", Category.CLIENT);
+        super("ModuleTools", "Change settings", Category.CLIENT, true, false);
         INSTANCE = this;
     }
 

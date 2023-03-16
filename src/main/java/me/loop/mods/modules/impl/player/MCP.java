@@ -13,7 +13,7 @@ public class MCP
     private boolean clicked = false;
 
     public MCP() {
-        super("MCP", "Throws a pearl", Category.PLAYER);
+        super("MCP", "Throws a pearl", Category.PLAYER, true, false);
     }
 
     @Override

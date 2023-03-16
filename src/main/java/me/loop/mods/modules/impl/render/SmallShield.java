@@ -13,7 +13,7 @@ public class SmallShield
     public Setting<Float> mainY = this.add(new Setting<Float>("MainHandY", Float.valueOf(0.0f), Float.valueOf(-1.0f), Float.valueOf(1.0f)));
 
     public SmallShield() {
-        super("SmallShield", "Makes you offhand lower.", Category.RENDER);
+        super("SmallShield", "Makes you offhand lower.", Category.RENDER, true, false);
         this.setInstance();
     }
 

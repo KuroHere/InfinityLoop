@@ -67,10 +67,11 @@ public class EventManager extends Mod {
     public void onUpdate(LivingEvent.LivingUpdateEvent event) {
         if (!fullNullCheck() && (event.getEntity().getEntityWorld()).isRemote && event.getEntityLiving().equals(mc.player)) {
 
+            Managers.moduleManager.onUpdate();
             Managers.totemPopManager.onUpdate();
             Managers.inventoryManager.update();
             Managers.holeManager.update();
-            Managers.moduleManager.onUpdate();
+
             if (this.timer.passedMs(HUD.getInstance().moduleListUpdates.getValue().intValue())) {
                 Managers.moduleManager.sortModules(true);
                 Managers.moduleManager.alphabeticallySortModules();

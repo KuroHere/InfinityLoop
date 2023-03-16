@@ -18,7 +18,7 @@ public class FogColor extends Module
     public Setting<Integer> delay = this.add(new Setting<Object>("Delay", Integer.valueOf(160), Integer.valueOf(0), Integer.valueOf(600), v -> this.rainbow.getValue()));
     private final Setting<Boolean> fog = this.add(new Setting<>("Fog", true));
     public FogColor() {
-        super("FogColor", "Changes the color of the sky", Category.RENDER);
+        super("FogColor", "Changes the color of the sky", Category.RENDER, true, false);
     }
 
     private void setInstance() {

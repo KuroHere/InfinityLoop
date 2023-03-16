@@ -15,6 +15,7 @@ public class CommandManager
 
     public CommandManager() {
         super("Command");
+        this.commands.add(new ReloadCommand());
         this.commands.add(new HistoryCommand());
         this.commands.add(new SearchCommand());
         this.commands.add(new loginCommand());

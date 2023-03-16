@@ -23,7 +23,7 @@ public class AutoDoSmth extends Module {
     public final Setting<Float> pitch = this.add(new Setting("Pitch", Float.valueOf(1.0f), Float.valueOf(-10.0f), Float.valueOf(10.0f), v -> this.autoSpin.getValue() && pitchAnimation.getValue()));
 
     public AutoDoSmth() {
-        super("AutoDoSmth", "I dont know why I'm made that", Category.PLAYER);
+        super("AutoDoSmth", "I dont know why I'm made that", Category.PLAYER, true, false);
         this.setInstance();
     }
 

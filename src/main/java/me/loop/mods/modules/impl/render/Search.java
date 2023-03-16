@@ -27,7 +27,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Search extends Module {
 
     public Search() {
-        super("Search", "Find a block", Category.RENDER);
+        super("Search", "Find a block", Category.RENDER, true, false);
     }
 
 

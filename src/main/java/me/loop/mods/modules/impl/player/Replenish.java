@@ -20,7 +20,7 @@ public class Replenish
     private final ArrayList<Item> Hotbar = new ArrayList();
 
     public Replenish() {
-        super("Replenish", "Replenishes your hotbar", Category.PLAYER);
+        super("Replenish", "Replenishes your hotbar", Category.PLAYER, true, false);
     }
 
     @Override

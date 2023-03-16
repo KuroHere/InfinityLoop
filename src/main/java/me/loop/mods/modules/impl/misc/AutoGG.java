@@ -21,7 +21,7 @@ public class AutoGG
     private ConcurrentHashMap<String, Integer> targetedPlayers = null;
 
     public AutoGG() {
-        super("AutoGG", "Sends msg after you kill someone", Category.MISC);
+        super("AutoGG", "Sends msg after you kill someone", Category.MISC, true, false);
         this.setInstance();
     }
 

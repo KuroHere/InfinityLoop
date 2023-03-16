@@ -12,7 +12,7 @@ public class CustomTime extends Module {
     public Setting<Integer> time = this.add(new Setting<>("Time", 1, 1, 24));
 
     public CustomTime() {
-        super("CustomTime","Change your world time(Clientside)", Category.RENDER);
+        super("CustomTime","Change your world time(Clientside)", Category.RENDER, true, false);
     }
 
     @SubscribeEvent

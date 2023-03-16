@@ -29,7 +29,7 @@ public final class HitMarkers
     private int renderTicks = 100;
 
     public HitMarkers() {
-        super("HitMarkers", "hitmarker thingys", Category.RENDER);
+        super("HitMarkers", "hitmarker thingys", Category.RENDER, true, false);
         this.image = new ResourceLocation("textures/hitmarker.png");
     }
 

@@ -21,7 +21,7 @@ public class FakePlayer
     private EntityOtherPlayerMP otherPlayer;
 
     public FakePlayer() {
-        super("FakePlayer", "Spawns fake player", Category.PLAYER);
+        super("FakePlayer", "Spawns fake player", Category.PLAYER, true, false);
         this.setInstance();
     }
 

@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 public class ShadowESP
         extends Module {
     public ShadowESP() {
-        super("ShadowEsp","ShadowEsp", Category.RENDER);
+        super("ShadowEsp","ShadowEsp", Category.RENDER, true, false);
     }
 
     @Override

@@ -14,7 +14,7 @@ import net.minecraftforge.fml.client.GuiModList;
 public class BlurExtends extends Module implements Util {
 
     public BlurExtends() {
-        super("BlurExtends", "Sussy", Category.CLIENT);
+        super("BlurExtends", "Sussy", Category.CLIENT, true, false);
     }
 
     public void onDisable() {

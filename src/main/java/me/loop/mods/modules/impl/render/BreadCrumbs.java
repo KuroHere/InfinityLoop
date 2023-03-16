@@ -1,45 +1,44 @@
 package me.loop.mods.modules.impl.render;
 
-import me.loop.api.events.impl.render.Render3DEvent;
-import me.loop.api.managers.Managers;
-import me.loop.api.managers.impl.AccessorRenderManager;
 import me.loop.api.utils.impl.maths.MathUtil;
-import me.loop.api.utils.impl.worlds.Timer;
-import me.loop.mods.modules.Module;
+import me.loop.api.utils.impl.renders.ColorUtil;
 import me.loop.mods.modules.Category;
+import me.loop.mods.modules.Module;
 import me.loop.mods.settings.Setting;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityEnderPearl;
+import net.minecraft.entity.item.EntityExpBottle;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.*;
 
 public class BreadCrumbs extends Module {
 
-    private static BreadCrumbs INSTANCE = new BreadCrumbs();
-    ArrayList<BreadCrumb> bcs = new ArrayList<>();
-
     public Setting<Mode> mode = this.add(new Setting<>("Mode", Mode.DEFAULT));
-    public Setting<Float> lineWidht = add(new Setting<>("LineWidth", Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(5.0f), v -> this.mode.getValue() == Mode.DEFAULT));
-    public Setting<Integer> tickClear = add(new Setting<>("TickClear",  25, 1, 45));
-    public Setting<Float> fadeSpeed = add(new Setting<>("FadeSpeed", Float.valueOf(0.4f), Float.valueOf(0.1f), Float.valueOf(2.0f)));
-    public Setting<Color> color  = add(new Setting<>("Alpha", new Color(-1), v -> this.mode.getValue() == Mode.DEFAULT));
+    public Setting<ParticleTypes> particleTypes = this.add(new Setting<>("Types", ParticleTypes.DRIP_WATER));
+    private final Setting<Float> lineWidth = add(new Setting<>("Width", 0.8f, 0.1f, 3.0f, v -> mode.getValue() == Mode.DEFAULT));
+    private final Setting<Integer> timeExisted = add(new Setting<>("Delay", 1000, 100, 3000, v -> mode.getValue() == Mode.DEFAULT));
+    private final Setting<Boolean> xp = add(new Setting<>("Exp", true, v -> mode.getValue() == Mode.DEFAULT));
+    private final Setting<Boolean> arrow = add(new Setting<>("Arrows", true, v -> mode.getValue() == Mode.DEFAULT));
+    private final Setting<Boolean> self = add(new Setting<>("Self", true, v -> mode.getValue() == Mode.DEFAULT));
+    private final Setting<Color> color = add(new Setting<>("Color", new Color(125, 125, 213), v -> mode.getValue() == Mode.DEFAULT)).hideAlpha();
+    private final Setting<Color> secondColor = add(new Setting<>("SecondColor", new Color(0xBF80FF), v -> mode.getValue() == Mode.DEFAULT)).injectBoolean(false).hideAlpha();
+    protected Map trails = new HashMap<>();
 
     public BreadCrumbs() {
-        super("BreadCumbs", "Draw Line behind u(Will fix crash on enable soon)", Category.RENDER);
-        this.setInstance();
-    }
-
-    public static BreadCrumbs getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new BreadCrumbs();
-        }
-        return INSTANCE;
-    }
-
-    private void setInstance() {
-        INSTANCE = this;
+        super("BreadCrumbs", "Draws trails behind projectiles and you (bread crumbs)", Category.RENDER, true, false);
     }
 
     public enum Mode {
@@ -47,107 +46,264 @@ public class BreadCrumbs extends Module {
         PARTICLE
     }
 
+    public enum ParticleTypes {
+        EXPLOSION_NORMAL,
+        EXPLOSION_LARGE,
+        EXPLOSION_HUGE,
+        FIREWORKS_SPARK,
+        WATER_BUBBLE,
+        WATER_SPLASH,
+        WATER_WAKE,
+        SUSPENDED,
+        SUSPENDED_DEPTH,
+        CRIT,
+        CRIT_MAGIC,
+        SMOKE_NORMAL,
+        SMOKE_LARGE,
+        SPELL,
+        SPELL_INSTANT,
+        SPELL_MOB,
+        SPELL_MOB_AMBIENT,
+        SPELL_WITCH,
+        DRIP_WATER,
+        DRIP_LAVA,
+        VILLAGER_ANGRY,
+        VILLAGER_HAPPY,
+        TOWN_AURA,
+        NOTE,
+        PORTAL,
+        ENCHANTMENT_TABLE,
+        FLAME,
+        LAVA,
+        FOOTSTEP,
+        CLOUD,
+        REDSTONE,
+        SNOWBALL,
+        SNOW_SHOVEL,
+        SLIME,
+        HEART,
+        BARRIER,
+        ITEM_CRACK,
+        BLOCK_CRACK,
+        BLOCK_DUST,
+        WATER_DROP,
+        ITEM_TAKE,
+        MOB_APPEARANCE,
+        DRAGON_BREATH,
+        END_ROD,
+        DAMAGE_INDICATOR,
+        SWEEP_ATTACK,
+        FALLING_DUST,
+        TOTEM,
+        SPIT
+    }
     @Override
     public void onTick() {
-        if (nullCheck()) return;
-        if (BreadCrumbs.getInstance().mode.getValue() == Mode.PARTICLE)
-            mc.world.spawnParticle(EnumParticleTypes.DRIP_WATER, mc.player.posX, mc.player.posY, mc.player.posZ, mc.player.motionX, mc.player.motionY, mc.player.motionZ, 2);
-    }
+        if (mode.getValue() == Mode.PARTICLE) {
+            mc.world.spawnParticle(EnumParticleTypes.getByName(this.particleTypes.getType()), mc.player.posX, mc.player.posY, mc.player.posZ, mc.player.motionX, mc.player.motionY, mc.player.motionZ, 2);
 
-    public static void putVertex3d(Vec3d vec) {
-        GL11.glVertex3d(vec.x, vec.y, vec.z);
-    }
+        }
 
-    public Vec3d getRenderPos(double x, double y, double z) {
-        AccessorRenderManager renderManager = (AccessorRenderManager) mc.getRenderManager( );
-        x = x - renderManager.getRenderPosX();
-        y = y - renderManager.getRenderPosY();
-        z = z - renderManager.getRenderPosZ();
-        return new Vec3d(x, y, z);
-    }
+        if (!nullCheck()) {
+            if (mode.getValue() == Mode.DEFAULT) {
+                for (Entity entity : mc.world.loadedEntityList) {
+                    if (isValid(entity)) {
+                        if (trails.containsKey(entity.getUniqueID())) {
+                            if (entity.isDead) {
+                                if (((ItemTrail) trails.get(entity.getUniqueID())).timer.isPaused()) {
+                                    ((ItemTrail) trails.get(entity.getUniqueID())).timer.resetDelay();
+                                }
 
-    @Override
-    public void toggle() {
-        bcs.clear();
-    }
-
-    @Override
-    public void onRender3D(Render3DEvent event) {
-        if (BreadCrumbs.getInstance().mode.getValue() == Mode.DEFAULT) {
-            double interpolatedX = MathUtil.interpolate(mc.player.lastTickPosX, mc.player.posX, mc.getRenderPartialTicks());
-            double interpolatedY = MathUtil.interpolate(mc.player.lastTickPosY, mc.player.posY, mc.getRenderPartialTicks());
-            double interpolatedZ = MathUtil.interpolate(mc.player.lastTickPosZ, mc.player.posZ, mc.getRenderPartialTicks());
-            bcs.add(new BreadCrumb(new Vec3d(interpolatedX, interpolatedY, interpolatedZ)));
-            int time = this.tickClear.getValue() * 50;
-            GL11.glPushAttrib(1048575);
-            GL11.glPushMatrix();
-            GL11.glDisable(3008);
-            GL11.glEnable(3042);
-            GL11.glBlendFunc(770, 771);
-            GL11.glDisable(3553);
-            GL11.glDisable(2929);
-            GL11.glDepthMask(false);
-            GL11.glEnable(2884);
-            GL11.glEnable(2848);
-            GL11.glHint(3154, 4353);
-            GL11.glDisable(2896);
-            GL11.glLineWidth(this.lineWidht.getValue());
-            GL11.glBegin(3);
-            for (int i = 0; i < bcs.size(); i++) {
-                BreadCrumb crumb = bcs.get(i);
-                if (crumb.getTimer().passed(time)) {
-                    crumb.update(bcs);
+                                ((ItemTrail) trails.get(entity.getUniqueID())).timer.setPaused(false);
+                            } else {
+                                ((ItemTrail) trails.get(entity.getUniqueID())).positions.add(new Position(entity.getPositionVector()));
+                            }
+                        } else {
+                            trails.put(entity.getUniqueID(), new ItemTrail(entity));
+                        }
+                    }
                 }
-                GL11.glColor4f(color.getValue().getRed() / 255.0F, color.getValue().getGreen() / 255.0f, color.getValue().getBlue() / 255.0f, ( float ) (crumb.getAlpha() / 255f));
-                putVertex3d(getRenderPos(crumb.getVector().x, crumb.getVector().y + 0.3, crumb.getVector().z));
+
+                if (self.getValue()) {
+
+                    if (trails.containsKey(mc.player.getUniqueID())) {
+
+                        BreadCrumbs.ItemTrail playerTrail = (BreadCrumbs.ItemTrail) trails.get(mc.player.getUniqueID());
+                        playerTrail.timer.resetDelay();
+                        List toRemove = new ArrayList();
+
+                        for (Object o : playerTrail.positions) {
+                            Position position = (Position) o;
+                            if (System.currentTimeMillis() - position.time > timeExisted.getValue()) {
+                                toRemove.add(position);
+                            }
+                        }
+
+                        playerTrail.positions.removeAll(toRemove);
+                        playerTrail.positions.add(new BreadCrumbs.Position(mc.player.getPositionVector()));
+
+                    } else {
+                        trails.put(mc.player.getUniqueID(), new BreadCrumbs.ItemTrail(mc.player));
+                    }
+
+                } else trails.remove(mc.player.getUniqueID());
             }
-            GL11.glEnd();
-            GL11.glEnable(2896);
-            GL11.glDisable(2848);
-            GL11.glEnable(3553);
-            GL11.glEnable(2929);
-            GL11.glDisable(3042);
-            GL11.glEnable(3008);
-            GL11.glDepthMask(true);
-            GL11.glCullFace(1029);
-            GL11.glPopMatrix();
-            GL11.glPopAttrib();
         }
     }
 
-    public class BreadCrumb {
+    @SubscribeEvent
+    public void onRenderWorld(RenderWorldLastEvent event) {
+        if (!nullCheck()) {
 
-        Vec3d vector;
-        Timer timer;
-        double alpha;
+            for (Object o : trails.entrySet()) {
+                Map.Entry entry = (Map.Entry) o;
+                if (((ItemTrail) entry.getValue()).entity.isDead || mc.world.getEntityByID(((ItemTrail) entry.getValue()).entity.getEntityId()) == null) {
 
-        public BreadCrumb(Vec3d vector) {
+                    if (((ItemTrail) entry.getValue()).timer.isPaused()) {
+                        ((ItemTrail) entry.getValue()).timer.resetDelay();
+                    }
+                    ((ItemTrail) entry.getValue()).timer.setPaused(false);
+                }
+
+                if (!((ItemTrail) entry.getValue()).timer.isPassed()) {
+                    drawTrail((ItemTrail) entry.getValue());
+                }
+            }
+
+        }
+    }
+
+    public void drawTrail(BreadCrumbs.ItemTrail trail) {
+        double fadeAmount = MathUtil.normalize((double)(System.currentTimeMillis() - trail.timer.getStartTime()), 0.0D, timeExisted.getValue());
+        int alpha = (int)(fadeAmount * 255.0D);
+        alpha = MathHelper.clamp(alpha, 0, 255);
+        alpha = 255 - alpha;
+        alpha = trail.timer.isPaused() ? 255 : alpha;
+        Color fadeColor = new Color(secondColor.getValue().getRed(), secondColor.getValue().getGreen(), secondColor.getValue().getBlue(), alpha);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.disableDepth();
+        GlStateManager.disableLighting();
+        GlStateManager.depthMask(false);
+        GlStateManager.disableAlpha();
+        GlStateManager.disableCull();
+        GlStateManager.enableBlend();
+        GL11.glDisable(3553);
+        GL11.glEnable(2848);
+        GL11.glBlendFunc(770, 771);
+
+        GL11.glLineWidth(((Number) lineWidth.getValue()).floatValue());
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder builder = tessellator.getBuffer();
+
+        builder.begin(3, DefaultVertexFormats.POSITION_COLOR);
+        buildBuffer(builder, trail, new Color(color.getValue().getRGB()), secondColor.booleanValue ? fadeColor : new Color(color.getValue().getRGB()));
+        tessellator.draw();
+
+        GlStateManager.depthMask(true);
+        GlStateManager.enableLighting();
+        GlStateManager.enableDepth();
+        GlStateManager.enableAlpha();
+        GlStateManager.popMatrix();
+        GL11.glEnable(3553);
+        GL11.glPolygonMode(1032, 6914);
+    }
+
+    public void buildBuffer(BufferBuilder builder, BreadCrumbs.ItemTrail trail, Color start, Color end) {
+
+        for (Object o : trail.positions) {
+            Position p = (Position) o;
+            Vec3d pos = updateToCamera(p.pos);
+            double value = MathUtil.normalize(trail.positions.indexOf(p), 0.0D, trail.positions.size());
+            addBuilderVertex(builder, pos.x, pos.y, pos.z, ColorUtil.interpolate((float) value, start, end));
+        }
+
+    }
+
+    boolean isValid(Entity e) {
+        return e instanceof EntityEnderPearl || e instanceof EntityExpBottle && xp.getValue() || e instanceof EntityArrow && arrow.getValue() && e.ticksExisted <= timeExisted.getValue();
+    }
+
+    public static class Position {
+        public Vec3d pos;
+        public long time;
+
+        public Position(Vec3d pos) {
+            this.pos = pos;
+            time = System.currentTimeMillis();
+        }
+
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            } else if (o != null && getClass() == o.getClass()) {
+                BreadCrumbs.Position position = (BreadCrumbs.Position)o;
+                return time == position.time && Objects.equals(pos, position.pos);
+            } else {
+                return false;
+            }
+        }
+
+        public int hashCode() {
+            return Objects.hash(pos, time);
+        }
+    }
+
+    public class ItemTrail {
+        public Entity entity;
+        public List positions;
+        public Timer timer;
+
+        public ItemTrail(Entity entity) {
+            this.entity = entity;
+            positions = new ArrayList();
             timer = new Timer();
-            timer.reset();
-            this.vector = vector;
-            this.alpha = color.getValue().getAlpha();
+            timer.setDelay(timeExisted.getValue());
+            timer.setPaused(true);
         }
-
-        public Timer getTimer() {
-            return timer;
-        }
-
-        public Vec3d getVector() {
-            return vector;
-        }
-
-        public double getAlpha() {
-            return alpha;
-        }
-
-        public void update(ArrayList arrayList) {
-            if (alpha <= 0) {
-                alpha = 0;
-                arrayList.remove(this);
-            }
-            this.alpha -= color.getValue().getAlpha() / fadeSpeed.getValue() * Managers.getFpsManagement().getFrametime();
-        }
-
     }
 
+    public class Timer {
+        long startTime = System.currentTimeMillis();
+        long delay;
+        boolean paused;
+
+        public boolean isPassed() {
+            return !paused && System.currentTimeMillis() - startTime >= delay;
+        }
+
+        public long getTime() {
+            return System.currentTimeMillis() - startTime;
+        }
+
+        public void resetDelay() {
+            startTime = System.currentTimeMillis();
+        }
+
+        public void setDelay(long delay) {
+            this.delay = delay;
+        }
+
+        public void setPaused(boolean paused) {
+            this.paused = paused;
+        }
+
+        public boolean isPaused() {
+            return paused;
+        }
+
+        public long getStartTime() {
+            return startTime;
+        }
+    }
+
+    public static Vec3d updateToCamera(Vec3d vec) {
+        return new Vec3d(vec.x - mc.getRenderManager().viewerPosX, vec.y - mc.getRenderManager().viewerPosY, vec.z - mc.getRenderManager().viewerPosZ);
+    }
+
+    public static void addBuilderVertex(BufferBuilder bufferBuilder, double x, double y, double z, Color color) {
+        bufferBuilder.pos(x, y, z).color((float)color.getRed() / 255.0F, (float)color.getGreen() / 255.0F, (float)color.getBlue() / 255.0F, (float)color.getAlpha() / 255.0F).endVertex();
+    }
 }

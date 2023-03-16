@@ -16,14 +16,15 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 public abstract class Module
         extends Mod {
 
-    public Setting<Boolean> enabled = this.add(new Setting<Boolean>("Enabled", false));
-    public Setting<Boolean> drawn = this.add(new Setting<Boolean>("Drawn", true));
-    public Setting<Bind> bind = this.add(new Setting<Bind>("Bind", new Bind(-1)));
+    public Setting<Boolean> enabled = this.add(new Setting<>("Enabled", false));
+    public Setting<Boolean> drawn = this.add(new Setting<>("Drawn", true));
+    public Setting<Bind> bind = this.add(new Setting<>("Bind", new Bind(-1)));
 
     //Main stuff
     private final String description;
     private final Category category;
     private final boolean shouldListen;
+    public boolean hidden;
     public Setting<String> displayName;
     public String hudInfo;
 
@@ -34,69 +35,67 @@ public abstract class Module
     public boolean sliding;
 
     //General stuff
-    public Module(String name, String description, Category category, boolean listen) {
+    public Module(String name, String description, Category category, boolean listen, boolean hidden) {
         super(name);
 
-        //this.displayName = this.add(new Setting<String>("DisplayName", name));
+        this.displayName = this.add(new Setting<>("DisplayName", name));
         this.description = description;
         this.category = category;
         shouldListen = listen;
+        this.hidden = hidden;
     }
 
     public Module(String name, String description, Category category) {
         super(name);
 
+        this.displayName = this.add(new Setting<>("DisplayName", name));
         this.description = description;
         this.category = category;
         shouldListen = false;
     }
 
+    public void setEnabled(boolean enabled) {
+        if (enabled) {
+            this.enable();
+        } else {
+            this.disable();
+        }
+    }
+
     public void enable() {
-        enabled.setValue(true);
+        this.enabled.setValue(true);
         this.onToggle();
-        onEnable();
-
-        Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + ".enabled =" + "\u00a7r" + ChatFormatting.GREEN + " true.", hashCode());
-
-        if (this.isOn() && shouldListen) {
+        this.onEnable();
+        if (this.isOn() && this.shouldListen) {
             MinecraftForge.EVENT_BUS.register(this);
         }
     }
 
     public void disable() {
-        enabled.setValue(false);
-        onDisable();
-        this.onDisable();
-
-        Command.sendMessageWithID(ChatFormatting.DARK_AQUA + getName() + "\u00a7r" + ".enabled =" + "\u00a7r" + ChatFormatting.RED + " false.", hashCode());
-
         if (this.shouldListen) {
             MinecraftForge.EVENT_BUS.unregister(this);
         }
+        this.enabled.setValue(false);
+        this.onToggle();
+        this.onDisable();
     }
 
     public void toggle() {
-        ClientEvent event = new ClientEvent(!isOn() ? 1 : 0, this);
+        ClientEvent event = new ClientEvent(!this.isEnabled() ? 1 : 0, this);
         MinecraftForge.EVENT_BUS.post(event);
-
         if (!event.isCanceled()) {
-
-            if (!isOn()) {
-                enable();
-
-            } else {
-                disable();
-            }
+            this.setEnabled(!this.isEnabled());
         }
     }
 
     public boolean isOn() {
-        return enabled.getValue();
+        return this.enabled.getValue();
     }
 
     public boolean isOff() {
-        return !enabled.getValue();
+        return this.enabled.getValue() == false;
     }
+
 
     public boolean isDrawn() {
         return drawn.getValue();
@@ -107,6 +106,7 @@ public abstract class Module
     }
 
     //Override-able methods
+
 
 
     public void onEnable() {

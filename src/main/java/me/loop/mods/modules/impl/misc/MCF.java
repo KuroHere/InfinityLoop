@@ -15,7 +15,7 @@ public class MCF
     private boolean clicked = false;
 
     public MCF() {
-        super("MCF", "Middleclick Friends.", Category.MISC);
+        super("MCF", "Middleclick Friends.", Category.MISC, true, false);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class ReverseStep
     private final Setting<Boolean> twoBlocks = this.add(new Setting<Boolean>("2Blocks", Boolean.FALSE));
 
     public ReverseStep() {
-        super("ReverseStep", "ReverseStep.", Category.MOVEMENT);
+        super("ReverseStep", "ReverseStep.", Category.MOVEMENT, true, false);
         this.setInstance();
     }
 

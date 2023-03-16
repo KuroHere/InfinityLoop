@@ -95,7 +95,7 @@ public class HUD extends Module {
 
 
     public HUD() {
-        super("HUD", "HUD Elements rendered on your screen", Category.CLIENT);
+        super("HUD", "HUD Elements rendered on your screen", Category.CLIENT, true, false);
         this.setInstance();
         this.potionColorMap.put(MobEffects.SPEED, new Color(124, 175, 198));
         this.potionColorMap.put(MobEffects.SLOWNESS, new Color(90, 108, 129));

@@ -2,7 +2,7 @@ package me.loop.asm.mixins;
 
 import me.loop.api.events.impl.render.PerspectiveEvent;
 import me.loop.mods.modules.impl.client.GameChanger;
-import me.loop.mods.modules.impl.misc.BlockTweaks;
+import me.loop.mods.modules.impl.player.BlockTweaks;
 import me.loop.mods.modules.impl.misc.Notifications;
 import me.loop.mods.modules.impl.render.CameraClip;
 import net.minecraft.client.Minecraft;

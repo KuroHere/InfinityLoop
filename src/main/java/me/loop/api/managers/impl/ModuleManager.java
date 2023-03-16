@@ -86,6 +86,7 @@ public class ModuleManager extends Mod {
         modules.add(new TpsSync());
 
         // Render
+        modules.add(new Dismemberment());
         modules.add(new HitMarkers());
         modules.add(new CustomTime());
         modules.add(new MotionBlur());
@@ -134,7 +135,7 @@ public class ModuleManager extends Mod {
         ArrayList<Module> modules = new ArrayList<>();
 
         for (Module module : this.modules) {
-            if (!module.isOn()) continue;
+            if (!module.isEnabled()) continue;
             modules.add(module);
         }
 
@@ -145,7 +146,7 @@ public class ModuleManager extends Mod {
         ArrayList<String> modules = new ArrayList<>();
 
         for (Module module : this.modules) {
-            if (!module.isOn() || !module.isDrawn()) continue;
+            if (!module.isEnabled() || !module.isDrawn()) continue;
             modules.add(module.getArrayListInfo());
         }
 
@@ -195,6 +196,11 @@ public class ModuleManager extends Mod {
         return module != null && module.isOn();
     }
 
+    public boolean isModuleEnabled(Class clazz) {
+        Module module = this.getModuleByClass(clazz);
+        return module != null && module.isOn();
+    }
+
     public Module getModuleByDisplayName(String displayName) {
         for (Module module : this.modules) {
             if (!module.getDisplayName().equalsIgnoreCase(displayName)) continue;
@@ -206,6 +212,7 @@ public class ModuleManager extends Mod {
     //Listeners
 
     public void onUnloadPre() {
+        this.modules.sort(Comparator.comparing(Module::getName));
         modules.forEach(MinecraftForge.EVENT_BUS::unregister);
         modules.forEach(Module::onUnload);
     }
@@ -234,27 +241,27 @@ public class ModuleManager extends Mod {
     }
 
     public void onUpdate() {
-        modules.stream().filter(Module::isOn).forEach(Module::onUpdate);
+        modules.stream().filter(Mod::isEnabled).forEach(Module::onUpdate);
     }
 
     public void onTick() {
-        modules.stream().filter(Module::isOn).forEach(Module::onTick);
+        modules.stream().filter(Mod::isEnabled).forEach(Module::onTick);
     }
 
     public void onRender2D(Render2DEvent event) {
-        modules.stream().filter(Module::isOn).forEach(module -> module.onRender2D(event));
+        modules.stream().filter(Mod::isEnabled).forEach(module -> module.onRender2D(event));
     }
 
     public void onRender3D(Render3DEvent event) {
-        modules.stream().filter(Module::isOn).forEach(module -> module.onRender3D(event));
+        modules.stream().filter(Mod::isEnabled).forEach(module -> module.onRender3D(event));
     }
 
     public void onTotemPop(EntityPlayer player) {
-        modules.stream().filter(Module::isOn).forEach(module -> module.onTotemPop(player));
+        modules.stream().filter(Mod::isEnabled).forEach(module -> module.onTotemPop(player));
     }
 
     public void onDeath(EntityPlayer player) {
-        modules.stream().filter(Module::isOn).forEach(module -> module.onDeath(player));
+        modules.stream().filter(Mod::isEnabled).forEach(module -> module.onDeath(player));
     }
 
     public void onLogout() {

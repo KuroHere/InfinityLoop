@@ -43,7 +43,7 @@ public class BurrowESP extends Module {
     private final RenderUtil renderUtil = new RenderUtil();
 
     public BurrowESP() {
-        super("BurrowESP", "BURROWESP", Category.RENDER);
+        super("BurrowESP", "BURROWESP", Category.RENDER, true, false);
         this.setInstance();
     }
 

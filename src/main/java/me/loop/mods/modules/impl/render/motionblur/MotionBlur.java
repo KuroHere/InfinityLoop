@@ -21,7 +21,7 @@ public class MotionBlur
     private static Map domainResourceManagers;
 
     public MotionBlur() {
-        super("MotionBlur", "Motion Blur", Category.RENDER);
+        super("MotionBlur", "Motion Blur", Category.RENDER, true, false);
         this.Setup = true;
         this.old = 0.0;
         this.setInstance();

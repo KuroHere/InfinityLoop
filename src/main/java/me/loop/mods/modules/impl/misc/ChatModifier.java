@@ -30,7 +30,7 @@ public class ChatModifier
     public boolean check;
 
     public ChatModifier() {
-        super("BetterChat", "Modifies your chat", Category.MISC);
+        super("BetterChat", "Modifies your chat", Category.MISC, true, false);
         this.setInstance();
     }
 
