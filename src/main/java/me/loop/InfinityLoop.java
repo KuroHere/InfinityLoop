@@ -2,7 +2,7 @@ package me.loop;
 
 import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.IconUtils;
-import me.loop.api.utils.impl.phobos.GlobalExecutor;
+import me.loop.asm.accessors.GlobalExecutor;
 import me.loop.api.utils.impl.phobos.Sphere;
 import me.loop.api.utils.impl.renders.helper.dism.EntityGib;
 import me.loop.api.utils.impl.renders.helper.dism.RenderGib;

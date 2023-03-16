@@ -89,7 +89,6 @@ public class ModuleManager extends Mod {
         modules.add(new HitMarkers());
         modules.add(new CustomTime());
         modules.add(new MotionBlur());
-        modules.add(new PlayerTrails());
         modules.add(new DeathEffects());
         modules.add(new ShadowESP());
         modules.add(new CustomAnimation());
@@ -104,7 +103,6 @@ public class ModuleManager extends Mod {
         modules.add(new HoleESP());
         modules.add(new ItemPhysics());
         modules.add(new PearlRender());
-        modules.add(new Skeleton());
         modules.add(new SmallShield());
         modules.add(new Trajectories());
 

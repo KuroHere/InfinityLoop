@@ -1,6 +1,6 @@
 package me.loop.asm.mixins;
 
-import me.loop.api.utils.impl.interfaces.IShaderGroup;
+import me.loop.asm.accessors.IShaderGroup;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;
 import net.minecraft.client.shader.ShaderGroup;

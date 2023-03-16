@@ -1,4 +1,6 @@
-package me.loop.api.utils.impl.phobos;
+package me.loop.asm.accessors;
+
+import me.loop.api.utils.impl.phobos.ThreadUtil;
 
 import java.util.concurrent.ExecutorService;
 

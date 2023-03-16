@@ -4,7 +4,7 @@ import me.loop.api.managers.Managers;
 import me.loop.api.utils.impl.EntityUtil;
 import me.loop.api.utils.impl.PlayerUtil;
 import me.loop.api.utils.impl.Util;
-import me.loop.api.utils.impl.interfaces.IShaderGroup;
+import me.loop.asm.accessors.IShaderGroup;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;

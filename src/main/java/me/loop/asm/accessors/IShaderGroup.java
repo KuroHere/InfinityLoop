@@ -1,4 +1,4 @@
-package me.loop.api.utils.impl.interfaces;
+package me.loop.asm.accessors;
 
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;

@@ -1,4 +1,4 @@
-package me.loop.api.utils.impl.minecraft;
+package me.loop.asm.accessors;
 
 public interface IMinecraft {
 
