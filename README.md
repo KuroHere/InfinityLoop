@@ -3,7 +3,7 @@
 
 # Infinity Loop Client
 
-![Logo](https://github.com/KuroHere/InfinityLoop/blob/master/src/main/resources/assets/me.loop/imgs/logotransparent.png)
+![Logo](https://github.com/KuroHere/InfinityLoop/blob/master/src/main/resources/assets/loop/imgs/logotransparent.png)
 
 ## Info:
 - Minecraft version: forge 1.12.2
