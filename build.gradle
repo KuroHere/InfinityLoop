@@ -1,50 +1,50 @@
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
-        maven { url = "https://files.minecraftforge.net/maven" }
-        maven { url = "https://repo.spongepowered.org/maven" }
+        maven {
+            name = "lukflug"
+            url = "https://lukflug.github.io/maven/"
+        }
+        maven {
+            name = 'forge'
+            url = 'https://files.minecraftforge.net/maven'
+        }
+        maven {
+            name = 'SpongePowered'
+            url = 'https://repo.spongepowered.org/repository/maven-public'
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.3'
-        classpath group: 'org.jetbrains.kotlin', name: 'kotlin-gradle-plugin', version: "${kotlin_version}"
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+        classpath 'com.peterabeles.gversion:com.peterabeles.gversion.gradle.plugin:1.5.0'
     }
 }
-apply plugin: 'kotlin'
+
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'com.peterabeles.gversion'
 apply plugin: 'java'
 
 compileJava.options.encoding = 'UTF-8'
 
 version project.modVersion
 group project.modGroup //http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "loop"
+archivesBaseName = "infinityloop"
 
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
 }
 
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-
 minecraft {
-    version = '1.12.2-14.23.5.2847'
+    version = project.forgeVersion
     runDir = 'run'
-    mappings = 'stable_39'
-    coreMod = 'com.me.infinity.loop.mixin.LoopMixinLoader'
+    mappings = project.mcpVersion
+    coreMod = 'infinityloop.mixin.LoopMixinLoader'
     makeObfSourceJar = false
 }
 
@@ -85,14 +85,6 @@ dependencies {
     compile 'com.github.ionar2:Alpine:1.9f'
     compile 'club.minnced:java-discord-rpc:2.0.2'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
-
-    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib", version: kotlin_version
-    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk7", version: kotlin_version
-    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk8", version: kotlin_version
-    compile group: "org.jetbrains.kotlin", name: "kotlin-reflect", version: kotlin_version
-
-    compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-core", version: coroutines_version
-    compile group: "org.jetbrains.kotlinx", name: "kotlinx-coroutines-jdk8", version: coroutines_version
 }
 
 processResources {
@@ -115,13 +107,7 @@ shadowJar {
         include(dependency('club.minnced:java-discord-rpc'))
         include(dependency('com.googlecode.json-simple:json-simple:1.1.1'))
         include(dependency('org.spongepowered:mixin'))
-        include(dependency("org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"))
-        include(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin_version}"))
-        include(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"))
-        include(dependency("org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}"))
         include(dependency("org.jetbrains:annotations:${annotations_version}"))
-        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"))
-        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutines_version}"))
     }
     exclude 'dummyThing'
     exclude 'LICENSE.txt'
@@ -130,7 +116,7 @@ shadowJar {
 
 mixin {
     defaultObfuscationEnv searge
-    add sourceSets.main, 'mixins.loop.refmap.json'
+    add sourceSets.main, 'mixins.infinityloop.refmap.json'
 
 }
 
@@ -144,11 +130,11 @@ reobf {
 jar {
     manifest {
         attributes(
-                'MixinConfigs': 'mixins.loop.json',
+                'MixinConfigs': 'mixins.infinityloop.json',
                 'tweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
                 'TweakOrder': 0,
                 'FMLCorePluginContainsFMLMod': 'true',
-                'FMLCorePlugin': 'com.me.infinity.loop.mixin.LoopMixinLoader',
+                'FMLCorePlugin': 'infinityloop.mixin.LoopMixinLoader',
                 'ForceLoadAsMod': 'true',
                 'FMLAT': 'loop_at.cfg'
         )
